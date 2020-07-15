@@ -1,5 +1,6 @@
 package com.singlelab.lume.ui.my_profile.di
 
+import com.singlelab.lume.LumeApplication
 import com.singlelab.lume.ui.my_profile.MyProfilePresenter
 import com.singlelab.lume.ui.my_profile.interactor.MyProfileInteractor
 import com.singlelab.lume.ui.my_profile.interactor.MyProfileInteractorImpl
@@ -19,7 +20,7 @@ object MyProfileModule {
         interactor: MyProfileInteractor,
         router: MyProfileRouter
     ): MyProfilePresenter {
-        return MyProfilePresenter(interactor, router)
+        return MyProfilePresenter(interactor, router, LumeApplication.preferences)
     }
 
     @Provides

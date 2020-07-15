@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.Navigation
+import com.google.android.material.textfield.TextInputEditText
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
+import com.singlelab.lume.util.maskPhone
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_auth.*
 import moxy.presenter.InjectPresenter
@@ -37,16 +40,43 @@ class AuthFragment : BaseFragment(), AuthView {
         super.onViewCreated(view, savedInstanceState)
         activity?.title = "Авторизация"
         setListeners()
+        layout_phone.hint = ""
+        edit_text_phone.setCustomHint("")
     }
 
     private fun setListeners() {
         button_send_code.setOnClickListener {
-            authPresenter.onClickSendCode(edit_text_phone.text.toString())
+            edit_text_phone.fixHintsForMeizu(edit_text_phone as TextInputEditText, edit_text_phone)
+            if (edit_text_phone.isValid) {
+                authPresenter.onClickSendCode(edit_text_phone.unmaskText)
+            } else {
+                layout_phone.error = "Некорректный номер"
+            }
+        }
+        button_auth.setOnClickListener {
+            authPresenter.onClickAuth(edit_text_code.text.toString())
         }
     }
 
-    override fun onCodeSend() {
-        Toast.makeText(context, "Код успешно отправлен", Toast.LENGTH_LONG).show()
+    override fun onCodeSend(phone: String) {
+        text_info.visibility = View.VISIBLE
+        text_info.text = "СМС-код отправлен на номер ${phone.maskPhone()}"
+        layout_code.visibility = View.VISIBLE
+        button_auth.visibility = View.VISIBLE
+
+        layout_phone.visibility = View.INVISIBLE
+        button_send_code.visibility = View.INVISIBLE
+    }
+
+    override fun onAuth() {
+        activity?.let {
+            authPresenter.navigateToMyProfile(
+                Navigation.findNavController(
+                    it,
+                    R.id.nav_host_fragment
+                )
+            )
+        }
     }
 
     override fun showLoading(isShow: Boolean) {

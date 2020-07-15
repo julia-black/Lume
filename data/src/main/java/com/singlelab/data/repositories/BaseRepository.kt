@@ -1,5 +1,7 @@
 package com.singlelab.data.repositories
 
+import com.google.gson.Gson
+import com.singlelab.data.model.Error
 import com.singlelab.data.model.ResultCoroutines
 import com.singlelab.data.net.ApiException
 import retrofit2.Response
@@ -29,8 +31,12 @@ open class BaseRepository {
             val response = call.invoke()
             if (response.isSuccessful && response.body() != null) {
                 ResultCoroutines.Success(response.body()!!)
-            } else { //todo добавить обработку ошибок с сервера
-                ResultCoroutines.Error(ApiException("Error Occurred during getting safe Api result, Custom ERROR - $errorMessage"))
+            } else if (response.errorBody() != null) {
+                val errorBody = response.errorBody()!!.string()
+                val error = Gson().fromJson(errorBody, Error::class.java)
+                ResultCoroutines.Error(ApiException(error.message))
+            } else {
+                ResultCoroutines.Error(ApiException(errorMessage))
             }
         } catch (e: UnknownHostException) {
             ResultCoroutines.Error(ApiException("Отсутствует соединение с сервером"))

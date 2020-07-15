@@ -1,5 +1,6 @@
 package com.singlelab.lume.ui.auth.interactor
 
+import com.singlelab.data.model.auth.ResponseAuth
 import com.singlelab.data.model.auth.ResponsePersonUid
 import com.singlelab.data.net.ApiException
 import com.singlelab.data.repositories.auth.AuthRepository
@@ -10,5 +11,10 @@ class AuthInteractorImpl @Inject constructor(private var repository: AuthReposit
     @Throws(ApiException::class)
     override suspend fun sendCode(phone: String): ResponsePersonUid? {
         return repository.sendCode(phone)
+    }
+
+    @Throws(ApiException::class)
+    override suspend fun auth(phone: String, code: String): ResponseAuth? {
+        return repository.auth(phone, code)
     }
 }

@@ -6,4 +6,9 @@
     <string name="title_auth">Авторизация</string>
     <string name="enter_phone">Введите номер телефона</string>
     <string name="send_code">Отправить код</string>
+    <string name="enter_code">Введите код</string>
+    <string name="auth">Авторизоваться</string>
+
+    <string name="meizu_model">MEIZU</string>
+
 </resources>

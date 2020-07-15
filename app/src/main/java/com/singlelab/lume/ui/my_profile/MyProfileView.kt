@@ -7,4 +7,6 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface MyProfileView : MvpView {
     fun showProfile()
+
+    fun navigateToAuth()
 }

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.singlelab.lume.R
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_my_profile.*
 import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -36,7 +35,13 @@ class MyProfileFragment : MvpAppCompatFragment(), MyProfileView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        text_notifications.text = "is my profile"
+        activity?.title = "Мой профиль"
+    }
+
+    override fun showProfile() {
+    }
+
+    override fun navigateToAuth() {
         activity?.let {
             myProfilePresenter.navigateToAuth(
                 Navigation.findNavController(
@@ -44,11 +49,6 @@ class MyProfileFragment : MvpAppCompatFragment(), MyProfileView {
                     R.id.nav_host_fragment
                 )
             )
-            it.title = "Мой профиль"
         }
-    }
-
-    override fun showProfile() {
-        text_notifications.text = "show profile"
     }
 }
