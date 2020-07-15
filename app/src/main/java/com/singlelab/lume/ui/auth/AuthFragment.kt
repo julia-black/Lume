@@ -4,16 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.singlelab.lume.R
+import com.singlelab.lume.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_auth.*
-import moxy.MvpAppCompatFragment
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AuthFragment : MvpAppCompatFragment(), AuthView {
+class AuthFragment : BaseFragment(), AuthView {
 
     @Inject
     lateinit var daggerPresenter: AuthPresenter
@@ -34,7 +35,25 @@ class AuthFragment : MvpAppCompatFragment(), AuthView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        text_auth.text = "is auth"
         activity?.title = "Авторизация"
+        setListeners()
+    }
+
+    private fun setListeners() {
+        button_send_code.setOnClickListener {
+            authPresenter.onClickSendCode(edit_text_phone.text.toString())
+        }
+    }
+
+    override fun onCodeSend() {
+        Toast.makeText(context, "Код успешно отправлен", Toast.LENGTH_LONG).show()
+    }
+
+    override fun showLoading(isShow: Boolean) {
+        super.showLoadingView(isShow)
+    }
+
+    override fun showError(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }

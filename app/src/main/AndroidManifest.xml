@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.singlelab.lume">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".LumeApplication"
         android:allowBackup="true"

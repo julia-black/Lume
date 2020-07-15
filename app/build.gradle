@@ -60,4 +60,13 @@ dependencies {
     implementation "com.github.moxy-community:moxy-androidx:$moxyVersion"
     implementation "com.github.moxy-community:moxy-material:$moxyVersion"
     implementation "com.github.moxy-community:moxy-ktx:$moxyVersion"
+
+    //Design
+    implementation 'com.google.android.material:material:1.1.0'
+
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
+
 }

@@ -1,6 +1,7 @@
 package com.singlelab.lume
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -29,5 +30,9 @@ class MainActivity : AppCompatActivity() {
     override fun onTitleChanged(title: CharSequence?, color: Int) {
         super.onTitleChanged(title, color)
         toolbar.title = title ?: ""
+    }
+
+    fun showLoading(isShow: Boolean) {
+        loading.visibility = if (isShow) View.VISIBLE else View.GONE
     }
 }

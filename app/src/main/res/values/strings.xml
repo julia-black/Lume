@@ -4,4 +4,6 @@
     <string name="title_events">Мои события</string>
     <string name="title_my_profile">Мой профиль</string>
     <string name="title_auth">Авторизация</string>
+    <string name="enter_phone">Введите номер телефона</string>
+    <string name="send_code">Отправить код</string>
 </resources>
