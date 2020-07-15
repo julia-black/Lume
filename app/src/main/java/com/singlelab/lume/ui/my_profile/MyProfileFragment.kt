@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import com.singlelab.lume.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_my_profile.*
@@ -16,13 +17,13 @@ import javax.inject.Inject
 class MyProfileFragment : MvpAppCompatFragment(), MyProfileView {
 
     @Inject
-    lateinit var hiltPresenter: MyProfilePresenter
+    lateinit var daggerPresenter: MyProfilePresenter
 
     @InjectPresenter
     lateinit var myProfilePresenter: MyProfilePresenter
 
     @ProvidePresenter
-    fun provideMyProfilePresenter() = hiltPresenter
+    fun provideMyProfilePresenter() = daggerPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +37,15 @@ class MyProfileFragment : MvpAppCompatFragment(), MyProfileView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         text_notifications.text = "is my profile"
+        activity?.let {
+            myProfilePresenter.navigateToAuth(
+                Navigation.findNavController(
+                    it,
+                    R.id.nav_host_fragment
+                )
+            )
+            it.title = "Мой профиль"
+        }
     }
 
     override fun showProfile() {

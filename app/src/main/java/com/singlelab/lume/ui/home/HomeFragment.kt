@@ -21,5 +21,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         text_home.text = "is home"
+        activity?.title = "Главная"
     }
 }

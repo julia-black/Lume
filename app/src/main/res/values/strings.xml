@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Lume</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_my_profile">My Profile</string>
+    <string name="title_home">Главная</string>
+    <string name="title_events">Мои события</string>
+    <string name="title_my_profile">Мой профиль</string>
+    <string name="title_auth">Авторизация</string>
 </resources>
