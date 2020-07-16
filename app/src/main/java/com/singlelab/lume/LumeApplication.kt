@@ -2,7 +2,7 @@ package com.singlelab.lume
 
 import android.app.Application
 import android.content.Context
-import com.singlelab.data.model.Const
+import com.singlelab.data.model.consts.Const
 import com.singlelab.lume.pref.Preferences
 import dagger.hilt.android.HiltAndroidApp
 

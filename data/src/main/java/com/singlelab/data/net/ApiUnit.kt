@@ -1,35 +1,21 @@
 package com.singlelab.data.net
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import okhttp3.Interceptor
+import com.singlelab.data.model.auth.Headers
+import com.singlelab.data.model.consts.Const.BASE_URL
+import com.singlelab.data.net.interceptors.HeaderInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object ApiUnit {
-
-    private const val BASE_URL = "https://lumewebapp.azurewebsites.net/api/"
-
-    private val authInterceptor = Interceptor { chain ->
-        val newUrl = chain.request().url()
-            .newBuilder()
-            //.addQueryParameter("api_key", AppConstants.tmdbApiKey)
-            .build()
-
-        val newRequest = chain.request()
-            .newBuilder()
-            .url(newUrl)
-            .build()
-
-        chain.proceed(newRequest)
-    }
+class ApiUnit(val headers: Headers?) {
 
     private val loggingInterceptor =
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
     private val client = OkHttpClient().newBuilder()
-        .addInterceptor(authInterceptor)
+        .addInterceptor(HeaderInterceptor(headers))
         .addInterceptor(loggingInterceptor)
         .build()
 
@@ -41,4 +27,6 @@ object ApiUnit {
         .build()
 
     val authApi: AuthApi = retrofit.create(AuthApi::class.java)
+
+    val myProfileApi: MyProfileApi = retrofit.create(MyProfileApi::class.java)
 }

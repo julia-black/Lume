@@ -1,6 +1,6 @@
 package com.singlelab.data.model
 
-import com.singlelab.data.net.ApiException
+import com.singlelab.data.exceptions.ApiException
 
 sealed class ResultCoroutines<out T : Any> {
     data class Success<out T : Any>(val data: T) : ResultCoroutines<T>()

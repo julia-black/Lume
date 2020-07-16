@@ -9,12 +9,19 @@ import retrofit2.http.Query
 
 interface AuthApi {
 
-    @POST("authorization/get-code")
+    @POST("api/authorization/get-code")
     fun sendCodeAsync(@Query("phoneNumber") phone: String): Deferred<Response<ResponsePersonUid>>
 
-    @POST("authorization/set-code")
+    @POST("api/authorization/set-code")
     fun authAsync(
         @Query("phoneNumber") phone: String,
         @Query("code") code: String
     ): Deferred<Response<ResponseAuth>>
+
+    @POST("/api/authorization/get-access-token")
+    fun refreshTokenAsync(
+        @Query("refreshToken") refreshToken: String,
+        @Query("personUid") uid: String
+    ): Deferred<Response<ResponseAuth>>
+
 }

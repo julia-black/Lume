@@ -1,10 +1,12 @@
 package com.singlelab.lume.ui.my_profile.interactor
 
-import android.util.Log
-import com.singlelab.data.model.Const
+import com.singlelab.data.repositories.BaseRepository
+import com.singlelab.data.repositories.my_profile.MyProfileRepository
+import com.singlelab.lume.base.BaseInteractor
 
-class MyProfileInteractorImpl : MyProfileInteractor {
-    override fun loadProfile() {
-        Log.d(Const.LOG_TAG, "loadProfile...")
+class MyProfileInteractorImpl(private val repository: MyProfileRepository) : MyProfileInteractor,
+    BaseInteractor(repository as BaseRepository) {
+    override suspend fun loadProfile() {
+        repository.getProfile()
     }
 }

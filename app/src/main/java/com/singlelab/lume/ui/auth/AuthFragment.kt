@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.Navigation
 import com.google.android.material.textfield.TextInputEditText
 import com.singlelab.lume.R
@@ -23,7 +22,7 @@ class AuthFragment : BaseFragment(), AuthView {
     lateinit var daggerPresenter: AuthPresenter
 
     @InjectPresenter
-    lateinit var authPresenter: AuthPresenter
+    lateinit var presenter: AuthPresenter
 
     @ProvidePresenter
     fun provideAuthPresenter() = daggerPresenter
@@ -48,13 +47,13 @@ class AuthFragment : BaseFragment(), AuthView {
         button_send_code.setOnClickListener {
             edit_text_phone.fixHintsForMeizu(edit_text_phone as TextInputEditText, edit_text_phone)
             if (edit_text_phone.isValid) {
-                authPresenter.onClickSendCode(edit_text_phone.unmaskText)
+                presenter.onClickSendCode(edit_text_phone.unmaskText)
             } else {
                 layout_phone.error = "Некорректный номер"
             }
         }
         button_auth.setOnClickListener {
-            authPresenter.onClickAuth(edit_text_code.text.toString())
+            presenter.onClickAuth(edit_text_code.text.toString())
         }
     }
 
@@ -70,20 +69,12 @@ class AuthFragment : BaseFragment(), AuthView {
 
     override fun onAuth() {
         activity?.let {
-            authPresenter.navigateToMyProfile(
+            presenter.navigateToMyProfile(
                 Navigation.findNavController(
                     it,
                     R.id.nav_host_fragment
                 )
             )
         }
-    }
-
-    override fun showLoading(isShow: Boolean) {
-        super.showLoadingView(isShow)
-    }
-
-    override fun showError(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }

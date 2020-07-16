@@ -2,8 +2,9 @@ package com.singlelab.lume.ui.auth
 
 import android.util.Log
 import androidx.navigation.NavController
-import com.singlelab.data.model.Const
-import com.singlelab.data.net.ApiException
+import com.singlelab.data.exceptions.ApiException
+import com.singlelab.data.model.consts.Const
+import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.auth.interactor.AuthInteractor
@@ -15,9 +16,8 @@ import javax.inject.Inject
 class AuthPresenter @Inject constructor(
     private var interactor: AuthInteractor,
     private var router: AuthRouter,
-    private val preferences: Preferences?
-) :
-    BasePresenter<AuthView>() {
+    preferences: Preferences?
+) : BasePresenter<AuthView>(preferences, interactor as BaseInteractor) {
 
     private var phone: String? = null
 
@@ -33,6 +33,7 @@ class AuthPresenter @Inject constructor(
         invokeSuspend {
             try {
                 val responsePersonUid = interactor.sendCode(phone)
+                preferences?.setUid(responsePersonUid?.personUid)
                 this.phone = phone
                 runOnMainThread {
                     viewState.showLoading(false)

@@ -28,8 +28,8 @@ object AuthModule {
     }
 
     @Provides
-    fun provideRepository(): AuthRepository {
-        return AuthRepositoryImpl(ApiUnit.authApi)
+    fun provideRepository(apiUnit: ApiUnit): AuthRepository {
+        return AuthRepositoryImpl(apiUnit)
     }
 
     @Provides
