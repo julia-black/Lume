@@ -1,6 +1,6 @@
 package com.singlelab.lume.base
 
-import com.singlelab.data.model.auth.ResponseAuth
+import com.singlelab.data.model.auth.Auth
 import com.singlelab.data.net.CoroutineContextProvider
 import com.singlelab.data.repositories.OnRefreshTokenListener
 import com.singlelab.lume.pref.Preferences
@@ -38,9 +38,9 @@ open class BasePresenter<ViewT : MvpView>(
         }
     }
 
-    override fun onRefreshToken(responseAuth: ResponseAuth?) {
-        if (responseAuth != null) {
-            preferences?.setAuth(responseAuth)
+    override fun onRefreshToken(auth: Auth?) {
+        if (auth != null) {
+            preferences?.setAuth(auth)
         }
     }
 }

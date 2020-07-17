@@ -7,8 +7,6 @@ import com.singlelab.lume.LumeApplication
 import com.singlelab.lume.ui.my_profile.MyProfilePresenter
 import com.singlelab.lume.ui.my_profile.interactor.MyProfileInteractor
 import com.singlelab.lume.ui.my_profile.interactor.MyProfileInteractorImpl
-import com.singlelab.lume.ui.my_profile.router.MyProfileRouter
-import com.singlelab.lume.ui.my_profile.router.MyProfileRouterImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,20 +18,14 @@ object MyProfileModule {
 
     @Provides
     fun providePresenter(
-        interactor: MyProfileInteractor,
-        router: MyProfileRouter
+        interactor: MyProfileInteractor
     ): MyProfilePresenter {
-        return MyProfilePresenter(interactor, router, LumeApplication.preferences)
+        return MyProfilePresenter(interactor, LumeApplication.preferences)
     }
 
     @Provides
     fun provideInteractor(repository: MyProfileRepository): MyProfileInteractor {
         return MyProfileInteractorImpl(repository)
-    }
-
-    @Provides
-    fun providesRouter(): MyProfileRouter {
-        return MyProfileRouterImpl()
     }
 
     @Provides

@@ -1,12 +1,12 @@
 package com.singlelab.data.net.interceptors
 
-import com.singlelab.data.model.auth.Headers
+import com.singlelab.data.model.auth.AuthData
 import com.singlelab.data.model.consts.HeaderConst
 import okhttp3.Interceptor
 import okhttp3.Response
 
 
-class HeaderInterceptor(private val headers: Headers?) : Interceptor {
+class HeaderInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
@@ -15,12 +15,12 @@ class HeaderInterceptor(private val headers: Headers?) : Interceptor {
         val requestBuilder = originalRequest.newBuilder()
             .url(originalHttpUrl)
 
-        if (!headers?.accessToken.isNullOrEmpty()) {
-            requestBuilder.addHeader(HeaderConst.ACCESS_TOKEN, headers!!.accessToken!!)
+        if (!AuthData.accessToken.isNullOrEmpty()) {
+            requestBuilder.addHeader(HeaderConst.ACCESS_TOKEN, AuthData.accessToken!!)
         }
 
-        if (!headers?.uid.isNullOrEmpty()) {
-            requestBuilder.addHeader(HeaderConst.UID, headers!!.uid!!)
+        if (!AuthData.uid.isNullOrEmpty()) {
+            requestBuilder.addHeader(HeaderConst.UID, AuthData.uid!!)
         }
 
         return chain.proceed(requestBuilder.build())

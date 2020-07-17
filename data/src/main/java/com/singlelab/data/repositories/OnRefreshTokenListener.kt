@@ -1,7 +1,7 @@
 package com.singlelab.data.repositories
 
-import com.singlelab.data.model.auth.ResponseAuth
+import com.singlelab.data.model.auth.Auth
 
 interface OnRefreshTokenListener {
-    fun onRefreshToken(responseAuth: ResponseAuth?)
+    fun onRefreshToken(auth: Auth?)
 }

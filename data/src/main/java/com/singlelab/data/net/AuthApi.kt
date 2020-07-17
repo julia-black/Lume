@@ -1,27 +1,32 @@
 package com.singlelab.data.net
 
-import com.singlelab.data.model.auth.ResponseAuth
-import com.singlelab.data.model.auth.ResponsePersonUid
+import com.singlelab.data.model.auth.Auth
+import com.singlelab.data.model.auth.RequestPersonFilled
+import com.singlelab.data.model.auth.RequestPersonUid
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
+import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface AuthApi {
 
-    @POST("api/authorization/get-code")
-    fun sendCodeAsync(@Query("phoneNumber") phone: String): Deferred<Response<ResponsePersonUid>>
+    @POST("authorization/get-code")
+    fun sendCodeAsync(@Query("phoneNumber") phone: String): Deferred<Response<RequestPersonUid>>
 
-    @POST("api/authorization/set-code")
+    @POST("authorization/set-code")
     fun authAsync(
         @Query("phoneNumber") phone: String,
         @Query("code") code: String
-    ): Deferred<Response<ResponseAuth>>
+    ): Deferred<Response<Auth>>
 
-    @POST("/api/authorization/get-access-token")
+    @POST("authorization/get-access-token")
     fun refreshTokenAsync(
         @Query("refreshToken") refreshToken: String,
         @Query("personUid") uid: String
-    ): Deferred<Response<ResponseAuth>>
+    ): Deferred<Response<Auth>>
+
+    @GET("/api/core/is-person-filled-up")
+    fun getIsPersonFilledAsync() : Deferred<Response<RequestPersonFilled>>
 
 }

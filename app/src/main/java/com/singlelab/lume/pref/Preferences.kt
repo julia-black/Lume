@@ -1,8 +1,8 @@
 package com.singlelab.lume.pref
 
 import android.content.SharedPreferences
-import com.singlelab.data.model.auth.Headers
-import com.singlelab.data.model.auth.ResponseAuth
+import com.singlelab.data.model.auth.Auth
+import com.singlelab.data.model.auth.AuthData
 
 class Preferences(private val sharedPreferences: SharedPreferences?) {
 
@@ -12,7 +12,12 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
         const val PREF_UID = "pref_uid"
     }
 
-    fun setAuth(auth: ResponseAuth) {
+    init {
+        AuthData.setAuthData(getAccessToken(), getRefreshToken(), getUid())
+    }
+
+    fun setAuth(auth: Auth) {
+        AuthData.setAuth(auth)
         setAccessToken(auth.accessToken)
         setRefreshToken(auth.refreshToken)
     }
@@ -21,33 +26,26 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
         setAccessToken(null)
         setRefreshToken(null)
         setUid(null)
+        AuthData.setAuthData(null, null, null)
     }
 
-    fun getHeaders(): Headers {
-        return Headers(
-            accessToken = getAccessToken(),
-            refreshToken = getRefreshToken(),
-            uid = getUid()
-        )
-    }
-
-    fun setAccessToken(accessToken: String?) {
+    private fun setAccessToken(accessToken: String?) {
         sharedPreferences?.edit()?.putString(PREF_ACCESS_TOKEN, accessToken)?.apply()
     }
 
-    fun getAccessToken() = sharedPreferences?.getString(PREF_ACCESS_TOKEN, "")
-
-    fun setRefreshToken(refreshToken: String?) {
+    private fun setRefreshToken(refreshToken: String?) {
         sharedPreferences?.edit()?.putString(PREF_REFRESH_TOKEN, refreshToken)?.apply()
     }
 
     fun setUid(uid: String?) {
+        AuthData.uid = uid
         sharedPreferences?.edit()?.putString(PREF_UID, uid)?.apply()
     }
 
-    fun getUid() = sharedPreferences?.getString(PREF_UID, "")
-
-    fun getRefreshToken() = sharedPreferences?.getString(PREF_REFRESH_TOKEN, "")
+    private fun getAccessToken() = sharedPreferences?.getString(PREF_ACCESS_TOKEN, "")
 
 
+    private fun getUid() = sharedPreferences?.getString(PREF_UID, "")
+
+    private fun getRefreshToken() = sharedPreferences?.getString(PREF_REFRESH_TOKEN, "")
 }

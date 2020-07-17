@@ -6,7 +6,6 @@ import com.singlelab.lume.base.BaseInteractor
 
 class MyProfileInteractorImpl(private val repository: MyProfileRepository) : MyProfileInteractor,
     BaseInteractor(repository as BaseRepository) {
-    override suspend fun loadProfile() {
-        repository.getProfile()
-    }
+
+    override suspend fun loadProfile() = repository.getProfile()
 }

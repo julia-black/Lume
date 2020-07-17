@@ -67,14 +67,13 @@ class AuthFragment : BaseFragment(), AuthView {
         button_send_code.visibility = View.INVISIBLE
     }
 
-    override fun onAuth() {
-        activity?.let {
-            presenter.navigateToMyProfile(
-                Navigation.findNavController(
-                    it,
-                    R.id.nav_host_fragment
-                )
-            )
-        }
+    override fun toProfile() {
+        Navigation.createNavigateOnClickListener(R.id.action_navigation_auth_to_navigation_my_profile)
+            .onClick(view)
+    }
+
+    override fun toRegistration() {
+        Navigation.createNavigateOnClickListener(R.id.action_navigation_auth_to_navigation_registration)
+            .onClick(view)
     }
 }

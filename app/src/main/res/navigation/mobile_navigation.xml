@@ -20,7 +20,8 @@
     <fragment
         android:id="@+id/navigation_my_profile"
         android:name="com.singlelab.lume.ui.my_profile.MyProfileFragment"
-        android:label="@string/title_my_profile">
+        android:label="@string/title_my_profile"
+        tools:layout="@layout/fragment_my_profile">
         <action
             android:id="@+id/action_navigation_my_profile_to_navigation_auth"
             app:destination="@id/navigation_auth" />
@@ -29,7 +30,25 @@
     <fragment
         android:id="@+id/navigation_auth"
         android:name="com.singlelab.lume.ui.auth.AuthFragment"
-        android:label="@string/title_auth">
+        android:label="@string/title_auth"
+        tools:layout="@layout/fragment_auth">
+        <action
+            android:id="@+id/action_navigation_auth_to_navigation_registration"
+            app:destination="@id/navigation_registration" />
+    </fragment>
 
+    <action
+        android:id="@+id/action_navigation_auth_to_navigation_my_profile"
+        app:destination="@id/navigation_my_profile" />
+
+    <fragment
+        android:id="@+id/navigation_registration"
+        android:name="com.singlelab.lume.ui.reg.RegistrationFragment"
+        android:label="@string/title_registration"
+        tools:layout="@layout/fragment_registration">
+
+        <action
+            android:id="@+id/action_navigation_registration_to_navigation_my_profile"
+            app:destination="@id/navigation_my_profile" />
     </fragment>
 </navigation>

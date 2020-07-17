@@ -1,14 +1,15 @@
 package com.singlelab.data.repositories.auth
 
 import com.singlelab.data.exceptions.ApiException
-import com.singlelab.data.model.auth.ResponseAuth
-import com.singlelab.data.model.auth.ResponsePersonUid
+import com.singlelab.data.model.auth.Auth
+import com.singlelab.data.model.auth.RequestPersonFilled
+import com.singlelab.data.model.auth.RequestPersonUid
 import com.singlelab.data.net.ApiUnit
 import com.singlelab.data.repositories.BaseRepository
 
-class AuthRepositoryImpl(private var apiUnit: ApiUnit) : AuthRepository, BaseRepository() {
+class AuthRepositoryImpl(var apiUnit: ApiUnit) : AuthRepository, BaseRepository() {
     @Throws(ApiException::class)
-    override suspend fun sendCode(phone: String): ResponsePersonUid? {
+    override suspend fun sendCode(phone: String): RequestPersonUid? {
         return safeApiCall(
             apiUnit = apiUnit,
             call = { apiUnit.authApi.sendCodeAsync(phone).await() },
@@ -17,10 +18,19 @@ class AuthRepositoryImpl(private var apiUnit: ApiUnit) : AuthRepository, BaseRep
     }
 
     @Throws(ApiException::class)
-    override suspend fun auth(phone: String, code: String): ResponseAuth? {
+    override suspend fun auth(phone: String, code: String): Auth? {
         return safeApiCall(
             apiUnit = apiUnit,
             call = { apiUnit.authApi.authAsync(phone, code).await() },
+            errorMessage = "Не удалось авторизоваться"
+        )
+    }
+
+    @Throws(ApiException::class)
+    override suspend fun isPersonFilled(): RequestPersonFilled? {
+        return safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.authApi.getIsPersonFilledAsync().await() },
             errorMessage = "Не удалось авторизоваться"
         )
     }

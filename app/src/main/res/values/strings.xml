@@ -10,5 +10,12 @@
     <string name="auth">Авторизоваться</string>
 
     <string name="meizu_model">MEIZU</string>
+    <string name="registration">Регистрация</string>
+    <string name="welcome">Добро пожаловать в Lume! \nПожалуйста, заполните небольшую анкету:</string>
+    <string name="name">Имя</string>
+    <string name="age">Возраст</string>
+    <string name="description">Пару слов о себе</string>
+    <string name="to_registration">Зарегистрироваться</string>
+    <string name="title_registration">Регистрация</string>
 
 </resources>

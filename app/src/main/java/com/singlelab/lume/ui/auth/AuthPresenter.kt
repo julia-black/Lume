@@ -15,7 +15,6 @@ import javax.inject.Inject
 @InjectViewState
 class AuthPresenter @Inject constructor(
     private var interactor: AuthInteractor,
-    private var router: AuthRouter,
     preferences: Preferences?
 ) : BasePresenter<AuthView>(preferences, interactor as BaseInteractor) {
 
@@ -56,13 +55,17 @@ class AuthPresenter @Inject constructor(
             invokeSuspend {
                 try {
                     val auth = interactor.auth(phone!!, code)
+                    if (auth != null) {
+                        preferences?.setAuth(auth)
+                    }
+                    val isPersonFilled = interactor.isPersonFilled()
                     runOnMainThread {
                         viewState.showLoading(false)
-                        Log.d(Const.LOG_TAG, auth?.accessToken ?: "")
-                        if (auth != null) {
-                            preferences?.setAuth(auth)
+                        if (isPersonFilled == null || !isPersonFilled.isPersonFilledUp) {
+                            viewState.toRegistration()
+                        } else {
+                            viewState.toProfile()
                         }
-                        viewState.onAuth()
                     }
                 } catch (e: ApiException) {
                     runOnMainThread {
@@ -72,9 +75,5 @@ class AuthPresenter @Inject constructor(
                 }
             }
         }
-    }
-
-    fun navigateToMyProfile(navController: NavController) {
-        router.navigateToMyProfile(navController)
     }
 }

@@ -1,7 +1,6 @@
 package com.singlelab.lume.di
 
 import com.singlelab.data.net.ApiUnit
-import com.singlelab.lume.LumeApplication
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,6 +13,6 @@ class NetModule {
 
     @Provides
     fun provideApiUnit(): ApiUnit {
-        return ApiUnit(LumeApplication.preferences?.getHeaders())
+        return ApiUnit()
     }
 }

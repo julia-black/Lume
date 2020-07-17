@@ -1,6 +1,6 @@
 package com.singlelab.data.model.auth
 
-class ResponseAuth(
+class Auth(
     val accessToken: String,
     val refreshToken: String?
 )

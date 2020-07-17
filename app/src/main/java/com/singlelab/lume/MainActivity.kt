@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 //                R.id.navigation_home, R.id.navigation_events, R.id.navigation_my_profile
 //            )
 //        )
-        // setupActionBarWithNavController(navController, appBarConfiguration)
+        //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         toolbar.inflateMenu(R.menu.toolbar_menu)
         toolbar.setOnMenuItemClickListener {
