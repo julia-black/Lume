@@ -10,4 +10,8 @@ class MyProfileInteractorImpl(private val repository: MyProfileRepository) : MyP
 
     @Throws(ApiException::class)
     override suspend fun loadProfile() = repository.getProfile()
+
+    @Throws(ApiException::class)
+    override suspend fun updateImageProfile(imageStr: String) =
+        repository.updateImageProfile(imageStr)
 }

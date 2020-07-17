@@ -11,4 +11,6 @@ interface MyProfileView : LoadingView, ErrorView {
     fun showProfile(profile: Profile)
 
     fun navigateToAuth()
+
+    fun loadImage(imageUid: String?)
 }

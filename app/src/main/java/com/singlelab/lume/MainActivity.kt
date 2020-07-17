@@ -1,11 +1,13 @@
 package com.singlelab.lume
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.base.listeners.OnToolbarListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -14,6 +16,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private var toolbarListener: OnToolbarListener? = null
+
+    private var activityResultListener: OnActivityResultListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +56,19 @@ class MainActivity : AppCompatActivity() {
         this.toolbarListener = listener
     }
 
+    fun setActivityListener(listener: OnActivityResultListener) {
+        this.activityResultListener = listener
+    }
+
     fun showLogoutInToolbar(isShow: Boolean) {
         toolbar.menu.findItem(R.id.menu_logout).isVisible = isShow
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (activityResultListener != null) {
+            activityResultListener?.onActivityResultFragment(requestCode, resultCode, data)
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
     }
 }

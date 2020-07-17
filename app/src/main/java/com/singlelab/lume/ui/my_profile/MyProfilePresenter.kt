@@ -1,11 +1,13 @@
 package com.singlelab.lume.ui.my_profile
 
+import android.graphics.Bitmap
 import com.singlelab.data.exceptions.ApiException
 import com.singlelab.data.model.auth.AuthData
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.my_profile.interactor.MyProfileInteractor
+import com.singlelab.lume.util.toBase64
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -25,9 +27,7 @@ class MyProfilePresenter @Inject constructor(
     }
 
     private fun loadProfile() {
-        runOnMainThread {
-            viewState.showLoading(true)
-        }
+        viewState.showLoading(true)
         invokeSuspend {
             try {
                 if (!AuthData.isAnon) {
@@ -42,6 +42,7 @@ class MyProfilePresenter @Inject constructor(
                     }
                 } else {
                     runOnMainThread {
+                        preferences?.clearAuth()
                         viewState.navigateToAuth()
                     }
                 }
@@ -49,7 +50,8 @@ class MyProfilePresenter @Inject constructor(
                 runOnMainThread {
                     viewState.showLoading(false)
                     viewState.showError(e.message)
-                    viewState.navigateToAuth()
+                    // preferences?.clearAuth()
+                    // viewState.navigateToAuth()
                 }
             }
         }
@@ -58,5 +60,23 @@ class MyProfilePresenter @Inject constructor(
     fun logout() {
         preferences?.clearAuth()
         viewState.navigateToAuth()
+    }
+
+    fun updateImageProfile(imageStr: Bitmap) {
+        viewState.showLoading(true)
+        invokeSuspend {
+            try {
+                val uid = interactor.updateImageProfile(imageStr.toBase64())
+                runOnMainThread {
+                    viewState.loadImage(uid?.imageUid)
+                    viewState.showLoading(false)
+                }
+            } catch (e: ApiException) {
+                runOnMainThread {
+                    viewState.showLoading(false)
+                    viewState.showError(e.message)
+                }
+            }
+        }
     }
 }

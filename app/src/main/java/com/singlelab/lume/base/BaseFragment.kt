@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import com.singlelab.data.net.CoroutineContextProvider
 import com.singlelab.lume.MainActivity
+import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.base.listeners.OnToolbarListener
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
@@ -37,6 +38,9 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         super.onViewCreated(view, savedInstanceState)
         if (this is OnToolbarListener) {
             (activity as MainActivity?)?.setToolbarListener(this)
+        }
+        if (this is OnActivityResultListener) {
+            (activity as MainActivity?)?.setActivityListener(this)
         }
     }
 

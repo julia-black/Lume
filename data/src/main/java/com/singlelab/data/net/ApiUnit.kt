@@ -27,5 +27,5 @@ class ApiUnit {
 
     val authApi: AuthApi = retrofit.create(AuthApi::class.java)
 
-    val profileApi: ProfileApi = retrofit.create(ProfileApi::class.java)
+    val myProfileApi: MyProfileApi = retrofit.create(MyProfileApi::class.java)
 }
