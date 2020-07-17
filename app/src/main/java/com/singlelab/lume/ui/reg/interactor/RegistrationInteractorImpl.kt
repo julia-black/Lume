@@ -8,6 +8,6 @@ import com.singlelab.lume.base.BaseInteractor
 class RegistrationInteractorImpl(private val repository: RegistrationRepository) :
     BaseInteractor(repository as BaseRepository), RegistrationInteractor {
     override suspend fun registration(profile: Profile) {
-        repository.registration(profile)
+        return repository.registration(profile)
     }
 }

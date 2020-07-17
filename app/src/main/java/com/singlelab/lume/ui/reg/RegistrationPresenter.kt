@@ -1,6 +1,7 @@
 package com.singlelab.lume.ui.reg
 
 import com.singlelab.data.exceptions.ApiException
+import com.singlelab.data.model.auth.Auth
 import com.singlelab.data.model.auth.AuthData
 import com.singlelab.data.model.profile.Profile
 import com.singlelab.lume.base.BaseInteractor
@@ -24,6 +25,7 @@ class RegistrationPresenter @Inject constructor(
                 val profile = Profile(name = name, age = age, description = description)
                 try {
                     interactor.registration(profile)
+                    preferences?.setAnon(false)
                     viewState.onRegistration()
                 } catch (e: ApiException) {
                     runOnMainThread {

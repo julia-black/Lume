@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/margin_large">
+    android:paddingTop="@dimen/margin_small"
+    android:paddingStart="@dimen/margin_large"
+    android:paddingEnd="@dimen/margin_large">
 
     <TextView
         android:id="@+id/text_welcome"
@@ -19,7 +21,7 @@
         android:id="@+id/layout_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_medium"
         android:hint="@string/name"
         app:boxBackgroundColor="@android:color/white"
         app:layout_constraintTop_toBottomOf="@id/text_welcome">
@@ -34,7 +36,7 @@
         android:id="@+id/layout_age"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_medium"
         android:hint="@string/age"
         app:boxBackgroundColor="@android:color/white"
         app:layout_constraintTop_toBottomOf="@id/layout_name">
@@ -49,7 +51,7 @@
         android:id="@+id/layout_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_medium"
         android:hint="@string/description"
         app:boxBackgroundColor="@android:color/white"
         app:layout_constraintTop_toBottomOf="@id/layout_age">

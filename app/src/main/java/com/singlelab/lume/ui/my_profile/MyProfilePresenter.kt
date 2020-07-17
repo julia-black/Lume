@@ -17,10 +17,10 @@ class MyProfilePresenter @Inject constructor(
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        if (!AuthData.accessToken.isNullOrEmpty()) {
-            loadProfile()
-        } else {
+        if (AuthData.isAnon) {
             viewState.navigateToAuth()
+        } else {
+            loadProfile()
         }
     }
 
@@ -30,19 +30,26 @@ class MyProfilePresenter @Inject constructor(
         }
         invokeSuspend {
             try {
-                val profile = interactor.loadProfile()
-                runOnMainThread {
-                    viewState.showLoading(false)
-                    if (profile != null) {
-                        viewState.showProfile(profile)
-                    } else {
-                        viewState.showError("Не удалось получить профиль")
+                if (!AuthData.isAnon) {
+                    val profile = interactor.loadProfile()
+                    runOnMainThread {
+                        viewState.showLoading(false)
+                        if (profile != null) {
+                            viewState.showProfile(profile)
+                        } else {
+                            viewState.showError("Не удалось получить профиль")
+                        }
+                    }
+                } else {
+                    runOnMainThread {
+                        viewState.navigateToAuth()
                     }
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
                     viewState.showLoading(false)
                     viewState.showError(e.message)
+                    viewState.navigateToAuth()
                 }
             }
         }

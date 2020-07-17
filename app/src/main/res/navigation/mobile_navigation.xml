@@ -35,11 +35,10 @@
         <action
             android:id="@+id/action_navigation_auth_to_navigation_registration"
             app:destination="@id/navigation_registration" />
+        <action
+            android:id="@+id/action_navigation_auth_to_navigation_my_profile"
+            app:destination="@id/navigation_my_profile" />
     </fragment>
-
-    <action
-        android:id="@+id/action_navigation_auth_to_navigation_my_profile"
-        app:destination="@id/navigation_my_profile" />
 
     <fragment
         android:id="@+id/navigation_registration"

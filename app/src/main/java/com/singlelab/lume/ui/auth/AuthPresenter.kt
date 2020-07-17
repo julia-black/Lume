@@ -1,14 +1,11 @@
 package com.singlelab.lume.ui.auth
 
-import android.util.Log
-import androidx.navigation.NavController
 import com.singlelab.data.exceptions.ApiException
-import com.singlelab.data.model.consts.Const
+import com.singlelab.data.model.auth.AuthData
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.auth.interactor.AuthInteractor
-import com.singlelab.lume.ui.auth.router.AuthRouter
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -22,7 +19,24 @@ class AuthPresenter @Inject constructor(
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        Log.d(Const.LOG_TAG, "view attach auth")
+        if (!AuthData.isAnon) {
+            runOnMainThread {
+                viewState.showLoading(true)
+            }
+            invokeSuspend {
+                try {
+                    runOnMainThread {
+                        viewState.showLoading(false)
+                        viewState.toProfile()
+                    }
+                } catch (e: ApiException) {
+                    runOnMainThread {
+                        viewState.showLoading(false)
+                        viewState.showError(e.message)
+                    }
+                }
+            }
+        }
     }
 
     fun onClickSendCode(phone: String) {
@@ -64,6 +78,7 @@ class AuthPresenter @Inject constructor(
                         if (isPersonFilled == null || !isPersonFilled.isPersonFilledUp) {
                             viewState.toRegistration()
                         } else {
+                            preferences?.setAnon(false)
                             viewState.toProfile()
                         }
                     }

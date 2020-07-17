@@ -13,6 +13,7 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnToolbarListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_my_profile.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
@@ -56,14 +57,13 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener {
 
     override fun showProfile(profile: Profile) {
         (activity as MainActivity?)?.showLogoutInToolbar(true)
+        name_age.text = "${profile.name}, ${profile.age}"
+        description.text = profile.description
     }
 
     override fun navigateToAuth() {
         Navigation.createNavigateOnClickListener(R.id.action_navigation_my_profile_to_navigation_auth)
             .onClick(view)
-//        navController?.let {
-//            presenter.navigateToAuth(it)
-//        }
     }
 
     override fun onClickLogout() {

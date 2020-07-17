@@ -1,5 +1,6 @@
 package com.singlelab.data.net
 
+import com.singlelab.data.model.ResponseMessage
 import com.singlelab.data.model.profile.Profile
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
@@ -13,5 +14,5 @@ interface ProfileApi {
     fun getProfileAsync(): Deferred<Response<Profile>>
 
     @POST("core/update-person")
-    fun updateProfileAsync(@Body profile: Profile): Deferred<Response<Nothing>>
+    fun updateProfileAsync(@Body profile: Profile): Deferred<Response<ResponseMessage>>
 }
