@@ -18,5 +18,6 @@
     <string name="to_registration">Зарегистрироваться</string>
     <string name="title_registration">Регистрация</string>
     <string name="error_pick_image">Не удалось выбрать изображение</string>
+    <string name="create_event">Создать событие</string>
 
 </resources>

@@ -50,8 +50,6 @@ class MyProfilePresenter @Inject constructor(
                 runOnMainThread {
                     viewState.showLoading(false)
                     viewState.showError(e.message)
-                    // preferences?.clearAuth()
-                    // viewState.navigateToAuth()
                 }
             }
         }

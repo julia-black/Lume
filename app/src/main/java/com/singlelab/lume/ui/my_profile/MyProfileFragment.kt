@@ -41,8 +41,6 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
     @ProvidePresenter
     fun provideMyProfilePresenter() = daggerPresenter
 
-    private var navController: NavController? = null
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,7 +53,6 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
         super.onViewCreated(view, savedInstanceState)
         activity?.let {
             it.title = getString(R.string.title_my_profile)
-            navController = Navigation.findNavController(it, R.id.nav_host_fragment)
         }
         view.findViewById<ImageView>(R.id.image)
             .setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_navigation_my_profile_to_navigation_auth))
@@ -101,9 +98,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
     }
 
     override fun onClickLogout() {
-        navController?.let {
-            presenter.logout()
-        }
+       presenter.logout()
     }
 
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
