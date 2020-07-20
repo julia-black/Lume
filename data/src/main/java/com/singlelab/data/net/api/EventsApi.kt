@@ -11,9 +11,9 @@ import retrofit2.http.POST
 
 interface EventsApi {
 
-    @GET("core/get-event-list")
+    @GET("event/get-event-list")
     fun getEventsAsync(): Deferred<Response<List<EventSummary>>>
 
-    @POST("core/add-event")
+    @POST("event/add-event")
     fun addEventAsync(@Body event: Event): Deferred<Response<ResponseEventUid>>
 }

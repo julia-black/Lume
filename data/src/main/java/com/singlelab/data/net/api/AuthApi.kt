@@ -26,7 +26,7 @@ interface AuthApi {
         @Query("personUid") uid: String
     ): Deferred<Response<Auth>>
 
-    @GET("/api/core/is-person-filled-up")
+    @GET("person/is-person-filled-up")
     fun getIsPersonFilledAsync() : Deferred<Response<RequestPersonFilled>>
 
 }

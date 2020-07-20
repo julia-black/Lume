@@ -12,12 +12,12 @@ import retrofit2.http.POST
 
 interface MyProfileApi {
 
-    @GET("core/get-person")
+    @GET("person/get-person")
     fun getProfileAsync(): Deferred<Response<Profile>>
 
-    @POST("core/update-person")
+    @POST("person/update-person")
     fun updateProfileAsync(@Body profile: Profile): Deferred<Response<ResponseMessage>>
 
-    @POST("image/add-person-image")
+    @POST("person/add-person-image")
     fun updateImageProfileAsync(@Body content: Content): Deferred<Response<ResponseImageUid>>
 }
