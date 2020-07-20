@@ -14,7 +14,7 @@ import dagger.hilt.android.components.ActivityComponent
 
 @InstallIn(ActivityComponent::class)
 @Module
-object EventsModule {
+object ChatsModule {
     @Provides
     fun providePresenter(interactor: ChatsInteractor): ChatsPresenter {
         return ChatsPresenter(interactor, LumeApplication.preferences)

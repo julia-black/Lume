@@ -23,4 +23,7 @@
     <!-- Chats -->
     <string name="chats_title">Чаты</string>
 
+    <!-- Chat -->
+    <string name="chat_title">Чат</string>
+
 </resources>

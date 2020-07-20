@@ -8,12 +8,19 @@ import com.singlelab.data.model.chats.ChatsInfoItem
 import com.singlelab.lume.R
 import kotlinx.android.synthetic.main.chats_item.view.*
 
-class ChatsAdapter : RecyclerView.Adapter<ChatsAdapter.ChatsItemViewHolder>() {
+class ChatsAdapter(
+    private val onClickAction: (ChatsInfoItem) -> Unit,
+    private val onLongClickAction: (ChatsInfoItem) -> Boolean
+) : RecyclerView.Adapter<ChatsAdapter.ChatsItemViewHolder>() {
 
     private var chats = mutableListOf<ChatsInfoItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ChatsItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.chats_item, parent, false))
+        ChatsItemViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.chats_item, parent, false),
+            onClickAction,
+            onLongClickAction
+        )
 
     override fun onBindViewHolder(holder: ChatsItemViewHolder, position: Int) =
         holder.bind(chats[position])
@@ -25,12 +32,19 @@ class ChatsAdapter : RecyclerView.Adapter<ChatsAdapter.ChatsItemViewHolder>() {
         this.chats.addAll(chats)
     }
 
-    class ChatsItemViewHolder(chatItemView: View) : RecyclerView.ViewHolder(chatItemView) {
+    class ChatsItemViewHolder(
+        view: View,
+        private val onClickAction: (ChatsInfoItem) -> Unit,
+        private val onLongClickAction: (ChatsInfoItem) -> Boolean
+    ) : RecyclerView.ViewHolder(view) {
         fun bind(chat: ChatsInfoItem) {
             itemView.chatsTitleView.text = chat.title
             //view.setImage(chat.image)
             //val image = itemView.context.resources.getIdentifier("ic_baseline_image_50", "drawable", itemView.context.packageName)
             //view.setImage(image)
+
+            itemView.setOnClickListener { onClickAction(chat) }
+            itemView.setOnLongClickListener { onLongClickAction(chat) }
         }
     }
 }

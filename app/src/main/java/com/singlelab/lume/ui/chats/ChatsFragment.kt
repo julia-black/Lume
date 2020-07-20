@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.singlelab.data.model.chats.ChatsInfoItem
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
+import com.singlelab.lume.ui.chat.ChatView.Companion.CHAT_TITLE_BUNDLE_KEY
 import com.singlelab.lume.ui.chats.common.ChatsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chats.*
-import kotlinx.android.synthetic.main.fragment_events.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
@@ -27,15 +28,18 @@ class ChatsFragment : BaseFragment(), ChatsView {
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
 
-    private val chatsAdapter : ChatsAdapter by lazy { ChatsAdapter() }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_chats, container, false)
+    private val onChatClicked: (ChatsInfoItem) -> Unit = {
+        navigateToChat(it.title)
     }
+
+    private val onChatLongClicked: (ChatsInfoItem) -> Boolean = {
+        true
+    }
+
+    private val chatsAdapter: ChatsAdapter by lazy { ChatsAdapter(onChatClicked, onChatLongClicked) }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        inflater.inflate(R.layout.fragment_chats, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,5 +51,11 @@ class ChatsFragment : BaseFragment(), ChatsView {
     override fun showChats(chats: List<ChatsInfoItem>) {
         chatsAdapter.setChats(chats)
         chatsAdapter.notifyDataSetChanged()
+    }
+
+    private fun navigateToChat(chatTitle: String) {
+        //TODO: Use androidx.core:core-ktx or write extension bundleOf()
+        val chatTitleBundle = Bundle().apply { putString(CHAT_TITLE_BUNDLE_KEY, chatTitle) }
+        Navigation.createNavigateOnClickListener(R.id.navigate_from_chats_to_chat, chatTitleBundle).onClick(view)
     }
 }
