@@ -1,4 +1,4 @@
-package com.singlelab.data.net
+package com.singlelab.data.net.api
 
 import com.singlelab.data.model.ResponseMessage
 import com.singlelab.data.model.profile.Content

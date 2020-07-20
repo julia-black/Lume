@@ -50,6 +50,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
     }
 
     override fun onRegistration() {
-       Navigation.createNavigateOnClickListener(R.id.action_navigation_registration_to_navigation_my_profile).onClick(view)
+        Navigation.createNavigateOnClickListener(R.id.action_registration_to_my_profile)
+            .onClick(view)
     }
 }

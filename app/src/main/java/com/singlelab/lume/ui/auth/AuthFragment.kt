@@ -68,12 +68,12 @@ class AuthFragment : BaseFragment(), AuthView {
     }
 
     override fun toProfile() {
-        Navigation.createNavigateOnClickListener(R.id.action_navigation_auth_to_navigation_my_profile)
+        Navigation.createNavigateOnClickListener(R.id.action_auth_to_my_profile)
             .onClick(view)
     }
 
     override fun toRegistration() {
-        Navigation.createNavigateOnClickListener(R.id.action_navigation_auth_to_navigation_registration)
+        Navigation.createNavigateOnClickListener(R.id.action_auth_to_registration)
             .onClick(view)
     }
 }

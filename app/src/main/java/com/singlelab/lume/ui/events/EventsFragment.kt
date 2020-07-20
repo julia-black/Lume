@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.singlelab.data.model.event.EventSummary
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
+import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.ui.view.adapter.EventsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_events.*
@@ -16,7 +18,7 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class EventsFragment : BaseFragment(), EventsView {
+class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments {
 
     @Inject
     lateinit var daggerPresenter: EventsPresenter
@@ -40,6 +42,10 @@ class EventsFragment : BaseFragment(), EventsView {
         activity?.title = getString(R.string.title_events)
         recycler_events.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        button_create_event.setOnClickListener {
+            Navigation.createNavigateOnClickListener(R.id.action_events_to_creating_event)
+                .onClick(view)
+        }
     }
 
     override fun showEvents(events: List<EventSummary>) {

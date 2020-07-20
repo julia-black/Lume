@@ -1,5 +1,6 @@
 package com.singlelab.lume.ui.events
 
+import com.singlelab.data.exceptions.ApiException
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.pref.Preferences
@@ -13,4 +14,26 @@ class EventsPresenter @Inject constructor(
     preferences: Preferences?
 ) : BasePresenter<EventsView>(preferences, interactor as BaseInteractor) {
 
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        loadEvents()
+    }
+
+    private fun loadEvents() {
+        viewState.showLoading(true)
+        try {
+            invokeSuspend {
+                val events = interactor.getEvents()
+                runOnMainThread {
+                    viewState.showLoading(false)
+                    events?.let {
+                        viewState.showEvents(events)
+                    }
+                }
+            }
+        } catch (e: ApiException) {
+            viewState.showLoading(false)
+            viewState.showError(e.message)
+        }
+    }
 }
