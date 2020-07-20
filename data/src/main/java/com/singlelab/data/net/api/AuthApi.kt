@@ -1,4 +1,4 @@
-package com.singlelab.data.net
+package com.singlelab.data.net.api
 
 import com.singlelab.data.model.auth.Auth
 import com.singlelab.data.model.auth.RequestPersonFilled
@@ -26,7 +26,7 @@ interface AuthApi {
         @Query("personUid") uid: String
     ): Deferred<Response<Auth>>
 
-    @GET("/api/core/is-person-filled-up")
+    @GET("person/is-person-filled-up")
     fun getIsPersonFilledAsync() : Deferred<Response<RequestPersonFilled>>
 
 }

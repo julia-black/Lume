@@ -14,11 +14,22 @@
     <string name="welcome">Добро пожаловать в Lume! \nПожалуйста, заполните небольшую анкету:</string>
     <string name="name">Имя</string>
     <string name="age">Возраст</string>
-    <string name="description">Пару слов о себе</string>
+    <string name="about_yourself">Пару слов о себе</string>
+    <string name="description">Расскажи подробнее о событии</string>
     <string name="to_registration">Зарегистрироваться</string>
     <string name="title_registration">Регистрация</string>
     <string name="error_pick_image">Не удалось выбрать изображение</string>
     <string name="create_event">Создать событие</string>
+    <string name="type_event">Тип события</string>
+    <string name="title">Название</string>
+    <string name="min_age">Минимальный возраст</string>
+    <string name="publish_event">Опубликовать</string>
+    <string name="title_creating_event">Создание события</string>
+    <string name="title_new_event">Новое событие</string>
+    <string name="max_age">Максимальный возраст</string>
+    <string name="date_start">Начало события</string>
+    <string name="date_end">Окончание события</string>
+    <string name="enter_fields">Заполните обязательные параметры</string>
 
     <!-- Chats -->
     <string name="chats_title">Чаты</string>

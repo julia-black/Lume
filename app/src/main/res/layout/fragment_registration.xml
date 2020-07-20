@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_medium"
-        android:hint="@string/description"
+        android:hint="@string/about_yourself"
         app:boxBackgroundColor="@android:color/white"
         app:layout_constraintTop_toBottomOf="@id/layout_age">
 

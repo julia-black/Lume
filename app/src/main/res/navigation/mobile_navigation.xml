@@ -3,22 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/home">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/home"
         android:name="com.singlelab.lume.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_events"
+        android:id="@+id/events"
         android:name="com.singlelab.lume.ui.events.EventsFragment"
         android:label="@string/title_events"
-        tools:layout="@layout/fragment_events" />
+        tools:layout="@layout/fragment_events">
+        <action
+            android:id="@+id/action_events_to_creating_event"
+            app:destination="@id/creating_event" />
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_chats"
+        android:id="@+id/creating_event"
+        android:name="com.singlelab.lume.ui.creating_event.CreatingEventFragment"
+        android:label="@string/title_creating_event"
+        tools:layout="@layout/fragment_creating_event">
+        <action
+            android:id="@+id/action_creating_event_to_events"
+            app:destination="@id/events" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chats"
         android:name="com.singlelab.lume.ui.chats.ChatsFragment"
         android:label="@string/chats_title"
         tools:layout="@layout/fragment_chats">
@@ -35,36 +49,36 @@
         tools:layout="@layout/fragment_chat" />
 
     <fragment
-        android:id="@+id/navigation_my_profile"
+        android:id="@+id/my_profile"
         android:name="com.singlelab.lume.ui.my_profile.MyProfileFragment"
         android:label="@string/title_my_profile"
         tools:layout="@layout/fragment_my_profile">
         <action
-            android:id="@+id/action_navigation_my_profile_to_navigation_auth"
-            app:destination="@id/navigation_auth" />
+            android:id="@+id/action_my_profile_to_auth"
+            app:destination="@id/auth" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_auth"
+        android:id="@+id/auth"
         android:name="com.singlelab.lume.ui.auth.AuthFragment"
         android:label="@string/title_auth"
         tools:layout="@layout/fragment_auth">
         <action
-            android:id="@+id/action_navigation_auth_to_navigation_registration"
-            app:destination="@id/navigation_registration" />
+            android:id="@+id/action_auth_to_registration"
+            app:destination="@id/registration" />
         <action
-            android:id="@+id/action_navigation_auth_to_navigation_my_profile"
-            app:destination="@id/navigation_my_profile" />
+            android:id="@+id/action_auth_to_my_profile"
+            app:destination="@id/my_profile" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_registration"
+        android:id="@+id/registration"
         android:name="com.singlelab.lume.ui.reg.RegistrationFragment"
         android:label="@string/title_registration"
         tools:layout="@layout/fragment_registration">
 
         <action
-            android:id="@+id/action_navigation_registration_to_navigation_my_profile"
-            app:destination="@id/navigation_my_profile" />
+            android:id="@+id/action_registration_to_my_profile"
+            app:destination="@id/my_profile" />
     </fragment>
 </navigation>

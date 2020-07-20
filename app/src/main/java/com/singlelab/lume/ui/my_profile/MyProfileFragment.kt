@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.singlelab.data.model.profile.Profile
@@ -55,7 +54,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
             it.title = getString(R.string.title_my_profile)
         }
         view.findViewById<ImageView>(R.id.image)
-            .setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_navigation_my_profile_to_navigation_auth))
+            .setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_my_profile_to_auth))
     }
 
     override fun onDestroy() {
@@ -85,7 +84,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
     }
 
     override fun navigateToAuth() {
-        Navigation.createNavigateOnClickListener(R.id.action_navigation_my_profile_to_navigation_auth)
+        Navigation.createNavigateOnClickListener(R.id.action_my_profile_to_auth)
             .onClick(view)
     }
 
@@ -98,7 +97,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
     }
 
     override fun onClickLogout() {
-       presenter.logout()
+        presenter.logout()
     }
 
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {

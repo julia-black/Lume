@@ -5,4 +5,7 @@ object Const {
 
     const val PREF = "lume_pref"
     const val LOG_TAG = "lume_app"
+
+    const val DATE_FORMAT_TIME_ZONE = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+    const val DATE_FORMAT_OUTPUT = "dd.MM.yyyy HH:mm"
 }
