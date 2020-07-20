@@ -20,4 +20,7 @@
     <string name="error_pick_image">Не удалось выбрать изображение</string>
     <string name="create_event">Создать событие</string>
 
+    <!-- Chats -->
+    <string name="chats_title">Чаты</string>
+
 </resources>
