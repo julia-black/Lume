@@ -3,16 +3,16 @@ package com.singlelab.lume.base
 import com.singlelab.data.model.auth.Auth
 import com.singlelab.data.net.CoroutineContextProvider
 import com.singlelab.data.repositories.OnRefreshTokenListener
+import com.singlelab.lume.base.view.BaseView
 import com.singlelab.lume.pref.Preferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import moxy.MvpPresenter
-import moxy.MvpView
 import kotlin.coroutines.CoroutineContext
 
-open class BasePresenter<ViewT : MvpView>(
+open class BasePresenter<ViewT : BaseView>(
     protected val preferences: Preferences?,
     private val baseInteractor: BaseInteractor
 ) : MvpPresenter<ViewT>(), OnRefreshTokenListener {
@@ -41,6 +41,13 @@ open class BasePresenter<ViewT : MvpView>(
     override fun onRefreshToken(auth: Auth?) {
         if (auth != null) {
             preferences?.setAuth(auth)
+        }
+    }
+
+    override fun onRefreshTokenFailed() {
+        preferences?.clearAuth()
+        runOnMainThread {
+            viewState.toAuth()
         }
     }
 }

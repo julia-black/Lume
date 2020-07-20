@@ -45,12 +45,12 @@ open class BaseRepository {
     ): ResultCoroutines<T> {
         return try {
             val response = call.invoke()
+            val errorBody = response.errorBody()?.string()
             if (response.isSuccessful && response.body() != null) {
                 ResultCoroutines.Success(response.body()!!)
             } else if (response.code() == HttpURLConnection.HTTP_FORBIDDEN) {
                 throw RefreshTokenException()
-            } else if (!response.errorBody()?.string().isNullOrEmpty()) {
-                val errorBody = response.errorBody()!!.string()
+            } else if (!errorBody.isNullOrEmpty()) {
                 val error = Gson().fromJson(errorBody, Error::class.java)
                 ResultCoroutines.Error(
                     ApiException(
@@ -68,16 +68,14 @@ open class BaseRepository {
             ResultCoroutines.Error(ApiException("Отсутствует соединение с сервером"))
         } catch (e: RefreshTokenException) {
             when (val responseAuth = updateToken(apiUnit)) { //обновляем токен
-                is ResultCoroutines.Error -> {
-                    responseAuth
-                }
                 is ResultCoroutines.Success<Auth> -> {
                     onRefreshTokenListener?.onRefreshToken(responseAuth.data)
                     AuthData.accessToken = responseAuth.data.accessToken
                     safeApiResult(apiUnit, call, errorMessage) //повторно выполняем запрос
                 }
                 else -> {
-                    throw Exception()
+                    onRefreshTokenListener?.onRefreshTokenFailed()
+                    throw e
                 }
             }
         } catch (e: Exception) {

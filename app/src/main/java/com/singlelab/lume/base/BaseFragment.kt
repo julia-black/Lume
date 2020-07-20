@@ -3,8 +3,10 @@ package com.singlelab.lume.base
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.singlelab.data.net.CoroutineContextProvider
 import com.singlelab.lume.MainActivity
+import com.singlelab.lume.R
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.base.listeners.OnToolbarListener
 import com.singlelab.lume.base.view.ErrorView
@@ -50,5 +52,11 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
 
     override fun showLoading(isShow: Boolean) {
         (activity as MainActivity?)?.showLoading(isShow)
+    }
+
+    override fun toAuth() {
+        showLoading(false)
+        findNavController().popBackStack()
+        findNavController().navigate(R.id.navigation_auth)
     }
 }
