@@ -7,6 +7,5 @@
     <color name="colorAccentLight">#F4A582</color>
     <color name="colorLight">#9BD7D1</color>
     <color name="colorTransparentPart">#80FFFFFF</color>
-
-    <color name="colorGrayText">#9A9A9A</color>
+    <color name="colorGray">#9A9A9A</color>
 </resources>

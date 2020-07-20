@@ -27,8 +27,8 @@
     <string name="title_creating_event">Создание события</string>
     <string name="title_new_event">Новое событие</string>
     <string name="max_age">Максимальный возраст</string>
-    <string name="date_start">Укажите начало события</string>
-    <string name="date_end">Укажите окончание события</string>
+    <string name="date_start">Начало события</string>
+    <string name="date_end">Окончание события</string>
     <string name="enter_fields">Заполните обязательные параметры</string>
 
 </resources>

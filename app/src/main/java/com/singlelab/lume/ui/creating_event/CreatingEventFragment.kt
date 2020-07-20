@@ -1,21 +1,31 @@
 package com.singlelab.lume.ui.creating_event
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
+import com.bumptech.glide.Glide
 import com.singlelab.data.model.consts.Const
 import com.singlelab.data.model.event.Event
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
+import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parseToString
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_creating_event.*
+import kotlinx.android.synthetic.main.fragment_creating_event.description
 import kotlinx.android.synthetic.main.fragment_events.button_create_event
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -24,7 +34,8 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFragments {
+class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFragments,
+    OnActivityResultListener {
 
     @Inject
     lateinit var daggerPresenter: CreatingEventPresenter
@@ -59,8 +70,41 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         Navigation.createNavigateOnClickListener(R.id.action_creating_event_to_events).onClick(view)
     }
 
+    override fun onCompleteAddImage(imageUid: String?) {
+        imageUid?.let {
+            Glide.with(this)
+                .load(imageUid.generateImageLink())
+                .into(image_event)
+        }
+    }
+
+    override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data)
+            if (resultCode == Activity.RESULT_OK) {
+                val bitmap =
+                    MediaStore.Images.Media.getBitmap(activity?.contentResolver, result.uri)
+                showImage(bitmap)
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(context, getString(R.string.error_pick_image), Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun showImage(bitmap: Bitmap?) {
+        bitmap?.let {
+            image_event.setImageBitmap(bitmap)
+        }
+    }
 
     private fun setListeners() {
+        start_date.setOnClickListener {
+            showDatePicker(currentDateStart, isStart = true)
+        }
+        end_date.setOnClickListener {
+            showDatePicker(currentDateEnd, isStart = false)
+        }
         button_create_event.setOnClickListener {
             if (validation()) {
                 val minAge =
@@ -82,11 +126,15 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                 showError(getString(R.string.enter_fields))
             }
         }
-        start_date.setOnClickListener {
-            showDatePicker(currentDateStart, isStart = true)
-        }
-        end_date.setOnClickListener {
-            showDatePicker(currentDateEnd, isStart = false)
+        image_plus.setOnClickListener {
+            //todo вскоре будет возможность добавлять несколько изображений к событию
+            activity?.let { activity ->
+                CropImage.activity()
+                    .setFixAspectRatio(true)
+                    .setRequestedSize(300, 300, CropImageView.RequestSizeOptions.RESIZE_FIT)
+                    .setCropShape(CropImageView.CropShape.RECTANGLE)
+                    .start(activity)
+            }
         }
     }
 

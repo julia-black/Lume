@@ -18,7 +18,7 @@
         app:boxBackgroundColor="@android:color/transparent"
         app:boxCornerRadiusTopEnd="4dp"
         app:boxCornerRadiusTopStart="4dp"
-        app:boxStrokeColor="@color/colorGrayText"
+        app:boxStrokeColor="@color/colorGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:textColor="@color/colorGrayText"
+            android:textColor="@color/colorGray"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,7 +48,7 @@
         app:boxCornerRadiusTopEnd="4dp"
         app:boxCornerRadiusTopStart="4dp"
         android:visibility="invisible"
-        app:boxStrokeColor="@color/colorGrayText"
+        app:boxStrokeColor="@color/colorGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,7 @@
             android:gravity="center_vertical"
             android:maxLength="4"
             android:inputType="number"
-            android:textColor="@color/colorGrayText"
+            android:textColor="@color/colorGray"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 

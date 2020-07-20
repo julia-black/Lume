@@ -125,13 +125,13 @@ class PhoneEditText : TextInputEditText, OnFocusChangeListener, OnTouchListener 
     }
 
     private fun init(attributeSet: AttributeSet?) {
-        setHintTextColor(ContextCompat.getColor(context, R.color.colorGrayText))
+        setHintTextColor(ContextCompat.getColor(context, R.color.colorGray))
         if (attributeSet != null) {
             val array =
                 context.obtainStyledAttributes(attributeSet, R.styleable.MaskEditText)
             try {
                 @ColorInt val defaultHintColor =
-                    ContextCompat.getColor(context, R.color.colorGrayText)
+                    ContextCompat.getColor(context, R.color.colorGray)
                 @ColorInt val hintColor =
                     array.getColor(R.styleable.MaskEditText_met_text_color_hint, defaultHintColor)
                 setHintTextColor(hintColor)

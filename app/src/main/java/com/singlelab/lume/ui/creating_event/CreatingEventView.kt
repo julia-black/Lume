@@ -8,5 +8,6 @@ import moxy.viewstate.strategy.StateStrategyType
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface CreatingEventView : LoadingView, ErrorView {
     fun onCompleteCreateEvent(eventUid: String)
-    // fun showEvents(events: List<EventSummary>)
+
+    fun onCompleteAddImage(imageUid: String?)
 }
