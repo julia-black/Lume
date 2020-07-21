@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/home">
+    app:startDestination="@+id/swiper_event">
 
     <fragment
-        android:id="@+id/home"
-        android:name="com.singlelab.lume.ui.home.HomeFragment"
+        android:id="@+id/swiper_event"
+        android:name="com.singlelab.lume.ui.swiper_event.SwiperEventFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_swiper_event" />
 
     <fragment
         android:id="@+id/events"
@@ -77,7 +77,7 @@
         android:id="@+id/event"
         android:name="com.singlelab.lume.ui.event.EventFragment"
         android:label="EventFragment"
-        tools:layout="@layout/fragment_event" >
+        tools:layout="@layout/fragment_event">
         <argument
             android:name="eventUid"
             app:argType="string" />
