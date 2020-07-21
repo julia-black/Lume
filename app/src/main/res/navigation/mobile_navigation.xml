@@ -45,6 +45,9 @@
         <action
             android:id="@+id/action_my_profile_to_auth"
             app:destination="@id/auth" />
+        <action
+            android:id="@+id/action_my_profile_to_event"
+            app:destination="@id/event" />
     </fragment>
 
     <fragment
@@ -78,5 +81,8 @@
         <argument
             android:name="eventUid"
             app:argType="string" />
+        <action
+            android:id="@+id/action_event_to_my_profile"
+            app:destination="@id/my_profile" />
     </fragment>
 </navigation>

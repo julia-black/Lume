@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.singlelab.data.model.consts.Const
 import com.singlelab.data.model.event.Event
@@ -46,6 +47,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments {
         arguments?.let {
             presenter.loadEvent(EventFragmentArgs.fromBundle(it).eventUid)
         }
+        setListeners()
     }
 
     override fun showEvent(event: Event) {
@@ -83,6 +85,23 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments {
             it.imageContentUid?.let { imageUid ->
                 showImage(image_administrator, imageUid)
             }
+        }
+    }
+
+    override fun toMyProfile() {
+        findNavController().navigate(R.id.action_event_to_my_profile)
+    }
+
+    override fun toProfile(personUid: String) {
+        //todo когда будет экран профиля другого юзера, сделать переход
+    }
+
+    private fun setListeners() {
+        image_administrator.setOnClickListener {
+            presenter.onClickAdministrator()
+        }
+        administrator.setOnClickListener {
+            presenter.onClickAdministrator()
         }
     }
 
