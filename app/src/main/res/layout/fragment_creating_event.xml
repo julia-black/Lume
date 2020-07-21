@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="vertical">
@@ -42,35 +43,43 @@
                 android:lines="3" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_images"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_event_image" />
 
-            <ImageView
-                android:id="@+id/image_event"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="@dimen/margin_medium"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:scaleType="centerCrop"
-                android:src="@drawable/shape_border" />
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:orientation="horizontal">-->
 
-            <ImageView
-                android:id="@+id/image_plus"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:padding="@dimen/margin_small"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_plus" />
+        <!--&lt;!&ndash;            <ImageView&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:id="@+id/image_event"&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:layout_width="50dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:layout_height="50dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:layout_marginStart="@dimen/margin_medium"&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:layout_marginTop="@dimen/margin_medium"&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:scaleType="centerCrop"&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:src="@drawable/shape_border" />&ndash;&gt;-->
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="@dimen/margin_medium"
-                android:layout_marginTop="@dimen/margin_medium" />
-        </LinearLayout>
+        <!--&lt;!&ndash;            <ImageView&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:id="@+id/image_plus"&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:layout_width="50dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:layout_height="50dp"&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:layout_marginTop="@dimen/margin_medium"&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:padding="@dimen/margin_small"&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:scaleType="centerCrop"&ndash;&gt;-->
+        <!--&lt;!&ndash;                android:src="@drawable/ic_plus" />&ndash;&gt;-->
+
+        <!--            <ImageView-->
+        <!--                android:layout_width="50dp"-->
+        <!--                android:layout_height="50dp"-->
+        <!--                android:layout_marginStart="@dimen/margin_medium"-->
+        <!--                android:layout_marginTop="@dimen/margin_medium" />-->
+        <!--        </LinearLayout>-->
 
 
         <com.google.android.material.textfield.TextInputLayout

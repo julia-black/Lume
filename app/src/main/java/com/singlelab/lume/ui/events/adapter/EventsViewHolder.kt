@@ -1,4 +1,4 @@
-package com.singlelab.lume.ui.view.adapter
+package com.singlelab.lume.ui.events.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

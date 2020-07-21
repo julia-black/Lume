@@ -1,9 +1,8 @@
-package com.singlelab.lume.ui.view.adapter
+package com.singlelab.lume.ui.events.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.singlelab.data.model.event.Event
 import com.singlelab.data.model.event.EventSummary
 
 class EventsAdapter(private val list: List<EventSummary>) :

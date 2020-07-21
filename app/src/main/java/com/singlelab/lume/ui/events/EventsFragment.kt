@@ -10,7 +10,7 @@ import com.singlelab.data.model.event.EventSummary
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
-import com.singlelab.lume.ui.view.adapter.EventsAdapter
+import com.singlelab.lume.ui.events.adapter.EventsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_events.*
 import moxy.presenter.InjectPresenter
