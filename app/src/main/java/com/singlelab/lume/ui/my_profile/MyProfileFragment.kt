@@ -3,7 +3,6 @@ package com.singlelab.lume.ui.my_profile
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +17,7 @@ import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.base.listeners.OnToolbarListener
 import com.singlelab.lume.util.generateImageLink
+import com.singlelab.lume.util.getBitmap
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
@@ -104,8 +104,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == RESULT_OK) {
-                val bitmap =
-                    MediaStore.Images.Media.getBitmap(activity?.contentResolver, result.uri)
+                val bitmap = result.uri.getBitmap(activity?.contentResolver)
                 presenter.updateImageProfile(bitmap)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Toast.makeText(context, getString(R.string.error_pick_image), Toast.LENGTH_LONG)

@@ -12,7 +12,6 @@ import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.base.listeners.OnToolbarListener
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
-import com.singlelab.lume.ui.auth.AuthFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -40,6 +39,7 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showLoading(false)
         if (AuthData.isAnon && this is OnlyForAuthFragments) {
             //todo подумать, как можно получше сделать общий обработчик того, что если
             // пользователь не залогинен, то с некоторых экранов должен осуществляться переход на авторизацию

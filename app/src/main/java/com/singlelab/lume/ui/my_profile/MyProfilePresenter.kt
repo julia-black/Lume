@@ -60,11 +60,12 @@ class MyProfilePresenter @Inject constructor(
         viewState.navigateToAuth()
     }
 
-    fun updateImageProfile(imageStr: Bitmap) {
+    fun updateImageProfile(image: Bitmap?) {
+        image ?: return
         viewState.showLoading(true)
         invokeSuspend {
             try {
-                val uid = interactor.updateImageProfile(imageStr.toBase64())
+                val uid = interactor.updateImageProfile(image.toBase64())
                 runOnMainThread {
                     viewState.loadImage(uid?.imageUid)
                     viewState.showLoading(false)

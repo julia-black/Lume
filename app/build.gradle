@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'androidx.navigation.safeargs'
 
 
 android {
@@ -63,6 +64,7 @@ dependencies {
 
     //Design
     implementation 'com.google.android.material:material:1.1.0'
+    implementation "com.yuyakaido.android:card-stack-view:2.3.4"
 
     //Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"

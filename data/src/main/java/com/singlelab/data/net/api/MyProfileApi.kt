@@ -18,6 +18,6 @@ interface MyProfileApi {
     @POST("person/update-person")
     fun updateProfileAsync(@Body profile: Profile): Deferred<Response<ResponseMessage>>
 
-    @POST("person/add-person-image")
+    @POST("image/add-person-image")
     fun updateImageProfileAsync(@Body content: Content): Deferred<Response<ResponseImageUid>>
 }

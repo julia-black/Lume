@@ -1,19 +1,19 @@
-package com.singlelab.lume.ui.my_profile
+package com.singlelab.lume.ui.event
 
-import com.singlelab.data.model.profile.Profile
+import com.singlelab.data.model.event.Event
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.OneExecutionStateStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
-interface MyProfileView : LoadingView, ErrorView {
+interface EventView : LoadingView, ErrorView {
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showProfile(profile: Profile)
+    fun showEvent(event: Event)
 
     @StateStrategyType(OneExecutionStateStrategy::class)
-    fun navigateToAuth()
+    fun toMyProfile()
 
     @StateStrategyType(OneExecutionStateStrategy::class)
-    fun loadImage(imageUid: String?)
+    fun toProfile(personUid: String)
 }

@@ -6,20 +6,21 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
-import com.bumptech.glide.Glide
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.singlelab.data.model.consts.Const
 import com.singlelab.data.model.event.Event
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnActivityResultListener
-import com.singlelab.lume.util.generateImageLink
+import com.singlelab.lume.ui.creating_event.adapter.EventImagesAdapter
+import com.singlelab.lume.ui.creating_event.adapter.OnImageClickListener
+import com.singlelab.lume.util.getBitmap
 import com.singlelab.lume.util.parseToString
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -35,7 +36,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFragments,
-    OnActivityResultListener {
+    OnActivityResultListener, OnImageClickListener {
 
     @Inject
     lateinit var daggerPresenter: CreatingEventPresenter
@@ -45,10 +46,6 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
 
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
-
-    private var currentDateStart: Calendar? = null
-
-    private var currentDateEnd: Calendar? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,6 +59,11 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         super.onViewCreated(view, savedInstanceState)
         activity?.title = getString(R.string.title_new_event)
         setListeners()
+        recycler_images.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = EventImagesAdapter()
+            (adapter as EventImagesAdapter).setClickListener(this@CreatingEventFragment)
+        }
     }
 
     override fun onCompleteCreateEvent(eventUid: String) {
@@ -70,21 +72,24 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         Navigation.createNavigateOnClickListener(R.id.action_creating_event_to_events).onClick(view)
     }
 
-    override fun onCompleteAddImage(imageUid: String?) {
-        imageUid?.let {
-            Glide.with(this)
-                .load(imageUid.generateImageLink())
-                .into(image_event)
-        }
+    override fun showDateStart(dateStr: String) {
+        start_date.text = dateStr
+    }
+
+    override fun showDateEnd(dateStr: String) {
+        end_date.text = dateStr
+    }
+
+    override fun addImage(bitmap: Bitmap) {
+        (recycler_images.adapter as EventImagesAdapter).addImage(bitmap)
     }
 
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
-                val bitmap =
-                    MediaStore.Images.Media.getBitmap(activity?.contentResolver, result.uri)
-                showImage(bitmap)
+                val bitmap = result.uri.getBitmap(activity?.contentResolver)
+                presenter.addImage(bitmap)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Toast.makeText(context, getString(R.string.error_pick_image), Toast.LENGTH_LONG)
                     .show()
@@ -92,18 +97,12 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         }
     }
 
-    private fun showImage(bitmap: Bitmap?) {
-        bitmap?.let {
-            image_event.setImageBitmap(bitmap)
-        }
-    }
-
     private fun setListeners() {
         start_date.setOnClickListener {
-            showDatePicker(currentDateStart, isStart = true)
+            showDatePicker(presenter.currentDateStart, isStart = true)
         }
         end_date.setOnClickListener {
-            showDatePicker(currentDateEnd, isStart = false)
+            showDatePicker(presenter.currentDateEnd, isStart = false)
         }
         button_create_event.setOnClickListener {
             if (validation()) {
@@ -118,22 +117,12 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                     maxAge = maxAge,
                     xCoordinate = 51.5819596F,
                     yCoordinate = 46.0621339F,
-                    startTime = currentDateStart?.time.parseToString(Const.DATE_FORMAT_TIME_ZONE),
-                    endTime = currentDateEnd?.time.parseToString(Const.DATE_FORMAT_TIME_ZONE)
+                    startTime = presenter.currentDateStart?.time.parseToString(Const.DATE_FORMAT_TIME_ZONE),
+                    endTime = presenter.currentDateEnd?.time.parseToString(Const.DATE_FORMAT_TIME_ZONE)
                 )
                 presenter.createEvent(event)
             } else {
                 showError(getString(R.string.enter_fields))
-            }
-        }
-        image_plus.setOnClickListener {
-            //todo вскоре будет возможность добавлять несколько изображений к событию
-            activity?.let { activity ->
-                CropImage.activity()
-                    .setFixAspectRatio(true)
-                    .setRequestedSize(300, 300, CropImageView.RequestSizeOptions.RESIZE_FIT)
-                    .setCropShape(CropImageView.CropShape.RECTANGLE)
-                    .start(activity)
             }
         }
     }
@@ -146,10 +135,10 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
             description.text.isNullOrBlank() -> {
                 return false
             }
-            currentDateStart == null -> {
+            presenter.currentDateStart == null -> {
                 return false
             }
-            currentDateEnd == null -> {
+            presenter.currentDateEnd == null -> {
                 return false
             }
         }
@@ -162,17 +151,17 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
             val picker = DatePickerDialog(
                 it,
                 DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                    saveCurrentDate(year, month, dayOfMonth, isStart)
-                    showTimePicker(currentDateStart, isStart)
+                    presenter.saveCurrentDate(year, month, dayOfMonth, isStart)
+                    showTimePicker(presenter.currentDateStart, isStart)
                 },
                 date.get(Calendar.YEAR),
                 date.get(Calendar.MONTH),
                 date.get(Calendar.DAY_OF_MONTH)
             )
-            if (isStart || currentDateStart == null) {
+            if (isStart || presenter.currentDateStart == null) {
                 picker.datePicker.minDate = Date().time
             } else {
-                picker.datePicker.minDate = currentDateStart!!.timeInMillis
+                picker.datePicker.minDate = presenter.currentDateStart!!.timeInMillis
             }
             picker.show()
         }
@@ -183,7 +172,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
             val dateTime = currentDateTime ?: Calendar.getInstance()
             TimePickerDialog(
                 it, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                    saveCurrentTime(hourOfDay, minute, isStart)
+                    presenter.saveCurrentTime(hourOfDay, minute, isStart)
                 },
                 dateTime.get(Calendar.HOUR_OF_DAY),
                 dateTime.get(Calendar.MINUTE),
@@ -192,39 +181,18 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         }
     }
 
-    private fun saveCurrentDate(year: Int, month: Int, day: Int, isStart: Boolean) {
-        if (isStart) {
-            if (currentDateStart == null) {
-                currentDateStart = Calendar.getInstance()
-            }
-            currentDateStart!!.set(Calendar.YEAR, year)
-            currentDateStart!!.set(Calendar.MONTH, month)
-            currentDateStart!!.set(Calendar.DAY_OF_MONTH, day)
-        } else {
-            if (currentDateEnd == null) {
-                currentDateEnd = Calendar.getInstance()
-            }
-            currentDateEnd!!.set(Calendar.YEAR, year)
-            currentDateEnd!!.set(Calendar.MONTH, month)
-            currentDateEnd!!.set(Calendar.DAY_OF_MONTH, day)
+    override fun onClickNewImage() {
+        activity?.let { activity ->
+            CropImage.activity()
+                .setFixAspectRatio(true)
+                .setRequestedSize(300, 300, CropImageView.RequestSizeOptions.RESIZE_FIT)
+                .setCropShape(CropImageView.CropShape.RECTANGLE)
+                .start(activity)
         }
     }
 
-    private fun saveCurrentTime(hours: Int, minutes: Int, isStart: Boolean) {
-        if (isStart) {
-            if (currentDateStart == null) {
-                currentDateStart = Calendar.getInstance()
-            }
-            currentDateStart!!.set(Calendar.HOUR_OF_DAY, hours)
-            currentDateStart!!.set(Calendar.MINUTE, minutes)
-            start_date.text = currentDateStart!!.parseToString(Const.DATE_FORMAT_OUTPUT)
-        } else {
-            if (currentDateEnd == null) {
-                currentDateEnd = Calendar.getInstance()
-            }
-            currentDateEnd!!.set(Calendar.HOUR_OF_DAY, hours)
-            currentDateEnd!!.set(Calendar.MINUTE, minutes)
-            end_date.text = currentDateEnd!!.parseToString(Const.DATE_FORMAT_OUTPUT)
-        }
+    override fun onClickDeleteImage(position: Int) {
+        (recycler_images.adapter as EventImagesAdapter).deleteImage(position)
+        presenter.deleteImage(position)
     }
 }

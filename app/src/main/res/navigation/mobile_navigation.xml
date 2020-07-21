@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/home">
+    app:startDestination="@+id/swiper_event">
 
     <fragment
-        android:id="@+id/home"
-        android:name="com.singlelab.lume.ui.home.HomeFragment"
+        android:id="@+id/swiper_event"
+        android:name="com.singlelab.lume.ui.swiper_event.SwiperEventFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_swiper_event" />
 
     <fragment
         android:id="@+id/events"
@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_events_to_creating_event"
             app:destination="@id/creating_event" />
+        <action
+            android:id="@+id/action_events_to_event"
+            app:destination="@id/event" />
     </fragment>
 
     <fragment
@@ -29,6 +32,9 @@
         <action
             android:id="@+id/action_creating_event_to_events"
             app:destination="@id/events" />
+        <action
+            android:id="@+id/action_creating_event_to_event"
+            app:destination="@id/event" />
     </fragment>
 
     <fragment
@@ -56,6 +62,9 @@
         <action
             android:id="@+id/action_my_profile_to_auth"
             app:destination="@id/auth" />
+        <action
+            android:id="@+id/action_my_profile_to_event"
+            app:destination="@id/event" />
     </fragment>
 
     <fragment
@@ -79,6 +88,18 @@
 
         <action
             android:id="@+id/action_registration_to_my_profile"
+            app:destination="@id/my_profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/event"
+        android:name="com.singlelab.lume.ui.event.EventFragment"
+        android:label="EventFragment"
+        tools:layout="@layout/fragment_event">
+        <argument
+            android:name="eventUid"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_event_to_my_profile"
             app:destination="@id/my_profile" />
     </fragment>
 </navigation>

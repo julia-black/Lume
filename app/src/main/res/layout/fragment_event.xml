@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:scrollbars="vertical"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/margin_medium">
+
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_type_event"
+            android:gravity="center"
+            android:letterSpacing="0.17"
+            android:paddingHorizontal="@dimen/margin_medium"
+            android:paddingVertical="@dimen/margin_small"
+            android:textAllCaps="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Вечеринка" />
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="146dp"
+            android:layout_height="146dp"
+            android:layout_margin="@dimen/margin_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/type"
+            tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            tools:text="Название" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_image_administrator"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="@dimen/margin_medium"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/age">
+
+            <ImageView
+                android:id="@+id/image_administrator"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_profile" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/administrator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
+            app:layout_constraintBottom_toBottomOf="@id/card_image_administrator"
+            app:layout_constraintStart_toEndOf="@id/card_image_administrator"
+            app:layout_constraintTop_toTopOf="@id/card_image_administrator"
+            tools:text="Организатор" />
+
+        <TextView
+            android:id="@+id/start_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:drawableStart="@drawable/ic_calendar"
+            android:drawablePadding="@dimen/margin_small"
+            android:text="@string/date_start"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        <TextView
+            android:id="@+id/end_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:drawableStart="@drawable/ic_calendar"
+            android:drawablePadding="@dimen/margin_small"
+            android:text="@string/date_end"
+            app:layout_constraintStart_toStartOf="@id/start_date"
+            app:layout_constraintTop_toBottomOf="@id/start_date" />
+
+        <TextView
+            android:id="@+id/count_participants"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/end_date"
+            tools:text="Идут 10 человек" />
+
+        <TextView
+            android:id="@+id/age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/count_participants"
+            tools:text="18-25 лет" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_large"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/administrator"
+            tools:text="Описание" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

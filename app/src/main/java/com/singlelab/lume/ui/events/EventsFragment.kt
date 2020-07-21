@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.singlelab.data.model.event.EventSummary
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
-import com.singlelab.lume.ui.view.adapter.EventsAdapter
+import com.singlelab.lume.ui.events.adapter.EventsAdapter
+import com.singlelab.lume.ui.events.adapter.OnEventItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_events.*
 import moxy.presenter.InjectPresenter
@@ -18,7 +20,7 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments {
+class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEventItemClickListener {
 
     @Inject
     lateinit var daggerPresenter: EventsPresenter
@@ -50,7 +52,12 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments {
 
     override fun showEvents(events: List<EventSummary>) {
         recycler_events.apply {
-            adapter = EventsAdapter(events)
+            adapter = EventsAdapter(events, this@EventsFragment)
         }
+    }
+
+    override fun onClickEvent(uid: String) {
+        val action = EventsFragmentDirections.actionEventsToEvent(uid)
+        findNavController().navigate(action)
     }
 }

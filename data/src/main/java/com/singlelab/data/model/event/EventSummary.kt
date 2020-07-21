@@ -1,6 +1,7 @@
 package com.singlelab.data.model.event
 
 class EventSummary(
+    val eventUid: String,
     val name: String,
     val description: String,
     val startTime: String,

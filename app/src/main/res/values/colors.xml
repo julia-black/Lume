@@ -8,4 +8,9 @@
     <color name="colorLight">#9BD7D1</color>
     <color name="colorTransparentPart">#80FFFFFF</color>
     <color name="colorGray">#9A9A9A</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorParty">#F24C56</color>
+
+    <color name="colorAccept">#8850FB89</color>
+    <color name="colorReject">#88F24C56</color>
 </resources>
