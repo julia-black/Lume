@@ -22,4 +22,12 @@ class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository, Bas
             errorMessage = "Не удалось получить список событий"
         )
     }
+
+    override suspend fun getEvent(uid: String): Event? {
+        return safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.eventsApi.getEventAsync(uid).await() },
+            errorMessage = "Не удалось получить список событий"
+        )
+    }
 }

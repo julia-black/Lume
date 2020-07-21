@@ -11,4 +11,7 @@ interface EventsRepository {
 
     @Throws(ApiException::class)
     suspend fun getEvents(): List<EventSummary>?
+
+    @Throws(ApiException::class)
+    suspend fun getEvent(uid: String): Event?
 }

@@ -5,7 +5,7 @@ import com.singlelab.data.repositories.events.EventsRepository
 import com.singlelab.data.repositories.events.EventsRepositoryImpl
 import com.singlelab.lume.LumeApplication
 import com.singlelab.lume.ui.events.EventsPresenter
-import com.singlelab.lume.ui.events.interactor.EventInteractorImpl
+import com.singlelab.lume.ui.events.interactor.EventsInteractorImpl
 import com.singlelab.lume.ui.events.interactor.EventsInteractor
 import dagger.Module
 import dagger.Provides
@@ -23,7 +23,7 @@ object EventsModule {
 
     @Provides
     fun provideInteractor(repository: EventsRepository): EventsInteractor {
-        return EventInteractorImpl(repository)
+        return EventsInteractorImpl(repository)
     }
 
     @Provides

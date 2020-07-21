@@ -125,16 +125,6 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                 showError(getString(R.string.enter_fields))
             }
         }
-//        image_plus.setOnClickListener {
-//            //todo вскоре будет возможность добавлять несколько изображений к событию
-//            activity?.let { activity ->
-//                CropImage.activity()
-//                    .setFixAspectRatio(true)
-//                    .setRequestedSize(300, 300, CropImageView.RequestSizeOptions.RESIZE_FIT)
-//                    .setCropShape(CropImageView.CropShape.RECTANGLE)
-//                    .start(activity)
-//            }
-//        }
     }
 
     private fun validation(): Boolean {

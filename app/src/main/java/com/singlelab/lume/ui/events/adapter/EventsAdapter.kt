@@ -5,8 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.singlelab.data.model.event.EventSummary
 
-class EventsAdapter(private val list: List<EventSummary>) :
-    RecyclerView.Adapter<EventsViewHolder>() {
+class EventsAdapter(
+    private val list: List<EventSummary>,
+    private val listener: OnEventItemClickListener
+) : RecyclerView.Adapter<EventsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -15,7 +17,7 @@ class EventsAdapter(private val list: List<EventSummary>) :
 
     override fun onBindViewHolder(holder: EventsViewHolder, position: Int) {
         val event = list[position]
-        holder.bind(event)
+        holder.bind(event, listener)
     }
 
     override fun getItemCount(): Int = list.size

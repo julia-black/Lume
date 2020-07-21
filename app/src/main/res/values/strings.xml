@@ -2,6 +2,7 @@
     <string name="app_name">Lume</string>
     <string name="title_home">Главная</string>
     <string name="title_events">Мои события</string>
+    <string name="title_event">Событие</string>
     <string name="title_my_profile">Мой профиль</string>
     <string name="title_auth">Авторизация</string>
     <string name="enter_phone">Введите номер телефона</string>
@@ -30,5 +31,13 @@
     <string name="date_start">Начало события</string>
     <string name="date_end">Окончание события</string>
     <string name="enter_fields">Заполните обязательные параметры</string>
+    <string name="party">Вечеринка</string>
+    <string name="boozy">Пьянка</string>
+
+    <string name="age_from_to">Возраст: %1$d-%2$d</string>
+    <string name="age_from">Возраст: %1$d+</string>
+    <string name="age_to">Возраст: до %1$d</string>
+
+    <string name="count_participants">Идут %1$d человек</string>
 
 </resources>

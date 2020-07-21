@@ -15,20 +15,26 @@
         android:id="@+id/events"
         android:name="com.singlelab.lume.ui.events.EventsFragment"
         android:label="@string/title_events"
-        tools:layout="@layout/fragment_events" >
+        tools:layout="@layout/fragment_events">
         <action
             android:id="@+id/action_events_to_creating_event"
             app:destination="@id/creating_event" />
+        <action
+            android:id="@+id/action_events_to_event"
+            app:destination="@id/event" />
     </fragment>
 
     <fragment
         android:id="@+id/creating_event"
         android:name="com.singlelab.lume.ui.creating_event.CreatingEventFragment"
         android:label="@string/title_creating_event"
-        tools:layout="@layout/fragment_creating_event" >
+        tools:layout="@layout/fragment_creating_event">
         <action
             android:id="@+id/action_creating_event_to_events"
             app:destination="@id/events" />
+        <action
+            android:id="@+id/action_creating_event_to_event"
+            app:destination="@id/event" />
     </fragment>
 
     <fragment
@@ -63,5 +69,14 @@
         <action
             android:id="@+id/action_registration_to_my_profile"
             app:destination="@id/my_profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/event"
+        android:name="com.singlelab.lume.ui.event.EventFragment"
+        android:label="EventFragment"
+        tools:layout="@layout/fragment_event" >
+        <argument
+            android:name="eventUid"
+            app:argType="string" />
     </fragment>
 </navigation>

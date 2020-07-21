@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.item_event.view.*
 class EventsViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.item_event, parent, false)) {
 
-    fun bind(event: EventSummary) {
+    fun bind(event: EventSummary, listener: OnEventItemClickListener) {
         itemView.name.text = event.name
         itemView.description.text = event.description
         itemView.date.text =
@@ -24,6 +24,9 @@ class EventsViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             Glide.with(itemView)
                 .load(it.generateImageLink())
                 .into(itemView.image)
+        }
+        itemView.setOnClickListener {
+            listener.onClickEvent(event.eventUid)
         }
     }
 }
