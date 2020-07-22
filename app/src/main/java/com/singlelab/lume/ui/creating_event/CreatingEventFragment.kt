@@ -10,7 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.singlelab.data.model.consts.Const
 import com.singlelab.data.model.event.Event
@@ -67,9 +67,9 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
     }
 
     override fun onCompleteCreateEvent(eventUid: String) {
-        //todo переход в детали
         Toast.makeText(context, "Ура! Вы создали событие!", Toast.LENGTH_LONG).show()
-        Navigation.createNavigateOnClickListener(R.id.action_creating_event_to_events).onClick(view)
+        val action = CreatingEventFragmentDirections.actionCreatingEventToEvent(eventUid)
+        findNavController().navigate(action)
     }
 
     override fun showDateStart(dateStr: String) {

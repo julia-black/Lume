@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.singlelab.data.model.profile.Profile
 import com.singlelab.lume.MainActivity
@@ -57,9 +58,9 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
             .setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_my_profile_to_auth))
     }
 
-    override fun onDestroy() {
+    override fun onStop() {
+        super.onStop()
         (activity as MainActivity?)?.showLogoutInToolbar(false)
-        super.onDestroy()
     }
 
     override fun showProfile(profile: Profile) {
@@ -80,7 +81,23 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
                     .start(activity)
             }
         }
+        if (profile.friends.isEmpty()) {
+            search_friends.visibility = View.VISIBLE
+            search_friends.setOnClickListener {
+                toFriends(true)
+            }
+        } else {
+            search_friends.visibility = View.GONE
+        }
+        title_friends.setOnClickListener {
+            toFriends()
+        }
+    }
 
+    private fun toFriends(isSearch: Boolean = false) {
+        val action = MyProfileFragmentDirections.actionMyProfileToFriends()
+        action.isSearch = isSearch
+        findNavController().navigate(action)
     }
 
     override fun navigateToAuth() {
