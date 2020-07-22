@@ -1,6 +1,7 @@
 package com.singlelab.lume.di
 
-import com.singlelab.data.net.ApiUnit
+import com.singlelab.lume.model.Const
+import com.singlelab.net.ApiUnit
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,6 +14,6 @@ class NetModule {
 
     @Provides
     fun provideApiUnit(): ApiUnit {
-        return ApiUnit()
+        return ApiUnit(Const.BASE_URL)
     }
 }

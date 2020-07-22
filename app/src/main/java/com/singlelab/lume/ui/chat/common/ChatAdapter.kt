@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.singlelab.data.model.chat.ChatMessage
+import com.singlelab.net.model.chat.ChatMessage
 import com.singlelab.lume.R
 
 class ChatAdapter() : RecyclerView.Adapter<ChatAdapter.ChatMessageViewHolder>() {

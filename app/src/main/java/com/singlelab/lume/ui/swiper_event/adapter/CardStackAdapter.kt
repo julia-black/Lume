@@ -3,7 +3,7 @@ package com.singlelab.lume.ui.swiper_event.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.singlelab.data.model.event.Event
+import com.singlelab.lume.model.event.Event
 
 class CardStackAdapter(
     private var events: List<Event> = emptyList()

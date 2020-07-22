@@ -8,8 +8,8 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.singlelab.data.model.consts.Const
-import com.singlelab.data.model.event.Event
+import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments

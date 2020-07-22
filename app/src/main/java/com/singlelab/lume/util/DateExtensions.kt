@@ -1,6 +1,6 @@
 package com.singlelab.lume.util
 
-import com.singlelab.data.model.consts.Const
+import com.singlelab.lume.model.Const
 import java.text.SimpleDateFormat
 import java.util.*
 

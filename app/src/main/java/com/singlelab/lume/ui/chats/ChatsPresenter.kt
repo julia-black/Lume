@@ -1,7 +1,7 @@
 package com.singlelab.lume.ui.chats
 
-import com.singlelab.data.exceptions.ApiException
-import com.singlelab.data.model.auth.AuthData
+import com.singlelab.net.exceptions.ApiException
+import com.singlelab.net.model.auth.AuthData
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.pref.Preferences

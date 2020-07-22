@@ -1,0 +1,31 @@
+package com.singlelab.lume.model.profile
+
+import com.singlelab.net.model.person.ProfileResponse
+
+class Profile(
+    val personUid: String? = null,
+    val name: String? = null,
+    val description: String? = null,
+    val age: Int? = null,
+    val imageContentUid: String? = null,
+    val friends: List<Person> = arrayListOf()
+) {
+    companion object {
+        fun fromResponse(profileResponse: ProfileResponse?): Profile? {
+            return if (profileResponse != null) {
+                Profile(
+                    profileResponse.personUid,
+                    profileResponse.name,
+                    profileResponse.description,
+                    profileResponse.age,
+                    profileResponse.imageContentUid,
+                    profileResponse.friends.mapNotNull {
+                        Person.fromResponse(it)
+                    }
+                )
+            } else {
+                null
+            }
+        }
+    }
+}

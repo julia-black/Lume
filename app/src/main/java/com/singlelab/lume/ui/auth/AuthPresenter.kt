@@ -1,11 +1,11 @@
 package com.singlelab.lume.ui.auth
 
-import com.singlelab.data.exceptions.ApiException
-import com.singlelab.data.model.auth.AuthData
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.auth.interactor.AuthInteractor
+import com.singlelab.net.exceptions.ApiException
+import com.singlelab.net.model.auth.AuthData
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -45,8 +45,8 @@ class AuthPresenter @Inject constructor(
         }
         invokeSuspend {
             try {
-                val responsePersonUid = interactor.sendCode(phone)
-                preferences?.setUid(responsePersonUid?.personUid)
+                val personUid = interactor.sendCode(phone)
+                preferences?.setUid(personUid)
                 this.phone = phone
                 runOnMainThread {
                     viewState.showLoading(false)
@@ -75,7 +75,7 @@ class AuthPresenter @Inject constructor(
                     val isPersonFilled = interactor.isPersonFilled()
                     runOnMainThread {
                         viewState.showLoading(false)
-                        if (isPersonFilled == null || !isPersonFilled.isPersonFilledUp) {
+                        if (!isPersonFilled) {
                             viewState.toRegistration()
                         } else {
                             preferences?.setAnon(false)

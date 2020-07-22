@@ -1,13 +1,12 @@
 package com.singlelab.lume.ui.reg
 
-import com.singlelab.data.exceptions.ApiException
-import com.singlelab.data.model.auth.Auth
-import com.singlelab.data.model.auth.AuthData
-import com.singlelab.data.model.profile.Profile
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.reg.interactor.RegistrationInteractor
+import com.singlelab.net.exceptions.ApiException
+import com.singlelab.net.model.person.ProfileRequest
+import com.singlelab.net.model.auth.AuthData
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -22,7 +21,11 @@ class RegistrationPresenter @Inject constructor(
         if (!uid.isNullOrEmpty()) {
             viewState.showLoading(true)
             invokeSuspend {
-                val profile = Profile(name = name, age = age, description = description)
+                val profile = ProfileRequest(
+                    name = name,
+                    age = age,
+                    description = description
+                )
                 try {
                     interactor.registration(profile)
                     preferences?.setAnon(false)

@@ -6,13 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.singlelab.data.model.profile.Person
+import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.ui.friends.adapter.FriendsAdapter
 import com.singlelab.lume.ui.friends.adapter.OnPersonItemClickListener
-import com.singlelab.lume.ui.my_profile.MyProfileFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_friends.*
 import moxy.presenter.InjectPresenter

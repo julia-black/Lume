@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.singlelab.data.model.consts.Const
-import com.singlelab.data.model.event.EventSummary
+import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.event.EventSummary
 import com.singlelab.lume.R
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse

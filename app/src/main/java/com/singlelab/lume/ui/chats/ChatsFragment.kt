@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.singlelab.data.model.chat.ChatInfo
+import com.singlelab.net.model.chat.ChatInfo
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.ui.chat.ChatView.Companion.CHAT_TITLE_BUNDLE_KEY

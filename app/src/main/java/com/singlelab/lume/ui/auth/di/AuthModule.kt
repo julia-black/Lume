@@ -1,8 +1,8 @@
 package com.singlelab.lume.ui.auth.di
 
-import com.singlelab.data.net.ApiUnit
-import com.singlelab.data.repositories.auth.AuthRepository
-import com.singlelab.data.repositories.auth.AuthRepositoryImpl
+import com.singlelab.net.ApiUnit
+import com.singlelab.net.repositories.auth.AuthRepository
+import com.singlelab.net.repositories.auth.AuthRepositoryImpl
 import com.singlelab.lume.LumeApplication
 import com.singlelab.lume.ui.auth.AuthPresenter
 import com.singlelab.lume.ui.auth.interactor.AuthInteractor

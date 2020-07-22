@@ -8,7 +8,7 @@ import android.view.animation.LinearInterpolator
 import android.widget.ImageView
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.bumptech.glide.Glide
-import com.singlelab.data.model.event.Event
+import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments

@@ -1,8 +1,8 @@
 package com.singlelab.lume.ui.person.di
 
-import com.singlelab.data.net.ApiUnit
-import com.singlelab.data.repositories.person.PersonRepository
-import com.singlelab.data.repositories.person.PersonRepositoryImpl
+import com.singlelab.net.ApiUnit
+import com.singlelab.net.repositories.person.PersonRepository
+import com.singlelab.net.repositories.person.PersonRepositoryImpl
 import com.singlelab.lume.LumeApplication
 import com.singlelab.lume.ui.person.PersonPresenter
 import com.singlelab.lume.ui.person.interactor.PersonInteractor

@@ -1,8 +1,8 @@
 package com.singlelab.lume.ui.events.di
 
-import com.singlelab.data.net.ApiUnit
-import com.singlelab.data.repositories.events.EventsRepository
-import com.singlelab.data.repositories.events.EventsRepositoryImpl
+import com.singlelab.net.ApiUnit
+import com.singlelab.net.repositories.events.EventsRepository
+import com.singlelab.net.repositories.events.EventsRepositoryImpl
 import com.singlelab.lume.LumeApplication
 import com.singlelab.lume.ui.events.EventsPresenter
 import com.singlelab.lume.ui.events.interactor.EventsInteractorImpl

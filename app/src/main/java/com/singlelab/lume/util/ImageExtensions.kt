@@ -7,7 +7,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Base64
-import com.singlelab.data.model.consts.Const
+import com.singlelab.lume.model.Const
 import java.io.ByteArrayOutputStream
 
 

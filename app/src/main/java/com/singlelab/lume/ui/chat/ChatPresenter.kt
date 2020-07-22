@@ -3,7 +3,7 @@ package com.singlelab.lume.ui.chat
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.pref.Preferences
-import com.singlelab.lume.ui.chats.interactor.ChatInteractor
+import com.singlelab.lume.ui.chat.interactor.ChatInteractor
 import moxy.InjectViewState
 import javax.inject.Inject
 

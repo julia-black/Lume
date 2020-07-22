@@ -1,6 +1,6 @@
 package com.singlelab.lume.ui.friends
 
-import com.singlelab.data.model.profile.Person
+import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
 import moxy.viewstate.strategy.AddToEndSingleStrategy

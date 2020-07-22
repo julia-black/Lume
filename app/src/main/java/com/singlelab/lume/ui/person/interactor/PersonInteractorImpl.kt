@@ -1,22 +1,21 @@
 package com.singlelab.lume.ui.person.interactor
 
-import com.singlelab.data.model.ResponseMessage
-import com.singlelab.data.model.profile.Profile
-import com.singlelab.data.repositories.BaseRepository
-import com.singlelab.data.repositories.person.PersonRepository
 import com.singlelab.lume.base.BaseInteractor
+import com.singlelab.lume.model.profile.Profile
+import com.singlelab.net.repositories.BaseRepository
+import com.singlelab.net.repositories.person.PersonRepository
 
 class PersonInteractorImpl(private val repository: PersonRepository) : PersonInteractor,
     BaseInteractor(repository as BaseRepository) {
     override suspend fun loadPerson(personUid: String): Profile? {
-        return repository.getProfile(personUid)
+        return Profile.fromResponse(repository.getProfile(personUid))
     }
 
-    override suspend fun addToFriends(personUid: String): ResponseMessage? {
+    override suspend fun addToFriends(personUid: String) {
         return repository.addToFriends(personUid)
     }
 
-    override suspend fun removeFromFriends(personUid: String): ResponseMessage? {
+    override suspend fun removeFromFriends(personUid: String) {
         return repository.removeFromFriends(personUid)
     }
 }

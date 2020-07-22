@@ -1,9 +1,9 @@
 package com.singlelab.lume.ui.chats.interactor
 
-import com.singlelab.data.exceptions.ApiException
-import com.singlelab.data.model.chat.ChatInfo
-import com.singlelab.data.repositories.BaseRepository
-import com.singlelab.data.repositories.chats.ChatsRepository
+import com.singlelab.net.exceptions.ApiException
+import com.singlelab.net.model.chat.ChatInfo
+import com.singlelab.net.repositories.BaseRepository
+import com.singlelab.net.repositories.chats.ChatsRepository
 import com.singlelab.lume.base.BaseInteractor
 
 interface ChatsInteractor {

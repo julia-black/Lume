@@ -1,10 +1,10 @@
 package com.singlelab.lume.base
 
-import com.singlelab.data.model.auth.Auth
-import com.singlelab.data.net.CoroutineContextProvider
-import com.singlelab.data.repositories.OnRefreshTokenListener
 import com.singlelab.lume.base.view.BaseView
+import com.singlelab.lume.model.auth.Auth
 import com.singlelab.lume.pref.Preferences
+import com.singlelab.net.model.auth.AuthResponse
+import com.singlelab.net.repositories.OnRefreshTokenListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -38,9 +38,9 @@ open class BasePresenter<ViewT : BaseView>(
         }
     }
 
-    override fun onRefreshToken(auth: Auth?) {
+    override fun onRefreshToken(auth: AuthResponse?) {
         if (auth != null) {
-            preferences?.setAuth(auth)
+            preferences?.setAuth(Auth.fromResponse(auth)!!)
         }
     }
 

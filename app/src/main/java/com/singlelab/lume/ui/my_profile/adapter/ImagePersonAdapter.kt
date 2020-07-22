@@ -3,7 +3,7 @@ package com.singlelab.lume.ui.my_profile.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.singlelab.data.model.profile.Person
+import com.singlelab.lume.model.profile.Person
 
 class ImagePersonAdapter(
     private val list: List<Person>,

@@ -1,4 +1,4 @@
 include ':data'
-include ':domain'
+include ':net'
 include ':app'
 rootProject.name = "Lume"

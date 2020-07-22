@@ -12,8 +12,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.singlelab.data.model.consts.Const
-import com.singlelab.data.model.event.Event
+import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
@@ -22,6 +22,7 @@ import com.singlelab.lume.ui.creating_event.adapter.EventImagesAdapter
 import com.singlelab.lume.ui.creating_event.adapter.OnImageClickListener
 import com.singlelab.lume.util.formatToUTC
 import com.singlelab.lume.util.getBitmap
+import com.singlelab.net.model.event.EventRequest
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
@@ -110,7 +111,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                     if (min_age.text.isNullOrEmpty()) null else min_age.text.toString().toInt()
                 val maxAge =
                     if (max_age.text.isNullOrEmpty()) null else max_age.text.toString().toInt()
-                val event = Event(
+                val event = EventRequest(
                     name = title.text.toString(),
                     description = description.text.toString(),
                     minAge = minAge,

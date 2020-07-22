@@ -1,8 +1,8 @@
 package com.singlelab.lume.ui.event
 
-import com.singlelab.data.exceptions.ApiException
-import com.singlelab.data.model.auth.AuthData
-import com.singlelab.data.model.event.Event
+import com.singlelab.net.exceptions.ApiException
+import com.singlelab.net.model.auth.AuthData
+import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.pref.Preferences

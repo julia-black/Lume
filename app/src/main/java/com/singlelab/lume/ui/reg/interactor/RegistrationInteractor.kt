@@ -1,7 +1,7 @@
 package com.singlelab.lume.ui.reg.interactor
 
-import com.singlelab.data.model.profile.Profile
+import com.singlelab.net.model.person.ProfileRequest
 
 interface RegistrationInteractor {
-    suspend fun registration(profile: Profile)
+    suspend fun registration(profile: ProfileRequest)
 }

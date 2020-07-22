@@ -1,8 +1,8 @@
 package com.singlelab.lume.ui.my_profile
 
 import android.graphics.Bitmap
-import com.singlelab.data.exceptions.ApiException
-import com.singlelab.data.model.auth.AuthData
+import com.singlelab.net.exceptions.ApiException
+import com.singlelab.net.model.auth.AuthData
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.pref.Preferences
@@ -67,7 +67,7 @@ class MyProfilePresenter @Inject constructor(
             try {
                 val uid = interactor.updateImageProfile(image.toBase64())
                 runOnMainThread {
-                    viewState.loadImage(uid?.imageUid)
+                    viewState.loadImage(uid)
                     viewState.showLoading(false)
                 }
             } catch (e: ApiException) {

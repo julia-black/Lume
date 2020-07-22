@@ -1,8 +1,8 @@
 package com.singlelab.lume.pref
 
 import android.content.SharedPreferences
-import com.singlelab.data.model.auth.Auth
-import com.singlelab.data.model.auth.AuthData
+import com.singlelab.lume.model.auth.Auth
+import com.singlelab.net.model.auth.AuthData
 
 class Preferences(private val sharedPreferences: SharedPreferences?) {
 
@@ -18,7 +18,7 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
     }
 
     fun setAuth(auth: Auth) {
-        AuthData.setAuth(auth)
+        AuthData.setAuth(auth.accessToken, auth.refreshToken)
         setAccessToken(auth.accessToken)
         setRefreshToken(auth.refreshToken)
     }

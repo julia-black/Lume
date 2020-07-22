@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.singlelab.data.model.profile.Person
+import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.R
 import com.singlelab.lume.util.generateImageLink
 import kotlinx.android.synthetic.main.item_person.view.*

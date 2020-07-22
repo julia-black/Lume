@@ -1,7 +1,7 @@
-package com.singlelab.lume.ui.chats.interactor
+package com.singlelab.lume.ui.chat.interactor
 
-import com.singlelab.data.repositories.BaseRepository
-import com.singlelab.data.repositories.chat.ChatRepository
+import com.singlelab.net.repositories.BaseRepository
+import com.singlelab.net.repositories.chat.ChatRepository
 import com.singlelab.lume.base.BaseInteractor
 
 interface ChatInteractor {

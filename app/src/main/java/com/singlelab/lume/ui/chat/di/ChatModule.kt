@@ -1,12 +1,12 @@
 package com.singlelab.lume.ui.chat.di
 
-import com.singlelab.data.net.ApiUnit
-import com.singlelab.data.repositories.chat.ChatRepository
-import com.singlelab.data.repositories.chat.DefaultChatRepository
+import com.singlelab.net.repositories.chat.ChatRepository
+import com.singlelab.net.repositories.chat.DefaultChatRepository
 import com.singlelab.lume.LumeApplication
 import com.singlelab.lume.ui.chat.ChatPresenter
-import com.singlelab.lume.ui.chats.interactor.ChatInteractor
-import com.singlelab.lume.ui.chats.interactor.DefaultChatInteractor
+import com.singlelab.lume.ui.chat.interactor.ChatInteractor
+import com.singlelab.lume.ui.chat.interactor.DefaultChatInteractor
+import com.singlelab.net.ApiUnit
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

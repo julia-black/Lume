@@ -1,6 +1,6 @@
 package com.singlelab.lume.ui.person
 
-import com.singlelab.data.model.profile.Profile
+import com.singlelab.lume.model.profile.Profile
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
 import moxy.viewstate.strategy.AddToEndSingleStrategy

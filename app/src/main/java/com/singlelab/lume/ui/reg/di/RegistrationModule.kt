@@ -1,8 +1,8 @@
 package com.singlelab.lume.ui.reg.di
 
-import com.singlelab.data.net.ApiUnit
-import com.singlelab.data.repositories.reg.RegistrationRepository
-import com.singlelab.data.repositories.reg.RegistrationRepositoryImpl
+import com.singlelab.net.ApiUnit
+import com.singlelab.net.repositories.reg.RegistrationRepository
+import com.singlelab.net.repositories.reg.RegistrationRepositoryImpl
 import com.singlelab.lume.LumeApplication
 import com.singlelab.lume.ui.reg.RegistrationPresenter
 import com.singlelab.lume.ui.reg.interactor.RegistrationInteractor

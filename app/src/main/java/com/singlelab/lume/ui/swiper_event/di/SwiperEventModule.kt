@@ -1,6 +1,6 @@
 package com.singlelab.lume.ui.swiper_event.di
 
-import com.singlelab.data.repositories.events.EventsRepository
+import com.singlelab.net.repositories.events.EventsRepository
 import com.singlelab.lume.LumeApplication
 import com.singlelab.lume.ui.swiper_event.SwiperEventPresenter
 import com.singlelab.lume.ui.swiper_event.interactor.SwiperEventInteractor

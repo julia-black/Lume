@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.singlelab.data.model.chat.ChatInfo
+import com.singlelab.net.model.chat.ChatInfo
 import com.singlelab.lume.R
 import kotlinx.android.synthetic.main.chats_item.view.*
 

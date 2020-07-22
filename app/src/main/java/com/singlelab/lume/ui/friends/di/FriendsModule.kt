@@ -1,8 +1,8 @@
 package com.singlelab.lume.ui.friends.di
 
-import com.singlelab.data.net.ApiUnit
-import com.singlelab.data.repositories.friends.FriendsRepository
-import com.singlelab.data.repositories.friends.FriendsRepositoryImpl
+import com.singlelab.net.ApiUnit
+import com.singlelab.net.repositories.friends.FriendsRepository
+import com.singlelab.net.repositories.friends.FriendsRepositoryImpl
 import com.singlelab.lume.LumeApplication
 import com.singlelab.lume.ui.friends.FriendsPresenter
 import com.singlelab.lume.ui.friends.interactor.FriendsInteractor

@@ -1,8 +1,8 @@
 package com.singlelab.lume.ui.chats.di
 
-import com.singlelab.data.net.ApiUnit
-import com.singlelab.data.repositories.chats.ChatsRepository
-import com.singlelab.data.repositories.chats.DefaultChatsRepository
+import com.singlelab.net.ApiUnit
+import com.singlelab.net.repositories.chats.ChatsRepository
+import com.singlelab.net.repositories.chats.DefaultChatsRepository
 import com.singlelab.lume.LumeApplication
 import com.singlelab.lume.ui.chats.ChatsPresenter
 import com.singlelab.lume.ui.chats.interactor.ChatsInteractor

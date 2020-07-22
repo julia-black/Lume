@@ -1,6 +1,6 @@
 package com.singlelab.lume.ui.my_profile.di
 
-import com.singlelab.data.repositories.person.PersonRepository
+import com.singlelab.net.repositories.person.PersonRepository
 import com.singlelab.lume.LumeApplication
 import com.singlelab.lume.ui.my_profile.MyProfilePresenter
 import com.singlelab.lume.ui.my_profile.interactor.MyProfileInteractor

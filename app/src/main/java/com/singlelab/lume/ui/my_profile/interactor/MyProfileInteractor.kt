@@ -1,10 +1,9 @@
 package com.singlelab.lume.ui.my_profile.interactor
 
-import com.singlelab.data.model.profile.Profile
-import com.singlelab.data.model.profile.ResponseImageUid
+import com.singlelab.lume.model.profile.Profile
 
 interface MyProfileInteractor {
     suspend fun loadProfile(): Profile?
 
-    suspend fun updateImageProfile(imageStr: String): ResponseImageUid?
+    suspend fun updateImageProfile(imageStr: String): String?
 }

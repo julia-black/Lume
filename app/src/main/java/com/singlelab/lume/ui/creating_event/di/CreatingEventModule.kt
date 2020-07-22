@@ -1,6 +1,6 @@
 package com.singlelab.lume.ui.creating_event.di
 
-import com.singlelab.data.repositories.events.EventsRepository
+import com.singlelab.net.repositories.events.EventsRepository
 import com.singlelab.lume.LumeApplication
 import com.singlelab.lume.ui.creating_event.CreatingEventPresenter
 import com.singlelab.lume.ui.creating_event.interactor.CreatingEventInteractor

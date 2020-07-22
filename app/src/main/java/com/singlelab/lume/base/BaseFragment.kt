@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import com.singlelab.data.model.auth.AuthData
-import com.singlelab.data.net.CoroutineContextProvider
+import com.singlelab.net.model.auth.AuthData
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.listeners.OnActivityResultListener

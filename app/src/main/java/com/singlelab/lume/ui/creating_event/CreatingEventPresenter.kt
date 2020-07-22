@@ -1,14 +1,15 @@
 package com.singlelab.lume.ui.creating_event
 
 import android.graphics.Bitmap
-import com.singlelab.data.exceptions.ApiException
-import com.singlelab.data.model.consts.Const
-import com.singlelab.data.model.event.Event
+import com.singlelab.net.exceptions.ApiException
+import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.creating_event.interactor.CreatingEventInteractor
 import com.singlelab.lume.util.parseToString
+import com.singlelab.net.model.event.EventRequest
 import moxy.InjectViewState
 import java.util.*
 import javax.inject.Inject
@@ -25,7 +26,7 @@ class CreatingEventPresenter @Inject constructor(
 
     var images: MutableList<Bitmap> = mutableListOf()
 
-    fun createEvent(event: Event) {
+    fun createEvent(event: EventRequest) {
         viewState.showLoading(true)
         invokeSuspend {
             try {
