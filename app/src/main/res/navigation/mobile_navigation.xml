@@ -38,6 +38,23 @@
     </fragment>
 
     <fragment
+        android:id="@+id/chats"
+        android:name="com.singlelab.lume.ui.chats.ChatsFragment"
+        android:label="@string/chats_title"
+        tools:layout="@layout/fragment_chats">
+
+        <action
+            android:id="@+id/navigate_from_chats_to_chat"
+            app:destination="@id/navigation_chat" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_chat"
+        android:name="com.singlelab.lume.ui.chat.ChatFragment"
+        android:label="@string/chat_title"
+        tools:layout="@layout/fragment_chat" />
+
+    <fragment
         android:id="@+id/my_profile"
         android:name="com.singlelab.lume.ui.my_profile.MyProfileFragment"
         android:label="@string/title_my_profile"

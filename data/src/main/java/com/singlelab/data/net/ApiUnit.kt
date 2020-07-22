@@ -3,6 +3,7 @@ package com.singlelab.data.net
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.singlelab.data.model.consts.Const.BASE_URL
 import com.singlelab.data.net.api.AuthApi
+import com.singlelab.data.net.api.ChatsApi
 import com.singlelab.data.net.api.EventsApi
 import com.singlelab.data.net.api.PersonApi
 import com.singlelab.data.net.interceptors.HeaderInterceptor
@@ -38,5 +39,9 @@ class ApiUnit {
 
     val eventsApi: EventsApi = retrofit.create(
         EventsApi::class.java
+    )
+
+    val chatsApi: ChatsApi = retrofit.create(
+        ChatsApi::class.java
     )
 }

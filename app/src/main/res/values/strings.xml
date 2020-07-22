@@ -51,4 +51,10 @@
     <string name="remove_from_friends">Удалить из друзей</string>
 
 
+    <!-- Chats -->
+    <string name="chats_title">Чаты</string>
+
+    <!-- Chat -->
+    <string name="chat_title">Чат</string>
+
 </resources>

@@ -12,6 +12,11 @@
         android:title="@string/title_events" />
 
     <item
+        android:id="@+id/chats"
+        android:icon="@drawable/ic_baseline_chat_24"
+        android:title="@string/chats_title" />
+
+    <item
         android:id="@+id/my_profile"
         android:icon="@drawable/ic_profile"
         android:title="@string/title_my_profile" />
