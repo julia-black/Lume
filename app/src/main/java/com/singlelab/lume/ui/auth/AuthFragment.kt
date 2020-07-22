@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
@@ -68,8 +69,8 @@ class AuthFragment : BaseFragment(), AuthView {
     }
 
     override fun toProfile() {
-        Navigation.createNavigateOnClickListener(R.id.action_auth_to_my_profile)
-            .onClick(view)
+        findNavController().popBackStack()
+        findNavController().navigate(R.id.my_profile)
     }
 
     override fun toRegistration() {

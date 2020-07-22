@@ -93,7 +93,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments {
     }
 
     override fun toProfile(personUid: String) {
-        //todo когда будет экран профиля другого юзера, сделать переход
+        findNavController().navigate(EventFragmentDirections.actionEventToPerson(personUid))
     }
 
     private fun setListeners() {
@@ -103,6 +103,15 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments {
         administrator.setOnClickListener {
             presenter.onClickAdministrator()
         }
+        button_chat.setOnClickListener {
+            presenter.event?.eventUid?.let { eventUid ->
+                toChat(eventUid)
+            }
+        }
+    }
+
+    private fun toChat(eventUid: String) {
+        //todo переход в чат события
     }
 
     private fun showImage(imageView: ImageView, imageUid: String) {

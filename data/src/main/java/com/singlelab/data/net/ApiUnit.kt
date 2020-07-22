@@ -5,7 +5,7 @@ import com.singlelab.data.model.consts.Const.BASE_URL
 import com.singlelab.data.net.api.AuthApi
 import com.singlelab.data.net.api.ChatsApi
 import com.singlelab.data.net.api.EventsApi
-import com.singlelab.data.net.api.MyProfileApi
+import com.singlelab.data.net.api.PersonApi
 import com.singlelab.data.net.interceptors.HeaderInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -33,8 +33,8 @@ class ApiUnit {
         AuthApi::class.java
     )
 
-    val myProfileApi: MyProfileApi = retrofit.create(
-        MyProfileApi::class.java
+    val personApi: PersonApi = retrofit.create(
+        PersonApi::class.java
     )
 
     val eventsApi: EventsApi = retrofit.create(

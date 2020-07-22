@@ -41,6 +41,7 @@ class SwiperEventPresenter @Inject constructor(
             viewState.showLoading(false)
             viewState.showEvent(
                 Event(
+                    null,
                     "Событие 1",
                     10,
                     20,

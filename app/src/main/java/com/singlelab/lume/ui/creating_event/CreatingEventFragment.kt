@@ -10,7 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.singlelab.data.model.consts.Const
 import com.singlelab.data.model.event.Event
@@ -20,8 +20,8 @@ import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.ui.creating_event.adapter.EventImagesAdapter
 import com.singlelab.lume.ui.creating_event.adapter.OnImageClickListener
+import com.singlelab.lume.util.formatToUTC
 import com.singlelab.lume.util.getBitmap
-import com.singlelab.lume.util.parseToString
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,9 +67,9 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
     }
 
     override fun onCompleteCreateEvent(eventUid: String) {
-        //todo переход в детали
         Toast.makeText(context, "Ура! Вы создали событие!", Toast.LENGTH_LONG).show()
-        Navigation.createNavigateOnClickListener(R.id.action_creating_event_to_events).onClick(view)
+        val action = CreatingEventFragmentDirections.actionCreatingEventToEvent(eventUid)
+        findNavController().navigate(action)
     }
 
     override fun showDateStart(dateStr: String) {
@@ -117,8 +117,8 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                     maxAge = maxAge,
                     xCoordinate = 51.5819596F,
                     yCoordinate = 46.0621339F,
-                    startTime = presenter.currentDateStart?.time.parseToString(Const.DATE_FORMAT_TIME_ZONE),
-                    endTime = presenter.currentDateEnd?.time.parseToString(Const.DATE_FORMAT_TIME_ZONE)
+                    startTime = presenter.currentDateStart?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE),
+                    endTime = presenter.currentDateEnd?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE)
                 )
                 presenter.createEvent(event)
             } else {

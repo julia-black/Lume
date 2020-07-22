@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.singlelab.data.model.profile.Profile
 import com.singlelab.lume.MainActivity
@@ -16,6 +18,8 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.base.listeners.OnToolbarListener
+import com.singlelab.lume.ui.my_profile.adapter.ImagePersonAdapter
+import com.singlelab.lume.ui.my_profile.adapter.OnPersonImageClickListener
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.getBitmap
 import com.theartofdev.edmodo.cropper.CropImage
@@ -29,7 +33,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
-    OnActivityResultListener {
+    OnActivityResultListener, OnPersonImageClickListener {
 
     @Inject
     lateinit var daggerPresenter: MyProfilePresenter
@@ -57,9 +61,9 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
             .setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_my_profile_to_auth))
     }
 
-    override fun onDestroy() {
+    override fun onStop() {
         (activity as MainActivity?)?.showLogoutInToolbar(false)
-        super.onDestroy()
+        super.onStop()
     }
 
     override fun showProfile(profile: Profile) {
@@ -80,7 +84,24 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
                     .start(activity)
             }
         }
-
+        if (profile.friends.isEmpty()) {
+            search_friends.visibility = View.VISIBLE
+            search_friends.setOnClickListener {
+                toFriends(true)
+            }
+            recycler_friends.visibility = View.GONE
+        } else {
+            search_friends.visibility = View.GONE
+            recycler_friends.apply {
+                layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                visibility = View.VISIBLE
+                adapter = ImagePersonAdapter(profile.friends, this@MyProfileFragment)
+            }
+        }
+        title_friends.setOnClickListener {
+            toFriends()
+        }
     }
 
     override fun navigateToAuth() {
@@ -111,5 +132,15 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
                     .show()
             }
         }
+    }
+
+    override fun onPersonClick(personUid: String) {
+        findNavController().navigate(MyProfileFragmentDirections.actionMyProfileToPerson(personUid))
+    }
+
+    private fun toFriends(isSearch: Boolean = false) {
+        val action = MyProfileFragmentDirections.actionMyProfileToFriends()
+        action.isSearch = isSearch
+        findNavController().navigate(action)
     }
 }
