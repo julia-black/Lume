@@ -74,4 +74,15 @@
         android:text="@string/search_friends"
         app:layout_constraintStart_toStartOf="@id/title_friends"
         app:layout_constraintTop_toBottomOf="@id/title_friends" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_friends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_friends"
+        tools:itemCount="1"
+        tools:listitem="@layout/item_image_person" />
 </androidx.constraintlayout.widget.ConstraintLayout>

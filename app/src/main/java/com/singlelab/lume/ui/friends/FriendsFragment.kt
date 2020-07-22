@@ -71,7 +71,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
         }
     }
 
-    override fun onPersonClick() {
+    override fun onPersonClick(personUid: String) {
         //todo переход на профиль
     }
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_image"
+    android:layout_width="@dimen/size_image_person_small"
+    android:layout_height="@dimen/size_image_person_small"
+    android:layout_marginStart="@dimen/margin_medium"
+    app:cardCornerRadius="26dp"
+    app:cardElevation="0dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <ImageView
+        android:id="@+id/image_person"
+        android:layout_width="@dimen/size_image_person_small"
+        android:layout_height="@dimen/size_image_person_small"
+        android:src="@drawable/ic_profile" />
+
+</androidx.cardview.widget.CardView>

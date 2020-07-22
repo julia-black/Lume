@@ -1,7 +1,7 @@
 package com.singlelab.lume.ui.friends.adapter
 
 interface OnPersonItemClickListener {
-    fun onPersonClick()
+    fun onPersonClick(personUid: String)
 
     fun onChatClick(personUid: String)
 }
