@@ -27,6 +27,6 @@ object ChatsModule {
 
     @Provides
     fun provideRepository(apiUnit: ApiUnit): ChatsRepository {
-        return DefaultChatsRepository(/*apiUnit*/)
+        return DefaultChatsRepository(apiUnit)
     }
 }

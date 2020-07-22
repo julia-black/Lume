@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.singlelab.data.model.chats.ChatsInfoItem
+import com.singlelab.data.model.chat.ChatInfo
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.ui.chat.ChatView.Companion.CHAT_TITLE_BUNDLE_KEY
@@ -28,11 +29,11 @@ class ChatsFragment : BaseFragment(), ChatsView {
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
 
-    private val onChatClicked: (ChatsInfoItem) -> Unit = {
+    private val onChatClicked: (ChatInfo) -> Unit = {
         navigateToChat(it.title)
     }
 
-    private val onChatLongClicked: (ChatsInfoItem) -> Boolean = {
+    private val onChatLongClicked: (ChatInfo) -> Boolean = {
         true
     }
 
@@ -46,9 +47,10 @@ class ChatsFragment : BaseFragment(), ChatsView {
         activity?.title = getString(R.string.chats_title)
         chatsView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         chatsView.adapter = chatsAdapter
+        chatsView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
     }
 
-    override fun showChats(chats: List<ChatsInfoItem>) {
+    override fun showChats(chats: List<ChatInfo>) {
         chatsAdapter.setChats(chats)
         chatsAdapter.notifyDataSetChanged()
     }
