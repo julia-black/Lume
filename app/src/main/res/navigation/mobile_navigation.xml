@@ -90,6 +90,9 @@
         <action
             android:id="@+id/action_event_to_my_profile"
             app:destination="@id/my_profile" />
+        <action
+            android:id="@+id/action_event_to_person"
+            app:destination="@id/person" />
     </fragment>
     <fragment
         android:id="@+id/friends"

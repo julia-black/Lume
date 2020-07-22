@@ -3,6 +3,7 @@ package com.singlelab.data.model.event
 import com.singlelab.data.model.profile.Person
 
 class Event(
+    val eventUid: String? = null,
     val name: String,
     val minAge: Int?,
     val maxAge: Int?,
