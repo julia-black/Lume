@@ -1,6 +1,5 @@
 package com.singlelab.data.repositories.auth
 
-import com.singlelab.data.exceptions.ApiException
 import com.singlelab.data.model.auth.Auth
 import com.singlelab.data.model.auth.RequestPersonFilled
 import com.singlelab.data.model.auth.RequestPersonUid
@@ -8,7 +7,6 @@ import com.singlelab.data.net.ApiUnit
 import com.singlelab.data.repositories.BaseRepository
 
 class AuthRepositoryImpl(var apiUnit: ApiUnit) : AuthRepository, BaseRepository() {
-    @Throws(ApiException::class)
     override suspend fun sendCode(phone: String): RequestPersonUid? {
         return safeApiCall(
             apiUnit = apiUnit,
@@ -17,7 +15,6 @@ class AuthRepositoryImpl(var apiUnit: ApiUnit) : AuthRepository, BaseRepository(
         )
     }
 
-    @Throws(ApiException::class)
     override suspend fun auth(phone: String, code: String): Auth? {
         return safeApiCall(
             apiUnit = apiUnit,
@@ -26,7 +23,6 @@ class AuthRepositoryImpl(var apiUnit: ApiUnit) : AuthRepository, BaseRepository(
         )
     }
 
-    @Throws(ApiException::class)
     override suspend fun isPersonFilled(): RequestPersonFilled? {
         return safeApiCall(
             apiUnit = apiUnit,

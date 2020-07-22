@@ -51,6 +51,9 @@
         <action
             android:id="@+id/action_my_profile_to_friends"
             app:destination="@id/friends" />
+        <action
+            android:id="@+id/action_my_profile_to_person"
+            app:destination="@id/person" />
     </fragment>
 
     <fragment
@@ -95,7 +98,19 @@
         tools:layout="@layout/fragment_friends">
         <argument
             android:name="isSearch"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_friends_to_person"
+            app:destination="@id/person" />
+    </fragment>
+    <fragment
+        android:id="@+id/person"
+        android:name="com.singlelab.lume.ui.person.PersonFragment"
+        android:label="PersonFragment"
+        tools:layout="@layout/fragment_person">
+        <argument
+            android:name="personUid"
+            app:argType="string" />
     </fragment>
 </navigation>

@@ -9,7 +9,7 @@ class RegistrationRepositoryImpl(private val apiUnit: ApiUnit) : RegistrationRep
     override suspend fun registration(profile: Profile) {
         safeApiCall(
             apiUnit,
-            call = { apiUnit.myProfileApi.updateProfileAsync(profile).await() },
+            call = { apiUnit.personApi.updateProfileAsync(profile).await() },
             errorMessage = "Не удалось зарегистрироваться"
         )
     }

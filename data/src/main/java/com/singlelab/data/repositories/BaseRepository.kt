@@ -51,12 +51,20 @@ open class BaseRepository {
             } else if (response.code() == HttpURLConnection.HTTP_FORBIDDEN) {
                 throw RefreshTokenException()
             } else if (!errorBody.isNullOrEmpty()) {
-                val error = Gson().fromJson(errorBody, Error::class.java)
-                ResultCoroutines.Error(
-                    ApiException(
-                        error.message
+                try {
+                    val error = Gson().fromJson(errorBody, Error::class.java)
+                    ResultCoroutines.Error(
+                        ApiException(
+                            error.message
+                        )
                     )
-                )
+                } catch (e: Exception) {
+                    ResultCoroutines.Error(
+                        ApiException(
+                            errorMessage
+                        )
+                    )
+                }
             } else {
                 ResultCoroutines.Error(
                     ApiException(

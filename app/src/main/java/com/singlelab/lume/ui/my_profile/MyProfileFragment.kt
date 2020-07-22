@@ -135,7 +135,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
     }
 
     override fun onPersonClick(personUid: String) {
-        //todo переход на профиль юзера
+        findNavController().navigate(MyProfileFragmentDirections.actionMyProfileToPerson(personUid))
     }
 
     private fun toFriends(isSearch: Boolean = false) {

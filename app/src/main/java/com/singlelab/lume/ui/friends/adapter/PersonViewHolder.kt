@@ -20,10 +20,7 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
                 .load(imageUid.generateImageLink())
                 .into(itemView.image_person)
         }
-        itemView.image_person.setOnClickListener {
-            listener.onPersonClick(person.personUid)
-        }
-        itemView.name.setOnClickListener {
+        itemView.setOnClickListener {
             listener.onPersonClick(person.personUid)
         }
         itemView.button_chat.setOnClickListener {
