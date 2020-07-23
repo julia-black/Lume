@@ -1,4 +1,5 @@
 include ':data'
 include ':net'
 include ':app'
+include ':lume-database'
 rootProject.name = "Lume"
