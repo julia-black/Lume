@@ -4,4 +4,6 @@ interface OnPersonItemClickListener {
     fun onPersonClick(personUid: String)
 
     fun onChatClick(personUid: String)
+
+    fun onAddToFriends(personUid: String)
 }

@@ -29,7 +29,9 @@ class RegistrationPresenter @Inject constructor(
                 try {
                     interactor.registration(profile)
                     preferences?.setAnon(false)
-                    viewState.onRegistration()
+                    runOnMainThread {
+                        viewState.onRegistration()
+                    }
                 } catch (e: ApiException) {
                     runOnMainThread {
                         viewState.showLoading(false)

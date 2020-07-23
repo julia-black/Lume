@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
-import com.singlelab.lume.ui.friends.adapter.FriendsAdapter
+import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.ui.friends.adapter.OnPersonItemClickListener
+import com.singlelab.lume.ui.friends.adapter.PersonsAdapter
+import com.singlelab.lume.util.TextInputDebounce
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_friends.*
 import moxy.presenter.InjectPresenter
@@ -31,6 +32,8 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
 
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
+
+    private var searchDebounce: TextInputDebounce? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,13 +65,41 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
         } else {
             showEmptyFriends()
         }
+        title_empty_search.visibility = View.GONE
+        if (searchDebounce == null) {
+            searchDebounce = TextInputDebounce(
+                editText = edit_text_search,
+                isHandleEmptyString = true
+            )
+            searchDebounce!!.watch {
+                presenter.search(it)
+            }
+        }
     }
 
     override fun showFriends(friends: List<Person>?) {
+        title_empty_search.visibility = View.GONE
+        recycler_search_results.visibility = View.GONE
         if (friends.isNullOrEmpty()) {
             showEmptyFriends()
         } else {
-            recycler_friends.adapter = FriendsAdapter(friends, this)
+            recycler_friends.adapter = PersonsAdapter(friends, this)
+        }
+    }
+
+    override fun showSearchResult(searchResults: List<Person>?) {
+        recycler_friends.visibility = View.GONE
+        title_empty_friends.visibility = View.GONE
+        if (searchResults.isNullOrEmpty()) {
+            title_empty_search.visibility = View.VISIBLE
+            recycler_search_results.visibility = View.GONE
+        } else {
+            title_empty_search.visibility = View.GONE
+            recycler_search_results.apply {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                visibility = View.VISIBLE
+                adapter = PersonsAdapter(searchResults, this@FriendsFragment)
+            }
         }
     }
 
@@ -78,6 +109,10 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
 
     override fun onChatClick(personUid: String) {
         //todo переход на чат
+    }
+
+    override fun onAddToFriends(personUid: String) {
+        presenter.addToFriends(personUid)
     }
 
     private fun showEmptyFriends() {
