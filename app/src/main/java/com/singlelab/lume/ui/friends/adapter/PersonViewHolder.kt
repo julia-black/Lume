@@ -1,11 +1,12 @@
 package com.singlelab.lume.ui.friends.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.R
+import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.util.generateImageLink
 import kotlinx.android.synthetic.main.item_person.view.*
 
@@ -25,6 +26,14 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         }
         itemView.button_chat.setOnClickListener {
             listener.onChatClick(person.personUid)
+        }
+        if (person.isFriend) {
+            itemView.button_add_to_friends.visibility = View.GONE
+        } else {
+            itemView.button_add_to_friends.visibility = View.VISIBLE
+            itemView.button_add_to_friends.setOnClickListener {
+                listener.onAddToFriends(person.personUid)
+            }
         }
     }
 }

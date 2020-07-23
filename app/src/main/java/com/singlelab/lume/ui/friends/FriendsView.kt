@@ -10,4 +10,7 @@ interface FriendsView : LoadingView, ErrorView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showFriends(friends: List<Person>?)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showSearchResult(searchResults: List<Person>?)
 }

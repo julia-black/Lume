@@ -1,11 +1,11 @@
 package com.singlelab.lume.ui.swiper_event
 
-import com.singlelab.net.exceptions.ApiException
-import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.swiper_event.interactor.SwiperEventInteractor
+import com.singlelab.net.exceptions.ApiException
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -19,8 +19,8 @@ class SwiperEventPresenter @Inject constructor(
 
     fun loadEvent(uid: String) {
         viewState.showLoading(true)
-        try {
-            invokeSuspend {
+        invokeSuspend {
+            try {
                 val event = interactor.getEvent(uid)
                 runOnMainThread {
                     viewState.showLoading(false)
@@ -29,10 +29,12 @@ class SwiperEventPresenter @Inject constructor(
                         viewState.showEvent(it)
                     }
                 }
+            } catch (e: ApiException) {
+                runOnMainThread {
+                    viewState.showLoading(false)
+                    viewState.showError(e.message)
+                }
             }
-        } catch (e: ApiException) {
-            viewState.showLoading(false)
-            viewState.showError(e.message)
         }
     }
 

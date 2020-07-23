@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.singlelab.lume.model.profile.Person
 
-class FriendsAdapter(
+class PersonsAdapter(
     private val list: List<Person>,
     private val listener: OnPersonItemClickListener
 ) : RecyclerView.Adapter<PersonViewHolder>() {

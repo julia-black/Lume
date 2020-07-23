@@ -45,7 +45,8 @@
 
     <string name="count_participants">Идут %1$d человек</string>
     <string name="search_friends">Найти друзей</string>
-    <string name="empty_friends">У вас пока нет друзей.\nНайдите их!</string>
+    <string name="empty_friends">У вас пока нет друзей\nНайдите их!</string>
+    <string name="empty_search">Ничего не найдено\nПопробуйте изменить запрос</string>
     <string name="add_to_friends">Добавить в друзья</string>
     <string name="in_friends">В друзьях</string>
     <string name="remove_from_friends">Удалить из друзей</string>

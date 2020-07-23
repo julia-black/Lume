@@ -12,12 +12,12 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.singlelab.lume.model.profile.Profile
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.base.listeners.OnToolbarListener
+import com.singlelab.lume.model.profile.Profile
 import com.singlelab.lume.ui.my_profile.adapter.ImagePersonAdapter
 import com.singlelab.lume.ui.my_profile.adapter.OnPersonImageClickListener
 import com.singlelab.lume.util.generateImageLink
@@ -66,6 +66,11 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
         super.onStop()
     }
 
+    override fun onStart() {
+        super.onStart()
+        (activity as MainActivity?)?.showLogoutInToolbar(true)
+    }
+
     override fun showProfile(profile: Profile) {
         (activity as MainActivity?)?.showLogoutInToolbar(true)
         name_age.text = "${profile.name}, ${profile.age}"
@@ -93,8 +98,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
         } else {
             search_friends.visibility = View.GONE
             recycler_friends.apply {
-                layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 visibility = View.VISIBLE
                 adapter = ImagePersonAdapter(profile.friends, this@MyProfileFragment)
             }
