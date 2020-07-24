@@ -21,5 +21,8 @@ interface EventsApi {
     fun addEventAsync(@Body event: EventRequest): Deferred<Response<EventUidResponse>>
 
     @POST("event/add-event-participant")
-    fun invitePersonAsync(@Body participantRequest: ParticipantRequest): Deferred<Response<MessageResponse>>
+    fun addParticipantsAsync(@Body participantRequest: ParticipantRequest): Deferred<Response<MessageResponse>>
+
+    @POST("event/get-random-event")
+    fun getRandomEventAsync(@Body randomEventRequest: RandomEventRequest): Deferred<Response<EventResponse>>
 }

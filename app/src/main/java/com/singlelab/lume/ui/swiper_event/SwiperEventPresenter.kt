@@ -6,6 +6,10 @@ import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.swiper_event.interactor.SwiperEventInteractor
 import com.singlelab.net.exceptions.ApiException
+import com.singlelab.net.model.auth.AuthData
+import com.singlelab.net.model.event.ParticipantRequest
+import com.singlelab.lume.model.event.ParticipantStatus
+import com.singlelab.net.model.event.RandomEventRequest
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -17,11 +21,16 @@ class SwiperEventPresenter @Inject constructor(
 
     var event: Event? = null
 
-    fun loadEvent(uid: String) {
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        loadRandomEvent()
+    }
+    fun loadRandomEvent() {
         viewState.showLoading(true)
         invokeSuspend {
             try {
-                val event = interactor.getEvent(uid)
+                val randomEventRequest = RandomEventRequest()
+                val event = interactor.getRandomEvent(randomEventRequest)
                 runOnMainThread {
                     viewState.showLoading(false)
                     this.event = event
@@ -38,22 +47,31 @@ class SwiperEventPresenter @Inject constructor(
         }
     }
 
-    fun loadNextEvent() {
-        runOnMainThread {
-            viewState.showLoading(false)
-            viewState.showEvent(
-                Event(
-                    null,
-                    "Событие 1",
-                    10,
-                    20,
-                    10f,
-                    10f,
-                    "Описание события 1",
-                    "2020-07-21T14:00:23.239",
-                    "2020-07-21T14:00:23.239"
-                )
-            )
+    fun acceptEvent() {
+        val uid = AuthData.uid ?: return
+        event?.eventUid?.let { eventUid ->
+            viewState.showLoading(true)
+            invokeSuspend {
+                try {
+                    interactor.acceptEvent(
+                        ParticipantRequest(
+                            uid,
+                            eventUid,
+                            ParticipantStatus.ACTIVE.id //todo в дальнейшем будем определять, переводим в статус ACTIVE или WAITING_FOR_APPROVE_FROM_EVENT
+                        )
+                    )
+                    event = null
+                    runOnMainThread {
+                        viewState.toAcceptedEvent(eventUid)
+                        viewState.showLoading(false)
+                    }
+                } catch (e: ApiException) {
+                    runOnMainThread {
+                        viewState.showLoading(false)
+                        viewState.showError(e.message)
+                    }
+                }
+            }
         }
     }
 }

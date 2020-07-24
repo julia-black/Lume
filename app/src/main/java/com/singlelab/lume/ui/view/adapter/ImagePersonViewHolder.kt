@@ -1,4 +1,4 @@
-package com.singlelab.lume.ui.my_profile.adapter
+package com.singlelab.lume.ui.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

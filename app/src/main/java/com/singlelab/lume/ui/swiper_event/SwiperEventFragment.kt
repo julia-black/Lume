@@ -6,25 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import android.widget.ImageView
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.bumptech.glide.Glide
-import com.singlelab.lume.model.event.Event
+import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
-import com.singlelab.lume.base.OnlyForAuthFragments
+import com.singlelab.lume.base.listeners.OnSearchListener
+import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.ui.swiper_event.adapter.CardStackAdapter
 import com.singlelab.lume.util.generateImageLink
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_swiper_event.*
-import kotlinx.coroutines.delay
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragments,
-    CardStackListener {
+class SwiperEventFragment : BaseFragment(), SwiperEventView, CardStackListener, OnSearchListener {
 
     @Inject
     lateinit var daggerPresenter: SwiperEventPresenter
@@ -50,11 +50,32 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         activity?.title = ""
         setListeners()
         initCardStack()
-        presenter.loadNextEvent()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (activity as MainActivity?)?.showSearchInToolbar(true)
+    }
+
+    override fun onStop() {
+        (activity as MainActivity?)?.showSearchInToolbar(false)
+        super.onStop()
     }
 
     override fun showEvent(event: Event) {
-        (card_stack_view.adapter as CardStackAdapter).setEvents(listOf(event))
+        if (presenter.event == null) {
+            presenter.loadRandomEvent()
+        } else {
+            (card_stack_view.adapter as CardStackAdapter).setEvents(listOf(event))
+        }
+    }
+
+    override fun toAcceptedEvent(eventUid: String) {
+        findNavController().navigate(SwiperEventFragmentDirections.actionSwiperEventToEvent(eventUid))
+    }
+
+    override fun onClickSearch() {
+        findNavController().navigate(SwiperEventFragmentDirections.actionSwiperEventToSearchEvent())
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {
@@ -65,14 +86,12 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
 
     override fun onCardSwiped(direction: Direction?) {
         when (direction) {
-            //todo если вправо, то переход к чату события? или в мои события? или продолжаем свайпать?
-            Direction.Right, Direction.Left -> {
-                super.showLoading(true)
-                invokeSuspend {
-                    delay(2000).run {
-                        presenter.loadNextEvent()
-                    }
-                }
+            Direction.Right -> {
+                //todo если пользователь не зареган, то отправлять на форму регистрации (запоминая событие, на которое он хотел пойти)
+                presenter.acceptEvent()
+            }
+            Direction.Left -> {
+                presenter.loadRandomEvent()
             }
             else -> {
             }

@@ -37,7 +37,7 @@ class FriendsRepositoryImpl(private val apiUnit: ApiUnit) : FriendsRepository, B
     override suspend fun invitePerson(request: ParticipantRequest) {
         safeApiCall(
             apiUnit = apiUnit,
-            call = { apiUnit.eventsApi.invitePersonAsync(request).await() },
+            call = { apiUnit.eventsApi.addParticipantsAsync(request).await() },
             errorMessage = "Не удалось пригласить пользователя"
         )
     }

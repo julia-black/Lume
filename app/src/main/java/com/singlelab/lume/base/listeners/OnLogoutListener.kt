@@ -1,5 +1,5 @@
 package com.singlelab.lume.base.listeners
 
-interface OnToolbarListener {
+interface OnLogoutListener {
     fun onClickLogout()
 }

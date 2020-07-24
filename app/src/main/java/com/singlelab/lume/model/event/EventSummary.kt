@@ -13,7 +13,8 @@ class EventSummary(
     val xCoordinate: Float,
     val yCoordinate: Float,
     val status: Int,
-    val isAdministrator: Boolean = false
+    val isAdministrator: Boolean = false,
+    val participantStatus: ParticipantStatus
 ) {
     companion object {
         fun fromResponse(eventSummaryResponse: EventSummaryResponse?): EventSummary? {
@@ -29,7 +30,8 @@ class EventSummary(
                     eventSummaryResponse.xCoordinate,
                     eventSummaryResponse.yCoordinate,
                     eventSummaryResponse.status,
-                    eventSummaryResponse.isAdministrator
+                    eventSummaryResponse.isAdministrator,
+                    ParticipantStatus.findStatus(eventSummaryResponse.participantStatus)!!
                 )
             } else {
                 null

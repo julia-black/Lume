@@ -1,4 +1,4 @@
-package com.singlelab.lume.ui.my_profile.adapter
+package com.singlelab.lume.ui.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,7 +12,10 @@ class ImagePersonAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImagePersonViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ImagePersonViewHolder(inflater, parent)
+        return ImagePersonViewHolder(
+            inflater,
+            parent
+        )
     }
 
     override fun onBindViewHolder(holder: ImagePersonViewHolder, position: Int) {

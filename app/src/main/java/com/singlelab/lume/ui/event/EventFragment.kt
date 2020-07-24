@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.Event
+import com.singlelab.lume.ui.view.adapter.ImagePersonAdapter
+import com.singlelab.lume.ui.view.adapter.OnPersonImageClickListener
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +25,7 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments {
+class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonImageClickListener {
 
     @Inject
     lateinit var daggerPresenter: EventPresenter
@@ -81,11 +84,26 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments {
             event.participants.size
         )
         event.administrator?.let {
-            administrator.text = it.name
+            administrator.text = getString(R.string.administrator, it.name)
             it.imageContentUid?.let { imageUid ->
                 showImage(image_administrator, imageUid)
             }
         }
+
+        if (event.participants.isEmpty()) {
+            recycler_participants.visibility = View.GONE
+        } else {
+            recycler_participants.visibility = View.VISIBLE
+            recycler_participants.apply {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                visibility = View.VISIBLE
+                adapter = ImagePersonAdapter(
+                    event.participants,
+                    this@EventFragment
+                )
+            }
+        }
+
     }
 
     override fun toMyProfile() {
@@ -95,6 +113,11 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments {
     override fun toProfile(personUid: String) {
         findNavController().navigate(EventFragmentDirections.actionEventToPerson(personUid))
     }
+
+    override fun onPersonClick(personUid: String) {
+        findNavController().navigate(EventFragmentDirections.actionEventToPerson(personUid))
+    }
+
 
     private fun setListeners() {
         image_administrator.setOnClickListener {

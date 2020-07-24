@@ -38,6 +38,7 @@
     <string name="enter_fields">Заполните обязательные параметры</string>
     <string name="party">Вечеринка</string>
     <string name="boozy">Пьянка</string>
+    <string name="administrator">%1$s (Организатор)</string>
 
     <string name="age_from_to">Возраст: %1$d-%2$d</string>
     <string name="age_from">Возраст: %1$d+</string>
@@ -51,12 +52,12 @@
     <string name="in_friends">В друзьях</string>
     <string name="remove_from_friends">Удалить из друзей</string>
 
-
     <!-- Chats -->
     <string name="chats_title">Чаты</string>
 
     <!-- Chat -->
     <string name="chat_title">Чат</string>
     <string name="invite">Пригласить</string>
+    <string name="waiting_for_approve_event">Ожидается подтверждение</string>
 
 </resources>

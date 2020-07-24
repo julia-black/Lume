@@ -1,7 +1,11 @@
 package com.singlelab.lume.ui.swiper_event.interactor
 
 import com.singlelab.lume.model.event.Event
+import com.singlelab.net.model.event.ParticipantRequest
+import com.singlelab.net.model.event.RandomEventRequest
 
 interface SwiperEventInteractor {
-    suspend fun getEvent(uid: String): Event?
+    suspend fun getRandomEvent(randomEventRequest: RandomEventRequest): Event?
+
+    suspend fun acceptEvent(participantRequest: ParticipantRequest)
 }

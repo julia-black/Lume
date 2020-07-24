@@ -3,7 +3,7 @@ package com.singlelab.lume.ui.friends.interactor
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.net.model.event.ParticipantRequest
-import com.singlelab.net.model.event.ParticipantStatus
+import com.singlelab.lume.model.event.ParticipantStatus
 import com.singlelab.net.repositories.BaseRepository
 import com.singlelab.net.repositories.friends.FriendsRepository
 

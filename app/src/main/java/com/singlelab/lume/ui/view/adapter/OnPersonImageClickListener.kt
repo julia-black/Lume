@@ -1,4 +1,4 @@
-package com.singlelab.lume.ui.my_profile.adapter
+package com.singlelab.lume.ui.view.adapter
 
 interface OnPersonImageClickListener {
     fun onPersonClick(personUid: String)

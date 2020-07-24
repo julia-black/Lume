@@ -8,7 +8,8 @@ import com.singlelab.net.model.auth.AuthData
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.listeners.OnActivityResultListener
-import com.singlelab.lume.base.listeners.OnToolbarListener
+import com.singlelab.lume.base.listeners.OnLogoutListener
+import com.singlelab.lume.base.listeners.OnSearchListener
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
 import kotlinx.coroutines.CoroutineScope
@@ -44,8 +45,11 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
             // пользователь не залогинен, то с некоторых экранов должен осуществляться переход на авторизацию
             toAuth()
         } else {
-            if (this is OnToolbarListener) {
-                (activity as MainActivity?)?.setToolbarListener(this)
+            if (this is OnLogoutListener) {
+                (activity as MainActivity?)?.setLogoutListener(this)
+            }
+            if (this is OnSearchListener) {
+                (activity as MainActivity?)?.setSearchListener(this)
             }
             if (this is OnActivityResultListener) {
                 (activity as MainActivity?)?.setActivityListener(this)
