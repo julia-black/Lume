@@ -4,42 +4,45 @@ import com.google.gson.annotations.SerializedName
 
 // Chat
 
-data class ChatResponse(
+data class ChatMessagesResponse(
     @SerializedName("chatUid")
-    val uId: String,
+    val uId: String? = null,
+    val chatName: String? = null,
     @SerializedName("isGroupChat")
-    val isGroup: Boolean,
-    val messages: List<ChatMessageResponse>
+    val isGroup: Boolean? = false,
+    val messages: List<ChatMessageResponse>? = emptyList()
 )
 
 // Chats
 
-data class ChatPreviewResponse(
+data class ChatResponse(
     @SerializedName("chatUid")
-    val uId: String,
+    val uId: String? = null,
     @SerializedName("isGroupChat")
-    val isGroup: Boolean,
-    val lastMessage: ChatMessageResponse
+    val isGroup: Boolean? = false,
+    @SerializedName("name")
+    val title: String? = null,
+    val lastMessage: ChatMessageResponse? = null
 )
 
 // Messages
 
 data class ChatMessageResponse(
     @SerializedName("messageUid")
-    val uId: String,
+    val uId: String? = null,
     @SerializedName("messageContent")
-    val text: String,
-    val images: List<String>,
-    val personName: String,
-    val personUid: String,
-    val personImageUid: String,
+    val text: String? = null,
+    val images: List<String>? = emptyList(),
+    val personName: String? = null,
+    val personUid: String? = null,
+    val personImageUid: String? = null,
     @SerializedName("messageTime")
-    val date: String
+    val date: String? = null
 )
 
 data class ChatMessageRequest(
-    val chatUid: String,
+    val chatUid: String? = null,
     @SerializedName("content")
-    val text: String,
-    val images: List<String>
+    val text: String? = null,
+    val images: List<String>? = emptyList()
 )

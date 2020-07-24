@@ -25,7 +25,7 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             listener.onPersonClick(person.personUid)
         }
         itemView.button_chat.setOnClickListener {
-            listener.onChatClick(person.personUid)
+            listener.onChatClick(person.name, person.personUid)
         }
         if (person.isFriend) {
             itemView.button_add_to_friends.visibility = View.GONE

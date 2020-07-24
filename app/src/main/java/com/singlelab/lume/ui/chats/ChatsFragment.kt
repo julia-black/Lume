@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.Navigation
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.singlelab.net.model.chat.ChatInfo
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
-import com.singlelab.lume.ui.chat.ChatView.Companion.CHAT_TITLE_BUNDLE_KEY
+import com.singlelab.lume.base.OnlyForAuthFragments
+import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
+import com.singlelab.lume.ui.chats.common.ChatItem
 import com.singlelab.lume.ui.chats.common.ChatsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chats.*
@@ -19,7 +21,7 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ChatsFragment : BaseFragment(), ChatsView {
+class ChatsFragment : BaseFragment(), ChatsView, OnlyForAuthFragments {
     @Inject
     lateinit var daggerPresenter: ChatsPresenter
 
@@ -29,11 +31,11 @@ class ChatsFragment : BaseFragment(), ChatsView {
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
 
-    private val onChatClicked: (ChatInfo) -> Unit = {
-        navigateToChat(it.title)
+    private val onChatClicked: (ChatItem) -> Unit = { chatInfo ->
+        navigateToChat(chatInfo.title, chatInfo.uid)
     }
 
-    private val onChatLongClicked: (ChatInfo) -> Boolean = {
+    private val onChatLongClicked: (ChatItem) -> Boolean = {
         true
     }
 
@@ -50,14 +52,24 @@ class ChatsFragment : BaseFragment(), ChatsView {
         chatsView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
     }
 
-    override fun showChats(chats: List<ChatInfo>) {
+    override fun showChats(chats: List<ChatItem>) {
         chatsAdapter.setChats(chats)
         chatsAdapter.notifyDataSetChanged()
     }
 
-    private fun navigateToChat(chatTitle: String) {
-        //TODO: Use androidx.core:core-ktx or write extension bundleOf()
-        val chatTitleBundle = Bundle().apply { putString(CHAT_TITLE_BUNDLE_KEY, chatTitle) }
-        Navigation.createNavigateOnClickListener(R.id.navigate_from_chats_to_chat, chatTitleBundle).onClick(view)
+    override fun showEmptyChats() {
+        // TODO: Сделать нормальный плейсхолер с сообщением, что нет чатов
+        showError("У вас нет активных чатов")
+    }
+
+    private fun navigateToChat(chatTitle: String, chatUid: String) {
+        findNavController().navigate(
+            ChatsFragmentDirections.actionFromChatsToChat(
+                ChatOpeningInvocationType.Common(
+                    title = chatTitle,
+                    chatUid = chatUid
+                )
+            )
+        )
     }
 }

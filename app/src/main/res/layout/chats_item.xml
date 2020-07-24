@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
     android:clickable="true"
-    android:focusable="true"
-    android:background="?selectableItemBackground">
+    android:focusable="true">
 
     <ImageView
         android:id="@+id/chatsImageView"
@@ -27,12 +27,27 @@
         android:layout_marginStart="10dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textColor="#000000"
+        android:textColor="#2C2C2C"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@id/chatsImageView"
+        app:layout_constraintBottom_toTopOf="@id/chatsLastMessageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/chatsImageView"
         app:layout_constraintTop_toTopOf="@id/chatsImageView"
         tools:text="Medium-Long Chat title" />
+
+    <TextView
+        android:id="@+id/chatsLastMessageView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="#A1A1A1"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/chatsImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/chatsImageView"
+        app:layout_constraintTop_toBottomOf="@id/chatsTitleView"
+        tools:text="Medium-Long Last Message" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

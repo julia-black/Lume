@@ -16,6 +16,7 @@ class Event(
     val status: Int = 0,
     val type: Int = 0,
     val eventImageContentUid: String? = null,
+    val chatUid: String? = null,
     val participants: List<Person> = listOf(),
     val administrator: Person? = null
 ) {
@@ -35,6 +36,7 @@ class Event(
                     eventResponse.status,
                     eventResponse.type,
                     eventResponse.eventImageContentUid,
+                    eventResponse.chatUid,
                     eventResponse.participants.mapNotNull { Person.fromResponse(it) },
                     Person.fromResponse(eventResponse.administrator)
                 )

@@ -13,6 +13,7 @@ import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.Event
+import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
 import dagger.hilt.android.AndroidEntryPoint
@@ -104,8 +105,9 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments {
             presenter.onClickAdministrator()
         }
         button_chat.setOnClickListener {
-            presenter.event?.eventUid?.let { eventUid ->
-                toChat(eventUid)
+            val event = presenter.event
+            if (event?.chatUid != null) {
+                toChat(event.name, event.chatUid)
             }
         }
         button_invite.setOnClickListener {
@@ -115,8 +117,15 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments {
         }
     }
 
-    private fun toChat(eventUid: String) {
-        //todo переход в чат события
+    private fun toChat(eventName: String, chatUid: String) {
+        findNavController().navigate(
+            EventFragmentDirections.actionFromEventToChat(
+                ChatOpeningInvocationType.Person(
+                    title = eventName,
+                    personUid = chatUid
+                )
+            )
+        )
     }
 
     private fun toInvite(eventUid: String) {

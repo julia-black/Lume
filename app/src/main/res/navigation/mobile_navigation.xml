@@ -16,9 +16,11 @@
         android:name="com.singlelab.lume.ui.events.EventsFragment"
         android:label="@string/title_events"
         tools:layout="@layout/fragment_events">
+
         <action
             android:id="@+id/action_events_to_creating_event"
             app:destination="@id/creating_event" />
+
         <action
             android:id="@+id/action_events_to_event"
             app:destination="@id/event" />
@@ -29,9 +31,11 @@
         android:name="com.singlelab.lume.ui.creating_event.CreatingEventFragment"
         android:label="@string/title_creating_event"
         tools:layout="@layout/fragment_creating_event">
+
         <action
             android:id="@+id/action_creating_event_to_events"
             app:destination="@id/events" />
+
         <action
             android:id="@+id/action_creating_event_to_event"
             app:destination="@id/event" />
@@ -44,30 +48,39 @@
         tools:layout="@layout/fragment_chats">
 
         <action
-            android:id="@+id/navigate_from_chats_to_chat"
-            app:destination="@id/navigation_chat" />
+            android:id="@+id/action_from_chats_to_chat"
+            app:destination="@id/chat" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_chat"
+        android:id="@+id/chat"
         android:name="com.singlelab.lume.ui.chat.ChatFragment"
         android:label="@string/chat_title"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat">
+
+        <argument
+            android:name="chatType"
+            app:argType="com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType" />
+    </fragment>
 
     <fragment
         android:id="@+id/my_profile"
         android:name="com.singlelab.lume.ui.my_profile.MyProfileFragment"
         android:label="@string/title_my_profile"
         tools:layout="@layout/fragment_my_profile">
+
         <action
             android:id="@+id/action_my_profile_to_auth"
             app:destination="@id/auth" />
+
         <action
             android:id="@+id/action_my_profile_to_event"
             app:destination="@id/event" />
+
         <action
             android:id="@+id/action_my_profile_to_friends"
             app:destination="@id/friends" />
+
         <action
             android:id="@+id/action_my_profile_to_person"
             app:destination="@id/person" />
@@ -78,9 +91,11 @@
         android:name="com.singlelab.lume.ui.auth.AuthFragment"
         android:label="@string/title_auth"
         tools:layout="@layout/fragment_auth">
+
         <action
             android:id="@+id/action_auth_to_registration"
             app:destination="@id/registration" />
+
         <action
             android:id="@+id/action_auth_to_my_profile"
             app:destination="@id/my_profile" />
@@ -96,47 +111,66 @@
             android:id="@+id/action_registration_to_my_profile"
             app:destination="@id/my_profile" />
     </fragment>
+
     <fragment
         android:id="@+id/event"
         android:name="com.singlelab.lume.ui.event.EventFragment"
         android:label="EventFragment"
         tools:layout="@layout/fragment_event">
+
         <argument
             android:name="eventUid"
             app:argType="string" />
+
         <action
             android:id="@+id/action_event_to_my_profile"
             app:destination="@id/my_profile" />
+
         <action
             android:id="@+id/action_event_to_person"
             app:destination="@id/person" />
+
         <action
             android:id="@+id/action_event_to_friends"
             app:destination="@id/friends" />
+
+        <action
+            android:id="@+id/action_from_event_to_chat"
+            app:destination="@id/chat" />
     </fragment>
+
     <fragment
         android:id="@+id/friends"
         android:name="com.singlelab.lume.ui.friends.FriendsFragment"
         android:label="FriendsFragment"
         tools:layout="@layout/fragment_friends">
+
         <argument
             android:name="isSearch"
             android:defaultValue="false"
             app:argType="boolean" />
+
         <action
             android:id="@+id/action_friends_to_person"
             app:destination="@id/person" />
+
         <argument
             android:name="eventUid"
+            android:defaultValue="@null"
             app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
+
+        <action
+            android:id="@+id/action_from_friends_to_chat"
+            app:destination="@id/chat" />
     </fragment>
+
     <fragment
         android:id="@+id/person"
         android:name="com.singlelab.lume.ui.person.PersonFragment"
         android:label="PersonFragment"
         tools:layout="@layout/fragment_person">
+
         <argument
             android:name="personUid"
             app:argType="string" />

@@ -15,6 +15,7 @@ class EventResponse(
     val status: Int = 0,
     val type: Int = 0,
     val eventImageContentUid: String? = null,
+    val chatUid: String? = null,
     val participants: List<PersonResponse> = listOf(),
     val administrator: PersonResponse? = null
 )

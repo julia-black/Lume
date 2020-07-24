@@ -4,16 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.singlelab.net.model.chat.ChatInfo
+import com.bumptech.glide.Glide
 import com.singlelab.lume.R
+import com.singlelab.lume.util.generateImageLink
+import com.singlelab.lume.util.isVisible
 import kotlinx.android.synthetic.main.chats_item.view.*
 
 class ChatsAdapter(
-    private val onClickAction: (ChatInfo) -> Unit,
-    private val onLongClickAction: (ChatInfo) -> Boolean
+    private val onClickAction: (ChatItem) -> Unit,
+    private val onLongClickAction: (ChatItem) -> Boolean
 ) : RecyclerView.Adapter<ChatsAdapter.ChatsItemViewHolder>() {
 
-    private var chats = mutableListOf<ChatInfo>()
+    private var chats = mutableListOf<ChatItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ChatsItemViewHolder(
@@ -27,21 +29,28 @@ class ChatsAdapter(
 
     override fun getItemCount() = chats.size
 
-    fun setChats(chats: List<ChatInfo>) {
+    fun setChats(chats: List<ChatItem>) {
         this.chats.clear()
         this.chats.addAll(chats)
     }
 
     class ChatsItemViewHolder(
         view: View,
-        private val onClickAction: (ChatInfo) -> Unit,
-        private val onLongClickAction: (ChatInfo) -> Boolean
+        private val onClickAction: (ChatItem) -> Unit,
+        private val onLongClickAction: (ChatItem) -> Boolean
     ) : RecyclerView.ViewHolder(view) {
-        fun bind(chat: ChatInfo) {
+        fun bind(chat: ChatItem) {
             itemView.chatsTitleView.text = chat.title
-            //view.setImage(chat.image)
-            //val image = itemView.context.resources.getIdentifier("ic_baseline_image_50", "drawable", itemView.context.packageName)
-            //view.setImage(image)
+            itemView.chatsLastMessageView.isVisible = chat.lastMessage.isNotEmpty()
+            itemView.chatsLastMessageView.text = chat.lastMessage
+
+            // TODO: Понять какую картинку чата мы хотим отображать для групповых чатов
+            // TODO: Подумать, может, стоит сделать для глайда интерсептор для хедеров, тогда, вероятно, стоить инжектить глайд
+            if (chat.image.generateImageLink().isNotEmpty()) {
+                Glide.with(itemView)
+                    .load(chat.image.generateImageLink())
+                    .into(itemView.chatsImageView)
+            }
 
             itemView.setOnClickListener { onClickAction(chat) }
             itemView.setOnLongClickListener { onLongClickAction(chat) }

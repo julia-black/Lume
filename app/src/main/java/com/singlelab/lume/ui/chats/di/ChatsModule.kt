@@ -21,35 +21,31 @@ object ChatsModule {
     @Provides
     fun providePresenter(
         interactor: ChatsInteractor
-    ): ChatsPresenter =
-        ChatsPresenter(
-            interactor = interactor,
-            preferences = LumeApplication.preferences
-        )
+    ): ChatsPresenter = ChatsPresenter(
+        interactor = interactor,
+        preferences = LumeApplication.preferences
+    )
 
     @Provides
     fun provideInteractor(
         remoteRepository: RemoteChatsRepository,
         localRepository: LocalChatsRepository
-    ): ChatsInteractor =
-        DefaultChatsInteractor(
-            remoteRepository = remoteRepository,
-            localRepository = localRepository
-        )
+    ): ChatsInteractor = DefaultChatsInteractor(
+        remoteRepository = remoteRepository,
+        localRepository = localRepository
+    )
 
     @Provides
     fun provideRemoteRepository(
         apiUnit: ApiUnit
-    ): RemoteChatsRepository =
-        DefaultChatsRepository(
-            apiUnit = apiUnit
-        )
+    ): RemoteChatsRepository = DefaultChatsRepository(
+        apiUnit = apiUnit
+    )
 
     @Provides
     fun provideLocalRepository(
         database: LumeDatabase
-    ): LocalChatsRepository =
-        RoomChatsRepository(
-            db = database
-        )
+    ): LocalChatsRepository = RoomChatsRepository(
+        db = database
+    )
 }

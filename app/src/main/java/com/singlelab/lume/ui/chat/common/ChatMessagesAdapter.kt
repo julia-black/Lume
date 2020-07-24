@@ -4,19 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.singlelab.net.model.chat.ChatMessage
 import com.singlelab.lume.R
 
-class ChatAdapter() : RecyclerView.Adapter<ChatAdapter.ChatMessageViewHolder>() {
+class ChatMessagesAdapter : RecyclerView.Adapter<ChatMessagesAdapter.ChatMessageViewHolder>() {
 
-    private val messages = mutableListOf<ChatMessage>()
+    private val messages = mutableListOf<ChatMessageItem>()
 
     override fun getItemViewType(position: Int) = messages[position].type.code
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatMessageViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            ChatMessage.Type.INCOMING.code -> IncomingMessageViewHolder(inflater.inflate(R.layout.incoming_message_item, parent, false))
+            ChatMessageItem.Type.INCOMING.code -> IncomingMessageViewHolder(inflater.inflate(R.layout.incoming_message_item, parent, false))
             else -> OutgoingMessageViewHolder(inflater.inflate(R.layout.outgoing_message_item, parent, false))
         }
     }
