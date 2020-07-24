@@ -10,8 +10,8 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.profile.Person
-import com.singlelab.lume.ui.friends.adapter.OnPersonItemClickListener
-import com.singlelab.lume.ui.friends.adapter.PersonsAdapter
+import com.singlelab.lume.ui.view.person.OnPersonItemClickListener
+import com.singlelab.lume.ui.view.person.PersonsAdapter
 import com.singlelab.lume.util.TextInputDebounce
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_friends.*
@@ -80,7 +80,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
         }
     }
 
-    override fun showFriends(friends: List<Person>?) {
+    override fun showFriends(friends: MutableList<Person>?) {
         isSearchResults = false
         title_empty_search.visibility = View.GONE
         recycler_search_results.visibility = View.GONE
@@ -89,11 +89,16 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
         } else {
             title_empty_friends.visibility = View.GONE
             recycler_friends.visibility = View.VISIBLE
-            recycler_friends.adapter = PersonsAdapter(friends, presenter.eventUid, this)
+            recycler_friends.adapter =
+                PersonsAdapter(
+                    friends,
+                    presenter.eventUid,
+                    this
+                )
         }
     }
 
-    override fun showSearchResult(searchResults: List<Person>?) {
+    override fun showSearchResult(searchResults: MutableList<Person>?) {
         isSearchResults = true
         recycler_friends.visibility = View.GONE
         title_empty_friends.visibility = View.GONE
@@ -105,7 +110,11 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
             recycler_search_results.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 visibility = View.VISIBLE
-                adapter = PersonsAdapter(searchResults, presenter.eventUid, this@FriendsFragment)
+                adapter = PersonsAdapter(
+                    searchResults,
+                    presenter.eventUid,
+                    this@FriendsFragment
+                )
             }
         }
     }
@@ -122,7 +131,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
         presenter.addToFriends(personUid)
     }
 
-    override fun onInviteClick(personUid: String, eventUid: String) {
+    override fun onAcceptClick(personUid: String, eventUid: String) {
         presenter.invitePerson(personUid, eventUid, isSearchResults)
     }
 

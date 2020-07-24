@@ -18,8 +18,8 @@ import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.base.listeners.OnLogoutListener
 import com.singlelab.lume.model.profile.Profile
-import com.singlelab.lume.ui.view.adapter.ImagePersonAdapter
-import com.singlelab.lume.ui.view.adapter.OnPersonImageClickListener
+import com.singlelab.lume.ui.view.image_person.ImagePersonAdapter
+import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.getBitmap
 import com.theartofdev.edmodo.cropper.CropImage

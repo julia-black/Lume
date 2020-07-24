@@ -9,6 +9,7 @@
     <string name="title_registration">Регистрация</string>
     <string name="title_creating_event">Создание события</string>
     <string name="title_new_event">Новое событие</string>
+    <string name="title_participants">Участники</string>
     <string name="meizu_model">MEIZU</string>
 
     <!-- Auth -->
@@ -30,9 +31,10 @@
     <string name="type_event">Тип события</string>
     <string name="title">Название</string>
     <string name="min_age">Минимальный возраст</string>
+    <string name="max_age">Максимальный возраст</string>
     <string name="publish_event">Опубликовать</string>
     <string name="invite">Пригласить</string>
-    <string name="max_age">Максимальный возраст</string>
+    <string name="event_is_open">Событие открытое (подтверждение участия не требуется)</string>
     <string name="date_start">Начало события</string>
     <string name="date_end">Окончание события</string>
     <string name="enter_fields">Заполните обязательные параметры</string>
@@ -59,6 +61,5 @@
 
     <!-- Chat -->
     <string name="chat_title">Чат</string>
-    <string name="event_is_open">Событие открытое (подтверждение участия не требуется)</string>
 
 </resources>

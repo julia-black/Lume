@@ -4,18 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
-import com.singlelab.lume.util.TextInputDebounce
+import com.singlelab.lume.model.profile.Person
+import com.singlelab.lume.ui.view.person.OnPersonItemClickListener
+import com.singlelab.lume.ui.view.person.PersonsAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_participants.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class ParticipantsFragment : BaseFragment(), ParticipantsView, OnlyForAuthFragments {
+class ParticipantsFragment : BaseFragment(), ParticipantsView, OnlyForAuthFragments,
+    OnPersonItemClickListener {
 
     @Inject
     lateinit var daggerPresenter: ParticipantsPresenter
@@ -25,10 +31,6 @@ class ParticipantsFragment : BaseFragment(), ParticipantsView, OnlyForAuthFragme
 
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
-
-    private var searchDebounce: TextInputDebounce? = null
-
-    private var isSearchResults = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,14 +43,48 @@ class ParticipantsFragment : BaseFragment(), ParticipantsView, OnlyForAuthFragme
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.let {
-            it.title = getString(R.string.title_my_friends)
+            it.title = getString(R.string.title_participants)
         }
         arguments?.let {
-//            val isSearch = FriendsFragmentArgs.fromBundle(it).isSearch
-//            if (isSearch) {
-//                edit_text_search.requestFocus()
-//            }
-//            presenter.eventUid = FriendsFragmentArgs.fromBundle(it).eventUid
+            ParticipantsFragmentArgs.fromBundle(it).let { args ->
+                presenter.withNotApproved = args.withNotApproved
+                presenter.eventUid = args.eventUid
+                presenter.participants = args.participants
+            }
         }
+        recycler_participants.apply {
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            visibility = View.VISIBLE
+            presenter.participants?.toMutableList()?.let { list ->
+                adapter = PersonsAdapter(
+                    list,
+                    presenter.eventUid,
+                    this@ParticipantsFragment
+                )
+            }
+        }
+    }
+
+    override fun onPersonClick(personUid: String) {
+        findNavController().navigate(
+            ParticipantsFragmentDirections.actionParticipantsToPerson(
+                personUid
+            )
+        )
+    }
+
+    override fun onChatClick(personUid: String) {
+    }
+
+    override fun onAddToFriends(personUid: String) {
+    }
+
+    override fun onAcceptClick(personUid: String, eventUid: String) {
+        presenter.approvePerson(personUid, eventUid)
+    }
+
+    override fun showParticipants(list: List<Person>) {
+        (recycler_participants.adapter as PersonsAdapter).setData(list)
     }
 }

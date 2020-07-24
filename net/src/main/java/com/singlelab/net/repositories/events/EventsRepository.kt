@@ -12,4 +12,6 @@ interface EventsRepository {
     suspend fun getRandomEvent(randomEventRequest: RandomEventRequest): EventResponse?
 
     suspend fun addParticipantsAsync(participantRequest: ParticipantRequest)
+
+    suspend fun updateParticipantsAsync(participantRequest: ParticipantRequest)
 }

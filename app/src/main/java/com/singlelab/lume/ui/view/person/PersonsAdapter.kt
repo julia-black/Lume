@@ -1,4 +1,4 @@
-package com.singlelab.lume.ui.friends.adapter
+package com.singlelab.lume.ui.view.person
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,14 +6,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.singlelab.lume.model.profile.Person
 
 class PersonsAdapter(
-    private val list: List<Person>,
+    private val list: MutableList<Person>,
     private val eventUid: String? = null,
     private val listener: OnPersonItemClickListener
 ) : RecyclerView.Adapter<PersonViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return PersonViewHolder(inflater, parent)
+        return PersonViewHolder(
+            inflater,
+            parent
+        )
     }
 
     override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
@@ -23,4 +26,9 @@ class PersonsAdapter(
 
     override fun getItemCount(): Int = list.size
 
+    fun setData(list: List<Person>) {
+        this.list.clear()
+        this.list.addAll(list)
+        notifyDataSetChanged()
+    }
 }

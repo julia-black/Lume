@@ -19,9 +19,9 @@ class FriendsPresenter @Inject constructor(
 
     var eventUid: String? = null
 
-    private var friends: List<Person>? = null
+    private var friends: MutableList<Person>? = null
 
-    private var searchResults: List<Person>? = null
+    private var searchResults: MutableList<Person>? = null
 
     private var pageNumber = 1
 
@@ -32,7 +32,7 @@ class FriendsPresenter @Inject constructor(
         viewState.showLoading(true)
         invokeSuspend {
             try {
-                friends = interactor.getFriends(uid)
+                friends = interactor.getFriends(uid)?.toMutableList()
                 runOnMainThread {
                     viewState.showLoading(false)
                     viewState.showFriends(friends)
@@ -53,7 +53,8 @@ class FriendsPresenter @Inject constructor(
             viewState.showLoading(true)
             invokeSuspend {
                 try {
-                    searchResults = interactor.search(searchStr, pageNumber, pageSize)
+                    searchResults =
+                        interactor.search(searchStr, pageNumber, pageSize)?.toMutableList()
                     runOnMainThread {
                         viewState.showLoading(false)
                         viewState.showSearchResult(searchResults)

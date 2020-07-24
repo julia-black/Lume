@@ -6,7 +6,7 @@ enum class ParticipantStatus(val id: Int) {
     ACTIVE(2);
 
     companion object {
-        fun findStatus(id: Int): ParticipantStatus? {
+        fun findStatus(id: Int?): ParticipantStatus? {
             return values().find {
                 it.id == id
             }

@@ -9,7 +9,7 @@
         android:id="@+id/swiper_event"
         android:name="com.singlelab.lume.ui.swiper_event.SwiperEventFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_swiper_event" >
+        tools:layout="@layout/fragment_swiper_event">
         <action
             android:id="@+id/action_swiper_event_to_event"
             app:destination="@id/event" />
@@ -120,6 +120,9 @@
         <action
             android:id="@+id/action_event_to_friends"
             app:destination="@id/friends" />
+        <action
+            android:id="@+id/action_event_to_participants"
+            app:destination="@id/participants" />
     </fragment>
     <fragment
         android:id="@+id/friends"
@@ -135,9 +138,9 @@
             app:destination="@id/person" />
         <argument
             android:name="eventUid"
+            android:defaultValue="@null"
             app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/person"
@@ -152,5 +155,24 @@
         android:id="@+id/search_event"
         android:name="com.singlelab.lume.ui.search_event.SearchEventFragment"
         android:label="SearchEventFragment"
-        tools:layout="@layout/fragment_search_event"/>
+        tools:layout="@layout/fragment_search_event" />
+    <fragment
+        android:id="@+id/participants"
+        android:name="com.singlelab.lume.ui.participants.ParticipantsFragment"
+        android:label="ParticipantsFragment"
+        tools:layout="@layout/fragment_participants">
+        <argument
+            android:name="withNotApproved"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <argument
+            android:name="eventUid"
+            app:argType="string" />
+        <argument
+            android:name="participants"
+            app:argType="com.singlelab.lume.model.profile.Person[]" />
+        <action
+            android:id="@+id/action_participants_to_person"
+            app:destination="@id/person" />
+    </fragment>
 </navigation>

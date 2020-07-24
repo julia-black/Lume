@@ -3,6 +3,7 @@ package com.singlelab.lume.ui.event
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.event.Event
+import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.event.interactor.EventInteractor
 import com.singlelab.net.exceptions.ApiException
@@ -47,5 +48,21 @@ class EventPresenter @Inject constructor(
                 viewState.toProfile(it)
             }
         }
+    }
+
+    fun getEventUid(): String? = event?.eventUid
+
+    fun getParticipant(withNotApproved: Boolean): Array<Person>? {
+        event?.let { event ->
+            return if (withNotApproved) {
+                val allParticipants = mutableListOf<Person>()
+                allParticipants.addAll(event.notApprovedParticipants)
+                allParticipants.addAll(event.participants)
+                allParticipants.map { it }.toTypedArray()
+            } else {
+                event.participants.map { it }.toTypedArray()
+            }
+        }
+        return null
     }
 }

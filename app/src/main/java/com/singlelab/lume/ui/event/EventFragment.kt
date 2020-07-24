@@ -14,8 +14,8 @@ import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.Event
-import com.singlelab.lume.ui.view.adapter.ImagePersonAdapter
-import com.singlelab.lume.ui.view.adapter.OnPersonImageClickListener
+import com.singlelab.lume.ui.view.image_person.ImagePersonAdapter
+import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
 import com.singlelab.net.model.auth.AuthData
@@ -98,10 +98,11 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             recycler_participants.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 visibility = View.VISIBLE
-                adapter = ImagePersonAdapter(
-                    event.participants,
-                    this@EventFragment
-                )
+                adapter =
+                    ImagePersonAdapter(
+                        event.participants,
+                        this@EventFragment
+                    )
             }
         }
         if (event.notApprovedParticipants.isEmpty() || event.administrator?.personUid != AuthData.uid) {
@@ -110,6 +111,19 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             count_not_approved.visibility = View.VISIBLE
             count_not_approved.text =
                 getString(R.string.waiting_for_approve_users, event.notApprovedParticipants.size)
+            count_not_approved.setOnClickListener {
+                toParticipants(true)
+            }
+        }
+    }
+
+    private fun toParticipants(withNotApproved: Boolean) {
+        presenter.getEventUid() ?: return
+        presenter.getParticipant(withNotApproved)?.let {
+            val action =
+                EventFragmentDirections.actionEventToParticipants(presenter.getEventUid()!!, it)
+            action.withNotApproved = withNotApproved
+            findNavController().navigate(action)
         }
     }
 
