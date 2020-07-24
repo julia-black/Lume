@@ -35,6 +35,8 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
 
     private var searchDebounce: TextInputDebounce? = null
 
+    private var isSearchResults = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -53,6 +55,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
             if (isSearch) {
                 edit_text_search.requestFocus()
             }
+            presenter.eventUid = FriendsFragmentArgs.fromBundle(it).eventUid
         }
         if (hasFriends()) {
             recycler_friends.apply {
@@ -78,16 +81,20 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
     }
 
     override fun showFriends(friends: List<Person>?) {
+        isSearchResults = false
         title_empty_search.visibility = View.GONE
         recycler_search_results.visibility = View.GONE
         if (friends.isNullOrEmpty()) {
             showEmptyFriends()
         } else {
-            recycler_friends.adapter = PersonsAdapter(friends, this)
+            title_empty_friends.visibility = View.GONE
+            recycler_friends.visibility = View.VISIBLE
+            recycler_friends.adapter = PersonsAdapter(friends, presenter.eventUid, this)
         }
     }
 
     override fun showSearchResult(searchResults: List<Person>?) {
+        isSearchResults = true
         recycler_friends.visibility = View.GONE
         title_empty_friends.visibility = View.GONE
         if (searchResults.isNullOrEmpty()) {
@@ -98,7 +105,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
             recycler_search_results.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 visibility = View.VISIBLE
-                adapter = PersonsAdapter(searchResults, this@FriendsFragment)
+                adapter = PersonsAdapter(searchResults, presenter.eventUid, this@FriendsFragment)
             }
         }
     }
@@ -113,6 +120,10 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
 
     override fun onAddToFriends(personUid: String) {
         presenter.addToFriends(personUid)
+    }
+
+    override fun onInviteClick(personUid: String, eventUid: String) {
+        presenter.invitePerson(personUid, eventUid, isSearchResults)
     }
 
     private fun showEmptyFriends() {

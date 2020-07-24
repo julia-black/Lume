@@ -8,11 +8,11 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.singlelab.lume.model.Const
-import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
+import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
 import dagger.hilt.android.AndroidEntryPoint
@@ -108,10 +108,22 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments {
                 toChat(eventUid)
             }
         }
+        button_invite.setOnClickListener {
+            presenter.event?.eventUid?.let { eventUid ->
+                toInvite(eventUid)
+            }
+        }
     }
 
     private fun toChat(eventUid: String) {
         //todo переход в чат события
+    }
+
+    private fun toInvite(eventUid: String) {
+        val action = EventFragmentDirections.actionEventToFriends()
+        action.eventUid = eventUid
+        findNavController().navigate(action)
+
     }
 
     private fun showImage(imageView: ImageView, imageUid: String) {

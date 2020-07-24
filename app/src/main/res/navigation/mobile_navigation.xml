@@ -110,6 +110,9 @@
         <action
             android:id="@+id/action_event_to_person"
             app:destination="@id/person" />
+        <action
+            android:id="@+id/action_event_to_friends"
+            app:destination="@id/friends" />
     </fragment>
     <fragment
         android:id="@+id/friends"
@@ -123,6 +126,11 @@
         <action
             android:id="@+id/action_friends_to_person"
             app:destination="@id/person" />
+        <argument
+            android:name="eventUid"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/person"

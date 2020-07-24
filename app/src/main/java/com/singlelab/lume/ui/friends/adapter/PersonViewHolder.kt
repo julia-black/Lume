@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.item_person.view.*
 class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.item_person, parent, false)) {
 
-    fun bind(person: Person, listener: OnPersonItemClickListener) {
+    fun bind(person: Person, eventUid: String? = null, listener: OnPersonItemClickListener) {
         itemView.name.text = person.name
         person.imageContentUid?.let { imageUid ->
             Glide.with(itemView)
@@ -34,6 +34,22 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             itemView.button_add_to_friends.setOnClickListener {
                 listener.onAddToFriends(person.personUid)
             }
+        }
+
+        if (eventUid != null) {
+            itemView.button_chat.visibility = View.GONE
+            itemView.button_add_to_friends.visibility = View.GONE
+            if (person.isInvited) {
+                itemView.button_invite.visibility = View.GONE
+            } else {
+                itemView.button_invite.visibility = View.VISIBLE
+                itemView.button_invite.setOnClickListener {
+                    listener.onInviteClick(person.personUid, eventUid)
+                }
+            }
+        } else {
+            itemView.button_chat.visibility = View.VISIBLE
+            itemView.button_invite.visibility = View.GONE
         }
     }
 }

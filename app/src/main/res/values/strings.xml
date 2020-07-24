@@ -57,5 +57,6 @@
 
     <!-- Chat -->
     <string name="chat_title">Чат</string>
+    <string name="invite">Пригласить</string>
 
 </resources>

@@ -15,6 +15,7 @@
     <color name="colorButton">#F24C56</color>
     <color name="colorButtonPressed">#F17E85</color>
 
+    <color name="colorAcceptFull">#50FB89</color>
     <color name="colorAccept">#8850FB89</color>
     <color name="colorReject">#88F24C56</color>
     <color name="colorOverlay">#80000000</color>

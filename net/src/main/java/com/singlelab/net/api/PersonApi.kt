@@ -31,6 +31,9 @@ interface PersonApi {
     @POST("image/add-person-image")
     fun updateImageProfileAsync(@Body content: ContentRequest): Deferred<Response<ImageUidResponse>>
 
+    @GET("friends/get-friends")
+    fun getFriendsAsync(@Query("personUid") personUid: String): Deferred<Response<List<PersonResponse>>>
+
     @POST("friends/add")
     fun addToFriendsAsync(@Query("friendGuid") personUid: String): Deferred<Response<MessageResponse>>
 

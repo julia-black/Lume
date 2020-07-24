@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/empty_friends"
+        android:text="@string/empty_search"
         android:textSize="@dimen/text_size_medium"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

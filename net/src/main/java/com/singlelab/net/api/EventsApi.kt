@@ -1,9 +1,7 @@
 package com.singlelab.net.api
 
-import com.singlelab.net.model.event.EventRequest
-import com.singlelab.net.model.event.EventResponse
-import com.singlelab.net.model.event.EventSummaryResponse
-import com.singlelab.net.model.event.EventUidResponse
+import com.singlelab.net.model.MessageResponse
+import com.singlelab.net.model.event.*
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.Body
@@ -21,4 +19,7 @@ interface EventsApi {
 
     @POST("event/add-event")
     fun addEventAsync(@Body event: EventRequest): Deferred<Response<EventUidResponse>>
+
+    @POST("event/add-event-participant")
+    fun invitePersonAsync(@Body participantRequest: ParticipantRequest): Deferred<Response<MessageResponse>>
 }

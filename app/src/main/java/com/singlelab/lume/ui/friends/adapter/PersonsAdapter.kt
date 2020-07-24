@@ -7,6 +7,7 @@ import com.singlelab.lume.model.profile.Person
 
 class PersonsAdapter(
     private val list: List<Person>,
+    private val eventUid: String? = null,
     private val listener: OnPersonItemClickListener
 ) : RecyclerView.Adapter<PersonViewHolder>() {
 
@@ -17,7 +18,7 @@ class PersonsAdapter(
 
     override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
         val person = list[position]
-        holder.bind(person, listener)
+        holder.bind(person, eventUid, listener)
     }
 
     override fun getItemCount(): Int = list.size

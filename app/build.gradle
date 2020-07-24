@@ -38,7 +38,6 @@ android {
 
 dependencies {
     implementation project(":net")
-    implementation project(":data")
     implementation project(":lume-database")
     implementation fileTree(dir: "libs", include: ["*.jar"])
 

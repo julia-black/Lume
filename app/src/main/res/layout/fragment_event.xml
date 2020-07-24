@@ -61,6 +61,24 @@
             app:layout_constraintTop_toBottomOf="@id/image"
             tools:text="Название" />
 
+        <Button
+            android:id="@+id/button_invite"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp"
+            android:text="@string/invite"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:rippleColor="@color/colorAccentLight"
+            app:strokeColor="@color/colorAccent"
+            app:strokeWidth="1dp" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_image_administrator"
@@ -98,7 +116,7 @@
             android:drawablePadding="@dimen/margin_small"
             android:text="@string/date_start"
             app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/title" />
+            app:layout_constraintTop_toBottomOf="@id/button_invite" />
 
         <TextView
             android:id="@+id/end_date"
