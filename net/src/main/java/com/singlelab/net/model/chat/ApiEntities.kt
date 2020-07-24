@@ -32,7 +32,9 @@ data class ChatMessageResponse(
     val images: List<String>,
     val personName: String,
     val personUid: String,
-    val personImageUid: String
+    val personImageUid: String,
+    @SerializedName("messageTime")
+    val date: String
 )
 
 data class ChatMessageRequest(
