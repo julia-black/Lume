@@ -12,5 +12,6 @@ class EventSummaryResponse(
     val yCoordinate: Float,
     val status: Int,
     val isAdministrator: Boolean = false,
-    val participantStatus: Int = 0
+    val participantStatus: Int = 0,
+    val anyPersonWaitingForApprove: Boolean
 )

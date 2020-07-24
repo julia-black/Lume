@@ -8,7 +8,7 @@ import com.singlelab.lume.ui.swiper_event.interactor.SwiperEventInteractor
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.event.ParticipantRequest
-import com.singlelab.lume.model.event.ParticipantStatus
+import com.singlelab.net.model.event.ParticipantStatus
 import com.singlelab.net.model.event.RandomEventRequest
 import moxy.InjectViewState
 import javax.inject.Inject
@@ -25,6 +25,7 @@ class SwiperEventPresenter @Inject constructor(
         super.onFirstViewAttach()
         loadRandomEvent()
     }
+
     fun loadRandomEvent() {
         viewState.showLoading(true)
         invokeSuspend {
@@ -57,7 +58,7 @@ class SwiperEventPresenter @Inject constructor(
                         ParticipantRequest(
                             uid,
                             eventUid,
-                            ParticipantStatus.ACTIVE.id //todo в дальнейшем будем определять, переводим в статус ACTIVE или WAITING_FOR_APPROVE_FROM_EVENT
+                            if (event!!.isOpenForInvitations) ParticipantStatus.ACTIVE.id else ParticipantStatus.WAITING_FOR_APPROVE_FROM_EVENT.id
                         )
                     )
                     event = null

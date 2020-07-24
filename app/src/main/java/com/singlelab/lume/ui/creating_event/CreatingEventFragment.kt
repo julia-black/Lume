@@ -12,12 +12,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.singlelab.lume.model.Const
-import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.ui.creating_event.adapter.EventImagesAdapter
 import com.singlelab.lume.ui.creating_event.adapter.OnImageClickListener
 import com.singlelab.lume.util.formatToUTC
@@ -119,7 +118,8 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                     xCoordinate = 51.5819596F,
                     yCoordinate = 46.0621339F,
                     startTime = presenter.currentDateStart?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE),
-                    endTime = presenter.currentDateEnd?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE)
+                    endTime = presenter.currentDateEnd?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE),
+                    isOpenForInvitations = switch_open_event.isChecked
                 )
                 presenter.createEvent(event)
             } else {

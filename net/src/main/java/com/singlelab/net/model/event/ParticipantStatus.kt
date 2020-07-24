@@ -1,4 +1,4 @@
-package com.singlelab.lume.model.event
+package com.singlelab.net.model.event
 
 enum class ParticipantStatus(val id: Int) {
     WAITING_FOR_APPROVE_FROM_USER(0),

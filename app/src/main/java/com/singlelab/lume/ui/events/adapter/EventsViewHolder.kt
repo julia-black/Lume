@@ -8,9 +8,9 @@ import com.bumptech.glide.Glide
 import com.singlelab.lume.R
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.EventSummary
-import com.singlelab.lume.model.event.ParticipantStatus
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
+import com.singlelab.net.model.event.ParticipantStatus
 import kotlinx.android.synthetic.main.item_event.view.*
 
 class EventsViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
@@ -39,6 +39,11 @@ class EventsViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             else -> {
                 itemView.participant_status.visibility = View.GONE
             }
+        }
+        if (event.anyPersonWaitingForApprove) {
+            itemView.icon_notifications.visibility = View.VISIBLE
+        } else {
+            itemView.icon_notifications.visibility = View.GONE
         }
     }
 }

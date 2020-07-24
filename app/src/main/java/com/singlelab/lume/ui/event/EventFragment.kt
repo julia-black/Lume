@@ -18,6 +18,7 @@ import com.singlelab.lume.ui.view.adapter.ImagePersonAdapter
 import com.singlelab.lume.ui.view.adapter.OnPersonImageClickListener
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
+import com.singlelab.net.model.auth.AuthData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_event.*
 import moxy.presenter.InjectPresenter
@@ -103,7 +104,13 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                 )
             }
         }
-
+        if (event.notApprovedParticipants.isEmpty() || event.administrator?.personUid != AuthData.uid) {
+            count_not_approved.visibility = View.GONE
+        } else {
+            count_not_approved.visibility = View.VISIBLE
+            count_not_approved.text =
+                getString(R.string.waiting_for_approve_users, event.notApprovedParticipants.size)
+        }
     }
 
     override fun toMyProfile() {
