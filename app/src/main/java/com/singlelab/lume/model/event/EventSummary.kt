@@ -1,6 +1,7 @@
 package com.singlelab.lume.model.event
 
 import com.singlelab.net.model.event.EventSummaryResponse
+import com.singlelab.net.model.event.ParticipantStatus
 
 class EventSummary(
     val eventUid: String,
@@ -13,7 +14,9 @@ class EventSummary(
     val xCoordinate: Float,
     val yCoordinate: Float,
     val status: Int,
-    val isAdministrator: Boolean = false
+    val isAdministrator: Boolean = false,
+    val participantStatus: ParticipantStatus,
+    val anyPersonWaitingForApprove: Boolean
 ) {
     companion object {
         fun fromResponse(eventSummaryResponse: EventSummaryResponse?): EventSummary? {
@@ -29,7 +32,9 @@ class EventSummary(
                     eventSummaryResponse.xCoordinate,
                     eventSummaryResponse.yCoordinate,
                     eventSummaryResponse.status,
-                    eventSummaryResponse.isAdministrator
+                    eventSummaryResponse.isAdministrator,
+                    ParticipantStatus.findStatus(eventSummaryResponse.participantStatus)!!,
+                    eventSummaryResponse.anyPersonWaitingForApprove
                 )
             } else {
                 null

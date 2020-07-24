@@ -9,4 +9,11 @@
         android:visible="false"
         app:showAsAction="ifRoom"
         tools:visible="true" />
+
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_search_menu"
+        android:visible="false"
+        app:showAsAction="ifRoom"
+        tools:visible="true" />
 </menu>

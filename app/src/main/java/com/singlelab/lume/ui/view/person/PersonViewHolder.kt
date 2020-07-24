@@ -1,4 +1,4 @@
-package com.singlelab.lume.ui.friends.adapter
+package com.singlelab.lume.ui.view.person
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.singlelab.lume.R
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.util.generateImageLink
+import com.singlelab.net.model.event.ParticipantStatus
 import kotlinx.android.synthetic.main.item_person.view.*
 
 
@@ -39,12 +40,12 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         if (eventUid != null) {
             itemView.button_chat.visibility = View.GONE
             itemView.button_add_to_friends.visibility = View.GONE
-            if (person.isInvited) {
+            if (person.isInvited || person.participantStatus == ParticipantStatus.ACTIVE) {
                 itemView.button_invite.visibility = View.GONE
             } else {
                 itemView.button_invite.visibility = View.VISIBLE
                 itemView.button_invite.setOnClickListener {
-                    listener.onInviteClick(person.personUid, eventUid)
+                    listener.onAcceptClick(person.personUid, eventUid)
                 }
             }
         } else {

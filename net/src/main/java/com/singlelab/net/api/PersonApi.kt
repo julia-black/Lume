@@ -34,9 +34,9 @@ interface PersonApi {
     @GET("friends/get-friends")
     fun getFriendsAsync(@Query("personUid") personUid: String): Deferred<Response<List<PersonResponse>>>
 
-    @POST("friends/add")
+    @POST("friends/add-friend")
     fun addToFriendsAsync(@Query("friendGuid") personUid: String): Deferred<Response<MessageResponse>>
 
-    @DELETE("friends/remove")
+    @DELETE("friends/remove-friend")
     fun removeFromFriendsAsync(@Query("friendGuid") personUid: String): Deferred<Response<MessageResponse>>
 }

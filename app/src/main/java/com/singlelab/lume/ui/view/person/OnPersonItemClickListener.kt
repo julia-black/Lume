@@ -1,4 +1,4 @@
-package com.singlelab.lume.ui.friends.adapter
+package com.singlelab.lume.ui.view.person
 
 interface OnPersonItemClickListener {
     fun onPersonClick(personUid: String)
@@ -7,5 +7,5 @@ interface OnPersonItemClickListener {
 
     fun onAddToFriends(personUid: String)
 
-    fun onInviteClick(personUid: String, eventUid: String)
+    fun onAcceptClick(personUid: String, eventUid: String)
 }

@@ -1,10 +1,7 @@
 package com.singlelab.net.repositories.events
 
 import com.singlelab.net.ApiUnit
-import com.singlelab.net.model.event.EventRequest
-import com.singlelab.net.model.event.EventResponse
-import com.singlelab.net.model.event.EventSummaryResponse
-import com.singlelab.net.model.event.EventUidResponse
+import com.singlelab.net.model.event.*
 import com.singlelab.net.repositories.BaseRepository
 
 class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository, BaseRepository() {
@@ -28,7 +25,31 @@ class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository, Bas
         return safeApiCall(
             apiUnit = apiUnit,
             call = { apiUnit.eventsApi.getEventAsync(uid).await() },
-            errorMessage = "Не удалось получить список событий"
+            errorMessage = "Не удалось получить события"
+        )
+    }
+
+    override suspend fun getRandomEvent(randomEventRequest: RandomEventRequest): EventResponse? {
+        return safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.eventsApi.getRandomEventAsync(randomEventRequest).await() },
+            errorMessage = "Не удалось получить событие"
+        )
+    }
+
+    override suspend fun addParticipantsAsync(participantRequest: ParticipantRequest) {
+        safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.eventsApi.addParticipantsAsync(participantRequest).await() },
+            errorMessage = "Не удалось пригласить пользователя"
+        )
+    }
+
+    override suspend fun updateParticipantsAsync(participantRequest: ParticipantRequest) {
+        safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.eventsApi.updateParticipantsAsync(participantRequest).await() },
+            errorMessage = "Не удалось подтвердить"
         )
     }
 }

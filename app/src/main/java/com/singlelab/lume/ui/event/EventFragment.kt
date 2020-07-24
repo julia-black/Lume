@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
@@ -14,8 +15,11 @@ import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
+import com.singlelab.lume.ui.view.image_person.ImagePersonAdapter
+import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
+import com.singlelab.net.model.auth.AuthData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_event.*
 import moxy.presenter.InjectPresenter
@@ -23,7 +27,7 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments {
+class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonImageClickListener {
 
     @Inject
     lateinit var daggerPresenter: EventPresenter
@@ -82,10 +86,45 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments {
             event.participants.size
         )
         event.administrator?.let {
-            administrator.text = it.name
+            administrator.text = getString(R.string.administrator, it.name)
             it.imageContentUid?.let { imageUid ->
                 showImage(image_administrator, imageUid)
             }
+        }
+
+        if (event.participants.isEmpty()) {
+            recycler_participants.visibility = View.GONE
+        } else {
+            recycler_participants.visibility = View.VISIBLE
+            recycler_participants.apply {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                visibility = View.VISIBLE
+                adapter =
+                    ImagePersonAdapter(
+                        event.participants,
+                        this@EventFragment
+                    )
+            }
+        }
+        if (event.notApprovedParticipants.isEmpty() || event.administrator?.personUid != AuthData.uid) {
+            count_not_approved.visibility = View.GONE
+        } else {
+            count_not_approved.visibility = View.VISIBLE
+            count_not_approved.text =
+                getString(R.string.waiting_for_approve_users, event.notApprovedParticipants.size)
+            count_not_approved.setOnClickListener {
+                toParticipants(true)
+            }
+        }
+    }
+
+    private fun toParticipants(withNotApproved: Boolean) {
+        presenter.getEventUid() ?: return
+        presenter.getParticipant(withNotApproved)?.let {
+            val action =
+                EventFragmentDirections.actionEventToParticipants(presenter.getEventUid()!!, it)
+            action.withNotApproved = withNotApproved
+            findNavController().navigate(action)
         }
     }
 
@@ -96,6 +135,11 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments {
     override fun toProfile(personUid: String) {
         findNavController().navigate(EventFragmentDirections.actionEventToPerson(personUid))
     }
+
+    override fun onPersonClick(personUid: String) {
+        findNavController().navigate(EventFragmentDirections.actionEventToPerson(personUid))
+    }
+
 
     private fun setListeners() {
         image_administrator.setOnClickListener {

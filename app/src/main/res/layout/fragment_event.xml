@@ -66,11 +66,11 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
             android:clickable="true"
             android:focusable="true"
             android:padding="16dp"
             android:text="@string/invite"
-            android:layout_marginTop="@dimen/margin_small"
             android:textAllCaps="false"
             android:textColor="@color/colorAccent"
             android:textSize="16sp"
@@ -130,13 +130,37 @@
             app:layout_constraintTop_toBottomOf="@id/start_date" />
 
         <TextView
+            android:id="@+id/count_not_approved"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:drawableStart="@drawable/ic_notifications"
+            android:drawablePadding="@dimen/margin_small"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/end_date"
+            tools:text="Ожидают подтверждения 5 человек" />
+
+        <TextView
             android:id="@+id/count_participants"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_medium"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/end_date"
+            app:layout_constraintTop_toBottomOf="@id/count_not_approved"
             tools:text="Идут 10 человек" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_participants"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/count_participants"
+            tools:itemCount="1"
+            tools:listitem="@layout/item_image_person" />
 
         <TextView
             android:id="@+id/age"
@@ -144,7 +168,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_medium"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/count_participants"
+            app:layout_constraintTop_toBottomOf="@id/recycler_participants"
             tools:text="18-25 лет" />
 
         <TextView

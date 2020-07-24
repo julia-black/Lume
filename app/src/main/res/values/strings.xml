@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Lume</string>
-
     <string name="title_home">Главная</string>
     <string name="title_events">Мои события</string>
     <string name="title_event">Событие</string>
@@ -10,13 +9,14 @@
     <string name="title_registration">Регистрация</string>
     <string name="title_creating_event">Создание события</string>
     <string name="title_new_event">Новое событие</string>
+    <string name="title_participants">Участники</string>
+    <string name="meizu_model">MEIZU</string>
 
+    <!-- Auth -->
     <string name="enter_phone">Введите номер телефона</string>
     <string name="send_code">Отправить код</string>
     <string name="enter_code">Введите код</string>
     <string name="auth">Авторизоваться</string>
-
-    <string name="meizu_model">MEIZU</string>
     <string name="registration">Регистрация</string>
     <string name="welcome">Добро пожаловать в Lume! \nПожалуйста, заполните небольшую анкету:</string>
     <string name="name">Имя</string>
@@ -24,26 +24,31 @@
     <string name="about_yourself">Пару слов о себе</string>
     <string name="description">Расскажи подробнее о событии</string>
     <string name="to_registration">Зарегистрироваться</string>
-
     <string name="error_pick_image">Не удалось выбрать изображение</string>
+
+    <!-- Event -->
     <string name="create_event">Создать событие</string>
     <string name="type_event">Тип события</string>
     <string name="title">Название</string>
     <string name="min_age">Минимальный возраст</string>
-    <string name="publish_event">Опубликовать</string>
-
     <string name="max_age">Максимальный возраст</string>
+    <string name="publish_event">Опубликовать</string>
+    <string name="invite">Пригласить</string>
+    <string name="event_is_open">Событие открытое (подтверждение участия не требуется)</string>
     <string name="date_start">Начало события</string>
     <string name="date_end">Окончание события</string>
     <string name="enter_fields">Заполните обязательные параметры</string>
     <string name="party">Вечеринка</string>
     <string name="boozy">Пьянка</string>
-
+    <string name="administrator">%1$s (Организатор)</string>
     <string name="age_from_to">Возраст: %1$d-%2$d</string>
     <string name="age_from">Возраст: %1$d+</string>
     <string name="age_to">Возраст: до %1$d</string>
-
     <string name="count_participants">Идут %1$d человек</string>
+    <string name="waiting_for_approve_event">Ожидается подтверждение</string>
+    <string name="waiting_for_approve_users">Ожидают подтверждения %1$d человек</string>
+
+    <!-- Friends -->
     <string name="search_friends">Найти друзей</string>
     <string name="empty_friends">У вас пока нет друзей\nНайдите их!</string>
     <string name="empty_search">Ничего не найдено\nПопробуйте изменить запрос</string>
@@ -51,12 +56,10 @@
     <string name="in_friends">В друзьях</string>
     <string name="remove_from_friends">Удалить из друзей</string>
 
-
     <!-- Chats -->
     <string name="chats_title">Чаты</string>
 
     <!-- Chat -->
     <string name="chat_title">Чат</string>
-    <string name="invite">Пригласить</string>
 
 </resources>

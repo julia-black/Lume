@@ -16,10 +16,10 @@ import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
-import com.singlelab.lume.base.listeners.OnToolbarListener
+import com.singlelab.lume.base.listeners.OnLogoutListener
 import com.singlelab.lume.model.profile.Profile
-import com.singlelab.lume.ui.my_profile.adapter.ImagePersonAdapter
-import com.singlelab.lume.ui.my_profile.adapter.OnPersonImageClickListener
+import com.singlelab.lume.ui.view.image_person.ImagePersonAdapter
+import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.getBitmap
 import com.theartofdev.edmodo.cropper.CropImage
@@ -32,8 +32,9 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
-    OnActivityResultListener, OnPersonImageClickListener {
+class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
+    OnActivityResultListener,
+    OnPersonImageClickListener {
 
     @Inject
     lateinit var daggerPresenter: MyProfilePresenter
@@ -72,7 +73,6 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
     }
 
     override fun showProfile(profile: Profile) {
-        (activity as MainActivity?)?.showLogoutInToolbar(true)
         name_age.text = "${profile.name}, ${profile.age}"
         description.text = profile.description
         if (!profile.imageContentUid.isNullOrEmpty()) {
@@ -100,7 +100,10 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnToolbarListener,
             recycler_friends.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 visibility = View.VISIBLE
-                adapter = ImagePersonAdapter(profile.friends, this@MyProfileFragment)
+                adapter = ImagePersonAdapter(
+                    profile.friends,
+                    this@MyProfileFragment
+                )
             }
         }
         title_friends.setOnClickListener {

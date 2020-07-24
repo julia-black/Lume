@@ -5,7 +5,7 @@
     android:layout_width="@dimen/size_image_person_small"
     android:layout_height="@dimen/size_image_person_small"
     android:layout_marginStart="@dimen/margin_medium"
-    app:cardCornerRadius="26dp"
+    app:cardCornerRadius="20dp"
     app:cardElevation="0dp"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">

@@ -1,4 +1,4 @@
-package com.singlelab.lume.ui.friends
+package com.singlelab.lume.ui.participants
 
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
@@ -6,11 +6,7 @@ import com.singlelab.lume.model.profile.Person
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
-interface FriendsView : LoadingView, ErrorView {
-
+interface ParticipantsView : LoadingView, ErrorView {
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showFriends(friends: MutableList<Person>?)
-
-    @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showSearchResult(searchResults: MutableList<Person>?)
+    fun showParticipants(list: List<Person>)
 }
