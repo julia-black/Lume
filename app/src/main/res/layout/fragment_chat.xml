@@ -5,21 +5,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/chatTextView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <EditText
+        android:id="@+id/messageInputView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/message_input_background"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:hint="@string/chat_message_hint"
+        android:imeOptions="actionSend"
+        android:importantForAutofill="no"
+        android:inputType="textShortMessage|textMultiLine"
+        android:maxLength="500"
+        android:maxLines="3"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="48dp"
+        android:paddingBottom="12dp"
+        app:backgroundTint="#E5E5E5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/sendMessageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:src="@drawable/ic_baseline_send_24"
+        app:layout_constraintBottom_toBottomOf="@+id/messageInputView"
+        app:layout_constraintEnd_toEndOf="@id/messageInputView"
+        app:layout_constraintTop_toTopOf="@+id/messageInputView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_weight="1"
+        app:layout_constraintBottom_toTopOf="@+id/messageInputView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/chats_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

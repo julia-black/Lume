@@ -61,5 +61,6 @@
 
     <!-- Chat -->
     <string name="chat_title">Чат</string>
+    <string name="chat_message_hint">Сообщение</string>
 
 </resources>

@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.singlelab.lume.R
+import kotlinx.android.synthetic.main.incoming_message_item.view.*
+import kotlinx.android.synthetic.main.outgoing_message_item.view.*
 
 class ChatMessagesAdapter : RecyclerView.Adapter<ChatMessagesAdapter.ChatMessageViewHolder>() {
 
@@ -22,25 +24,34 @@ class ChatMessagesAdapter : RecyclerView.Adapter<ChatMessagesAdapter.ChatMessage
 
     override fun getItemCount() = messages.size
 
-    override fun onBindViewHolder(holder: ChatMessageViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onBindViewHolder(holder: ChatMessageViewHolder, position: Int) =
+        holder.bind(messages[position])
+
+    fun setMessages(messages: List<ChatMessageItem>) {
+        this.messages.clear()
+        this.messages.addAll(messages)
     }
 
     abstract class ChatMessageViewHolder(
         view: View
     ) : RecyclerView.ViewHolder(view) {
-
+        abstract fun bind(messageItem: ChatMessageItem)
     }
 
     class IncomingMessageViewHolder(
         view: View
     ) : ChatMessageViewHolder(view) {
-
+        override fun bind(messageItem: ChatMessageItem) {
+            itemView.incomingMessageView.text = messageItem.text
+        }
     }
 
     class OutgoingMessageViewHolder(
         view: View
     ) : ChatMessageViewHolder(view) {
+        override fun bind(messageItem: ChatMessageItem) {
+            itemView.outgoingMessageView.text = messageItem.text
+        }
 
     }
 }

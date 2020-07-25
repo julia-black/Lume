@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
@@ -12,6 +11,7 @@ import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.ui.chat.common.ChatMessageItem
 import com.singlelab.lume.ui.chat.common.ChatMessagesAdapter
 import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
+import com.singlelab.lume.ui.chat.common.SpaceDivider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chat.*
 import moxy.presenter.InjectPresenter
@@ -43,6 +43,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments {
 
         chatView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         chatView.adapter = chatMessagesAdapter
+        chatView.addItemDecoration(SpaceDivider(4))
 
         chatType?.let {
             presenter.showChat(it)
@@ -50,7 +51,8 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments {
     }
 
     override fun showChat(messages: List<ChatMessageItem>) {
-
+        chatMessagesAdapter.setMessages(messages)
+        chatMessagesAdapter.notifyDataSetChanged()
     }
 
     override fun showEmptyChat() {
