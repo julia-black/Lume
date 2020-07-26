@@ -14,41 +14,110 @@
         android:layout_height="match_parent"
         tools:ignore="ContentDescription" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="26sp"
-            android:textStyle="bold" />
+            android:layout_margin="@dimen/margin_medium"
+            android:background="@drawable/shape_type_event"
+            android:gravity="center"
+            android:letterSpacing="0.17"
+            android:paddingHorizontal="@dimen/margin_medium"
+            android:paddingVertical="@dimen/margin_small"
+            android:textAllCaps="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Вечеринка" />
 
         <TextView
-            android:id="@+id/start_date"
-            android:layout_width="wrap_content"
+            android:id="@+id/count_participants"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_margin="@dimen/margin_medium"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/type"
+            tools:text="Идут 10 человек" />
 
         <TextView
-            android:id="@+id/end_date"
-            android:layout_width="wrap_content"
+            android:id="@+id/age"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_medium"
-            android:textStyle="bold" />
+            android:layout_margin="@dimen/margin_medium"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/count_participants"
+            tools:text="18-25 лет" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_image_administrator"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="@dimen/margin_medium"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/age">
+
+            <ImageView
+                android:id="@+id/image_administrator"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_profile" />
+        </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/description"
+            android:id="@+id/administrator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_standart" />
+            android:layout_margin="@dimen/margin_small"
+            app:layout_constraintBottom_toBottomOf="@id/card_image_administrator"
+            app:layout_constraintStart_toEndOf="@id/card_image_administrator"
+            app:layout_constraintTop_toTopOf="@id/card_image_administrator"
+            tools:text="Организатор" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/start_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/end_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_standart" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:id="@+id/left_overlay"
@@ -78,5 +147,6 @@
             android:src="@drawable/ic_accept"
             tools:ignore="ContentDescription" />
     </FrameLayout>
+
 
 </androidx.cardview.widget.CardView>

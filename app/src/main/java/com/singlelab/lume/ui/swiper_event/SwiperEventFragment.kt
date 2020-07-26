@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
+import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnSearchListener
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.ui.swiper_event.adapter.CardStackAdapter
@@ -24,7 +25,8 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SwiperEventFragment : BaseFragment(), SwiperEventView, CardStackListener, OnSearchListener {
+class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragments,
+    CardStackListener, OnSearchListener {
 
     @Inject
     lateinit var daggerPresenter: SwiperEventPresenter
