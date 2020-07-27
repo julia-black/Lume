@@ -6,5 +6,6 @@ class ProfileResponse(
     val description: String? = null,
     val age: Int? = null,
     val imageContentUid: String? = null,
+    val isFriend: Boolean = false,
     val friends: List<PersonResponse> = arrayListOf()
 )

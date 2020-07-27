@@ -14,11 +14,12 @@ class EventResponse(
     val endTime: String,
     val status: Int = 0,
     val type: Int = 0,
-    val eventImageContentUid: String? = null,
     val chatUid: String? = null,
     val participants: List<PersonResponse> = listOf(),
     val administrator: PersonResponse? = null,
-    val isOpenForInvitations: Boolean = true
+    val isOpenForInvitations: Boolean = true,
+    val eventPrimaryImageContentUid: String? = null,
+    val images: List<String>? = null
 ) {
     fun getApprovedParticipants(): List<PersonResponse> {
         return participants.filter {
@@ -29,6 +30,12 @@ class EventResponse(
     fun getNotApprovedParticipants(): List<PersonResponse> {
         return participants.filter {
             it.participantStatus == ParticipantStatus.WAITING_FOR_APPROVE_FROM_EVENT.id
+        }
+    }
+
+    fun getInvitedParticipants(): List<PersonResponse> {
+        return participants.filter {
+            it.participantStatus == ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER.id
         }
     }
 }

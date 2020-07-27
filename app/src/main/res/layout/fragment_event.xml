@@ -142,13 +142,24 @@
             tools:text="Ожидают подтверждения 5 человек" />
 
         <TextView
+            android:id="@+id/count_invited"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:drawablePadding="@dimen/margin_small"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/count_not_approved"
+            tools:text="Приглашены 5 человек" />
+
+        <TextView
             android:id="@+id/count_participants"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_medium"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/count_not_approved"
+            app:layout_constraintTop_toBottomOf="@id/count_invited"
             tools:text="Идут 10 человек" />
 
         <androidx.recyclerview.widget.RecyclerView

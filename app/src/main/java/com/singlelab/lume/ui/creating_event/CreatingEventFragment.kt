@@ -119,7 +119,9 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                     yCoordinate = 46.0621339F,
                     startTime = presenter.currentDateStart?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE),
                     endTime = presenter.currentDateEnd?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE),
-                    isOpenForInvitations = switch_open_event.isChecked
+                    isOpenForInvitations = switch_open_event.isChecked,
+                    primaryImage = presenter.getPrimaryImage(),
+                    images = presenter.getImagesStr()
                 )
                 presenter.createEvent(event)
             } else {
@@ -186,7 +188,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         activity?.let { activity ->
             CropImage.activity()
                 .setFixAspectRatio(true)
-                .setRequestedSize(300, 300, CropImageView.RequestSizeOptions.RESIZE_FIT)
+                .setRequestedSize(500, 500, CropImageView.RequestSizeOptions.RESIZE_FIT)
                 .setCropShape(CropImageView.CropShape.RECTANGLE)
                 .start(activity)
         }

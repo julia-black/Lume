@@ -20,7 +20,7 @@ import com.singlelab.lume.base.listeners.OnLogoutListener
 import com.singlelab.lume.model.profile.Profile
 import com.singlelab.lume.ui.view.image_person.ImagePersonAdapter
 import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
-import com.singlelab.lume.util.generateImageLink
+import com.singlelab.lume.util.generateImageLinkForPerson
 import com.singlelab.lume.util.getBitmap
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -119,7 +119,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
     override fun loadImage(imageUid: String?) {
         imageUid?.let {
             Glide.with(this)
-                .load(imageUid.generateImageLink())
+                .load(imageUid.generateImageLinkForPerson())
                 .into(image)
         }
     }
@@ -148,6 +148,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
     private fun toFriends(isSearch: Boolean = false) {
         val action = MyProfileFragmentDirections.actionMyProfileToFriends()
         action.isSearch = isSearch
+        action.hasFriends = presenter.hasFriends()
         findNavController().navigate(action)
     }
 }

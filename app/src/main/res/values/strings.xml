@@ -62,5 +62,6 @@
     <!-- Chat -->
     <string name="chat_title">Чат</string>
     <string name="chat_message_hint">Сообщение</string>
+    <string name="count_invited">Приглашены %1$d человек</string>
 
 </resources>

@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.singlelab.lume.R
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.EventSummary
-import com.singlelab.lume.util.generateImageLink
+import com.singlelab.lume.util.generateImageLinkForEvent
 import com.singlelab.lume.util.parse
 import com.singlelab.net.model.event.ParticipantStatus
 import kotlinx.android.synthetic.main.item_event.view.*
@@ -22,9 +22,9 @@ class EventsViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         itemView.date.text =
             event.startTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
 
-        event.eventImageContentUid?.let {
+        event.eventPrimaryImageContentUid?.let {
             Glide.with(itemView)
-                .load(it.generateImageLink())
+                .load(it.generateImageLinkForEvent())
                 .into(itemView.image)
         }
         itemView.setOnClickListener {

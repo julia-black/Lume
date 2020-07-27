@@ -1,14 +1,14 @@
 package com.singlelab.lume.ui.creating_event
 
 import android.graphics.Bitmap
-import com.singlelab.net.exceptions.ApiException
-import com.singlelab.lume.model.Const
-import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.creating_event.interactor.CreatingEventInteractor
 import com.singlelab.lume.util.parseToString
+import com.singlelab.lume.util.toBase64
+import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.event.EventRequest
 import moxy.InjectViewState
 import java.util.*
@@ -24,7 +24,7 @@ class CreatingEventPresenter @Inject constructor(
 
     var currentDateEnd: Calendar? = null
 
-    var images: MutableList<Bitmap> = mutableListOf()
+    private var images: MutableList<Bitmap> = mutableListOf()
 
     fun createEvent(event: EventRequest) {
         viewState.showLoading(true)
@@ -91,5 +91,19 @@ class CreatingEventPresenter @Inject constructor(
 
     fun deleteImage(position: Int) {
         images.removeAt(position)
+    }
+
+    fun getPrimaryImage(): String? {
+        return if (images.isNotEmpty()) {
+            images[0].toBase64()
+        } else {
+            null
+        }
+    }
+
+    fun getImagesStr(): List<String>? {
+        return images.map {
+            it.toBase64()
+        }
     }
 }
