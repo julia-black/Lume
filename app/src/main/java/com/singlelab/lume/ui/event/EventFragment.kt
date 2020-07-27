@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,8 @@ import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.ui.view.image_person.ImagePersonAdapter
 import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
-import com.singlelab.lume.util.generateImageLink
+import com.singlelab.lume.util.generateImageLinkForEvent
+import com.singlelab.lume.util.generateImageLinkForPerson
 import com.singlelab.lume.util.parse
 import com.singlelab.net.model.auth.AuthData
 import dagger.hilt.android.AndroidEntryPoint
@@ -61,6 +61,13 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         end_date.text = event.endTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
         description.text = event.description
         val eventType = EventType.findById(event.type)
+
+        event.eventPrimaryImageContentUid?.let {
+            Glide.with(this)
+                .load(it.generateImageLinkForEvent())
+                .into(image)
+        }
+
         eventType?.let {
             context?.let { safeContext ->
                 type.text = getString(it.titleRes)
@@ -87,7 +94,9 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         event.administrator?.let {
             administrator.text = getString(R.string.administrator, it.name)
             it.imageContentUid?.let { imageUid ->
-                showImage(image_administrator, imageUid)
+                Glide.with(this)
+                    .load(imageUid.generateImageLinkForPerson())
+                    .into(image_administrator)
             }
         }
 
@@ -167,12 +176,5 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         val action = EventFragmentDirections.actionEventToFriends()
         action.eventUid = eventUid
         findNavController().navigate(action)
-
-    }
-
-    private fun showImage(imageView: ImageView, imageUid: String) {
-        Glide.with(this)
-            .load(imageUid.generateImageLink())
-            .into(imageView)
     }
 }

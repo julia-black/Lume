@@ -17,8 +17,12 @@ fun Bitmap.toBase64(): String {
     return Base64.encodeToString(outputStream.toByteArray(), Base64.NO_WRAP)
 }
 
-fun String.generateImageLink(): String {
+fun String.generateImageLinkForPerson(): String {
     return "${Const.BASE_URL}image/get-person-image?imageUid=$this"
+}
+
+fun String.generateImageLinkForEvent(): String {
+    return "${Const.BASE_URL}image/get-event-image?imageUid=$this"
 }
 
 fun Uri.getBitmap(contentResolver: ContentResolver?): Bitmap? {

@@ -5,10 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
-import android.widget.ImageView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
-import com.bumptech.glide.Glide
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
@@ -16,7 +14,6 @@ import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnSearchListener
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.ui.swiper_event.adapter.CardStackAdapter
-import com.singlelab.lume.util.generateImageLink
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_swiper_event.*
@@ -134,11 +131,5 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
     }
 
     private fun setListeners() {
-    }
-
-    private fun showImage(imageView: ImageView, imageUid: String) {
-        Glide.with(this)
-            .load(imageUid.generateImageLink())
-            .into(imageView)
     }
 }

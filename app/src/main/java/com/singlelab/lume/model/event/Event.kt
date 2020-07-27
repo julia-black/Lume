@@ -15,11 +15,12 @@ class Event(
     val endTime: String,
     val status: Int = 0,
     val type: Int = 0,
-    val eventImageContentUid: String? = null,
     val participants: List<Person> = listOf(),
     val notApprovedParticipants: List<Person> = listOf(),
     val administrator: Person? = null,
-    val isOpenForInvitations: Boolean = true
+    val isOpenForInvitations: Boolean = true,
+    val eventPrimaryImageContentUid: String? = null,
+    val images: List<String>? = null
 ) {
     companion object {
         fun fromResponse(eventResponse: EventResponse?): Event? {
@@ -36,7 +37,6 @@ class Event(
                     eventResponse.endTime,
                     eventResponse.status,
                     eventResponse.type,
-                    eventResponse.eventImageContentUid,
                     eventResponse.getApprovedParticipants().mapNotNull {
                         Person.fromResponse(it)
                     },
@@ -44,7 +44,9 @@ class Event(
                         Person.fromResponse(it)
                     },
                     Person.fromResponse(eventResponse.administrator),
-                    eventResponse.isOpenForInvitations
+                    eventResponse.isOpenForInvitations,
+                    eventResponse.eventPrimaryImageContentUid,
+                    eventResponse.images
                 )
             } else {
                 null

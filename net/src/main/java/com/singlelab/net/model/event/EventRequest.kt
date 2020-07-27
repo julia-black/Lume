@@ -10,6 +10,7 @@ class EventRequest(
     val startTime: String,
     val endTime: String,
     val type: Int = 0,
-    val eventImageContentUid: String? = null,
-    val isOpenForInvitations: Boolean = true
+    val isOpenForInvitations: Boolean = true,
+    val primaryImage: String? = null,
+    val images: List<String>? = null
 )

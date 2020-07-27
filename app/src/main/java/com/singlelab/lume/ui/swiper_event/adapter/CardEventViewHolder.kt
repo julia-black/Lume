@@ -3,7 +3,6 @@ package com.singlelab.lume.ui.swiper_event.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -11,7 +10,8 @@ import com.singlelab.lume.R
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.ui.event.EventType
-import com.singlelab.lume.util.generateImageLink
+import com.singlelab.lume.util.generateImageLinkForEvent
+import com.singlelab.lume.util.generateImageLinkForPerson
 import com.singlelab.lume.util.parse
 import kotlinx.android.synthetic.main.item_card_event.view.*
 
@@ -24,9 +24,9 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         itemView.start_date.text =
             event.startTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
 
-        event.eventImageContentUid?.let {
+        event.eventPrimaryImageContentUid?.let {
             Glide.with(itemView)
-                .load(it.generateImageLink())
+                .load(it.generateImageLinkForEvent())
                 .into(itemView.image)
         }
         val eventType = EventType.findById(event.type)
@@ -50,22 +50,14 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
                 event.maxAge
             )
         }
-        itemView.count_participants.text = itemView.context.getString(
-            R.string.count_participants,
-            event.participants.size
-        )
         event.administrator?.let {
             itemView.administrator.text =
                 itemView.context.getString(R.string.administrator, it.name)
             it.imageContentUid?.let { imageUid ->
-                showImage(itemView.image_administrator, imageUid)
+                Glide.with(itemView.context)
+                    .load(imageUid.generateImageLinkForPerson())
+                    .into(itemView.image_administrator)
             }
         }
-    }
-
-    private fun showImage(imageView: ImageView, imageUid: String) {
-        Glide.with(itemView.context)
-            .load(imageUid.generateImageLink())
-            .into(imageView)
     }
 }

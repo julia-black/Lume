@@ -14,10 +14,11 @@ class EventResponse(
     val endTime: String,
     val status: Int = 0,
     val type: Int = 0,
-    val eventImageContentUid: String? = null,
     val participants: List<PersonResponse> = listOf(),
     val administrator: PersonResponse? = null,
-    val isOpenForInvitations: Boolean = true
+    val isOpenForInvitations: Boolean = true,
+    val eventPrimaryImageContentUid: String? = null,
+    val images: List<String>? = null
 ) {
     fun getApprovedParticipants(): List<PersonResponse> {
         return participants.filter {

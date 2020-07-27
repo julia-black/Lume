@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.singlelab.lume.R
 import com.singlelab.lume.model.profile.Person
-import com.singlelab.lume.util.generateImageLink
+import com.singlelab.lume.util.generateImageLinkForPerson
 import com.singlelab.net.model.event.ParticipantStatus
 import kotlinx.android.synthetic.main.item_person.view.*
 
@@ -19,7 +19,7 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         itemView.name.text = person.name
         person.imageContentUid?.let { imageUid ->
             Glide.with(itemView)
-                .load(imageUid.generateImageLink())
+                .load(imageUid.generateImageLinkForPerson())
                 .into(itemView.image_person)
         }
         itemView.setOnClickListener {
