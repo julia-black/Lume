@@ -22,9 +22,12 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         listener: OnPersonItemClickListener
     ) {
         itemView.name.text = person.name
-        person.imageContentUid?.let { imageUid ->
+
+        if (person.imageContentUid == null) {
+            itemView.image_person.setImageResource(R.drawable.ic_profile)
+        } else {
             Glide.with(itemView)
-                .load(imageUid.generateImageLinkForPerson())
+                .load(person.imageContentUid.generateImageLinkForPerson())
                 .into(itemView.image_person)
         }
         itemView.setOnClickListener {

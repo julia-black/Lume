@@ -2,6 +2,7 @@ package com.singlelab.lume.model.event
 
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.net.model.event.EventResponse
+import com.singlelab.net.model.event.ParticipantStatus
 
 class Event(
     val eventUid: String? = null,
@@ -56,5 +57,22 @@ class Event(
                 null
             }
         }
+    }
+
+    fun getParticipantStatus(personUid: String): ParticipantStatus? {
+        var person = participants.find {
+            it.personUid == personUid
+        }
+        if (person == null) {
+            person = notApprovedParticipants.find {
+                it.personUid == personUid
+            }
+        }
+        if (person == null) {
+            person = invitedParticipants.find {
+                it.personUid == personUid
+            }
+        }
+        return person?.participantStatus
     }
 }

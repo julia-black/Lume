@@ -12,5 +12,5 @@ interface SwiperEventView : LoadingView, ErrorView {
     fun showEvent(event: Event)
 
     @StateStrategyType(OneExecutionStateStrategy::class)
-    fun toAcceptedEvent(eventUid: String)
+    fun toAcceptedEvent(isOpenEvent: Boolean, eventUid: String)
 }

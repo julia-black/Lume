@@ -14,12 +14,7 @@ class EventsPresenter @Inject constructor(
     preferences: Preferences?
 ) : BasePresenter<EventsView>(preferences, interactor as BaseInteractor) {
 
-    override fun onFirstViewAttach() {
-        super.onFirstViewAttach()
-        loadEvents()
-    }
-
-    private fun loadEvents() {
+    fun loadEvents() {
         viewState.showLoading(true)
         invokeSuspend {
             try {

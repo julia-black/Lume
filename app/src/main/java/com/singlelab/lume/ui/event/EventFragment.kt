@@ -19,6 +19,7 @@ import com.singlelab.lume.util.generateImageLinkForEvent
 import com.singlelab.lume.util.generateImageLinkForPerson
 import com.singlelab.lume.util.parse
 import com.singlelab.net.model.auth.AuthData
+import com.singlelab.net.model.event.ParticipantStatus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_event.*
 import moxy.presenter.InjectPresenter
@@ -62,9 +63,11 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         description.text = event.description
         val eventType = EventType.findById(event.type)
 
-        event.eventPrimaryImageContentUid?.let {
+        if (event.eventPrimaryImageContentUid == null) {
+            image.setImageResource(R.drawable.ic_event_image)
+        } else {
             Glide.with(this)
-                .load(it.generateImageLinkForEvent())
+                .load(event.eventPrimaryImageContentUid.generateImageLinkForEvent())
                 .into(image)
         }
 
@@ -96,9 +99,12 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         }
         event.administrator?.let {
             administrator.text = getString(R.string.administrator, it.name)
-            it.imageContentUid?.let { imageUid ->
+
+            if (it.imageContentUid == null) {
+                image_administrator.setImageResource(R.drawable.ic_profile)
+            } else {
                 Glide.with(this)
-                    .load(imageUid.generateImageLinkForPerson())
+                    .load(it.imageContentUid.generateImageLinkForPerson())
                     .into(image_administrator)
             }
         }
@@ -143,6 +149,21 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         } else {
             button_search_participants.visibility = View.GONE
         }
+
+        val currentUid = AuthData.uid
+        if (currentUid != null && event.getParticipantStatus(currentUid) == ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER) {
+            button_accept.visibility = View.VISIBLE
+            button_reject.visibility = View.VISIBLE
+            button_accept.setOnClickListener {
+                presenter.acceptEvent(currentUid, event.eventUid)
+            }
+            button_reject.setOnClickListener {
+                presenter.rejectEvent(currentUid, event.eventUid)
+            }
+        } else {
+            button_accept.visibility = View.GONE
+            button_reject.visibility = View.GONE
+        }
     }
 
     private fun toSwiperPeople(eventUid: String?) {
@@ -169,10 +190,13 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         findNavController().navigate(EventFragmentDirections.actionEventToPerson(personUid))
     }
 
+    override fun onRejectedEvent() {
+        findNavController().navigate(EventFragmentDirections.actionEventToEvents())
+    }
+
     override fun onPersonClick(personUid: String) {
         findNavController().navigate(EventFragmentDirections.actionEventToPerson(personUid))
     }
-
 
     private fun setListeners() {
         image_administrator.setOnClickListener {

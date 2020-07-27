@@ -8,6 +8,8 @@ import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.event.interactor.EventInteractor
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.auth.AuthData
+import com.singlelab.net.model.event.ParticipantRequest
+import com.singlelab.net.model.event.ParticipantStatus
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -64,6 +66,52 @@ class EventPresenter @Inject constructor(
             }
         }
         return null
+    }
+
+    fun acceptEvent(personUid: String, eventUid: String?) {
+        eventUid ?: return
+        viewState.showLoading(true)
+        invokeSuspend {
+            try {
+                val event = interactor.acceptEvent(
+                    ParticipantRequest(
+                        personUid,
+                        eventUid,
+                        ParticipantStatus.ACTIVE.id
+                    )
+                )
+                runOnMainThread {
+                    viewState.showLoading(false)
+                    event?.let {
+                        viewState.showEvent(event)
+                    }
+                }
+            } catch (e: ApiException) {
+                runOnMainThread {
+                    viewState.showLoading(false)
+                    viewState.showError(e.message)
+                }
+            }
+        }
+    }
+
+    fun rejectEvent(personUid: String, eventUid: String?) {
+        eventUid ?: return
+        viewState.showLoading(true)
+        invokeSuspend {
+            try {
+                interactor.rejectEvent(personUid, eventUid)
+                runOnMainThread {
+                    viewState.showLoading(false)
+                    viewState.onRejectedEvent()
+                }
+            } catch (e: ApiException) {
+                runOnMainThread {
+                    viewState.showLoading(false)
+                    viewState.showError(e.message)
+                }
+            }
+        }
     }
 
     fun isAdministrator() = event?.administrator?.personUid == AuthData.uid

@@ -48,6 +48,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
             Navigation.createNavigateOnClickListener(R.id.action_events_to_creating_event)
                 .onClick(view)
         }
+        presenter.loadEvents()
     }
 
     override fun showEvents(events: List<EventSummary>) {

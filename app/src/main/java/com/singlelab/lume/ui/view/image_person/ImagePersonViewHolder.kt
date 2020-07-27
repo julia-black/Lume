@@ -13,9 +13,11 @@ class ImagePersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.item_image_person, parent, false)) {
 
     fun bind(person: Person, listener: OnPersonImageClickListener?) {
-        person.imageContentUid?.let { imageUid ->
+        if (person.imageContentUid == null) {
+            itemView.image_person.setImageResource(R.drawable.ic_profile)
+        } else {
             Glide.with(itemView)
-                .load(imageUid.generateImageLinkForPerson())
+                .load(person.imageContentUid.generateImageLinkForPerson())
                 .into(itemView.image_person)
         }
         itemView.image_person.setOnClickListener {

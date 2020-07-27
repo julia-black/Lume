@@ -27,16 +27,14 @@ class ParticipantsPresenter @Inject constructor(
         viewState.showLoading(true)
         invokeSuspend {
             try {
-                interactor.approvePerson(
+                val event = interactor.approvePerson(
                     ParticipantRequest(
                         personUid,
                         eventUid,
                         ParticipantStatus.ACTIVE.id
                     )
                 )
-                participants?.forEach {
-                    it.participantStatus = ParticipantStatus.ACTIVE
-                }
+                participants = event?.participants?.toMutableList()
                 runOnMainThread {
                     viewState.showLoading(false)
                     participants?.let {
@@ -56,10 +54,8 @@ class ParticipantsPresenter @Inject constructor(
         viewState.showLoading(true)
         invokeSuspend {
             try {
-                interactor.rejectPerson(personUid, eventUid)
-                participants?.removeAll {
-                    it.personUid == personUid
-                }
+                val event = interactor.rejectPerson(personUid, eventUid)
+                participants = event?.participants?.toMutableList()
                 runOnMainThread {
                     viewState.showLoading(false)
                     participants?.let {

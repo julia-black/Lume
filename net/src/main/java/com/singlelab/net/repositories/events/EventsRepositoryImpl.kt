@@ -47,16 +47,16 @@ class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository, Bas
         )
     }
 
-    override suspend fun updateParticipants(participantRequest: ParticipantRequest) {
-        safeApiCall(
+    override suspend fun updateParticipants(participantRequest: ParticipantRequest): EventResponse? {
+        return safeApiCall(
             apiUnit = apiUnit,
             call = { apiUnit.eventsApi.updateParticipantsAsync(participantRequest).await() },
             errorMessage = "Не удалось подтвердить"
         )
     }
 
-    override suspend fun removeParticipants(personUid: String, eventUid: String) {
-        safeApiCall(
+    override suspend fun removeParticipants(personUid: String, eventUid: String): EventResponse? {
+        return safeApiCall(
             apiUnit = apiUnit,
             call = { apiUnit.eventsApi.removeParticipantsAsync(personUid, eventUid).await() },
             errorMessage = "Не удалось отклонить"

@@ -68,5 +68,6 @@
     <string name="search_participants">Найти участников</string>
     <string name="person_invited">Пользователь %1$s приглашен</string>
     <string name="person_age">%1$d лет</string>
+    <string name="waiting_for_approve_user">Новое приглашение</string>
 
 </resources>

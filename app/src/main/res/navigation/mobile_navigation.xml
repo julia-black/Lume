@@ -126,6 +126,9 @@
         <action
             android:id="@+id/action_event_to_swiper_person"
             app:destination="@id/swiper_person" />
+        <action
+            android:id="@+id/action_event_to_events"
+            app:destination="@id/events" />
     </fragment>
     <fragment
         android:id="@+id/friends"

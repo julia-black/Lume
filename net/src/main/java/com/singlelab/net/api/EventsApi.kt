@@ -23,7 +23,7 @@ interface EventsApi {
     fun addParticipantsAsync(@Body participantRequest: ParticipantRequest): Deferred<Response<MessageResponse>>
 
     @POST("event/update-event-participant")
-    fun updateParticipantsAsync(@Body participantRequest: ParticipantRequest): Deferred<Response<MessageResponse>>
+    fun updateParticipantsAsync(@Body participantRequest: ParticipantRequest): Deferred<Response<EventResponse>>
 
     @POST("event/get-random-event")
     fun getRandomEventAsync(@Body randomEventRequest: RandomEventRequest): Deferred<Response<EventResponse>>
@@ -32,7 +32,7 @@ interface EventsApi {
     fun removeParticipantsAsync(
         @Query("personUid") personUid: String,
         @Query("eventUid") eventUid: String
-    ): Deferred<Response<MessageResponse>>
+    ): Deferred<Response<EventResponse>>
 
     @POST("event/search-for-event")
     fun searchEventAsync(@Body searchEventRequest: SearchEventRequest): Deferred<Response<List<EventSummaryResponse>>>

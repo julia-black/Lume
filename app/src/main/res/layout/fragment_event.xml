@@ -61,6 +61,28 @@
             app:layout_constraintTop_toBottomOf="@id/image"
             tools:text="Название" />
 
+        <ImageView
+            android:id="@+id/button_reject"
+            android:layout_width="@dimen/size_icon_button"
+            android:layout_height="@dimen/size_icon_button"
+            android:layout_margin="@dimen/margin_small"
+            android:src="@drawable/ic_reject"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/button_accept"
+            android:layout_width="@dimen/size_icon_button"
+            android:layout_height="@dimen/size_icon_button"
+            android:layout_margin="@dimen/margin_small"
+            android:src="@drawable/ic_accept"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/button_reject"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:visibility="visible" />
+
         <Button
             android:id="@+id/button_search_participants"
             style="?attr/materialButtonOutlinedStyle"
@@ -94,7 +116,7 @@
             android:textColor="@color/colorAccent"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/button_reject"
             app:rippleColor="@color/colorAccentLight"
             app:strokeColor="@color/colorAccent"
             app:strokeWidth="1dp" />

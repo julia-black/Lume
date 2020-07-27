@@ -20,7 +20,7 @@ interface PersonApi {
 
     @GET("person/get-person-list")
     fun searchPersonAsync(
-        @Query("filter") searchStr: String,
+        @Query("query") searchStr: String,
         @Query("pageNumber") pageNumber: Int = 1,
         @Query("pageSize") pageSize: Int = 20
     ): Deferred<Response<List<PersonResponse>>>

@@ -69,8 +69,16 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         }
     }
 
-    override fun toAcceptedEvent(eventUid: String) {
-        findNavController().navigate(SwiperEventFragmentDirections.actionSwiperEventToEvent(eventUid))
+    override fun toAcceptedEvent(isOpenEvent: Boolean, eventUid: String) {
+        if (isOpenEvent) {
+            findNavController().navigate(
+                SwiperEventFragmentDirections.actionSwiperEventToEvent(
+                    eventUid
+                )
+            )
+        } else {
+            presenter.loadRandomEvent()
+        }
     }
 
     override fun onClickSearch() {
@@ -86,7 +94,6 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
     override fun onCardSwiped(direction: Direction?) {
         when (direction) {
             Direction.Right -> {
-                //todo если пользователь не зареган, то отправлять на форму регистрации (запоминая событие, на которое он хотел пойти)
                 presenter.acceptEvent()
             }
             Direction.Left -> {
