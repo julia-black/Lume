@@ -15,6 +15,6 @@ class SwiperEventInteractorImpl(private val repository: EventsRepository) : Swip
     }
 
     override suspend fun acceptEvent(participantRequest: ParticipantRequest) {
-        return repository.addParticipantsAsync(participantRequest)
+        return repository.addParticipants(participantRequest)
     }
 }

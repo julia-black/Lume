@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.singlelab.lume.model.event.EventSummary
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
+import com.singlelab.lume.model.event.EventSummary
 import com.singlelab.lume.ui.events.adapter.EventsAdapter
 import com.singlelab.lume.ui.events.adapter.OnEventItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,11 +48,12 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
             Navigation.createNavigateOnClickListener(R.id.action_events_to_creating_event)
                 .onClick(view)
         }
+        presenter.loadEvents()
     }
 
     override fun showEvents(events: List<EventSummary>) {
         recycler_events.apply {
-            adapter = EventsAdapter(events, this@EventsFragment)
+            adapter = EventsAdapter(events.toMutableList(), this@EventsFragment)
         }
     }
 

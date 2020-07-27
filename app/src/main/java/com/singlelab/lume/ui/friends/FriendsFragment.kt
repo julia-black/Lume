@@ -86,6 +86,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
                 PersonsAdapter(
                     friends,
                     presenter.eventUid,
+                    true,
                     this
                 )
         }
@@ -106,6 +107,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
                 adapter = PersonsAdapter(
                     searchResults,
                     presenter.eventUid,
+                    true,
                     this@FriendsFragment
                 )
             }
@@ -140,5 +142,8 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
 
     override fun onAcceptClick(personUid: String, eventUid: String) {
         presenter.invitePerson(personUid, eventUid, isSearchResults)
+    }
+
+    override fun onRejectClick(personUid: String, eventUid: String) {
     }
 }

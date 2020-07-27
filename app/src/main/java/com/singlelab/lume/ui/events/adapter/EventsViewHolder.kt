@@ -22,9 +22,11 @@ class EventsViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         itemView.date.text =
             event.startTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
 
-        event.eventPrimaryImageContentUid?.let {
+        if (event.eventPrimaryImageContentUid == null) {
+            itemView.image.setImageResource(R.drawable.ic_event_image)
+        } else {
             Glide.with(itemView)
-                .load(it.generateImageLinkForEvent())
+                .load(event.eventPrimaryImageContentUid.generateImageLinkForEvent())
                 .into(itemView.image)
         }
         itemView.setOnClickListener {
@@ -35,6 +37,11 @@ class EventsViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
                 itemView.participant_status.visibility = View.VISIBLE
                 itemView.participant_status.text =
                     itemView.context.getString(R.string.waiting_for_approve_event)
+            }
+            ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER -> {
+                itemView.participant_status.visibility = View.VISIBLE
+                itemView.participant_status.text =
+                    itemView.context.getString(R.string.waiting_for_approve_user)
             }
             else -> {
                 itemView.participant_status.visibility = View.GONE

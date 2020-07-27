@@ -42,40 +42,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_very_small"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/start_date"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/start_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_very_small"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/description"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_very_small"
             android:textSize="@dimen/text_size_standart"
             app:layout_constraintBottom_toTopOf="@id/age"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/start_date" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_very_small"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/card_image_administrator"
-            app:layout_constraintTop_toBottomOf="@id/description"
             tools:text="18-25 лет" />
 
         <androidx.cardview.widget.CardView
@@ -83,12 +83,11 @@
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginBottom="@dimen/margin_small"
+            android:layout_marginBottom="@dimen/margin_very_small"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/age">
+            app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
                 android:id="@+id/image_administrator"

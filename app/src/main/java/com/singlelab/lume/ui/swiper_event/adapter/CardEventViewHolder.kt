@@ -24,10 +24,15 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         itemView.start_date.text =
             event.startTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
 
-        event.eventPrimaryImageContentUid?.let {
-            Glide.with(itemView)
-                .load(it.generateImageLinkForEvent())
-                .into(itemView.image)
+        if (event.eventPrimaryImageContentUid == null) {
+            itemView.image.visibility = View.INVISIBLE
+        } else {
+            itemView.image.visibility = View.VISIBLE
+            event.eventPrimaryImageContentUid.let {
+                Glide.with(itemView)
+                    .load(it.generateImageLinkForEvent())
+                    .into(itemView.image)
+            }
         }
         val eventType = EventType.findById(event.type)
         eventType?.let {
@@ -53,9 +58,12 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         event.administrator?.let {
             itemView.administrator.text =
                 itemView.context.getString(R.string.administrator, it.name)
-            it.imageContentUid?.let { imageUid ->
+
+            if (it.imageContentUid == null) {
+                itemView.image_administrator.setImageResource(R.drawable.ic_profile)
+            } else {
                 Glide.with(itemView.context)
-                    .load(imageUid.generateImageLinkForPerson())
+                    .load(it.imageContentUid.generateImageLinkForPerson())
                     .into(itemView.image_administrator)
             }
         }

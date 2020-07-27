@@ -2,6 +2,8 @@ package com.singlelab.net.repositories.events
 
 import com.singlelab.net.ApiUnit
 import com.singlelab.net.model.event.*
+import com.singlelab.net.model.person.PersonResponse
+import com.singlelab.net.model.person.RandomPersonRequest
 import com.singlelab.net.repositories.BaseRepository
 
 class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository, BaseRepository() {
@@ -37,7 +39,7 @@ class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository, Bas
         )
     }
 
-    override suspend fun addParticipantsAsync(participantRequest: ParticipantRequest) {
+    override suspend fun addParticipants(participantRequest: ParticipantRequest) {
         safeApiCall(
             apiUnit = apiUnit,
             call = { apiUnit.eventsApi.addParticipantsAsync(participantRequest).await() },
@@ -45,11 +47,37 @@ class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository, Bas
         )
     }
 
-    override suspend fun updateParticipantsAsync(participantRequest: ParticipantRequest) {
-        safeApiCall(
+    override suspend fun updateParticipants(participantRequest: ParticipantRequest): EventResponse? {
+        return safeApiCall(
             apiUnit = apiUnit,
             call = { apiUnit.eventsApi.updateParticipantsAsync(participantRequest).await() },
             errorMessage = "Не удалось подтвердить"
+        )
+    }
+
+    override suspend fun removeParticipants(personUid: String, eventUid: String): EventResponse? {
+        return safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.eventsApi.removeParticipantsAsync(personUid, eventUid).await() },
+            errorMessage = "Не удалось отклонить"
+        )
+    }
+
+    override suspend fun search(searchEventRequest: SearchEventRequest): List<EventSummaryResponse>? {
+        return safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.eventsApi.searchEventAsync(searchEventRequest).await() },
+            errorMessage = "Не удалось выполнить поиск"
+        )
+    }
+
+    override suspend fun getRandomPerson(randomPersonRequest: RandomPersonRequest): PersonResponse? {
+        return safeApiCall(
+            apiUnit = apiUnit,
+            call = {
+                apiUnit.eventsApi.getRandomPersonAsync(randomPersonRequest).await()
+            },
+            errorMessage = "Не удалось получить пользователя"
         )
     }
 }

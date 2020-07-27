@@ -63,5 +63,12 @@
     <string name="chat_title">Чат</string>
     <string name="chat_message_hint">Сообщение</string>
     <string name="count_invited">Приглашены %1$d человек</string>
+    <string name="search_events">Поиск события</string>
+    <string name="search_event">Найти событие</string>
+    <string name="invite_friends">Пригласить друзей</string>
+    <string name="search_participants">Найти участников</string>
+    <string name="person_invited">Пользователь %1$s приглашен</string>
+    <string name="person_age">%1$d лет</string>
+    <string name="waiting_for_approve_user">Новое приглашение</string>
 
 </resources>

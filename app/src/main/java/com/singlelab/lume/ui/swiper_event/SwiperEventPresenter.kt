@@ -61,9 +61,9 @@ class SwiperEventPresenter @Inject constructor(
                             if (event!!.isOpenForInvitations) ParticipantStatus.ACTIVE.id else ParticipantStatus.WAITING_FOR_APPROVE_FROM_EVENT.id
                         )
                     )
-                    event = null
                     runOnMainThread {
-                        viewState.toAcceptedEvent(eventUid)
+                        viewState.toAcceptedEvent(event!!.isOpenForInvitations, eventUid)
+                        event = null
                         viewState.showLoading(false)
                     }
                 } catch (e: ApiException) {

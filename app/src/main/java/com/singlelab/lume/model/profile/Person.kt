@@ -9,6 +9,8 @@ import kotlinx.android.parcel.Parcelize
 class Person(
     val personUid: String,
     val name: String,
+    val description: String?,
+    val age: Int,
     val imageContentUid: String?,
     var isFriend: Boolean = false,
     var isInvited: Boolean = false,
@@ -20,6 +22,8 @@ class Person(
                 Person(
                     personResponse.personUid,
                     personResponse.name,
+                    personResponse.description,
+                    personResponse.age,
                     personResponse.imageContentUid,
                     personResponse.isFriend,
                     false,

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.singlelab.lume.model.event.EventSummary
 
 class EventsAdapter(
-    private val list: List<EventSummary>,
+    private val list: MutableList<EventSummary>,
     private val listener: OnEventItemClickListener
 ) : RecyclerView.Adapter<EventsViewHolder>() {
 
@@ -22,4 +22,9 @@ class EventsAdapter(
 
     override fun getItemCount(): Int = list.size
 
+    fun setData(list: List<EventSummary>) {
+        this.list.clear()
+        this.list.addAll(list)
+        notifyDataSetChanged()
+    }
 }

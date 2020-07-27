@@ -46,6 +46,20 @@
         app:layout_constraintTop_toTopOf="@id/card_image" />
 
     <ImageView
+        android:id="@+id/button_reject"
+        android:layout_width="@dimen/size_image_add_to_friends"
+        android:layout_height="@dimen/size_image_add_to_friends"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:backgroundTint="@color/colorAcceptFull"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_reject"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/card_image"
+        app:layout_constraintEnd_toStartOf="@id/button_invite"
+        app:layout_constraintTop_toTopOf="@id/card_image" />
+
+    <ImageView
         android:id="@+id/button_invite"
         android:layout_width="@dimen/size_image_add_to_friends"
         android:layout_height="@dimen/size_image_add_to_friends"
@@ -54,7 +68,6 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_accept"
-        android:tint="@color/colorPrimary"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/card_image"
         app:layout_constraintEnd_toEndOf="parent"

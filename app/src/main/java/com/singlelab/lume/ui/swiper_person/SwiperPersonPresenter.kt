@@ -1,44 +1,43 @@
-package com.singlelab.lume.ui.participants
+package com.singlelab.lume.ui.swiper_person
 
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.pref.Preferences
-import com.singlelab.lume.ui.participants.interactor.ParticipantsInteractor
+import com.singlelab.lume.ui.swiper_person.interactor.SwiperPersonInteractor
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.event.ParticipantRequest
 import com.singlelab.net.model.event.ParticipantStatus
+import com.singlelab.net.model.person.RandomPersonRequest
 import moxy.InjectViewState
 import javax.inject.Inject
 
 @InjectViewState
-class ParticipantsPresenter @Inject constructor(
-    private var interactor: ParticipantsInteractor,
+class SwiperPersonPresenter @Inject constructor(
+    private val interactor: SwiperPersonInteractor,
     preferences: Preferences?
-) : BasePresenter<ParticipantsView>(preferences, interactor as BaseInteractor) {
-
-    var withNotApproved: Boolean = false
+) : BasePresenter<SwiperPersonView>(preferences, interactor as BaseInteractor) {
 
     var eventUid: String? = null
 
-    var participants: MutableList<Person>? = null
+    var person: Person? = null
 
-    fun approvePerson(personUid: String, eventUid: String) {
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        loadRandomPerson()
+    }
+
+    fun loadRandomPerson() {
+        eventUid ?: return
         viewState.showLoading(true)
         invokeSuspend {
             try {
-                val event = interactor.approvePerson(
-                    ParticipantRequest(
-                        personUid,
-                        eventUid,
-                        ParticipantStatus.ACTIVE.id
-                    )
-                )
-                participants = event?.participants?.toMutableList()
+                val randomPersonRequest = RandomPersonRequest(eventUid = eventUid!!)
+                person = interactor.getRandomPerson(randomPersonRequest)
                 runOnMainThread {
                     viewState.showLoading(false)
-                    participants?.let {
-                        viewState.showParticipants(it.toList())
+                    person?.let {
+                        viewState.showPerson(it)
                     }
                 }
             } catch (e: ApiException) {
@@ -50,17 +49,23 @@ class ParticipantsPresenter @Inject constructor(
         }
     }
 
-    fun rejectPerson(personUid: String, eventUid: String) {
+    fun invitePerson() {
+        eventUid ?: return
+        person ?: return
         viewState.showLoading(true)
         invokeSuspend {
             try {
-                val event = interactor.rejectPerson(personUid, eventUid)
-                participants = event?.participants?.toMutableList()
+                interactor.invitePerson(
+                    ParticipantRequest(
+                        person!!.personUid,
+                        eventUid!!,
+                        ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER.id
+                    )
+                )
                 runOnMainThread {
+                    viewState.toAcceptedPerson(person!!, eventUid!!)
+                    person = null
                     viewState.showLoading(false)
-                    participants?.let {
-                        viewState.showParticipants(it.toList())
-                    }
                 }
             } catch (e: ApiException) {
                 runOnMainThread {

@@ -1,22 +1,16 @@
-package com.singlelab.lume.ui.event
+package com.singlelab.lume.ui.swiper_person
 
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
-import com.singlelab.lume.model.event.Event
+import com.singlelab.lume.model.profile.Person
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.OneExecutionStateStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
-interface EventView : LoadingView, ErrorView {
+interface SwiperPersonView : LoadingView, ErrorView {
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showEvent(event: Event)
+    fun showPerson(person: Person)
 
     @StateStrategyType(OneExecutionStateStrategy::class)
-    fun toMyProfile()
-
-    @StateStrategyType(OneExecutionStateStrategy::class)
-    fun toProfile(personUid: String)
-
-    @StateStrategyType(OneExecutionStateStrategy::class)
-    fun onRejectedEvent()
+    fun toAcceptedPerson(person: Person, eventUid: String)
 }

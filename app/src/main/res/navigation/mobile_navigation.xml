@@ -148,6 +148,12 @@
         <action
             android:id="@+id/action_event_to_participants"
             app:destination="@id/participants" />
+        <action
+            android:id="@+id/action_event_to_swiper_person"
+            app:destination="@id/swiper_person" />
+        <action
+            android:id="@+id/action_event_to_events"
+            app:destination="@id/events" />
     </fragment>
 
     <fragment
@@ -220,5 +226,14 @@
         <action
             android:id="@+id/action_participants_to_person"
             app:destination="@id/person" />
+    </fragment>
+    <fragment
+        android:id="@+id/swiper_person"
+        android:name="com.singlelab.lume.ui.swiper_person.SwiperPersonFragment"
+        android:label="SwiperPersonFragment"
+        tools:layout="@layout/fragment_swiper_person">
+        <argument
+            android:name="eventUid"
+            app:argType="string" />
     </fragment>
 </navigation>
