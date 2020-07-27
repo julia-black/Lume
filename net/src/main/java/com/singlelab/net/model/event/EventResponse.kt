@@ -31,4 +31,10 @@ class EventResponse(
             it.participantStatus == ParticipantStatus.WAITING_FOR_APPROVE_FROM_EVENT.id
         }
     }
+
+    fun getInvitedParticipants(): List<PersonResponse> {
+        return participants.filter {
+            it.participantStatus == ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER.id
+        }
+    }
 }

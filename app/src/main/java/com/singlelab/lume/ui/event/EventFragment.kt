@@ -91,6 +91,9 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             R.string.count_participants,
             event.participants.size
         )
+        count_participants.setOnClickListener {
+            toParticipants(false)
+        }
         event.administrator?.let {
             administrator.text = getString(R.string.administrator, it.name)
             it.imageContentUid?.let { imageUid ->
@@ -123,6 +126,13 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             count_not_approved.setOnClickListener {
                 toParticipants(true)
             }
+        }
+
+        if (event.invitedParticipants.isEmpty()) {
+            count_invited.visibility = View.GONE
+        } else {
+            count_invited.visibility = View.VISIBLE
+            count_invited.text = getString(R.string.count_invited, event.invitedParticipants.size)
         }
     }
 

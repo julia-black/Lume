@@ -17,6 +17,7 @@ class Event(
     val type: Int = 0,
     val participants: List<Person> = listOf(),
     val notApprovedParticipants: List<Person> = listOf(),
+    val invitedParticipants: List<Person> = listOf(),
     val administrator: Person? = null,
     val isOpenForInvitations: Boolean = true,
     val eventPrimaryImageContentUid: String? = null,
@@ -41,6 +42,9 @@ class Event(
                         Person.fromResponse(it)
                     },
                     eventResponse.getNotApprovedParticipants().mapNotNull {
+                        Person.fromResponse(it)
+                    },
+                    eventResponse.getInvitedParticipants().mapNotNull {
                         Person.fromResponse(it)
                     },
                     Person.fromResponse(eventResponse.administrator),
