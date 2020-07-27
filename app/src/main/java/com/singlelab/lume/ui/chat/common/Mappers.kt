@@ -6,9 +6,9 @@ import com.singlelab.lume.ui.chat.common.ChatMessageItem.Type.OUTGOING
 import com.singlelab.net.model.chat.ChatMessageResponse
 
 fun List<ChatMessageResponse>.toDbEntities(): List<ChatMessage> =
-    mapNotNull { it.toDbEntity() }
+    mapNotNull { it.toUiEntity() }
 
-fun ChatMessageResponse.toDbEntity(): ChatMessage? {
+fun ChatMessageResponse.toUiEntity(): ChatMessage? {
     return ChatMessage(
         uid = uId ?: return null,
         personUid = personUid ?: return null,
@@ -18,9 +18,9 @@ fun ChatMessageResponse.toDbEntity(): ChatMessage? {
 }
 
 fun List<ChatMessage>.toUiEntities(currentPersonUid: String): List<ChatMessageItem> =
-    map { it.toDbEntity(currentPersonUid) }
+    map { it.toUiEntity(currentPersonUid) }
 
-fun ChatMessage.toDbEntity(currentPersonUid: String): ChatMessageItem =
+fun ChatMessage.toUiEntity(currentPersonUid: String): ChatMessageItem =
     ChatMessageItem(
         uid = uid,
         text = text,

@@ -13,6 +13,7 @@ import com.singlelab.lume.ui.chat.common.ChatMessagesAdapter
 import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
 import com.singlelab.lume.ui.chat.common.SpaceDivider
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.chats_item.*
 import kotlinx.android.synthetic.main.fragment_chat.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -41,12 +42,20 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments {
         chatType = arguments?.let { ChatFragmentArgs.fromBundle(it).chatType }
         activity?.title = chatType?.title ?: getString(R.string.chat_title)
 
-        chatView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        chatView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false).apply { stackFromEnd = true; }
         chatView.adapter = chatMessagesAdapter
         chatView.addItemDecoration(SpaceDivider(4))
 
         chatType?.let {
             presenter.showChat(it)
+        }
+
+        sendMessageView.setOnClickListener {
+            val currentText = messageInputView.text.toString()
+            if (currentText.isNotEmpty()) {
+                presenter.sendMessage(currentText)
+                messageInputView.setText("")
+            }
         }
     }
 

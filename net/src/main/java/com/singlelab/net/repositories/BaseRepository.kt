@@ -4,12 +4,14 @@ import com.google.gson.Gson
 import com.singlelab.net.ApiUnit
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.exceptions.RefreshTokenException
+import com.singlelab.net.exceptions.TimeoutException
 import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.ErrorResponse
 import com.singlelab.net.model.ResultCoroutines
 import com.singlelab.net.model.auth.AuthResponse
 import retrofit2.Response
 import java.net.HttpURLConnection
+import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 open class BaseRepository {
@@ -86,6 +88,8 @@ open class BaseRepository {
                     throw e
                 }
             }
+        } catch (e: SocketTimeoutException) {
+            ResultCoroutines.Error(TimeoutException())
         } catch (e: Exception) {
             ResultCoroutines.Error(
                 ApiException(

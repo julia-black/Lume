@@ -13,11 +13,10 @@ import retrofit2.http.Query
 
 interface ChatsApi {
     @GET("chat/get-new-chat-messages")
-    fun messagesAsync(
+    fun loadNewMessageAsync(
         @Query("chatUid") chatUid: String,
-        @Query("messageUid") lastMessageUid: String,
-        @Query("personUid") personUid: Int
-    ): Deferred<Response<ChatMessagesResponse>>
+        @Query("messageUid") lastMessageUid: String?
+    ): Deferred<Response<List<ChatMessageResponse>>>
 
     @GET("chat/get-chat")
     fun chatAsync(
