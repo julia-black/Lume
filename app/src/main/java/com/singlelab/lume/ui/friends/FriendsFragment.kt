@@ -55,28 +55,20 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
             if (isSearch) {
                 edit_text_search.requestFocus()
             }
+            presenter.hasFriends = FriendsFragmentArgs.fromBundle(it).hasFriends
             presenter.eventUid = FriendsFragmentArgs.fromBundle(it).eventUid
         }
-        if (hasFriends()) {
-            recycler_friends.apply {
-                layoutManager =
-                    LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                visibility = View.VISIBLE
-            }
-            presenter.loadFriends()
-            title_empty_friends.visibility = View.GONE
-        } else {
-            showEmptyFriends()
+        recycler_friends.apply {
+            layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            visibility = View.VISIBLE
         }
-        title_empty_search.visibility = View.GONE
-        if (searchDebounce == null) {
-            searchDebounce = TextInputDebounce(
-                editText = edit_text_search,
-                isHandleEmptyString = true
-            )
-            searchDebounce!!.watch {
-                presenter.search(it)
-            }
+        searchDebounce = TextInputDebounce(
+            editText = edit_text_search,
+            isHandleEmptyString = true
+        )
+        searchDebounce!!.watch {
+            presenter.search(it)
         }
     }
 
@@ -119,6 +111,13 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
         }
     }
 
+    override fun showEmptyFriends() {
+        recycler_search_results.visibility = View.GONE
+        title_empty_search.visibility = View.GONE
+        recycler_friends.visibility = View.GONE
+        title_empty_friends.visibility = View.VISIBLE
+    }
+
     override fun onPersonClick(personUid: String) {
         findNavController().navigate(FriendsFragmentDirections.actionFriendsToPerson(personUid))
     }
@@ -133,14 +132,5 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
 
     override fun onAcceptClick(personUid: String, eventUid: String) {
         presenter.invitePerson(personUid, eventUid, isSearchResults)
-    }
-
-    private fun showEmptyFriends() {
-        recycler_friends.visibility = View.GONE
-        title_empty_friends.visibility = View.VISIBLE
-    }
-
-    private fun hasFriends(): Boolean {
-        return true
     }
 }

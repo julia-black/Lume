@@ -8,6 +8,7 @@ class Profile(
     val description: String? = null,
     val age: Int? = null,
     val imageContentUid: String? = null,
+    val isFriend: Boolean = false,
     val friends: List<Person> = arrayListOf()
 ) {
     companion object {
@@ -19,6 +20,7 @@ class Profile(
                     profileResponse.description,
                     profileResponse.age,
                     profileResponse.imageContentUid,
+                    profileResponse.isFriend,
                     profileResponse.friends.mapNotNull {
                         Person.fromResponse(it)
                     }

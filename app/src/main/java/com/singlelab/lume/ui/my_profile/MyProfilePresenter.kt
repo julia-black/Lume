@@ -1,13 +1,14 @@
 package com.singlelab.lume.ui.my_profile
 
 import android.graphics.Bitmap
-import com.singlelab.net.exceptions.ApiException
-import com.singlelab.net.model.auth.AuthData
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.profile.Profile
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.my_profile.interactor.MyProfileInteractor
 import com.singlelab.lume.util.toBase64
+import com.singlelab.net.exceptions.ApiException
+import com.singlelab.net.model.auth.AuthData
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -16,6 +17,8 @@ class MyProfilePresenter @Inject constructor(
     private var interactor: MyProfileInteractor,
     preferences: Preferences?
 ) : BasePresenter<MyProfileView>(preferences, interactor as BaseInteractor) {
+
+    private var profile: Profile? = null
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -31,11 +34,11 @@ class MyProfilePresenter @Inject constructor(
         invokeSuspend {
             try {
                 if (!AuthData.isAnon) {
-                    val profile = interactor.loadProfile()
+                    profile = interactor.loadProfile()
                     runOnMainThread {
                         viewState.showLoading(false)
                         if (profile != null) {
-                            viewState.showProfile(profile)
+                            viewState.showProfile(profile!!)
                         } else {
                             viewState.showError("Не удалось получить профиль")
                         }
@@ -78,4 +81,6 @@ class MyProfilePresenter @Inject constructor(
             }
         }
     }
+
+    fun hasFriends() = !profile?.friends.isNullOrEmpty()
 }

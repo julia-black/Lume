@@ -53,7 +53,14 @@ class PersonFragment : BaseFragment(), PersonView {
         } else {
             image.setImageDrawable(context?.getDrawable(R.drawable.ic_profile))
         }
-        button_add_to_friends.visibility = View.VISIBLE
+        if (profile.isFriend) {
+            button_add_to_friends.visibility = View.GONE
+            button_remove_from_friends.visibility = View.VISIBLE
+        } else {
+            button_add_to_friends.visibility = View.VISIBLE
+            button_remove_from_friends.visibility = View.GONE
+        }
+
         button_add_to_friends.setOnClickListener {
             profile.personUid?.let { uid ->
                 presenter.addToFriends(uid)
