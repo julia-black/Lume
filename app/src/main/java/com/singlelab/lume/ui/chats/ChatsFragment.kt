@@ -32,7 +32,7 @@ class ChatsFragment : BaseFragment(), ChatsView, OnlyForAuthFragments {
     fun providePresenter() = daggerPresenter
 
     private val onChatClicked: (ChatItem) -> Unit = { chatInfo ->
-        navigateToChat(chatInfo.title, chatInfo.uid)
+        navigateToChat(chatInfo.title, chatInfo.uid, chatInfo.isGroup)
     }
 
     private val onChatLongClicked: (ChatItem) -> Boolean = {
@@ -62,7 +62,7 @@ class ChatsFragment : BaseFragment(), ChatsView, OnlyForAuthFragments {
         showError("У вас нет активных чатов")
     }
 
-    private fun navigateToChat(chatTitle: String, chatUid: String) {
+    private fun navigateToChat(chatTitle: String, chatUid: String, isGroup: Boolean) {
         findNavController().navigate(
             ChatsFragmentDirections.actionFromChatsToChat(
                 ChatOpeningInvocationType.Common(
@@ -71,5 +71,18 @@ class ChatsFragment : BaseFragment(), ChatsView, OnlyForAuthFragments {
                 )
             )
         )
+        /*val type = if (isGroup) {
+            ChatOpeningInvocationType.Common(
+                title = chatTitle,
+                chatUid = chatUid
+            )
+        } else {
+            ChatOpeningInvocationType.Person(
+                title = chatTitle,
+                personUid = chatUid
+            )
+        }
+
+        findNavController().navigate(ChatsFragmentDirections.actionFromChatsToChat(type))*/
     }
 }

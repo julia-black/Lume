@@ -6,8 +6,7 @@ import com.singlelab.lume.database.entity.ChatMessage
 interface ChatMessagesRepository {
     suspend fun insert(messages: Collection<ChatMessage>)
     suspend fun insert(message: ChatMessage)
-    suspend fun all(): List<ChatMessage>
-    suspend fun last50messages(): List<ChatMessage>
+    suspend fun byChatUid(chatUid: String): List<ChatMessage>
 }
 
 class RoomChatMessagesRepository(db: LumeDatabase) : ChatMessagesRepository {
@@ -19,9 +18,6 @@ class RoomChatMessagesRepository(db: LumeDatabase) : ChatMessagesRepository {
     override suspend fun insert(message: ChatMessage) =
         dao.insertOrReplace(message)
 
-    override suspend fun all(): List<ChatMessage> =
-        dao.all()
-
-    override suspend fun last50messages(): List<ChatMessage> =
-        dao.last50messages()
+    override suspend fun byChatUid(chatUid: String): List<ChatMessage> =
+        dao.byChatUid(chatUid)
 }

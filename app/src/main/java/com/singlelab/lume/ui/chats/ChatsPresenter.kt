@@ -20,6 +20,9 @@ constructor(
 
     override fun attachView(view: ChatsView?) {
         super.attachView(view)
+        invokeSuspend {
+            showLocalChats()
+        }
         showChats()
     }
 
@@ -33,11 +36,8 @@ constructor(
                     interactor.saveChats(remoteChats.toDbEntities())
                 }
                 showLocalChats()
-                runOnMainThread { viewState.showError("Чаты синзронизованы с сервером") } // TODO: Нужно для демонстрации работы бд, удалить
             } catch (e: ApiException) {
-                // Если не получилось загрузить чаты, показываем чаты из БД
                 showLocalChats()
-                runOnMainThread { viewState.showError("Нет сети, показаны чаты из БД") } // TODO: Нужно для демонстрации работы бд, удалить
             }
         }
     }

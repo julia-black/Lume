@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.singlelab.lume.R
-import com.singlelab.lume.util.generateImageLink
+import com.singlelab.lume.util.generateImageLinkForPerson
 import com.singlelab.lume.util.isVisible
 import kotlinx.android.synthetic.main.chats_item.view.*
 
@@ -46,11 +46,11 @@ class ChatsAdapter(
 
             // TODO: Понять какую картинку чата мы хотим отображать для групповых чатов
             // TODO: Подумать, может, стоит сделать для глайда интерсептор для хедеров, тогда, вероятно, стоить инжектить глайд
-            if (chat.image.generateImageLink().isNotEmpty()) {
+            /*if (chat.image.isNotEmpty()) {
                 Glide.with(itemView)
-                    .load(chat.image.generateImageLink())
+                    .load(chat.image)
                     .into(itemView.chatsImageView)
-            }
+            }*/
 
             itemView.setOnClickListener { onClickAction(chat) }
             itemView.setOnLongClickListener { onLongClickAction(chat) }

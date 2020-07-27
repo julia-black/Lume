@@ -1,6 +1,8 @@
 package com.singlelab.lume.ui.chats.common
 
 import com.singlelab.lume.database.entity.Chat
+import com.singlelab.lume.util.generateImageLinkForEvent
+import com.singlelab.lume.util.generateImageLinkForPerson
 import com.singlelab.net.model.chat.ChatResponse
 
 fun List<ChatResponse>.toDbEntities(): List<Chat> =
@@ -23,7 +25,7 @@ fun Chat.toDbEntity(): ChatItem =
     ChatItem(
         uid = uid,
         title = title,
-        image = image,
+        image = if (isGroup) image.generateImageLinkForEvent() else image.generateImageLinkForPerson(),
         isGroup = isGroup,
         lastMessage = lastMessage
     )

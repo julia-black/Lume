@@ -5,6 +5,8 @@ import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.chat.ChatMessageRequest
 import com.singlelab.net.model.chat.ChatMessageResponse
 import com.singlelab.net.model.chat.ChatMessagesResponse
+import com.singlelab.net.model.event.EventResponse
+import com.singlelab.net.model.person.ProfileResponse
 import com.singlelab.net.repositories.BaseRepository
 
 interface ChatRepository {
@@ -22,6 +24,12 @@ interface ChatRepository {
         chatUid: String,
         lastMessageUid: String?
     ): List<ChatMessageResponse>?
+
+    @Throws(ApiException::class)
+    suspend fun getProfile(personUid: String): ProfileResponse?
+
+    @Throws(ApiException::class)
+    suspend fun getEvent(uid: String): EventResponse?
 }
 
 class DefaultChatRepository(private val apiUnit: ApiUnit) : BaseRepository(), ChatRepository {
@@ -57,6 +65,22 @@ class DefaultChatRepository(private val apiUnit: ApiUnit) : BaseRepository(), Ch
             apiUnit = apiUnit,
             call = { apiUnit.chatsApi.loadNewMessageAsync(chatUid, lastMessageUid).await() },
             errorMessage = "Не удалось получить сообщение"
+        )
+    }
+
+    override suspend fun getProfile(personUid: String): ProfileResponse? {
+        return safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.personApi.getProfileAsync(personUid).await() },
+            errorMessage = "Не удалось получить профиль"
+        )
+    }
+
+    override suspend fun getEvent(uid: String): EventResponse? {
+        return safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.eventsApi.getEventAsync(uid).await() },
+            errorMessage = "Не удалось получить события"
         )
     }
 }

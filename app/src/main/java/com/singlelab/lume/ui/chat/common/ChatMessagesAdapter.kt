@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.singlelab.lume.R
 import kotlinx.android.synthetic.main.incoming_message_item.view.*
 import kotlinx.android.synthetic.main.outgoing_message_item.view.*
@@ -32,6 +33,10 @@ class ChatMessagesAdapter : RecyclerView.Adapter<ChatMessagesAdapter.ChatMessage
         this.messages.addAll(messages)
     }
 
+    fun addMessage(message: ChatMessageItem) {
+        messages.add(message)
+    }
+
     abstract class ChatMessageViewHolder(
         view: View
     ) : RecyclerView.ViewHolder(view) {
@@ -43,6 +48,11 @@ class ChatMessagesAdapter : RecyclerView.Adapter<ChatMessagesAdapter.ChatMessage
     ) : ChatMessageViewHolder(view) {
         override fun bind(messageItem: ChatMessageItem) {
             itemView.incomingMessageView.text = messageItem.text
+            if (messageItem.personPhoto.isNotEmpty()) {
+                Glide.with(itemView)
+                    .load(messageItem.personPhoto)
+                    .into(itemView.incomingMessagePhotoView)
+            }
         }
     }
 
@@ -51,6 +61,11 @@ class ChatMessagesAdapter : RecyclerView.Adapter<ChatMessagesAdapter.ChatMessage
     ) : ChatMessageViewHolder(view) {
         override fun bind(messageItem: ChatMessageItem) {
             itemView.outgoingMessageView.text = messageItem.text
+            if (messageItem.personPhoto.isNotEmpty()) {
+                Glide.with(itemView)
+                    .load(messageItem.personPhoto)
+                    .into(itemView.outgoingMessagePhotoView)
+            }
         }
 
     }

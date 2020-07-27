@@ -2,6 +2,8 @@ package com.singlelab.lume.ui.chat.interactor
 
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.database.entity.ChatMessage
+import com.singlelab.lume.model.event.Event
+import com.singlelab.lume.model.profile.Profile
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.chat.ChatMessageRequest
 import com.singlelab.net.model.chat.ChatMessageResponse
@@ -23,10 +25,16 @@ interface ChatInteractor {
     @Throws(ApiException::class)
     suspend fun loadNewMessages(chatUid: String, lastMessageUid: String?): List<ChatMessageResponse>?
 
+    @Throws(ApiException::class)
+    suspend fun loadPerson(personUid: String): Profile?
+
+    @Throws(ApiException::class)
+    suspend fun getEvent(uid: String): Event?
+
     suspend fun saveChatMessages(messages: List<ChatMessage>)
     suspend fun saveChatMessage(message: ChatMessage)
 
-    suspend fun all(): List<ChatMessage>
+    suspend fun byChatUid(chatUid: String): List<ChatMessage>
 }
 
 class DefaultChatInteractor(
@@ -54,6 +62,14 @@ class DefaultChatInteractor(
     override suspend fun saveChatMessage(message: ChatMessage) =
         localRepository.insert(message)
 
-    override suspend fun all() =
-        localRepository.all()
+    override suspend fun byChatUid(chatUid: String) =
+        localRepository.byChatUid(chatUid)
+
+    override suspend fun loadPerson(personUid: String): Profile? {
+        return Profile.fromResponse(remoteRepository.getProfile(personUid))
+    }
+
+    override suspend fun getEvent(uid: String): Event? {
+        return Event.fromResponse(remoteRepository.getEvent(uid))
+    }
 }

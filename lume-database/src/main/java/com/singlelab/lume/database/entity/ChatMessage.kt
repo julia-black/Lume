@@ -9,6 +9,9 @@ data class ChatMessage(
     val uid: String,
     val text: String,
     val date: String,
-    val personUid: String
+    val personUid: String,
+    val chatUid: String,
+    val personName: String,
+    val personPhoto: String
     //val images: List<String>
 )
