@@ -62,5 +62,7 @@
     <!-- Chat -->
     <string name="chat_title">Чат</string>
     <string name="count_invited">Приглашены %1$d человек</string>
+    <string name="search_events">Поиск события</string>
+    <string name="search_event">Найти событие</string>
 
 </resources>

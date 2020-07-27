@@ -21,7 +21,7 @@ class ParticipantsPresenter @Inject constructor(
 
     var eventUid: String? = null
 
-    var participants: Array<Person>? = null
+    var participants: MutableList<Person>? = null
 
     fun approvePerson(personUid: String, eventUid: String) {
         viewState.showLoading(true)
@@ -36,6 +36,29 @@ class ParticipantsPresenter @Inject constructor(
                 )
                 participants?.forEach {
                     it.participantStatus = ParticipantStatus.ACTIVE
+                }
+                runOnMainThread {
+                    viewState.showLoading(false)
+                    participants?.let {
+                        viewState.showParticipants(it.toList())
+                    }
+                }
+            } catch (e: ApiException) {
+                runOnMainThread {
+                    viewState.showLoading(false)
+                    viewState.showError(e.message)
+                }
+            }
+        }
+    }
+
+    fun rejectPerson(personUid: String, eventUid: String) {
+        viewState.showLoading(true)
+        invokeSuspend {
+            try {
+                interactor.rejectPerson(personUid, eventUid)
+                participants?.removeAll {
+                    it.personUid == personUid
                 }
                 runOnMainThread {
                     viewState.showLoading(false)

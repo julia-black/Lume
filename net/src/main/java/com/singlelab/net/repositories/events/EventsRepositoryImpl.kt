@@ -37,7 +37,7 @@ class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository, Bas
         )
     }
 
-    override suspend fun addParticipantsAsync(participantRequest: ParticipantRequest) {
+    override suspend fun addParticipants(participantRequest: ParticipantRequest) {
         safeApiCall(
             apiUnit = apiUnit,
             call = { apiUnit.eventsApi.addParticipantsAsync(participantRequest).await() },
@@ -45,11 +45,27 @@ class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository, Bas
         )
     }
 
-    override suspend fun updateParticipantsAsync(participantRequest: ParticipantRequest) {
+    override suspend fun updateParticipants(participantRequest: ParticipantRequest) {
         safeApiCall(
             apiUnit = apiUnit,
             call = { apiUnit.eventsApi.updateParticipantsAsync(participantRequest).await() },
             errorMessage = "Не удалось подтвердить"
+        )
+    }
+
+    override suspend fun removeParticipants(personUid: String, eventUid: String) {
+        safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.eventsApi.removeParticipantsAsync(personUid, eventUid).await() },
+            errorMessage = "Не удалось отклонить"
+        )
+    }
+
+    override suspend fun search(searchEventRequest: SearchEventRequest): List<EventSummaryResponse>? {
+        return safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.eventsApi.searchEventAsync(searchEventRequest).await() },
+            errorMessage = "Не удалось выполнить поиск"
         )
     }
 }

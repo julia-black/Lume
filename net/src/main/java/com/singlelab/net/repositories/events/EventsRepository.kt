@@ -11,7 +11,11 @@ interface EventsRepository {
 
     suspend fun getRandomEvent(randomEventRequest: RandomEventRequest): EventResponse?
 
-    suspend fun addParticipantsAsync(participantRequest: ParticipantRequest)
+    suspend fun addParticipants(participantRequest: ParticipantRequest)
 
-    suspend fun updateParticipantsAsync(participantRequest: ParticipantRequest)
+    suspend fun updateParticipants(participantRequest: ParticipantRequest)
+
+    suspend fun removeParticipants(personUid: String, eventUid: String)
+
+    suspend fun search(searchEventRequest: SearchEventRequest): List<EventSummaryResponse>?
 }

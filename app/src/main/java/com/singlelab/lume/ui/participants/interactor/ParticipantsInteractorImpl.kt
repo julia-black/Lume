@@ -9,6 +9,10 @@ class ParticipantsInteractorImpl(private val repository: EventsRepository) : Par
     BaseInteractor(repository as BaseRepository) {
 
     override suspend fun approvePerson(participantRequest: ParticipantRequest) {
-        repository.updateParticipantsAsync(participantRequest)
+        repository.updateParticipants(participantRequest)
+    }
+
+    override suspend fun rejectPerson(personUid: String, eventUid: String) {
+        repository.removeParticipants(personUid, eventUid)
     }
 }

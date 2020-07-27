@@ -4,10 +4,7 @@ import com.singlelab.net.model.MessageResponse
 import com.singlelab.net.model.event.*
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface EventsApi {
 
@@ -28,4 +25,13 @@ interface EventsApi {
 
     @POST("event/get-random-event")
     fun getRandomEventAsync(@Body randomEventRequest: RandomEventRequest): Deferred<Response<EventResponse>>
+
+    @DELETE("event/remove-event-participant")
+    fun removeParticipantsAsync(
+        @Query("personUid") personUid: String,
+        @Query("eventUid") eventUid: String
+    ): Deferred<Response<MessageResponse>>
+
+    @POST("event/search-for-event")
+    fun searchEventAsync(@Body searchEventRequest: SearchEventRequest): Deferred<Response<List<EventSummaryResponse>>>
 }

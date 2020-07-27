@@ -49,17 +49,18 @@ class ParticipantsFragment : BaseFragment(), ParticipantsView, OnlyForAuthFragme
             ParticipantsFragmentArgs.fromBundle(it).let { args ->
                 presenter.withNotApproved = args.withNotApproved
                 presenter.eventUid = args.eventUid
-                presenter.participants = args.participants
+                presenter.participants = args.participants.toMutableList()
             }
         }
         recycler_participants.apply {
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             visibility = View.VISIBLE
-            presenter.participants?.toMutableList()?.let { list ->
+            presenter.participants?.let { list ->
                 adapter = PersonsAdapter(
                     list,
                     presenter.eventUid,
+                    false,
                     this@ParticipantsFragment
                 )
             }
@@ -82,6 +83,10 @@ class ParticipantsFragment : BaseFragment(), ParticipantsView, OnlyForAuthFragme
 
     override fun onAcceptClick(personUid: String, eventUid: String) {
         presenter.approvePerson(personUid, eventUid)
+    }
+
+    override fun onRejectClick(personUid: String, eventUid: String) {
+        presenter.rejectPerson(personUid, eventUid)
     }
 
     override fun showParticipants(list: List<Person>) {
