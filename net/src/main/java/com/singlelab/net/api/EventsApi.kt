@@ -2,6 +2,8 @@ package com.singlelab.net.api
 
 import com.singlelab.net.model.MessageResponse
 import com.singlelab.net.model.event.*
+import com.singlelab.net.model.person.PersonResponse
+import com.singlelab.net.model.person.RandomPersonRequest
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.*
@@ -34,4 +36,7 @@ interface EventsApi {
 
     @POST("event/search-for-event")
     fun searchEventAsync(@Body searchEventRequest: SearchEventRequest): Deferred<Response<List<EventSummaryResponse>>>
+
+    @POST("person/get-random-person")
+    fun getRandomPersonAsync(@Body randomPersonRequest: RandomPersonRequest): Deferred<Response<PersonResponse>>
 }

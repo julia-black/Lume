@@ -84,7 +84,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
             activity?.let { activity ->
                 CropImage.activity()
                     .setFixAspectRatio(true)
-                    .setRequestedSize(300, 300, CropImageView.RequestSizeOptions.RESIZE_FIT)
+                    .setRequestedSize(500, 500, CropImageView.RequestSizeOptions.RESIZE_FIT)
                     .setCropShape(CropImageView.CropShape.RECTANGLE)
                     .start(activity)
             }

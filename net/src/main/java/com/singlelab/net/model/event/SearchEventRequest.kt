@@ -1,7 +1,7 @@
 package com.singlelab.net.model.event
 
 class SearchEventRequest(
-    val name: String,
+    val query: String,
     val minAge: Int? = null,
     val maxAge: Int? = null,
     val startTime: String? = null,

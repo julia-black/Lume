@@ -65,4 +65,6 @@ class EventPresenter @Inject constructor(
         }
         return null
     }
+
+    fun isAdministrator() = event?.administrator?.personUid == AuthData.uid
 }

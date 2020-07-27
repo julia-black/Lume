@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.singlelab.lume.model.event.Event
 
-class CardStackAdapter(
+class CardStackEventAdapter(
     private var events: List<Event> = emptyList()
 ) : RecyclerView.Adapter<CardEventViewHolder>() {
 

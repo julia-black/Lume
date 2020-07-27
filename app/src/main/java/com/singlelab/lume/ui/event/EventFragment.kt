@@ -134,6 +134,21 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             count_invited.visibility = View.VISIBLE
             count_invited.text = getString(R.string.count_invited, event.invitedParticipants.size)
         }
+
+        if (presenter.isAdministrator()) {
+            button_search_participants.visibility = View.VISIBLE
+            button_search_participants.setOnClickListener {
+                toSwiperPeople(event.eventUid)
+            }
+        } else {
+            button_search_participants.visibility = View.GONE
+        }
+    }
+
+    private fun toSwiperPeople(eventUid: String?) {
+        eventUid?.let {
+            findNavController().navigate(EventFragmentDirections.actionEventToSwiperPerson(eventUid))
+        }
     }
 
     private fun toParticipants(withNotApproved: Boolean) {

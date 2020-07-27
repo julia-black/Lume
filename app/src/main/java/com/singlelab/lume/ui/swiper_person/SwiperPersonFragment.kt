@@ -1,19 +1,19 @@
-package com.singlelab.lume.ui.swiper_event
+package com.singlelab.lume.ui.swiper_person
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
-import androidx.navigation.fragment.findNavController
+import android.widget.Toast
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnSearchListener
-import com.singlelab.lume.model.event.Event
-import com.singlelab.lume.ui.swiper_event.adapter.CardStackEventAdapter
+import com.singlelab.lume.model.profile.Person
+import com.singlelab.lume.ui.swiper_person.adapter.CardStackPersonAdapter
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_swiper_event.*
@@ -22,14 +22,14 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragments,
+class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragments,
     CardStackListener, OnSearchListener {
 
     @Inject
-    lateinit var daggerPresenter: SwiperEventPresenter
+    lateinit var daggerPresenter: SwiperPersonPresenter
 
     @InjectPresenter
-    lateinit var presenter: SwiperEventPresenter
+    lateinit var presenter: SwiperPersonPresenter
 
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
@@ -41,12 +41,15 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_swiper_event, container, false)
+        return inflater.inflate(R.layout.fragment_swiper_person, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.title = ""
+        arguments?.let {
+            presenter.eventUid = SwiperPersonFragmentArgs.fromBundle(it).eventUid
+        }
         setListeners()
         initCardStack()
     }
@@ -61,22 +64,6 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         super.onStop()
     }
 
-    override fun showEvent(event: Event) {
-        if (presenter.event == null) {
-            presenter.loadRandomEvent()
-        } else {
-            (card_stack_view.adapter as CardStackEventAdapter).setEvents(listOf(event))
-        }
-    }
-
-    override fun toAcceptedEvent(eventUid: String) {
-        findNavController().navigate(SwiperEventFragmentDirections.actionSwiperEventToEvent(eventUid))
-    }
-
-    override fun onClickSearch() {
-        findNavController().navigate(SwiperEventFragmentDirections.actionSwiperEventToSearchEvent())
-    }
-
     override fun onCardDisappeared(view: View?, position: Int) {
     }
 
@@ -86,11 +73,10 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
     override fun onCardSwiped(direction: Direction?) {
         when (direction) {
             Direction.Right -> {
-                //todo если пользователь не зареган, то отправлять на форму регистрации (запоминая событие, на которое он хотел пойти)
-                presenter.acceptEvent()
+                presenter.invitePerson()
             }
             Direction.Left -> {
-                presenter.loadRandomEvent()
+                presenter.loadRandomPerson()
             }
             else -> {
             }
@@ -122,7 +108,7 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
             setOverlayInterpolator(LinearInterpolator())
         }
         card_stack_view.layoutManager = cardStackManager
-        card_stack_view.adapter = CardStackEventAdapter()
+        card_stack_view.adapter = CardStackPersonAdapter()
         card_stack_view.itemAnimator.apply {
             if (this is DefaultItemAnimator) {
                 supportsChangeAnimations = false
@@ -131,5 +117,26 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
     }
 
     private fun setListeners() {
+    }
+
+    override fun showPerson(person: Person) {
+        if (presenter.person == null) {
+            presenter.loadRandomPerson()
+        } else {
+            (card_stack_view.adapter as CardStackPersonAdapter).setData(listOf(person))
+        }
+    }
+
+    override fun toAcceptedPerson(person: Person, eventUid: String) {
+        Toast.makeText(
+            context,
+            getString(R.string.person_invited, person.name),
+            Toast.LENGTH_LONG
+        ).show()
+        presenter.loadRandomPerson()
+    }
+
+    override fun onClickSearch() {
+        TODO("Not yet implemented")
     }
 }

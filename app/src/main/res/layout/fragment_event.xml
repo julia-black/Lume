@@ -62,6 +62,25 @@
             tools:text="Название" />
 
         <Button
+            android:id="@+id/button_search_participants"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp"
+            android:text="@string/search_participants"
+            android:textAllCaps="false"
+            android:textColor="@color/colorAccent"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/button_invite"
+            app:rippleColor="@color/colorAccentLight"
+            app:strokeColor="@color/colorAccent"
+            app:strokeWidth="1dp" />
+
+        <Button
             android:id="@+id/button_invite"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
@@ -70,7 +89,7 @@
             android:clickable="true"
             android:focusable="true"
             android:padding="16dp"
-            android:text="@string/invite"
+            android:text="@string/invite_friends"
             android:textAllCaps="false"
             android:textColor="@color/colorAccent"
             android:textSize="16sp"
@@ -116,7 +135,7 @@
             android:drawablePadding="@dimen/margin_small"
             android:text="@string/date_start"
             app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/button_invite" />
+            app:layout_constraintTop_toBottomOf="@id/button_search_participants" />
 
         <TextView
             android:id="@+id/end_date"

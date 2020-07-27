@@ -23,7 +23,7 @@ class SearchEventPresenter @Inject constructor(
             invokeSuspend {
                 try {
                     val searchResults = interactor.search(
-                        SearchEventRequest(name = searchStr)
+                        SearchEventRequest(query = searchStr)
                     )
                     runOnMainThread {
                         viewState.showLoading(false)

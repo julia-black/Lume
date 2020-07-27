@@ -1,6 +1,8 @@
 package com.singlelab.net.repositories.events
 
 import com.singlelab.net.model.event.*
+import com.singlelab.net.model.person.PersonResponse
+import com.singlelab.net.model.person.RandomPersonRequest
 
 interface EventsRepository {
     suspend fun createEvent(event: EventRequest): EventUidResponse?
@@ -18,4 +20,6 @@ interface EventsRepository {
     suspend fun removeParticipants(personUid: String, eventUid: String)
 
     suspend fun search(searchEventRequest: SearchEventRequest): List<EventSummaryResponse>?
+
+    suspend fun getRandomPerson(randomPersonRequest: RandomPersonRequest): PersonResponse?
 }
