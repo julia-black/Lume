@@ -72,6 +72,4 @@ class MyProfilePresenter @Inject constructor(
             }
         }
     }
-
-    fun hasFriends() = !profile?.friends.isNullOrEmpty()
 }

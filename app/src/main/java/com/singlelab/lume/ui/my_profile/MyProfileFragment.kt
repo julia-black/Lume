@@ -155,7 +155,6 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
     private fun toFriends(isSearch: Boolean = false) {
         val action = MyProfileFragmentDirections.actionMyProfileToFriends()
         action.isSearch = isSearch
-        action.hasFriends = presenter.hasFriends()
         findNavController().navigate(action)
     }
 }

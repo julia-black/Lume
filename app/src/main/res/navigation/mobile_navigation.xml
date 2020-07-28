@@ -147,10 +147,6 @@
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />
-        <argument
-            android:name="hasFriends"
-            android:defaultValue="false"
-            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/person"

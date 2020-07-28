@@ -148,6 +148,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             }
         } else {
             button_search_participants.visibility = View.GONE
+            button_invite.visibility = if (event.isOpenForInvitations) View.VISIBLE else View.GONE
         }
 
         val currentUid = AuthData.uid

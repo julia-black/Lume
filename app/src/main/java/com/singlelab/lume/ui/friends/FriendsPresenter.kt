@@ -19,8 +19,6 @@ class FriendsPresenter @Inject constructor(
 
     var eventUid: String? = null
 
-    var hasFriends = false
-
     private var friends: MutableList<Person>? = null
 
     private var searchResults: MutableList<Person>? = null
@@ -31,11 +29,7 @@ class FriendsPresenter @Inject constructor(
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        if (hasFriends) {
-            loadFriends()
-        } else {
-            viewState.showEmptyFriends()
-        }
+        loadFriends()
     }
 
     private fun loadFriends() {
