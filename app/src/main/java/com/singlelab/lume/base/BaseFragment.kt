@@ -1,10 +1,11 @@
 package com.singlelab.lume.base
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import com.singlelab.net.model.auth.AuthData
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.listeners.OnActivityResultListener
@@ -12,6 +13,7 @@ import com.singlelab.lume.base.listeners.OnLogoutListener
 import com.singlelab.lume.base.listeners.OnSearchListener
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
+import com.singlelab.net.model.auth.AuthData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -26,16 +28,6 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         get() = parentJob + Dispatchers.Default
 
     private val scope = CoroutineScope(coroutineContext)
-
-    protected fun invokeSuspend(block: suspend () -> Unit) {
-        scope.launch { block.invoke() }
-    }
-
-    protected fun runOnMainThread(block: () -> Unit) {
-        scope.launch(CoroutineContextProvider().main) {
-            block.invoke()
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,5 +61,25 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         showLoading(false)
         findNavController().popBackStack()
         findNavController().navigate(R.id.auth)
+    }
+
+    protected fun invokeSuspend(block: suspend () -> Unit) {
+        scope.launch { block.invoke() }
+    }
+
+    protected fun runOnMainThread(block: () -> Unit) {
+        scope.launch(CoroutineContextProvider().main) {
+            block.invoke()
+        }
+    }
+
+    fun hideKeyboard() {
+        val imm: InputMethodManager =
+            activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        var view = activity?.currentFocus
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

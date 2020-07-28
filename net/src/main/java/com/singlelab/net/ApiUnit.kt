@@ -1,10 +1,7 @@
 package com.singlelab.net
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.singlelab.net.api.AuthApi
-import com.singlelab.net.api.ChatsApi
-import com.singlelab.net.api.EventsApi
-import com.singlelab.net.api.PersonApi
+import com.singlelab.net.api.*
 import com.singlelab.net.interactor.HeaderInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -42,5 +39,9 @@ class ApiUnit(baseUrl: String) {
 
     val chatsApi: ChatsApi = retrofit.create(
         ChatsApi::class.java
+    )
+
+    val citiesApi: CitiesApi = retrofit.create(
+        CitiesApi::class.java
     )
 }

@@ -1,15 +1,13 @@
-package com.singlelab.lume.ui.reg
+package com.singlelab.lume.ui.cities
 
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
+import com.singlelab.lume.model.city.City
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.StateStrategyType
 
-interface RegistrationView : LoadingView, ErrorView {
+interface CitiesView : LoadingView, ErrorView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun onRegistration()
-
-    @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showCity(cityName: String)
+    fun showCities(cities: List<City>?)
 }

@@ -102,6 +102,9 @@
         <action
             android:id="@+id/action_registration_to_my_profile"
             app:destination="@id/my_profile" />
+        <action
+            android:id="@+id/action_registration_to_cities"
+            app:destination="@id/cities" />
     </fragment>
     <fragment
         android:id="@+id/event"
@@ -190,4 +193,9 @@
             android:name="eventUid"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/cities"
+        android:name="com.singlelab.lume.ui.cities.CitiesFragment"
+        android:label="CitiesFragment"
+        tools:layout="@layout/fragment_cities" />
 </navigation>
