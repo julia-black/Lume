@@ -70,6 +70,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         Toast.makeText(context, "Ура! Вы создали событие!", Toast.LENGTH_LONG).show()
         val action = CreatingEventFragmentDirections.actionCreatingEventToEvent(eventUid)
         findNavController().navigate(action)
+        findNavController().popBackStack(R.id.creating_event, true)
     }
 
     override fun showDateStart(dateStr: String) {

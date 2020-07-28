@@ -20,16 +20,7 @@ class MyProfilePresenter @Inject constructor(
 
     private var profile: Profile? = null
 
-    override fun onFirstViewAttach() {
-        super.onFirstViewAttach()
-        if (AuthData.isAnon) {
-            viewState.navigateToAuth()
-        } else {
-            loadProfile()
-        }
-    }
-
-    private fun loadProfile() {
+    fun loadProfile() {
         viewState.showLoading(true)
         invokeSuspend {
             try {

@@ -22,6 +22,7 @@ import com.singlelab.lume.ui.view.image_person.ImagePersonAdapter
 import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
 import com.singlelab.lume.util.generateImageLinkForPerson
 import com.singlelab.lume.util.getBitmap
+import com.singlelab.net.model.auth.AuthData
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,6 +61,12 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
         }
         view.findViewById<ImageView>(R.id.image)
             .setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_my_profile_to_auth))
+
+        if (AuthData.isAnon) {
+            navigateToAuth()
+        } else {
+            presenter.loadProfile()
+        }
     }
 
     override fun onStop() {
