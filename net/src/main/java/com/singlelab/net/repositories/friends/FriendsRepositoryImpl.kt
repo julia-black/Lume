@@ -3,6 +3,7 @@ package com.singlelab.net.repositories.friends
 import com.singlelab.net.ApiUnit
 import com.singlelab.net.model.event.ParticipantRequest
 import com.singlelab.net.model.person.PersonResponse
+import com.singlelab.net.model.person.SearchPersonRequest
 import com.singlelab.net.repositories.BaseRepository
 
 class FriendsRepositoryImpl(private val apiUnit: ApiUnit) : FriendsRepository, BaseRepository() {
@@ -14,14 +15,10 @@ class FriendsRepositoryImpl(private val apiUnit: ApiUnit) : FriendsRepository, B
         )
     }
 
-    override suspend fun search(
-        searchStr: String,
-        pageNumber: Int,
-        pageSize: Int
-    ): List<PersonResponse>? {
+    override suspend fun search(request: SearchPersonRequest): List<PersonResponse>? {
         return safeApiCall(
             apiUnit = apiUnit,
-            call = { apiUnit.personApi.searchPersonAsync(searchStr, pageNumber, pageSize).await() },
+            call = { apiUnit.personApi.searchPersonAsync(request).await() },
             errorMessage = "Не удалось выполнить поиск"
         )
     }

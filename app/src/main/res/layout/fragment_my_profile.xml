@@ -35,12 +35,21 @@
         tools:text="Иван, 23" />
 
     <TextView
+        android:id="@+id/city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        android:textSize="@dimen/text_size_standart"
+        app:layout_constraintTop_toBottomOf="@id/name_age"
+        tools:text="Москва" />
+
+    <TextView
         android:id="@+id/count_events"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_medium"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/name_age"
+        android:textSize="@dimen/text_size_standart"
+        app:layout_constraintTop_toBottomOf="@id/city"
         tools:text="14 встреч" />
 
     <TextView

@@ -8,6 +8,7 @@ import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.friends.interactor.FriendsInteractor
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.auth.AuthData
+import com.singlelab.net.model.person.SearchPersonRequest
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -58,8 +59,8 @@ class FriendsPresenter @Inject constructor(
             viewState.showLoading(true)
             invokeSuspend {
                 try {
-                    searchResults =
-                        interactor.search(searchStr, pageNumber, pageSize)?.toMutableList()
+                    val request = SearchPersonRequest(pageNumber, pageSize, searchStr)
+                    searchResults = interactor.search(request)?.toMutableList()
                     runOnMainThread {
                         viewState.showLoading(false)
                         viewState.showSearchResult(searchResults)

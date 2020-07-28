@@ -82,6 +82,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
     override fun showProfile(profile: Profile) {
         name_age.text = "${profile.name}, ${profile.age}"
         description.text = profile.description
+        city.text = profile.cityName
         if (!profile.imageContentUid.isNullOrEmpty()) {
             loadImage(profile.imageContentUid)
         } else {
