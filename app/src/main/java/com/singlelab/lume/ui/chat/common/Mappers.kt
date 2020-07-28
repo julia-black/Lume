@@ -1,35 +1,39 @@
 package com.singlelab.lume.ui.chat.common
 
 import com.singlelab.lume.database.entity.ChatMessage
-import com.singlelab.lume.ui.chat.common.ChatMessageItem.Type.INCOMING
-import com.singlelab.lume.ui.chat.common.ChatMessageItem.Type.OUTGOING
-import com.singlelab.lume.util.generateImageLinkForPerson
+import com.singlelab.lume.ui.chat.common.ChatMessageItem.Type
 import com.singlelab.net.model.chat.ChatMessageResponse
 
-fun List<ChatMessageResponse>.toDbEntities(chatUid: String, personName: String, personPhoto: String): List<ChatMessage> =
-    mapNotNull { it.toDbEntity(chatUid, personName, personPhoto) }
+fun List<ChatMessageResponse>.toDbEntities(chatUid: String?): List<ChatMessage> =
+    mapNotNull { it.toDbEntity(chatUid) }
 
-fun ChatMessageResponse.toDbEntity(chatUid: String, personName: String, personPhoto: String): ChatMessage? {
+fun ChatMessageResponse.toDbEntity(chatUid: String?): ChatMessage? {
     return ChatMessage(
-        uid = uId ?: return null,
+        uid = messageUid ?: return null,
         personUid = personUid ?: return null,
-        chatUid = chatUid,
-        text = text ?: "",
-        date = date ?: "",
-        personName = personName,
-        personPhoto = personPhoto
+        chatUid = chatUid ?: return null,
+        text = messageContent ?: "",
+        date = messageTime ?: "",
+        personName = personName ?: "",
+        personPhoto = personImageUid ?: ""
     )
 }
 
-fun List<ChatMessage>.toUiEntities(currentPersonUid: String): List<ChatMessageItem> =
-    map { it.toUiEntity(currentPersonUid) }
+fun List<ChatMessage>.toUiEntities(type: ChatOpeningInvocationType, currentPersonUid: String): List<ChatMessageItem> =
+    map { if (type is ChatOpeningInvocationType.Person) it.toPrivateItems(currentPersonUid) else it.toGroupItems(currentPersonUid) }
 
-fun ChatMessage.toUiEntity(currentPersonUid: String): ChatMessageItem =
-    ChatMessageItem(
+fun ChatMessage.toPrivateItems(currentPersonUid: String): PrivateChatMessageItem =
+    PrivateChatMessageItem(
         uid = uid,
         text = text,
-        isError = false,
-        type = if (personUid == currentPersonUid) OUTGOING else INCOMING,
-        personPhoto = personPhoto.generateImageLinkForPerson(),
-        personName = personName.generateImageLinkForPerson()
+        type = if (personUid == currentPersonUid) Type.OUTGOING else Type.INCOMING
+    )
+
+fun ChatMessage.toGroupItems(currentPersonUid: String): GroupChatMessageItem =
+    GroupChatMessageItem(
+        uid = uid,
+        text = text,
+        type = if (personUid == currentPersonUid) Type.OUTGOING else Type.INCOMING,
+        personPhoto = personPhoto,
+        personName = personName
     )

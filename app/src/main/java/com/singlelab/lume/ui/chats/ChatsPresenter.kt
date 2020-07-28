@@ -16,8 +16,10 @@ class ChatsPresenter
 constructor(
     private val interactor: ChatsInteractor,
     preferences: Preferences?
-) : BasePresenter<ChatsView>(preferences, interactor as BaseInteractor) {
-
+) : BasePresenter<ChatsView>(
+    preferences,
+    interactor as BaseInteractor
+) {
     override fun attachView(view: ChatsView?) {
         super.attachView(view)
         invokeSuspend {
@@ -30,7 +32,7 @@ constructor(
         viewState.showLoading(true)
         invokeSuspend {
             try {
-                // Пытаемся загрузить чаты с сервера и обновить их в БД, после чего показываем список чатов
+                // TODO: Сделать прогресс бар для загрузки чатов с сервера, изначально показывать чаты из бд?
                 val remoteChats = interactor.remoteChats()
                 if (remoteChats != null) {
                     interactor.saveChats(remoteChats.toDbEntities())
@@ -43,13 +45,13 @@ constructor(
     }
 
     private suspend fun showLocalChats() {
-        val chats = interactor.localChats()
+        val chats = interactor.localChats().toUiEntities()
         runOnMainThread {
             viewState.showLoading(false)
             if (chats.isEmpty()) {
                 viewState.showEmptyChats()
             } else {
-                viewState.showChats(chats.toUiEntities())
+                viewState.showChats(chats)
             }
         }
     }

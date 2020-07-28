@@ -18,9 +18,6 @@ fun Bitmap.toBase64(): String {
 }
 
 fun String.generateImageLinkForPerson(): String {
-    if (isEmpty()) {
-        return ""
-    }
     return "${Const.BASE_URL}image/get-person-image?imageUid=$this"
 }
 

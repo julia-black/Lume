@@ -1,48 +1,43 @@
 package com.singlelab.net.model.chat
 
-import com.google.gson.annotations.SerializedName
-
 // Chat
 
 data class ChatMessagesResponse(
-    @SerializedName("chatUid")
-    val uId: String? = null,
+    val chatUid: String? = null,
+    val isGroupChat: Boolean? = false,
     val chatName: String? = null,
-    @SerializedName("isGroupChat")
-    val isGroup: Boolean? = false,
-    val messages: List<ChatMessageResponse>? = emptyList()
+    val messages: List<ChatMessageResponse>? = emptyList(),
+    val personUid: String? = null,
+    val eventUid: String? = null,
+    val personImageUid: String? = null,
+    val eventImageUid: String? = null
 )
 
 // Chats
 
 data class ChatResponse(
-    @SerializedName("chatUid")
-    val uId: String? = null,
-    @SerializedName("isGroupChat")
-    val isGroup: Boolean? = false,
-    @SerializedName("name")
-    val title: String? = null,
-    val lastMessage: ChatMessageResponse? = null
+    val chatUid: String? = null,
+    val isGroupChat: Boolean? = false,
+    val name: String? = null,
+    val lastMessage: ChatMessageResponse? = null,
+    val personImageUid: String? = null,
+    val eventImageUid: String? = null
 )
 
 // Messages
 
 data class ChatMessageResponse(
-    @SerializedName("messageUid")
-    val uId: String? = null,
-    @SerializedName("messageContent")
-    val text: String? = null,
+    val messageUid: String? = null,
+    val messageContent: String? = null,
+    val messageTime: String? = null,
     val images: List<String>? = emptyList(),
     val personName: String? = null,
     val personUid: String? = null,
-    val personImageUid: String? = null,
-    @SerializedName("messageTime")
-    val date: String? = null
+    val personImageUid: String? = null
 )
 
 data class ChatMessageRequest(
     val chatUid: String? = null,
-    @SerializedName("content")
-    val text: String? = null,
+    val content: String? = null,
     val images: List<String>? = emptyList()
 )

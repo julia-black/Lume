@@ -2,9 +2,6 @@ package com.singlelab.lume.ui.chat.interactor
 
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.database.entity.ChatMessage
-import com.singlelab.lume.model.event.Event
-import com.singlelab.lume.model.profile.Profile
-import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.chat.ChatMessageRequest
 import com.singlelab.net.model.chat.ChatMessageResponse
 import com.singlelab.net.model.chat.ChatMessagesResponse
@@ -13,27 +10,13 @@ import com.singlelab.lume.database.repository.ChatMessagesRepository as LocalCha
 import com.singlelab.net.repositories.chat.ChatRepository as RemoteChatRepository
 
 interface ChatInteractor {
-    @Throws(ApiException::class)
-    suspend fun loadChatByUid(chatUid: String): ChatMessagesResponse?
-
-    @Throws(ApiException::class)
-    suspend fun loadPersonChat(personUid: String): ChatMessagesResponse?
-
-    @Throws(ApiException::class)
+    suspend fun loadNewMessages(chatUid: String, lastMessageUid: String): List<ChatMessageResponse>?
     suspend fun sendMessage(message: ChatMessageRequest): ChatMessageResponse?
-
-    @Throws(ApiException::class)
-    suspend fun loadNewMessages(chatUid: String, lastMessageUid: String?): List<ChatMessageResponse>?
-
-    @Throws(ApiException::class)
-    suspend fun loadPerson(personUid: String): Profile?
-
-    @Throws(ApiException::class)
-    suspend fun getEvent(uid: String): Event?
+    suspend fun loadPersonChat(personUid: String): ChatMessagesResponse?
+    suspend fun loadChatByUid(chatUid: String): ChatMessagesResponse?
 
     suspend fun saveChatMessages(messages: List<ChatMessage>)
     suspend fun saveChatMessage(message: ChatMessage)
-
     suspend fun byChatUid(chatUid: String): List<ChatMessage>
 }
 
@@ -44,17 +27,17 @@ class DefaultChatInteractor(
     remoteRepository as BaseRepository
 ), ChatInteractor {
 
-    override suspend fun loadChatByUid(chatUid: String) =
-        remoteRepository.loadChatByUid(chatUid)
-
-    override suspend fun loadPersonChat(personUid: String) =
-        remoteRepository.loadPersonChat(personUid)
+    override suspend fun loadNewMessages(chatUid: String, lastMessageUid: String) =
+        remoteRepository.loadNewMessages(chatUid, lastMessageUid)
 
     override suspend fun sendMessage(message: ChatMessageRequest) =
         remoteRepository.sendMessage(message)
 
-    override suspend fun loadNewMessages(chatUid: String, lastMessageUid: String?) =
-        remoteRepository.loadNewMessages(chatUid, lastMessageUid)
+    override suspend fun loadPersonChat(personUid: String) =
+        remoteRepository.loadPersonChat(personUid)
+
+    override suspend fun loadChatByUid(chatUid: String) =
+        remoteRepository.loadChatByUid(chatUid)
 
     override suspend fun saveChatMessages(messages: List<ChatMessage>) =
         localRepository.insert(messages)
@@ -64,12 +47,4 @@ class DefaultChatInteractor(
 
     override suspend fun byChatUid(chatUid: String) =
         localRepository.byChatUid(chatUid)
-
-    override suspend fun loadPerson(personUid: String): Profile? {
-        return Profile.fromResponse(remoteRepository.getProfile(personUid))
-    }
-
-    override suspend fun getEvent(uid: String): Event? {
-        return Event.fromResponse(remoteRepository.getEvent(uid))
-    }
 }

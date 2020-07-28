@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.singlelab.lume.R
+import com.singlelab.lume.util.generateImageLinkForEvent
 import com.singlelab.lume.util.generateImageLinkForPerson
 import com.singlelab.lume.util.isVisible
 import kotlinx.android.synthetic.main.chats_item.view.*
 
 class ChatsAdapter(
-    private val onClickAction: (ChatItem) -> Unit,
-    private val onLongClickAction: (ChatItem) -> Boolean
+    private val onClickAction: (ChatItem) -> Unit
 ) : RecyclerView.Adapter<ChatsAdapter.ChatsItemViewHolder>() {
 
     private var chats = mutableListOf<ChatItem>()
@@ -20,8 +20,7 @@ class ChatsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ChatsItemViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.chats_item, parent, false),
-            onClickAction,
-            onLongClickAction
+            onClickAction
         )
 
     override fun onBindViewHolder(holder: ChatsItemViewHolder, position: Int) =
@@ -36,24 +35,32 @@ class ChatsAdapter(
 
     class ChatsItemViewHolder(
         view: View,
-        private val onClickAction: (ChatItem) -> Unit,
-        private val onLongClickAction: (ChatItem) -> Boolean
+        private val onClickAction: (ChatItem) -> Unit
     ) : RecyclerView.ViewHolder(view) {
         fun bind(chat: ChatItem) {
             itemView.chatsTitleView.text = chat.title
             itemView.chatsLastMessageView.isVisible = chat.lastMessage.isNotEmpty()
             itemView.chatsLastMessageView.text = chat.lastMessage
 
-            // TODO: Понять какую картинку чата мы хотим отображать для групповых чатов
-            // TODO: Подумать, может, стоит сделать для глайда интерсептор для хедеров, тогда, вероятно, стоить инжектить глайд
-            /*if (chat.image.isNotEmpty()) {
+            if (chat.chatImage != null) {
                 Glide.with(itemView)
-                    .load(chat.image)
+                    .load(chat.chatImage)
                     .into(itemView.chatsImageView)
-            }*/
+            }
 
             itemView.setOnClickListener { onClickAction(chat) }
-            itemView.setOnLongClickListener { onLongClickAction(chat) }
         }
+
+        private val ChatItem.chatImage: String?
+            get() {
+                if (image.isNotEmpty()) {
+                    return if (isGroup) {
+                        image.generateImageLinkForEvent()
+                    } else {
+                        image.generateImageLinkForPerson()
+                    }
+                }
+                return null
+            }
     }
 }

@@ -1,9 +1,6 @@
 package com.singlelab.net.api
 
-import com.singlelab.net.model.chat.ChatMessageRequest
-import com.singlelab.net.model.chat.ChatMessageResponse
-import com.singlelab.net.model.chat.ChatResponse
-import com.singlelab.net.model.chat.ChatMessagesResponse
+import com.singlelab.net.model.chat.*
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.Body
@@ -15,7 +12,7 @@ interface ChatsApi {
     @GET("chat/get-new-chat-messages")
     fun loadNewMessageAsync(
         @Query("chatUid") chatUid: String,
-        @Query("messageUid") lastMessageUid: String?
+        @Query("messageUid") lastMessageUid: String
     ): Deferred<Response<List<ChatMessageResponse>>>
 
     @GET("chat/get-chat")

@@ -10,5 +10,6 @@ data class Chat(
     val title: String,
     val lastMessage: String,
     val isGroup: Boolean,
-    val image: String
+    val image: String,
+    val privateChatPersonUid: String
 )
