@@ -52,6 +52,12 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         initCardStack()
     }
 
+    override fun onStart() {
+        super.onStart()
+        (activity as MainActivity?)?.showSearchInToolbar(true)
+        (activity as MainActivity?)?.showFilterInToolbar(true)
+    }
+
     override fun onStop() {
         (activity as MainActivity?)?.showSearchInToolbar(false)
         (activity as MainActivity?)?.showFilterInToolbar(false)
@@ -62,8 +68,6 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         if (presenter.event == null) {
             presenter.loadRandomEvent()
         } else {
-            (activity as MainActivity?)?.showSearchInToolbar(true)
-            (activity as MainActivity?)?.showFilterInToolbar(true)
             (card_stack_view.adapter as CardStackEventAdapter).setEvents(listOf(event))
         }
     }

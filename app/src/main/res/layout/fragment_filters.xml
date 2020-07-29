@@ -10,6 +10,7 @@
         android:id="@+id/title_types"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
         android:text="@string/choose_types"
         android:textSize="@dimen/text_size_standart"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,6 +20,7 @@
         android:id="@+id/chip_groups"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_types">
 
@@ -64,6 +66,7 @@
         android:id="@+id/text_distance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_medium"
         android:textSize="@dimen/text_size_standart"
         app:layout_constraintStart_toStartOf="parent"

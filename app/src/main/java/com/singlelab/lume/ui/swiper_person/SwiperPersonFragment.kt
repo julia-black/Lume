@@ -138,7 +138,7 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
     }
 
     override fun onClickFilter() {
-        val action = SwiperPersonFragmentDirections.actionSwiperPersonToFilterFragment()
+        val action = SwiperPersonFragmentDirections.actionSwiperPersonToFilters()
         action.isEvent = false
         findNavController().navigate(action)
     }
