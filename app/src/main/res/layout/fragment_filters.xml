@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/margin_medium">
+
+    <TextView
+        android:id="@+id/title_types"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_types"
+        android:textSize="@dimen/text_size_standart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_groups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_types">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_party"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/party"
+            app:chipBackgroundColor="@color/selector_chip"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_types" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_booze"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:text="@string/booze"
+            app:chipBackgroundColor="@color/selector_chip"
+            app:layout_constraintStart_toEndOf="@id/chip_party"
+            app:layout_constraintTop_toTopOf="@id/chip_party" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <TextView
+        android:id="@+id/text_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:drawableEnd="@drawable/ic_arrow"
+        android:paddingStart="@dimen/margin_medium"
+        android:paddingTop="@dimen/margin_medium"
+        android:paddingEnd="0dp"
+        android:paddingBottom="@dimen/margin_medium"
+        android:text="@string/city"
+        android:textSize="@dimen/text_size_standart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chip_groups" />
+
+    <TextView
+        android:id="@+id/text_distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:textSize="@dimen/text_size_standart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_city"
+        tools:text="На расстоянии от меня в 10 км" />
+
+    <SeekBar
+        android:id="@+id/seek_bar_distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:max="2"
+        android:theme="@style/Widget.AppCompat.SeekBar.Discrete"
+        android:thumbTint="@color/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_distance" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

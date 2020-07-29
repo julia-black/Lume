@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.base.listeners.OnFilterListener
 import com.singlelab.lume.base.listeners.OnLogoutListener
 import com.singlelab.lume.base.listeners.OnSearchListener
 import com.singlelab.lume.base.view.ErrorView
@@ -45,6 +46,9 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
             }
             if (this is OnActivityResultListener) {
                 (activity as MainActivity?)?.setActivityListener(this)
+            }
+            if (this is OnFilterListener) {
+                (activity as MainActivity?)?.setFilterListener(this)
             }
         }
     }

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_swiper_event_to_search_event"
             app:destination="@id/search_event" />
+        <action
+            android:id="@+id/action_swiper_event_to_filterFragment"
+            app:destination="@id/filterFragment" />
     </fragment>
 
     <fragment
@@ -195,10 +198,22 @@
         <argument
             android:name="eventUid"
             app:argType="string" />
+        <action
+            android:id="@+id/action_swiper_person_to_filterFragment"
+            app:destination="@id/filterFragment" />
     </fragment>
     <fragment
         android:id="@+id/cities"
         android:name="com.singlelab.lume.ui.cities.CitiesFragment"
         android:label="CitiesFragment"
         tools:layout="@layout/fragment_cities" />
+    <fragment
+        android:id="@+id/filterFragment"
+        android:name="com.singlelab.lume.ui.filters.FilterFragment"
+        android:label="FilterFragment">
+        <argument
+            android:name="isEvent"
+            android:defaultValue="true"
+            app:argType="boolean" />
+    </fragment>
 </navigation>

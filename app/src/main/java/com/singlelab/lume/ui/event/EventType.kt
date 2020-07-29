@@ -4,7 +4,7 @@ import com.singlelab.lume.R
 
 enum class EventType(val typeId: Int, val titleRes: Int, val colorRes: Int) {
     PARTY(0, R.string.party, R.color.colorParty),
-    BOOZE(1, R.string.boozy, R.color.colorDark);
+    BOOZE(1, R.string.booze, R.color.colorDark);
 
     companion object {
         fun findById(typeId: Int): EventType? {

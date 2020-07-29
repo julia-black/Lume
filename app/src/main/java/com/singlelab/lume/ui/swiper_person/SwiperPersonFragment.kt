@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
+import com.singlelab.lume.base.listeners.OnFilterListener
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.ui.swiper_person.adapter.CardStackPersonAdapter
 import com.yuyakaido.android.cardstackview.*
@@ -22,7 +24,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragments,
-    CardStackListener {
+    CardStackListener, OnFilterListener {
 
     @Inject
     lateinit var daggerPresenter: SwiperPersonPresenter
@@ -51,6 +53,16 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
         }
         setListeners()
         initCardStack()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (activity as MainActivity).showFilterInToolbar(true)
+    }
+
+    override fun onStop() {
+        (activity as MainActivity).showFilterInToolbar(false)
+        super.onStop()
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {
@@ -123,5 +135,11 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
             Toast.LENGTH_LONG
         ).show()
         presenter.loadRandomPerson()
+    }
+
+    override fun onClickFilter() {
+        val action = SwiperPersonFragmentDirections.actionSwiperPersonToFilterFragment()
+        action.isEvent = false
+        findNavController().navigate(action)
     }
 }

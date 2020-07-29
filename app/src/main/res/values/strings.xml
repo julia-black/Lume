@@ -39,7 +39,7 @@
     <string name="date_end">Окончание события</string>
     <string name="enter_fields">Заполните обязательные параметры</string>
     <string name="party">Вечеринка</string>
-    <string name="boozy">Пьянка</string>
+    <string name="booze">Пьянка</string>
     <string name="administrator">%1$s (Организатор)</string>
     <string name="age_from_to">Возраст: %1$d-%2$d</string>
     <string name="age_from">Возраст: %1$d+</string>
@@ -72,5 +72,7 @@
     <string name="city">Город</string>
     <string name="title_cities">Выберите город</string>
     <string name="search_city">Найти город</string>
+    <string name="title_filters">Фильтры</string>
+    <string name="choose_types">Выберите тип</string>
 
 </resources>
