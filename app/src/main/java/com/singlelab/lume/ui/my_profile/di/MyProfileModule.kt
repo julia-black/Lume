@@ -1,10 +1,11 @@
 package com.singlelab.lume.ui.my_profile.di
 
-import com.singlelab.net.repositories.person.PersonRepository
 import com.singlelab.lume.LumeApplication
+import com.singlelab.lume.database.repository.ProfileRepository
 import com.singlelab.lume.ui.my_profile.MyProfilePresenter
 import com.singlelab.lume.ui.my_profile.interactor.MyProfileInteractor
 import com.singlelab.lume.ui.my_profile.interactor.MyProfileInteractorImpl
+import com.singlelab.net.repositories.person.PersonRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +23,10 @@ object MyProfileModule {
     }
 
     @Provides
-    fun provideInteractor(repository: PersonRepository): MyProfileInteractor {
-        return MyProfileInteractorImpl(repository)
+    fun provideInteractor(
+        repository: PersonRepository,
+        profileRepository: ProfileRepository
+    ): MyProfileInteractor {
+        return MyProfileInteractorImpl(repository, profileRepository)
     }
 }

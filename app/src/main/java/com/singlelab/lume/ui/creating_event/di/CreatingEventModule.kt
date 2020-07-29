@@ -1,10 +1,11 @@
 package com.singlelab.lume.ui.creating_event.di
 
-import com.singlelab.net.repositories.events.EventsRepository
 import com.singlelab.lume.LumeApplication
+import com.singlelab.lume.database.repository.ProfileRepository
 import com.singlelab.lume.ui.creating_event.CreatingEventPresenter
 import com.singlelab.lume.ui.creating_event.interactor.CreatingEventInteractor
 import com.singlelab.lume.ui.creating_event.interactor.CreatingEventInteractorImpl
+import com.singlelab.net.repositories.events.EventsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +21,10 @@ object CreatingEventModule {
     }
 
     @Provides
-    fun provideInteractor(repository: EventsRepository): CreatingEventInteractor {
-        return CreatingEventInteractorImpl(repository)
+    fun provideInteractor(
+        eventsRepository: EventsRepository,
+        profileRepository: ProfileRepository
+    ): CreatingEventInteractor {
+        return CreatingEventInteractorImpl(eventsRepository, profileRepository)
     }
 }

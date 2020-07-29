@@ -36,7 +36,8 @@ class MyProfilePresenter @Inject constructor(
                     }
                 } else {
                     runOnMainThread {
-                        preferences?.clearAuth()
+                        clearProfile()
+                       // preferences?.clearAuth()
                         viewState.navigateToAuth()
                     }
                 }
@@ -50,7 +51,7 @@ class MyProfilePresenter @Inject constructor(
     }
 
     fun logout() {
-        preferences?.clearAuth()
+        clearProfile()
         viewState.navigateToAuth()
     }
 

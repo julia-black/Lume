@@ -4,7 +4,7 @@ import com.singlelab.net.model.auth.AuthResponse
 
 class Auth(
     val accessToken: String,
-    val refreshToken: String?
+    val refreshToken: String
 ) {
     companion object {
         fun fromResponse(authResponse: AuthResponse?): Auth? {

@@ -15,6 +15,7 @@ class AuthPresenter @Inject constructor(
     preferences: Preferences?
 ) : BasePresenter<AuthView>(preferences, interactor as BaseInteractor) {
 
+    private var personUid: String? = null
     private var phone: String? = null
 
     override fun onFirstViewAttach() {
@@ -45,8 +46,8 @@ class AuthPresenter @Inject constructor(
         }
         invokeSuspend {
             try {
-                val personUid = interactor.sendCode(phone)
-                preferences?.setUid(personUid)
+                personUid = interactor.sendCode(phone)
+//                preferences?.setUid(personUid)
                 this.phone = phone
                 runOnMainThread {
                     viewState.showLoading(false)
@@ -62,16 +63,16 @@ class AuthPresenter @Inject constructor(
     }
 
     fun onClickAuth(code: String) {
-        if (phone != null) {
+        if (phone != null && personUid != null) {
             runOnMainThread {
                 viewState.showLoading(true)
             }
             invokeSuspend {
                 try {
-                    val auth = interactor.auth(phone!!, code)
-                    if (auth != null) {
-                        preferences?.setAuth(auth)
-                    }
+                    interactor.auth(personUid!!, phone!!, code)
+//                    if (auth != null) {
+//                        preferences?.setAuth(auth)
+//                    }
                     val isPersonFilled = interactor.isPersonFilled()
                     runOnMainThread {
                         viewState.showLoading(false)

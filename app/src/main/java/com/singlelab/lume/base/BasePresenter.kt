@@ -28,6 +28,23 @@ open class BasePresenter<ViewT : BaseView>(
         baseInteractor.setOnRefreshTokenListener(this)
     }
 
+    override fun onRefreshToken(auth: AuthResponse?) {
+        auth?.let {
+            invokeSuspend {
+                baseInteractor.updateProfile(auth.accessToken, auth.refreshToken)
+            }
+        }
+    }
+
+    override fun onRefreshTokenFailed() {
+        invokeSuspend {
+            baseInteractor.clearProfile()
+        }
+        runOnMainThread {
+            viewState.toAuth()
+        }
+    }
+
     protected fun invokeSuspend(block: suspend () -> Unit) {
         scope.launch { block.invoke() }
     }
@@ -38,16 +55,9 @@ open class BasePresenter<ViewT : BaseView>(
         }
     }
 
-    override fun onRefreshToken(auth: AuthResponse?) {
-        if (auth != null) {
-            preferences?.setAuth(Auth.fromResponse(auth)!!)
-        }
-    }
-
-    override fun onRefreshTokenFailed() {
-        preferences?.clearAuth()
-        runOnMainThread {
-            viewState.toAuth()
+    protected fun clearProfile() {
+        invokeSuspend {
+            baseInteractor.clearProfile()
         }
     }
 }

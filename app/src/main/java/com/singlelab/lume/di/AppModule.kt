@@ -2,6 +2,8 @@ package com.singlelab.lume.di
 
 import android.content.Context
 import com.singlelab.lume.database.LumeDatabase
+import com.singlelab.lume.database.repository.ProfileRepository
+import com.singlelab.lume.database.repository.RoomProfileRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,4 +18,9 @@ class AppModule {
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): LumeDatabase =
         LumeDatabase.create(context)
+
+
+    @Provides
+    fun provideLocalRepository(database: LumeDatabase): ProfileRepository =
+        RoomProfileRepository(database)
 }

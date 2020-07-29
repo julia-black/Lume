@@ -1,12 +1,13 @@
 package com.singlelab.lume.ui.auth.di
 
-import com.singlelab.net.ApiUnit
-import com.singlelab.net.repositories.auth.AuthRepository
-import com.singlelab.net.repositories.auth.AuthRepositoryImpl
 import com.singlelab.lume.LumeApplication
+import com.singlelab.lume.database.repository.ProfileRepository
 import com.singlelab.lume.ui.auth.AuthPresenter
 import com.singlelab.lume.ui.auth.interactor.AuthInteractor
 import com.singlelab.lume.ui.auth.interactor.AuthInteractorImpl
+import com.singlelab.net.ApiUnit
+import com.singlelab.net.repositories.auth.AuthRepository
+import com.singlelab.net.repositories.auth.AuthRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,8 +22,11 @@ object AuthModule {
     }
 
     @Provides
-    fun provideInteractor(repository: AuthRepository): AuthInteractor {
-        return AuthInteractorImpl(repository)
+    fun provideInteractor(
+        repository: AuthRepository,
+        profileRepository: ProfileRepository
+    ): AuthInteractor {
+        return AuthInteractorImpl(repository, profileRepository)
     }
 
     @Provides

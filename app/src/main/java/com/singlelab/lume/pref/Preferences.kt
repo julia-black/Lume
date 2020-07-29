@@ -17,11 +17,11 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
         AuthData.setAuthData(getAccessToken(), getRefreshToken(), getUid(), isAnon())
     }
 
-    fun setAuth(auth: Auth) {
-        AuthData.setAuth(auth.accessToken, auth.refreshToken)
-        setAccessToken(auth.accessToken)
-        setRefreshToken(auth.refreshToken)
-    }
+//    fun setAuth(auth: Auth) {
+//        AuthData.setAuth(auth.accessToken, auth.refreshToken)
+//        setAccessToken(auth.accessToken)
+//        setRefreshToken(auth.refreshToken)
+//    }
 
     fun clearAuth() {
         setAccessToken(null)

@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.city.City
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.creating_event.interactor.CreatingEventInteractor
 import com.singlelab.lume.util.parseToString
@@ -25,6 +26,24 @@ class CreatingEventPresenter @Inject constructor(
     var currentDateEnd: Calendar? = null
 
     private var images: MutableList<Bitmap> = mutableListOf()
+
+    private var city: City? = null
+
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        loadCurrentCity()
+    }
+
+    private fun loadCurrentCity() {
+        viewState.showLoading(true)
+        invokeSuspend {
+            this.city = interactor.getCurrentCity()
+            runOnMainThread {
+                viewState.showLoading(false)
+                viewState.showCurrentCity(this.city)
+            }
+        }
+    }
 
     fun createEvent(event: EventRequest) {
         viewState.showLoading(true)
