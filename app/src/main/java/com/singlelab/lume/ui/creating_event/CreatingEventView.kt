@@ -19,4 +19,7 @@ interface CreatingEventView : LoadingView, ErrorView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun addImage(bitmap: Bitmap)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showCurrentCity(cityId: Int?, cityName: String?)
 }

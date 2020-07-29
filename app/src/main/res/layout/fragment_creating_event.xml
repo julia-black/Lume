@@ -51,36 +51,21 @@
             tools:itemCount="1"
             tools:listitem="@layout/item_event_image" />
 
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:orientation="horizontal">-->
-
-        <!--&lt;!&ndash;            <ImageView&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:id="@+id/image_event"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:layout_width="50dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:layout_height="50dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:layout_marginStart="@dimen/margin_medium"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:layout_marginTop="@dimen/margin_medium"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:scaleType="centerCrop"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:src="@drawable/shape_border" />&ndash;&gt;-->
-
-        <!--&lt;!&ndash;            <ImageView&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:id="@+id/image_plus"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:layout_width="50dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:layout_height="50dp"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:layout_marginTop="@dimen/margin_medium"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:padding="@dimen/margin_small"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:scaleType="centerCrop"&ndash;&gt;-->
-        <!--&lt;!&ndash;                android:src="@drawable/ic_plus" />&ndash;&gt;-->
-
-        <!--            <ImageView-->
-        <!--                android:layout_width="50dp"-->
-        <!--                android:layout_height="50dp"-->
-        <!--                android:layout_marginStart="@dimen/margin_medium"-->
-        <!--                android:layout_marginTop="@dimen/margin_medium" />-->
-        <!--        </LinearLayout>-->
-
+        <TextView
+            android:id="@+id/text_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:drawableEnd="@drawable/ic_arrow"
+            android:paddingStart="@dimen/margin_medium"
+            android:paddingTop="@dimen/margin_medium"
+            android:paddingEnd="0dp"
+            android:paddingBottom="@dimen/margin_medium"
+            android:text="@string/city"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/layout_age" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

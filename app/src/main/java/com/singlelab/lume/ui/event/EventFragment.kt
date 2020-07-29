@@ -61,6 +61,14 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             event.startTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
         end_date.text = event.endTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
         description.text = event.description
+
+        if (event.cityName != null) {
+            city.text = event.cityName
+            city.visibility = View.VISIBLE
+        } else {
+            city.visibility = View.GONE
+        }
+
         val eventType = EventType.findById(event.type)
 
         if (event.eventPrimaryImageContentUid == null) {

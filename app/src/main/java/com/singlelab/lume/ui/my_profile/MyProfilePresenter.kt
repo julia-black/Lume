@@ -26,6 +26,9 @@ class MyProfilePresenter @Inject constructor(
             try {
                 if (!AuthData.isAnon) {
                     profile = interactor.loadProfile()
+                    profile?.let {
+                        preferences?.setCity(it.cityId, it.cityName)
+                    }
                     runOnMainThread {
                         viewState.showLoading(false)
                         if (profile != null) {

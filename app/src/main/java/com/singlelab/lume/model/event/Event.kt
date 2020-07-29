@@ -22,7 +22,8 @@ class Event(
     val administrator: Person? = null,
     val isOpenForInvitations: Boolean = true,
     val eventPrimaryImageContentUid: String? = null,
-    val images: List<String>? = null
+    val images: List<String>? = null,
+    val cityName: String? = null
 ) {
     companion object {
         fun fromResponse(eventResponse: EventResponse?): Event? {
@@ -51,7 +52,8 @@ class Event(
                     Person.fromResponse(eventResponse.administrator),
                     eventResponse.isOpenForInvitations,
                     eventResponse.eventPrimaryImageContentUid,
-                    eventResponse.images
+                    eventResponse.images,
+                    eventResponse.cityName
                 )
             } else {
                 null

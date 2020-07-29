@@ -3,10 +3,11 @@ package com.singlelab.lume.model.profile
 import com.singlelab.net.model.person.ProfileResponse
 
 class Profile(
-    val personUid: String? = null,
-    val name: String? = null,
+    val personUid: String,
+    val name: String,
     val description: String? = null,
-    val cityName: String? = null,
+    val cityId: Int,
+    val cityName: String,
     val age: Int? = null,
     val imageContentUid: String? = null,
     val isFriend: Boolean = false,
@@ -19,6 +20,7 @@ class Profile(
                     profileResponse.personUid,
                     profileResponse.name,
                     profileResponse.description,
+                    profileResponse.cityId,
                     profileResponse.cityName,
                     profileResponse.age,
                     profileResponse.imageContentUid,

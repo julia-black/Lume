@@ -12,5 +12,6 @@ class EventRequest(
     val type: Int = 0,
     val isOpenForInvitations: Boolean = true,
     val primaryImage: String? = null,
-    val images: List<String>? = null
+    val images: List<String>? = null,
+    val cityId: Int
 )

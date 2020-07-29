@@ -1,10 +1,11 @@
 package com.singlelab.net.model.person
 
 class ProfileResponse(
-    val personUid: String? = null,
-    val name: String? = null,
+    val personUid: String,
+    val name: String,
     val description: String? = null,
-    val cityName: String? = null,
+    val cityId: Int,
+    val cityName: String,
     val age: Int? = null,
     val imageContentUid: String? = null,
     val isFriend: Boolean = false,

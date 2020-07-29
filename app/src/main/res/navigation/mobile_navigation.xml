@@ -42,6 +42,9 @@
         <action
             android:id="@+id/action_creating_event_to_event"
             app:destination="@id/event" />
+        <action
+            android:id="@+id/action_creating_event_to_cities"
+            app:destination="@id/cities" />
     </fragment>
 
     <fragment

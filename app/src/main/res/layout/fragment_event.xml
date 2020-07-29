@@ -149,6 +149,15 @@
             tools:text="Организатор" />
 
         <TextView
+            android:id="@+id/city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/button_search_participants"
+            tools:text="Москва" />
+
+        <TextView
             android:id="@+id/start_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -157,7 +166,7 @@
             android:drawablePadding="@dimen/margin_small"
             android:text="@string/date_start"
             app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/button_search_participants" />
+            app:layout_constraintTop_toBottomOf="@id/city" />
 
         <TextView
             android:id="@+id/end_date"

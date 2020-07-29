@@ -4,11 +4,13 @@ import android.graphics.Bitmap
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.city.City
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.creating_event.interactor.CreatingEventInteractor
 import com.singlelab.lume.util.parseToString
 import com.singlelab.lume.util.toBase64
 import com.singlelab.net.exceptions.ApiException
+import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.event.EventRequest
 import moxy.InjectViewState
 import java.util.*
@@ -24,7 +26,16 @@ class CreatingEventPresenter @Inject constructor(
 
     var currentDateEnd: Calendar? = null
 
+    var cityId = AuthData.cityId
+
+    private var cityName = AuthData.cityName
+
     private var images: MutableList<Bitmap> = mutableListOf()
+
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        viewState.showCurrentCity(cityId, cityName)
+    }
 
     fun createEvent(event: EventRequest) {
         viewState.showLoading(true)
@@ -105,5 +116,11 @@ class CreatingEventPresenter @Inject constructor(
         return images.map {
             it.toBase64()
         }
+    }
+
+    fun setCity(city: City) {
+        this.cityId = city.cityId
+        this.cityName = city.cityName
+        viewState.showCurrentCity(cityId, cityName)
     }
 }

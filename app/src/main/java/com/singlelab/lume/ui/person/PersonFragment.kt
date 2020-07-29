@@ -48,6 +48,7 @@ class PersonFragment : BaseFragment(), PersonView {
     override fun showProfile(profile: Profile) {
         name_age.text = "${profile.name}, ${profile.age}"
         description.text = profile.description
+        city.text = profile.cityName
         if (!profile.imageContentUid.isNullOrEmpty()) {
             showImage(profile.imageContentUid)
         } else {
@@ -62,14 +63,10 @@ class PersonFragment : BaseFragment(), PersonView {
         }
 
         button_add_to_friends.setOnClickListener {
-            profile.personUid?.let { uid ->
-                presenter.addToFriends(uid)
-            }
+            presenter.addToFriends(profile.personUid)
         }
         button_remove_from_friends.setOnClickListener {
-            profile.personUid?.let { uid ->
-                presenter.removeFromFriends(uid)
-            }
+            presenter.removeFromFriends(profile.personUid)
         }
     }
 
