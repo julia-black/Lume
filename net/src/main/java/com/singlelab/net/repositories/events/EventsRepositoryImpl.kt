@@ -80,4 +80,36 @@ class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository, Bas
             errorMessage = "Не удалось получить пользователя"
         )
     }
+
+    override suspend fun acceptRandomEvent(participantRequest: ParticipantRequest) {
+        safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.eventsApi.acceptRandomEventAsync(participantRequest).await() },
+            errorMessage = "Не удалось выполнить действие"
+        )
+    }
+
+    override suspend fun rejectRandomEvent(eventUid: String) {
+        safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.eventsApi.rejectRandomEventAsync(eventUid).await() },
+            errorMessage = "Не удалось выполнить действие"
+        )
+    }
+
+    override suspend fun acceptRandomPerson(participantRequest: ParticipantRequest) {
+        safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.eventsApi.acceptRandomPersonAsync(participantRequest).await() },
+            errorMessage = "Не удалось выполнить действие"
+        )
+    }
+
+    override suspend fun rejectRandomPerson(eventUid: String, personUid: String) {
+        safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.eventsApi.rejectRandomPersonAsync(eventUid, personUid).await() },
+            errorMessage = "Не удалось выполнить действие"
+        )
+    }
 }

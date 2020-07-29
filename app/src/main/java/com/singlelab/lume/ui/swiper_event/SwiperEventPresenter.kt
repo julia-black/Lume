@@ -75,4 +75,25 @@ class SwiperEventPresenter @Inject constructor(
             }
         }
     }
+
+    fun rejectEvent() {
+        event?.eventUid?.let { eventUid ->
+            viewState.showLoading(true)
+            invokeSuspend {
+                try {
+                    interactor.rejectEvent(eventUid)
+                    runOnMainThread {
+                        event = null
+                        viewState.showLoading(false)
+                        loadRandomEvent()
+                    }
+                } catch (e: ApiException) {
+                    runOnMainThread {
+                        viewState.showLoading(false)
+                        viewState.showError(e.message)
+                    }
+                }
+            }
+        }
+    }
 }

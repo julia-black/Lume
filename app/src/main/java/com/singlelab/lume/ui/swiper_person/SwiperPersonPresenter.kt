@@ -75,4 +75,25 @@ class SwiperPersonPresenter @Inject constructor(
             }
         }
     }
+
+    fun rejectPerson() {
+        eventUid ?: return
+        person ?: return
+        viewState.showLoading(true)
+        invokeSuspend {
+            try {
+                interactor.rejectPerson(eventUid!!, person!!.personUid)
+                runOnMainThread {
+                    person = null
+                    viewState.showLoading(false)
+                    loadRandomPerson()
+                }
+            } catch (e: ApiException) {
+                runOnMainThread {
+                    viewState.showLoading(false)
+                    viewState.showError(e.message)
+                }
+            }
+        }
+    }
 }

@@ -39,4 +39,19 @@ interface EventsApi {
 
     @POST("person/get-random-person")
     fun getRandomPersonAsync(@Body randomPersonRequest: RandomPersonRequest): Deferred<Response<PersonResponse>>
+
+    @POST("event/accept-random-event")
+    fun acceptRandomEventAsync(@Body participantRequest: ParticipantRequest): Deferred<Response<MessageResponse>>
+
+    @POST("event/reject-random-event")
+    fun rejectRandomEventAsync(@Query("eventUid") eventUid: String): Deferred<Response<MessageResponse>>
+
+    @POST("person/accept-random-person")
+    fun acceptRandomPersonAsync(@Body participantRequest: ParticipantRequest): Deferred<Response<MessageResponse>>
+
+    @POST("person/reject-random-person")
+    fun rejectRandomPersonAsync(
+        @Query("eventUid") eventUid: String,
+        @Query("personUid") personUid: String
+    ): Deferred<Response<MessageResponse>>
 }

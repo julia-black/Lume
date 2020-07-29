@@ -77,7 +77,7 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
                 presenter.invitePerson()
             }
             Direction.Left -> {
-                presenter.loadRandomPerson()
+                presenter.rejectPerson()
             }
             else -> {
             }
