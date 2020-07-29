@@ -11,7 +11,6 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
-import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType.Common
 import com.singlelab.lume.ui.chats.common.ChatItem
 import com.singlelab.lume.ui.chats.common.ChatsAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,8 +30,8 @@ class ChatsFragment : BaseFragment(), ChatsView, OnlyForAuthFragments {
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
 
-    private val onChatClicked: (ChatItem) -> Unit = { chatInfo ->
-        navigateToChat(chatInfo)
+    private val onChatClicked: (ChatItem) -> Unit = { chat ->
+        navigateToChat(chat)
     }
 
     private val chatsAdapter: ChatsAdapter by lazy { ChatsAdapter(onChatClicked) }
@@ -59,7 +58,7 @@ class ChatsFragment : BaseFragment(), ChatsView, OnlyForAuthFragments {
     private fun navigateToChat(chat: ChatItem) =
         findNavController().navigate(
             ChatsFragmentDirections.actionFromChatsToChat(
-                if (chat.isGroup) Common(chat.title, chat.uid) else ChatOpeningInvocationType.Person(chat.title, chat.personUid)
+                ChatOpeningInvocationType.Common(chat.title, chat.uid, chat.isGroup)
             )
         )
 

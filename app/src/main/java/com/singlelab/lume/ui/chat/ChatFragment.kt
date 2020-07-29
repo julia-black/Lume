@@ -9,6 +9,8 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.ui.chat.common.*
+import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType.Common
+import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType.Person
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chat.*
 import moxy.presenter.InjectPresenter
@@ -38,7 +40,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments {
         activity?.title = chatType?.title ?: getString(R.string.chat_title)
 
         chatType?.let {
-            initViews(it)
+            initViews((chatType as? Common)?.isGroup ?: false)
             presenter.showChat(it)
         }
     }
@@ -53,8 +55,8 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments {
         showError("Чат пуст")
     }
 
-    private fun initViews(chatType: ChatOpeningInvocationType) {
-        chatMessagesAdapter = if (chatType is ChatOpeningInvocationType.Person) PrivateChatMessagesAdapter() else GroupChatMessagesAdapter()
+    private fun initViews(isChatGroup: Boolean) {
+        chatMessagesAdapter = if (isChatGroup) GroupChatMessagesAdapter() else PrivateChatMessagesAdapter()
         chatView.adapter = chatMessagesAdapter
         chatView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false).apply { stackFromEnd = true; }
         chatView.addItemDecoration(SpaceDivider(4))
@@ -62,10 +64,10 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments {
         sendMessageView.setOnClickListener {
             val currentText = messageInputView.text.toString()
             if (currentText.isNotEmpty()) {
-                val message = if (chatType is ChatOpeningInvocationType.Person) {
-                    PrivateChatMessageItem("0", currentText, ChatMessageItem.Type.OUTGOING)
-                } else {
+                val message = if (isChatGroup) {
                     GroupChatMessageItem("0", currentText, ChatMessageItem.Type.OUTGOING, "", "")
+                } else {
+                    PrivateChatMessageItem("0", currentText, ChatMessageItem.Type.OUTGOING)
                 }
                 chatMessagesAdapter.addMessage(message)
                 chatMessagesAdapter.notifyDataSetChanged()

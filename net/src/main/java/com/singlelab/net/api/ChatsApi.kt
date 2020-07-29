@@ -12,7 +12,7 @@ interface ChatsApi {
     @GET("chat/get-new-chat-messages")
     fun loadNewMessageAsync(
         @Query("chatUid") chatUid: String,
-        @Query("messageUid") lastMessageUid: String
+        @Query("messageUid") lastMessageUid: String?
     ): Deferred<Response<List<ChatMessageResponse>>>
 
     @GET("chat/get-chat")

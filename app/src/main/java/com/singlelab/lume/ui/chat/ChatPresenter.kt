@@ -34,14 +34,15 @@ constructor(
                     interactor.sendMessage(ChatMessageRequest(chatUid, messageText))
                 }
             } catch (e: ApiException) {
-                viewState.showError(e.message)
+                runOnMainThread {
+                    viewState.showError(e.message)
+                }
             }
         }
     }
 
     fun showChat(type: ChatOpeningInvocationType) {
         // TODO: Сделать прогресс бар для загрузки сообщений с сервера, изначально показывать сообщения из бд?
-        chatSettings.chatType = type
         viewState.showLoading(true)
         invokeSuspend {
             try {
@@ -52,13 +53,18 @@ constructor(
                 }
 
                 if (chatResponse != null) {
+                    chatSettings.chatType = type
                     chatSettings.chatUid = chatResponse.chatUid
                     chatSettings.setLastMessageUid(chatResponse.messages)
                     saveChatMessages(chatResponse.messages)
-                }
 
-                showLocalMessages()
-                syncMessages()
+                    showLocalMessages()
+                    syncMessages()
+                } else {
+                    runOnMainThread {
+                        viewState.showError("Ошибка при загрузке чата")
+                    }
+                }
             } catch (e: Exception) {
                 showLocalMessages()
             }
@@ -70,7 +76,8 @@ constructor(
         val chatType = chatSettings.chatType
         val currentPersonUid = AuthData.uid
         val messages = if (chatUid != null && chatType != null && currentPersonUid != null) {
-            interactor.byChatUid(chatUid).toUiEntities(chatType, currentPersonUid)
+            val isChatGroup = (chatType as? ChatOpeningInvocationType.Common)?.isGroup ?: false
+            interactor.byChatUid(chatUid).toUiEntities(isChatGroup, currentPersonUid)
         } else {
             emptyList()
         }
@@ -89,7 +96,7 @@ constructor(
         try {
             val chatUid = chatSettings.chatUid
             val chatLastMessage = chatSettings.lastMessageUid
-            if (chatUid != null && chatLastMessage != null) {
+            if (chatUid != null) {
                 val messagesResponse = interactor.loadNewMessages(chatUid, chatLastMessage)
                 chatSettings.setLastMessageUid(messagesResponse)
                 saveChatMessages(messagesResponse)
@@ -118,7 +125,8 @@ constructor(
         var chatType: ChatOpeningInvocationType? = null,
         var chatUid: String? = null
     ) {
-        val lastMessageUid = _lastMessageUid
+        val lastMessageUid
+            get() = _lastMessageUid
 
         fun setLastMessageUid(messagesResponse: List<ChatMessageResponse>?) {
             if (!messagesResponse.isNullOrEmpty()) {

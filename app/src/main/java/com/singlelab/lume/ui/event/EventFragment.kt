@@ -222,9 +222,10 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
     private fun toChat(eventName: String, chatUid: String) {
         findNavController().navigate(
             EventFragmentDirections.actionFromEventToChat(
-                ChatOpeningInvocationType.Person(
+                ChatOpeningInvocationType.Common(
                     title = eventName,
-                    personUid = chatUid
+                    chatUid = chatUid,
+                    isGroup = true
                 )
             )
         )

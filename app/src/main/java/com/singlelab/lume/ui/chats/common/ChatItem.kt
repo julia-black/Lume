@@ -5,6 +5,5 @@ data class ChatItem(
     val image: String,
     val title: String,
     val isGroup: Boolean,
-    val lastMessage: String,
-    val personUid: String
+    val lastMessage: String
 )

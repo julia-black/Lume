@@ -7,7 +7,7 @@ import com.singlelab.net.model.chat.ChatMessagesResponse
 import com.singlelab.net.repositories.BaseRepository
 
 interface ChatRepository {
-    suspend fun loadNewMessages(chatUid: String, lastMessageUid: String): List<ChatMessageResponse>?
+    suspend fun loadNewMessages(chatUid: String, lastMessageUid: String?): List<ChatMessageResponse>?
     suspend fun sendMessage(message: ChatMessageRequest): ChatMessageResponse?
     suspend fun loadPersonChat(personUid: String): ChatMessagesResponse?
     suspend fun loadChatByUid(chatUid: String): ChatMessagesResponse?
@@ -19,7 +19,7 @@ class DefaultChatRepository(
 
     private val chatsApi = apiUnit.chatsApi
 
-    override suspend fun loadNewMessages(chatUid: String, lastMessageUid: String) =
+    override suspend fun loadNewMessages(chatUid: String, lastMessageUid: String?) =
         safeApiCall(
             apiUnit = apiUnit,
             call = { chatsApi.loadNewMessageAsync(chatUid, lastMessageUid).await() },

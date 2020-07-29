@@ -19,8 +19,8 @@ fun ChatMessageResponse.toDbEntity(chatUid: String?): ChatMessage? {
     )
 }
 
-fun List<ChatMessage>.toUiEntities(type: ChatOpeningInvocationType, currentPersonUid: String): List<ChatMessageItem> =
-    map { if (type is ChatOpeningInvocationType.Person) it.toPrivateItems(currentPersonUid) else it.toGroupItems(currentPersonUid) }
+fun List<ChatMessage>.toUiEntities(isChatGroup: Boolean, currentPersonUid: String): List<ChatMessageItem> =
+    map { if (isChatGroup) it.toGroupItems(currentPersonUid) else it.toPrivateItems(currentPersonUid) }
 
 fun ChatMessage.toPrivateItems(currentPersonUid: String): PrivateChatMessageItem =
     PrivateChatMessageItem(
