@@ -2,7 +2,9 @@ package com.singlelab.lume.ui.swiper_event
 
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.Event
+import com.singlelab.lume.model.event.FilterEvent
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.swiper_event.interactor.SwiperEventInteractor
 import com.singlelab.net.exceptions.ApiException
@@ -21,8 +23,15 @@ class SwiperEventPresenter @Inject constructor(
 
     var event: Event? = null
 
+    var filterEvent = FilterEvent(cityId = AuthData.cityId, cityName = AuthData.cityName)
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
+        loadRandomEvent()
+    }
+
+    fun applyFilter(filterEvent: FilterEvent) {
+        this.filterEvent = filterEvent
         loadRandomEvent()
     }
 
@@ -30,7 +39,13 @@ class SwiperEventPresenter @Inject constructor(
         viewState.showLoading(true)
         invokeSuspend {
             try {
-                val randomEventRequest = RandomEventRequest()
+                val randomEventRequest = RandomEventRequest(
+                    cityId = filterEvent.cityId,
+                    eventTypes = filterEvent.selectedTypes.map { it.typeId },
+                    personXCoordinate = filterEvent.latitude,
+                    personYCoordinate = filterEvent.longitude,
+                    distance = filterEvent.distance.value
+                )
                 val event = interactor.getRandomEvent(randomEventRequest)
                 runOnMainThread {
                     viewState.showLoading(false)
@@ -42,7 +57,11 @@ class SwiperEventPresenter @Inject constructor(
             } catch (e: ApiException) {
                 runOnMainThread {
                     viewState.showLoading(false)
-                    viewState.showError(e.message)
+                    if (e.errorCode == Const.ERROR_CODE_NO_MATCHING) {
+                        viewState.showEmptySwipes()
+                    } else {
+                        viewState.showError(e.message)
+                    }
                 }
             }
         }

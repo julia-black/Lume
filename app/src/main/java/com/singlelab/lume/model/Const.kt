@@ -11,4 +11,6 @@ object Const {
     const val UTC = "UTC"
 
     const val PAGE_SIZE = 20
+
+    const val ERROR_CODE_NO_MATCHING = 25
 }

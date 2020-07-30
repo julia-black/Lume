@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
+import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.singlelab.lume.MainActivity
@@ -14,6 +15,8 @@ import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnFilterListener
 import com.singlelab.lume.base.listeners.OnSearchListener
 import com.singlelab.lume.model.event.Event
+import com.singlelab.lume.model.event.FilterEvent
+import com.singlelab.lume.ui.filters.FilterFragment
 import com.singlelab.lume.ui.swiper_event.adapter.CardStackEventAdapter
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -68,6 +71,8 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         if (presenter.event == null) {
             presenter.loadRandomEvent()
         } else {
+            card_stack_view.visibility = View.VISIBLE
+            text_empty_swipes.visibility = View.GONE
             (card_stack_view.adapter as CardStackEventAdapter).setEvents(listOf(event))
         }
     }
@@ -84,6 +89,11 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         }
     }
 
+    override fun showEmptySwipes() {
+        card_stack_view.visibility = View.GONE
+        text_empty_swipes.visibility = View.VISIBLE
+    }
+
     override fun onClickSearch() {
         findNavController().navigate(SwiperEventFragmentDirections.actionSwiperEventToSearchEvent())
     }
@@ -91,6 +101,7 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
     override fun onClickFilter() {
         val action = SwiperEventFragmentDirections.actionSwiperEventToFilterFragment()
         action.isEvent = true
+        action.filterEvent = presenter.filterEvent
         findNavController().navigate(action)
     }
 
@@ -147,5 +158,19 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
     }
 
     private fun setListeners() {
+        parentFragmentManager.setFragmentResultListener(
+            FilterFragment.REQUEST_FILTER,
+            this,
+            FragmentResultListener { requestKey, result ->
+                onFragmentResult(requestKey, result)
+            })
+    }
+
+    private fun onFragmentResult(requestKey: String, result: Bundle) {
+        if (requestKey == FilterFragment.REQUEST_FILTER) {
+            val filterEvent: FilterEvent =
+                result.getParcelable(FilterFragment.RESULT_FILTER) ?: return
+            presenter.applyFilter(filterEvent)
+        }
     }
 }

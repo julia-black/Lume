@@ -4,9 +4,9 @@ import com.google.gson.Gson
 import com.singlelab.net.ApiUnit
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.exceptions.RefreshTokenException
-import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.ErrorResponse
 import com.singlelab.net.model.ResultCoroutines
+import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.auth.AuthResponse
 import retrofit2.Response
 import java.net.HttpURLConnection
@@ -53,24 +53,12 @@ open class BaseRepository {
             } else if (!errorBody.isNullOrEmpty()) {
                 try {
                     val error = Gson().fromJson(errorBody, ErrorResponse::class.java)
-                    ResultCoroutines.Error(
-                        ApiException(
-                            error.message
-                        )
-                    )
+                    ResultCoroutines.Error(ApiException(error.message, error.errorCode))
                 } catch (e: Exception) {
-                    ResultCoroutines.Error(
-                        ApiException(
-                            errorMessage
-                        )
-                    )
+                    ResultCoroutines.Error(ApiException(errorMessage))
                 }
             } else {
-                ResultCoroutines.Error(
-                    ApiException(
-                        errorMessage
-                    )
-                )
+                ResultCoroutines.Error(ApiException(errorMessage))
             }
         } catch (e: UnknownHostException) {
             ResultCoroutines.Error(ApiException("Отсутствует соединение с сервером"))
@@ -88,9 +76,7 @@ open class BaseRepository {
             }
         } catch (e: Exception) {
             ResultCoroutines.Error(
-                ApiException(
-                    e.message ?: "Не удалось выполнить запрос"
-                )
+                ApiException(e.message ?: "Не удалось выполнить запрос")
             )
         }
     }

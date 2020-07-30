@@ -1,25 +1,47 @@
 package com.singlelab.lume.ui.filters
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.event.Distance
+import com.singlelab.lume.model.event.FilterEvent
 import com.singlelab.lume.ui.cities.CitiesFragment
+import com.singlelab.lume.ui.event.EventType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_filters.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class FilterFragment : BaseFragment(), FilterView {
+
+    companion object {
+        const val REQUEST_FILTER = "REQUEST_FILTER"
+        const val RESULT_FILTER = "RESULT_FILTER"
+        const val FAR_DISTANCE = 2
+    }
 
     @Inject
     lateinit var daggerPresenter: FilterPresenter
@@ -29,6 +51,8 @@ class FilterFragment : BaseFragment(), FilterView {
 
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
+
+    private lateinit var locationClient: FusedLocationProviderClient
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,14 +66,16 @@ class FilterFragment : BaseFragment(), FilterView {
         super.onViewCreated(view, savedInstanceState)
         activity?.title = getString(R.string.title_filters)
         arguments?.let {
-            presenter.isEvent = FilterFragmentArgs.fromBundle(it).isEvent
+            presenter.filterEvent = FilterFragmentArgs.fromBundle(it).filterEvent
+            //todo будет еще filterPerson
         }
-        showFilters(presenter.isEvent)
+        showFilters(presenter.isEvent())
         setListeners()
     }
 
     override fun showDistance(distance: Distance) {
         text_distance.text = distance.title
+        seek_bar_distance.progress = distance.id
     }
 
     override fun showCity(cityName: String) {
@@ -60,10 +86,16 @@ class FilterFragment : BaseFragment(), FilterView {
         if (isEvent) {
             chip_groups.visibility = View.VISIBLE
             seek_bar_distance.visibility = View.VISIBLE
-            presenter.filterEvent.let {
+            presenter.filterEvent?.let {
                 seek_bar_distance.progress = it.distance.id
                 text_distance.text = it.distance.title
                 text_city.text = it.cityName
+                if (it.selectedTypes.contains(EventType.PARTY)) {
+                    chip_party.isChecked = true
+                }
+                if (it.selectedTypes.contains(EventType.BOOZE)) {
+                    chip_booze.isChecked = true
+                }
             }
         } else {
             chip_groups.visibility = View.GONE
@@ -73,13 +105,19 @@ class FilterFragment : BaseFragment(), FilterView {
     }
 
     private fun setListeners() {
+        chip_party.setOnCheckedChangeListener { _, isChecked ->
+            presenter.setCheckedEventType(EventType.PARTY, isChecked)
+        }
+        chip_booze.setOnCheckedChangeListener { _, isChecked ->
+            presenter.setCheckedEventType(EventType.BOOZE, isChecked)
+        }
         seek_bar_distance.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 presenter.changeDistance(progress)
-
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                checkLocationPermission()
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
@@ -88,12 +126,62 @@ class FilterFragment : BaseFragment(), FilterView {
         text_city.setOnClickListener {
             toChooseCity()
         }
+        button_apply.setOnClickListener {
+            presenter.filterEvent?.let {
+                applyFilter(it)
+            }
+        }
         parentFragmentManager.setFragmentResultListener(
             CitiesFragment.REQUEST_CITY,
             this,
             FragmentResultListener { requestKey, result ->
                 onFragmentResult(requestKey, result)
             })
+    }
+
+    private fun checkLocationPermission() {
+        Dexter.withContext(context)
+            .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+            .withListener(object : PermissionListener {
+                override fun onPermissionGranted(response: PermissionGrantedResponse) {
+                    getLocation()
+                }
+
+                override fun onPermissionDenied(response: PermissionDeniedResponse) {
+                    onErrorGeo()
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permission: PermissionRequest?,
+                    token: PermissionToken?
+                ) {
+                    onErrorGeo()
+                }
+            }).check()
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLocation() {
+        context?.let { context ->
+            locationClient = LocationServices.getFusedLocationProviderClient(context)
+            locationClient.lastLocation
+                .addOnSuccessListener { location: Location? ->
+                    if (location == null) {
+                        onErrorGeo()
+                    } else {
+                        presenter.setUserLocation(location.longitude, location.latitude)
+                    }
+                }
+        }
+    }
+
+    private fun onErrorGeo() {
+        Toast.makeText(
+            context,
+            getString(R.string.permission_location_denied),
+            Toast.LENGTH_LONG
+        ).show()
+        presenter.changeDistance(FAR_DISTANCE)
     }
 
     private fun toChooseCity() {
@@ -105,5 +193,13 @@ class FilterFragment : BaseFragment(), FilterView {
             val city: City = result.getParcelable(CitiesFragment.RESULT_CITY) ?: return
             presenter.setCity(city)
         }
+    }
+
+    private fun applyFilter(filterEvent: FilterEvent) {
+        parentFragmentManager.setFragmentResult(
+            REQUEST_FILTER,
+            bundleOf(RESULT_FILTER to filterEvent)
+        )
+        parentFragmentManager.popBackStack()
     }
 }

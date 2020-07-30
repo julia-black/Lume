@@ -9,5 +9,7 @@ class FilterEvent(
     var distance: Distance = Distance.FAR,
     val selectedTypes: MutableList<EventType> = mutableListOf(),
     var cityId: Int? = null,
-    var cityName: String? = null
+    var cityName: String? = null,
+    var longitude: Double? = null,
+    var latitude: Double? = null
 ) : Parcelable

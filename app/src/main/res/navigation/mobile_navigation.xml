@@ -219,5 +219,10 @@
         <action
             android:id="@+id/action_filters_to_cities"
             app:destination="@id/cities" />
+        <argument
+            android:name="filterEvent"
+            app:argType="com.singlelab.lume.model.event.FilterEvent"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>
