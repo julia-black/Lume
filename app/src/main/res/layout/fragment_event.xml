@@ -158,6 +158,15 @@
             tools:text="Москва" />
 
         <TextView
+            android:id="@+id/is_online"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/city"
+            android:text="@string/online" />
+
+        <TextView
             android:id="@+id/start_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -166,7 +175,7 @@
             android:drawablePadding="@dimen/margin_small"
             android:text="@string/date_start"
             app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/city" />
+            app:layout_constraintTop_toBottomOf="@id/is_online" />
 
         <TextView
             android:id="@+id/end_date"

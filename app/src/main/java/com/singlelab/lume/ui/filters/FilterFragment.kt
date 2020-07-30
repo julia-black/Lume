@@ -96,6 +96,8 @@ class FilterFragment : BaseFragment(), FilterView {
                 if (it.selectedTypes.contains(EventType.BOOZE)) {
                     chip_booze.isChecked = true
                 }
+                switch_online.isChecked = it.isOnlyOnline
+                switch_not_online.isChecked = it.isExceptOnline
             }
         } else {
             chip_groups.visibility = View.GONE
@@ -110,6 +112,27 @@ class FilterFragment : BaseFragment(), FilterView {
         }
         chip_booze.setOnCheckedChangeListener { _, isChecked ->
             presenter.setCheckedEventType(EventType.BOOZE, isChecked)
+        }
+        switch_online.setOnCheckedChangeListener { _, isChecked ->
+            presenter.filterEvent?.isOnlyOnline = isChecked
+            if (isChecked) {
+                text_city.isEnabled = false
+                seek_bar_distance.isEnabled = false
+                text_distance.isEnabled = false
+                switch_not_online.isChecked = false
+                presenter.filterEvent?.isExceptOnline = false
+            } else {
+                text_city.isEnabled = true
+                seek_bar_distance.isEnabled = true
+                text_distance.isEnabled = true
+            }
+        }
+        switch_not_online.setOnCheckedChangeListener { _, isChecked ->
+            presenter.filterEvent?.isExceptOnline = isChecked
+            if (isChecked) {
+                switch_online.isChecked = false
+                presenter.filterEvent?.isOnlyOnline = false
+            }
         }
         seek_bar_distance.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {

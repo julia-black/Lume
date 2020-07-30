@@ -13,5 +13,6 @@ class EventSummaryResponse(
     val status: Int,
     val isAdministrator: Boolean = false,
     val participantStatus: Int = 0,
-    val anyPersonWaitingForApprove: Boolean
+    val anyPersonWaitingForApprove: Boolean,
+    val isOnline: Boolean
 )

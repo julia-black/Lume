@@ -51,12 +51,19 @@
             tools:itemCount="1"
             tools:listitem="@layout/item_event_image" />
 
+        <Switch
+            android:id="@+id/switch_online"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:checked="false"
+            android:text="@string/event_is_online" />
+
         <TextView
             android:id="@+id/text_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_medium"
             android:layout_marginEnd="@dimen/margin_medium"
             android:drawableEnd="@drawable/ic_arrow"
             android:paddingStart="@dimen/margin_medium"
@@ -125,7 +132,7 @@
 
         <Switch
             android:id="@+id/switch_open_event"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_medium"
             android:checked="true"

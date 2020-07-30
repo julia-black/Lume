@@ -40,11 +40,12 @@ class SwiperEventPresenter @Inject constructor(
         invokeSuspend {
             try {
                 val randomEventRequest = RandomEventRequest(
-                    cityId = filterEvent.cityId,
+                    cityId = if (filterEvent.isOnlyOnline) null else filterEvent.cityId,
                     eventTypes = filterEvent.selectedTypes.map { it.typeId },
-                    personXCoordinate = filterEvent.latitude,
-                    personYCoordinate = filterEvent.longitude,
-                    distance = filterEvent.distance.value
+                    personXCoordinate = if (filterEvent.isOnlyOnline) null else filterEvent.latitude,
+                    personYCoordinate = if (filterEvent.isOnlyOnline) null else filterEvent.longitude,
+                    distance = if (filterEvent.isOnlyOnline) null else filterEvent.distance.value,
+                    isOnline = filterEvent.isOnlineForRequest()
                 )
                 val event = interactor.getRandomEvent(randomEventRequest)
                 runOnMainThread {

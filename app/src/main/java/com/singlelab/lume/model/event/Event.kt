@@ -23,7 +23,8 @@ class Event(
     val isOpenForInvitations: Boolean = true,
     val eventPrimaryImageContentUid: String? = null,
     val images: List<String>? = null,
-    val cityName: String? = null
+    val cityName: String? = null,
+    val isOnline: Boolean
 ) {
     companion object {
         fun fromResponse(eventResponse: EventResponse?): Event? {
@@ -53,7 +54,8 @@ class Event(
                     eventResponse.isOpenForInvitations,
                     eventResponse.eventPrimaryImageContentUid,
                     eventResponse.images,
-                    eventResponse.cityName
+                    eventResponse.cityName,
+                    eventResponse.isOnline
                 )
             } else {
                 null

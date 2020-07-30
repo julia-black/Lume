@@ -62,11 +62,13 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         end_date.text = event.endTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
         description.text = event.description
 
-        if (event.cityName != null) {
+        is_online.visibility = if (event.isOnline) View.VISIBLE else View.GONE
+
+        if (event.cityName == null) {
+            city.visibility = View.GONE
+        } else {
             city.text = event.cityName
             city.visibility = View.VISIBLE
-        } else {
-            city.visibility = View.GONE
         }
 
         val eventType = EventType.findById(event.type)

@@ -47,6 +47,28 @@
             app:layout_constraintTop_toTopOf="@id/chip_party" />
     </com.google.android.material.chip.ChipGroup>
 
+    <Switch
+        android:id="@+id/switch_online"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:checked="false"
+        android:text="@string/events_is_online"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chip_groups" />
+
+    <Switch
+        android:id="@+id/switch_not_online"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:checked="false"
+        android:text="@string/events_not_online"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/switch_online" />
+
     <TextView
         android:id="@+id/text_city"
         android:layout_width="match_parent"
@@ -60,7 +82,8 @@
         android:text="@string/city"
         android:textSize="@dimen/text_size_standart"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chip_groups" />
+        app:layout_constraintTop_toBottomOf="@id/switch_not_online"
+        app:layout_goneMarginTop="@dimen/margin_medium" />
 
     <TextView
         android:id="@+id/text_distance"

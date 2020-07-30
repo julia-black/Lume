@@ -134,6 +134,10 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         end_date.setOnClickListener {
             showDatePicker(presenter.currentDateEnd, isStart = false)
         }
+        switch_online.setOnCheckedChangeListener { _, isChecked ->
+            text_city.isEnabled = !isChecked
+        }
+
         button_create_event.setOnClickListener {
             if (validation()) {
                 val minAge =
@@ -145,14 +149,15 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                     description = description.text.toString(),
                     minAge = minAge,
                     maxAge = maxAge,
-                    xCoordinate = 51.5819596F,
-                    yCoordinate = 46.0621339F,
+                    xCoordinate = if (switch_online.isChecked) null else 51.5819596F,
+                    yCoordinate = if (switch_online.isChecked) null else 46.0621339F,
                     startTime = presenter.currentDateStart?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE),
                     endTime = presenter.currentDateEnd?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE),
                     isOpenForInvitations = switch_open_event.isChecked,
                     primaryImage = presenter.getPrimaryImage(),
                     images = presenter.getImagesStr(),
-                    cityId = presenter.cityId!!
+                    cityId = if (switch_online.isChecked) null else presenter.cityId!!,
+                    isOnline = switch_online.isChecked
                 )
                 presenter.createEvent(event)
             } else {

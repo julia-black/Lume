@@ -5,5 +5,6 @@ class RandomEventRequest(
     val personYCoordinate: Double? = null,
     val distance: Double? = null,
     val cityId: Int? = null,
-    val eventTypes: List<Int>? = null
+    val eventTypes: List<Int>? = null,
+    val isOnline: Boolean? = null
 )

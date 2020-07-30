@@ -11,5 +11,15 @@ class FilterEvent(
     var cityId: Int? = null,
     var cityName: String? = null,
     var longitude: Double? = null,
-    var latitude: Double? = null
-) : Parcelable
+    var latitude: Double? = null,
+    var isExceptOnline: Boolean = false,
+    var isOnlyOnline: Boolean = false
+) : Parcelable {
+    fun isOnlineForRequest(): Boolean? {
+        return when {
+            isExceptOnline -> false
+            isOnlyOnline -> true
+            else -> null
+        }
+    }
+}
