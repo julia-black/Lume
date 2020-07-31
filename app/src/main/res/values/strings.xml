@@ -57,6 +57,7 @@
     <string name="empty_swipes">К сожалению, новых событий нет\nПопробуйте расширить фильтры или создайте своё событие!</string>
     <string name="online">Онлайн</string>
     <string name="event_is_online">Онлайн-событие</string>
+    <string name="unavailable_location">Неизвестное местоположение. Обратитесь к организатору в чате</string>
 
     <!-- Map -->
     <string name="title_activity_maps">Map</string>

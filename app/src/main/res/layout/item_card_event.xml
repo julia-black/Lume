@@ -45,8 +45,35 @@
             android:layout_marginBottom="@dimen/margin_very_small"
             android:textSize="20sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/text_location"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/text_online"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
+            android:drawableStart="@drawable/ic_circle"
+            android:drawablePadding="@dimen/margin_small"
+            android:text="@string/online"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/start_date"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/text_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
+            android:drawableStart="@drawable/ic_place"
+            android:drawablePadding="@dimen/margin_small"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="16sp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/start_date"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Москва" />
 
         <TextView
             android:id="@+id/start_date"

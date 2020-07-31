@@ -61,6 +61,29 @@
             app:layout_constraintTop_toBottomOf="@id/image"
             tools:text="Название" />
 
+        <TextView
+            android:id="@+id/text_online"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:drawableStart="@drawable/ic_circle"
+            android:drawablePadding="@dimen/margin_small"
+            android:text="@string/online"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        <TextView
+            android:id="@+id/text_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:drawableStart="@drawable/ic_place"
+            android:drawablePadding="@dimen/margin_small"
+            android:textSize="16sp"
+            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:text="Москва" />
+
         <ImageView
             android:id="@+id/button_reject"
             android:layout_width="@dimen/size_icon_button"
@@ -69,7 +92,7 @@
             android:src="@drawable/ic_reject"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/text_location"
             tools:visibility="visible" />
 
         <ImageView
@@ -80,7 +103,7 @@
             android:src="@drawable/ic_accept"
             android:visibility="gone"
             app:layout_constraintStart_toEndOf="@id/button_reject"
-            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/text_location"
             tools:visibility="visible" />
 
         <Button
@@ -158,15 +181,6 @@
             tools:text="Москва" />
 
         <TextView
-            android:id="@+id/is_online"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
-            app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/city"
-            android:text="@string/online" />
-
-        <TextView
             android:id="@+id/start_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -175,7 +189,7 @@
             android:drawablePadding="@dimen/margin_small"
             android:text="@string/date_start"
             app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/is_online" />
+            app:layout_constraintTop_toBottomOf="@id/city" />
 
         <TextView
             android:id="@+id/end_date"

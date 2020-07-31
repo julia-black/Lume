@@ -115,6 +115,9 @@ class CreatingEventPresenter @Inject constructor(
     }
 
     fun getImagesStr(): List<String>? {
+        if (images.isNotEmpty()) {
+            images.removeAt(0)
+        }
         return images.map {
             it.toBase64()
         }

@@ -1,5 +1,7 @@
 package com.singlelab.lume.ui.swiper_event
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,16 +20,18 @@ import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.model.event.FilterEvent
 import com.singlelab.lume.ui.filters.FilterFragment
 import com.singlelab.lume.ui.swiper_event.adapter.CardStackEventAdapter
+import com.singlelab.lume.ui.swiper_event.adapter.OnCardEventListener
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_swiper_event.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragments,
-    CardStackListener, OnSearchListener, OnFilterListener {
+    CardStackListener, OnSearchListener, OnFilterListener, OnCardEventListener {
 
     @Inject
     lateinit var daggerPresenter: SwiperEventPresenter
@@ -149,7 +153,7 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
             setOverlayInterpolator(LinearInterpolator())
         }
         card_stack_view.layoutManager = cardStackManager
-        card_stack_view.adapter = CardStackEventAdapter()
+        card_stack_view.adapter = CardStackEventAdapter(listener = this)
         card_stack_view.itemAnimator.apply {
             if (this is DefaultItemAnimator) {
                 supportsChangeAnimations = false
@@ -172,5 +176,20 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
                 result.getParcelable(FilterFragment.RESULT_FILTER) ?: return
             presenter.applyFilter(filterEvent)
         }
+    }
+
+    override fun onLocationClick(lat: Double, long: Double, name: String) {
+        val uri = String.format(
+            Locale.ENGLISH,
+            "geo:%f,%f?z=%d&q=%f,%f (%s)",
+            lat,
+            long,
+            13,
+            lat,
+            long,
+            name
+        )
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+        context?.startActivity(intent)
     }
 }
