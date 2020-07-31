@@ -8,10 +8,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
-import com.singlelab.lume.base.listeners.OnActivityResultListener
-import com.singlelab.lume.base.listeners.OnFilterListener
-import com.singlelab.lume.base.listeners.OnLogoutListener
-import com.singlelab.lume.base.listeners.OnSearchListener
+import com.singlelab.lume.base.listeners.*
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
 import com.singlelab.net.model.auth.AuthData
@@ -50,7 +47,15 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
             if (this is OnFilterListener) {
                 (activity as MainActivity?)?.setFilterListener(this)
             }
+            if (this is OnPermissionListener) {
+                (activity as MainActivity?)?.setPermissionListener(this)
+            }
         }
+    }
+
+    override fun onStop() {
+        hideKeyboard()
+        super.onStop()
     }
 
     override fun showError(message: String) {

@@ -27,7 +27,7 @@ class CreatingEventPresenter @Inject constructor(
     var currentDateEnd: Calendar? = null
 
     var cityId = AuthData.cityId
-    private var cityName = AuthData.cityName
+    var cityName = AuthData.cityName
 
     var locationName: String? = null
     private var locationCoordinate: LatLng? = null
@@ -124,11 +124,23 @@ class CreatingEventPresenter @Inject constructor(
         this.cityId = city.cityId
         this.cityName = city.cityName
         viewState.showCurrentCity(cityId, cityName)
+
+        this.locationName = null
+        this.locationCoordinate = null
+        viewState.showLocationName(null)
     }
 
     fun setLocation(locationName: String, locationCoordinate: LatLng) {
         this.locationName = locationName
         this.locationCoordinate = locationCoordinate
         viewState.showLocationName(locationName)
+    }
+
+    fun getLat(): Double? {
+        return locationCoordinate?.latitude
+    }
+
+    fun getLong(): Double? {
+        return locationCoordinate?.longitude
     }
 }

@@ -1,7 +1,6 @@
 package com.singlelab.lume.ui.map
 
-import android.Manifest
-import android.content.pm.PackageManager
+import android.annotation.SuppressLint
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
@@ -9,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.core.os.bundleOf
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -17,11 +15,12 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
+import com.singlelab.lume.base.listeners.OnPermissionListener
 import com.singlelab.lume.util.TextInputDebounce
 import com.singlelab.lume.util.removePostalCode
-import com.singlelab.net.model.auth.AuthData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_map.*
 import moxy.presenter.InjectPresenter
@@ -31,7 +30,7 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MapFragment : BaseFragment(), MapView, OnMapReadyCallback {
+class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionListener {
 
     companion object {
         const val REQUEST_LOCATION = "REQUEST_LOCATION"
@@ -90,46 +89,27 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback {
                 acceptLocation()
             }
         }
+
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
         locationMap = googleMap
-        locationMap?.let { map ->
-            locationMap!!.uiSettings.isMyLocationButtonEnabled = true
-            context?.let {
-                if (!(ActivityCompat.checkSelfPermission(
-                        it,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED
-                            && ActivityCompat.checkSelfPermission(
-                        it,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                    ) != PackageManager.PERMISSION_GRANTED)
-                ) {
-                    locationMap!!.isMyLocationEnabled = true
-                }
-            }
-            map.setOnMapClickListener {
-                map.clear()
-                map.addMarker(MarkerOptions().position(it))
-                presenter.searchPlace(it)
-            }
-            if (locationName != null) {
-                edit_text_search.setText(locationName)
-                presenter.searchPlace(locationName!!)
-            } else {
-                AuthData.cityName?.let {
-                    presenter.searchPlace(it)
-                }
-            }
-        }
+        (activity as MainActivity).checkLocationPermission()
+    }
+
+    override fun onLocationPermissionGranted() {
+        showMap(true)
+    }
+
+    override fun onLocationPermissionDenied() {
+        showMap(false)
     }
 
     override fun searchPlace(queryStr: String) {
         locationMap?.let { map ->
             try {
                 val addresses: List<Address> =
-                    geoCoder.getFromLocationName("${AuthData.cityName}, $queryStr", 1)
+                    geoCoder.getFromLocationName(queryStr, 1)
                 if (addresses.isNotEmpty()) {
                     val lat = addresses[0].latitude
                     val lon = addresses[0].longitude
@@ -160,6 +140,23 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback {
         } catch (e: IOException) {
             e.printStackTrace()
             Toast.makeText(context, getString(R.string.error_address), Toast.LENGTH_LONG).show()
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun showMap(withMyLocation: Boolean) {
+        locationMap?.let { map ->
+            map.uiSettings.isMyLocationButtonEnabled = true
+            map.isMyLocationEnabled = withMyLocation
+            map.setOnMapClickListener {
+                map.clear()
+                map.addMarker(MarkerOptions().position(it))
+                presenter.searchPlace(it)
+            }
+            locationName?.let {
+                edit_text_search.setText(it)
+                presenter.searchPlace(it)
+            }
         }
     }
 

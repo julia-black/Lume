@@ -98,8 +98,12 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         }
     }
 
-    override fun showLocationName(locationName: String) {
-        text_location.text = locationName
+    override fun showLocationName(locationName: String?) {
+        if (locationName != null) {
+            text_location.text = locationName
+        } else {
+            text_location.text = getString(R.string.choose_location)
+        }
     }
 
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -157,8 +161,8 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                     description = description.text.toString(),
                     minAge = minAge,
                     maxAge = maxAge,
-                    xCoordinate = if (switch_online.isChecked) null else 51.5819596F,
-                    yCoordinate = if (switch_online.isChecked) null else 46.0621339F,
+                    xCoordinate = if (switch_online.isChecked) null else presenter.getLat(),
+                    yCoordinate = if (switch_online.isChecked) null else presenter.getLong(),
                     startTime = presenter.currentDateStart?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE),
                     endTime = presenter.currentDateEnd?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE),
                     isOpenForInvitations = switch_open_event.isChecked,
@@ -180,8 +184,9 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
             FragmentResultListener { requestKey, result ->
                 onFragmentResult(requestKey, result)
             })
-        val action = CreatingEventFragmentDirections.actionCreatingEventToMap()
-        action.locationName = presenter.locationName
+        val action = CreatingEventFragmentDirections.actionCreatingEventToMap(
+            presenter.locationName ?: presenter.cityName!!
+        )
         findNavController().navigate(action)
     }
 
