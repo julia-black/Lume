@@ -17,6 +17,7 @@
         android:paddingEnd="16dp"
         android:paddingBottom="8dp"
         android:textAppearance="?android:textAppearance"
+        android:textSize="16sp"
         app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

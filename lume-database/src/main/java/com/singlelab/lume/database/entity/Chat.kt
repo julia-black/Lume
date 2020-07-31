@@ -8,7 +8,8 @@ data class Chat(
     @PrimaryKey
     val uid: String,
     val title: String,
-    val lastMessage: String,
     val isGroup: Boolean,
-    val image: String
+    val image: String,
+    val lastMessage: String,
+    val lastMessagePersonUid: String
 )

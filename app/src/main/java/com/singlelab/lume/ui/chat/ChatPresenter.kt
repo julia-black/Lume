@@ -27,11 +27,11 @@ constructor(
 ) {
     private val chatSettings = ChatSettings()
 
-    fun sendMessage(messageText: String) {
+    fun sendMessage(messageText: String, images: List<String>) {
         invokeSuspend {
             try {
                 chatSettings.chatUid?.let { chatUid ->
-                    interactor.sendMessage(ChatMessageRequest(chatUid, messageText))
+                    interactor.sendMessage(ChatMessageRequest(chatUid, messageText, images))
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
@@ -100,8 +100,8 @@ constructor(
                 val messagesResponse = interactor.loadNewMessages(chatUid, chatLastMessage)
                 chatSettings.setLastMessageUid(messagesResponse)
                 saveChatMessages(messagesResponse)
+                showLocalMessages()
             }
-            showLocalMessages()
             syncMessages()
         } catch (e: ApiException) {
             if (e is TimeoutException) {

@@ -1,14 +1,20 @@
 package com.singlelab.lume.ui.chats.common
 
+import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.singlelab.lume.R
 import com.singlelab.lume.util.generateImageLinkForEvent
 import com.singlelab.lume.util.generateImageLinkForPerson
 import com.singlelab.lume.util.isVisible
+import com.singlelab.net.model.auth.AuthData
 import kotlinx.android.synthetic.main.chats_item.view.*
 
 class ChatsAdapter(
@@ -40,11 +46,19 @@ class ChatsAdapter(
         fun bind(chat: ChatItem) {
             itemView.chatsTitleView.text = chat.title
             itemView.chatsLastMessageView.isVisible = chat.lastMessage.isNotEmpty()
-            itemView.chatsLastMessageView.text = chat.lastMessage
+            itemView.chatsLastMessageView.text = if (chat.lastMessagePersonUid == AuthData.uid) {
+                val lastMessage =  itemView.context.getString(R.string.chats_last_message_author, chat.lastMessage)
+                SpannableString(lastMessage).apply {
+                    setSpan(ForegroundColorSpan(Color.BLACK), 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                }
+            } else {
+                chat.lastMessage
+            }
 
             if (chat.chatImage != null) {
                 Glide.with(itemView)
                     .load(chat.chatImage)
+                    .apply(RequestOptions.circleCropTransform())
                     .into(itemView.chatsImageView)
             }
 

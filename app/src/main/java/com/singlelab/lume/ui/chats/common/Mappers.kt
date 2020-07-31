@@ -10,9 +10,10 @@ fun ChatResponse.toDbEntity(): Chat? {
     return Chat(
         uid = chatUid ?: return null,
         title = name ?: "",
-        lastMessage = lastMessage?.messageContent ?: "",
         isGroup = isGroupChat ?: false,
-        image = (if (isGroupChat == true) eventImageUid else personImageUid) ?: ""
+        image = (if (isGroupChat == true) eventImageUid else personImageUid) ?: "",
+        lastMessage = lastMessage?.messageContent ?: "",
+        lastMessagePersonUid = lastMessage?.personUid ?: return null
     )
 }
 
@@ -25,5 +26,6 @@ fun Chat.toDbEntity(): ChatItem =
         title = title,
         image = image,
         isGroup = isGroup,
-        lastMessage = lastMessage
+        lastMessage = lastMessage,
+        lastMessagePersonUid = lastMessagePersonUid
     )

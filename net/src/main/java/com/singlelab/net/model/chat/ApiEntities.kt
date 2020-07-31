@@ -37,7 +37,7 @@ data class ChatMessageResponse(
 )
 
 data class ChatMessageRequest(
-    val chatUid: String? = null,
-    val content: String? = null,
-    val images: List<String>? = emptyList()
+    val chatUid: String,
+    val content: String,
+    val images: List<String>
 )

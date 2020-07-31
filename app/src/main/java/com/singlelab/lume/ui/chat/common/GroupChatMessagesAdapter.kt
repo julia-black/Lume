@@ -5,12 +5,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.singlelab.lume.R
 import com.singlelab.lume.util.generateImageLinkForPerson
 import kotlinx.android.synthetic.main.group_incoming_message_item.view.*
-import kotlinx.android.synthetic.main.group_outgoing_message_item.view.*
+import kotlinx.android.synthetic.main.outgoing_message_item.view.*
+
 
 class GroupChatMessagesAdapter : ChatMessagesAdapter() {
+
+    override fun setMessages(messages: List<ChatMessageItem>) {
+        val diffResult = DiffUtil.calculateDiff(GroupChatMessagesDiffCallback(this.messages, messages), true)
+        this.messages.clear()
+        this.messages.addAll(messages)
+        diffResult.dispatchUpdatesTo(this)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatMessageViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
@@ -23,7 +33,7 @@ class GroupChatMessagesAdapter : ChatMessagesAdapter() {
             )
             else -> GroupOutgoingMessageViewHolder(
                 inflater.inflate(
-                    R.layout.group_outgoing_message_item,
+                    R.layout.outgoing_message_item,
                     parent,
                     false
                 )
@@ -36,13 +46,15 @@ class GroupChatMessagesAdapter : ChatMessagesAdapter() {
 
     class GroupIncomingMessageViewHolder(view: View) : ChatMessageViewHolder(view) {
         override fun bind(messageItem: ChatMessageItem) {
-            val groupMessageItem = messageItem as? GroupChatMessageItem ?: return
+            if (messageItem !is GroupChatMessageItem) return
 
             itemView.incomingMessageView.text = messageItem.text
+            itemView.incomingMessageAuthorView.text = messageItem.personName
 
-            if (groupMessageItem.personPhoto.isNotEmpty()) {
+            if (messageItem.personPhoto.isNotEmpty()) {
                 Glide.with(itemView)
-                    .load(groupMessageItem.personPhoto.generateImageLinkForPerson())
+                    .load(messageItem.personPhoto.generateImageLinkForPerson())
+                    .apply(RequestOptions.circleCropTransform())
                     .into(itemView.incomingMessagePhotoView)
             }
         }
@@ -50,36 +62,30 @@ class GroupChatMessagesAdapter : ChatMessagesAdapter() {
 
     class GroupOutgoingMessageViewHolder(view: View) : ChatMessageViewHolder(view) {
         override fun bind(messageItem: ChatMessageItem) {
-            val groupMessageItem = messageItem as? GroupChatMessageItem ?: return
-
             itemView.outgoingMessageView.text = messageItem.text
-
-            if (groupMessageItem.personPhoto.isNotEmpty()) {
-                Glide.with(itemView)
-                    .load(groupMessageItem.personPhoto.generateImageLinkForPerson())
-                    .into(itemView.outgoingMessagePhotoView)
-            }
         }
     }
 
     private class GroupChatMessagesDiffCallback(
-        private val oldData: List<GroupChatMessageItem>,
-        private val newData: List<GroupChatMessageItem>
+        private val oldMessages: List<ChatMessageItem>,
+        private val newMessages: List<ChatMessageItem>
     ) : DiffUtil.Callback() {
 
-        override fun getOldListSize() = oldData.size
+        override fun getOldListSize() = oldMessages.size
 
-        override fun getNewListSize() = newData.size
+        override fun getNewListSize() = newMessages.size
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-            oldData[oldItemPosition].uid == newData[newItemPosition].uid ||
-                    oldData[oldItemPosition].uid == "-1"
+            oldMessages[oldItemPosition].uid == newMessages[newItemPosition].uid ||
+                    oldMessages[oldItemPosition].uid == "-1"
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            val oldItem = oldData[oldItemPosition]
-            val newItem = newData[newItemPosition]
+            val oldMessage = oldMessages[oldItemPosition] as? GroupChatMessageItem ?: return false
+            val newMessage = newMessages[newItemPosition] as? GroupChatMessageItem ?: return false
 
-            return false
+            return oldMessage.type == newMessage.type &&
+                    oldMessage.personName == newMessage.personName &&
+                    oldMessage.text == newMessage.text
         }
 
     }
