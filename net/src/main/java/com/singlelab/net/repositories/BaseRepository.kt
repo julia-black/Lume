@@ -55,24 +55,12 @@ open class BaseRepository {
             } else if (!errorBody.isNullOrEmpty()) {
                 try {
                     val error = Gson().fromJson(errorBody, ErrorResponse::class.java)
-                    ResultCoroutines.Error(
-                        ApiException(
-                            error.message
-                        )
-                    )
+                    ResultCoroutines.Error(ApiException(error.message, error.errorCode))
                 } catch (e: Exception) {
-                    ResultCoroutines.Error(
-                        ApiException(
-                            errorMessage
-                        )
-                    )
+                    ResultCoroutines.Error(ApiException(errorMessage))
                 }
             } else {
-                ResultCoroutines.Error(
-                    ApiException(
-                        errorMessage
-                    )
-                )
+                ResultCoroutines.Error(ApiException(errorMessage))
             }
         } catch (e: UnknownHostException) {
             ResultCoroutines.Error(ApiException("Отсутствует соединение с сервером"))
@@ -92,9 +80,7 @@ open class BaseRepository {
             ResultCoroutines.Error(TimeoutException())
         } catch (e: Exception) {
             ResultCoroutines.Error(
-                ApiException(
-                    e.message ?: "Не удалось выполнить запрос"
-                )
+                ApiException(e.message ?: "Не удалось выполнить запрос")
             )
         }
     }

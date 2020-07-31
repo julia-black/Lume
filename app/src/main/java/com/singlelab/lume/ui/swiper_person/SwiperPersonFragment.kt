@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
-import com.singlelab.lume.base.listeners.OnSearchListener
+import com.singlelab.lume.base.listeners.OnFilterListener
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.ui.swiper_person.adapter.CardStackPersonAdapter
 import com.yuyakaido.android.cardstackview.*
@@ -23,7 +24,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragments,
-    CardStackListener, OnSearchListener {
+    CardStackListener, OnFilterListener {
 
     @Inject
     lateinit var daggerPresenter: SwiperPersonPresenter
@@ -56,11 +57,11 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
 
     override fun onStart() {
         super.onStart()
-        (activity as MainActivity?)?.showSearchInToolbar(true)
+        (activity as MainActivity).showFilterInToolbar(true)
     }
 
     override fun onStop() {
-        (activity as MainActivity?)?.showSearchInToolbar(false)
+        (activity as MainActivity).showFilterInToolbar(false)
         super.onStop()
     }
 
@@ -76,7 +77,7 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
                 presenter.invitePerson()
             }
             Direction.Left -> {
-                presenter.loadRandomPerson()
+                presenter.rejectPerson()
             }
             else -> {
             }
@@ -136,7 +137,9 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
         presenter.loadRandomPerson()
     }
 
-    override fun onClickSearch() {
-        TODO("Not yet implemented")
+    override fun onClickFilter() {
+        val action = SwiperPersonFragmentDirections.actionSwiperPersonToFilters()
+        action.isEvent = false
+        findNavController().navigate(action)
     }
 }

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_swiper_event_to_search_event"
             app:destination="@id/search_event" />
+        <action
+            android:id="@+id/action_swiper_event_to_filterFragment"
+            app:destination="@id/filters" />
     </fragment>
 
     <fragment
@@ -46,6 +49,9 @@
         <action
             android:id="@+id/action_creating_event_to_event"
             app:destination="@id/event" />
+        <action
+            android:id="@+id/action_creating_event_to_cities"
+            app:destination="@id/cities" />
     </fragment>
 
     <fragment
@@ -117,6 +123,9 @@
         <action
             android:id="@+id/action_registration_to_my_profile"
             app:destination="@id/my_profile" />
+        <action
+            android:id="@+id/action_registration_to_cities"
+            app:destination="@id/cities" />
     </fragment>
 
     <fragment
@@ -235,5 +244,31 @@
         <argument
             android:name="eventUid"
             app:argType="string" />
+        <action
+            android:id="@+id/action_swiper_person_to_filters"
+            app:destination="@id/filters" />
+    </fragment>
+    <fragment
+        android:id="@+id/cities"
+        android:name="com.singlelab.lume.ui.cities.CitiesFragment"
+        android:label="CitiesFragment"
+        tools:layout="@layout/fragment_cities" />
+    <fragment
+        android:id="@+id/filters"
+        android:name="com.singlelab.lume.ui.filters.FilterFragment"
+        android:label="FilterFragment"
+        tools:layout="@layout/fragment_filters">
+        <argument
+            android:name="isEvent"
+            android:defaultValue="true"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_filters_to_cities"
+            app:destination="@id/cities" />
+        <argument
+            android:name="filterEvent"
+            app:argType="com.singlelab.lume.model.event.FilterEvent"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>

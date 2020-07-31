@@ -14,6 +14,10 @@ class SwiperPersonInteractorImpl(private val repository: EventsRepository) : Swi
     }
 
     override suspend fun invitePerson(participantRequest: ParticipantRequest) {
-        repository.addParticipants(participantRequest)
+        repository.acceptRandomPerson(participantRequest)
+    }
+
+    override suspend fun rejectPerson(eventUid: String, personUid: String) {
+        repository.rejectRandomPerson(eventUid, personUid)
     }
 }

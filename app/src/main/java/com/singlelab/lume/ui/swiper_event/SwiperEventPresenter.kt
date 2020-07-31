@@ -2,7 +2,9 @@ package com.singlelab.lume.ui.swiper_event
 
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.Event
+import com.singlelab.lume.model.event.FilterEvent
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.swiper_event.interactor.SwiperEventInteractor
 import com.singlelab.net.exceptions.ApiException
@@ -21,8 +23,15 @@ class SwiperEventPresenter @Inject constructor(
 
     var event: Event? = null
 
+    var filterEvent = FilterEvent(cityId = AuthData.cityId, cityName = AuthData.cityName)
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
+        loadRandomEvent()
+    }
+
+    fun applyFilter(filterEvent: FilterEvent) {
+        this.filterEvent = filterEvent
         loadRandomEvent()
     }
 
@@ -30,7 +39,14 @@ class SwiperEventPresenter @Inject constructor(
         viewState.showLoading(true)
         invokeSuspend {
             try {
-                val randomEventRequest = RandomEventRequest()
+                val randomEventRequest = RandomEventRequest(
+                    cityId = if (filterEvent.isOnlyOnline) null else filterEvent.cityId,
+                    eventTypes = filterEvent.selectedTypes.map { it.typeId },
+                    personXCoordinate = if (filterEvent.isOnlyOnline) null else filterEvent.latitude,
+                    personYCoordinate = if (filterEvent.isOnlyOnline) null else filterEvent.longitude,
+                    distance = if (filterEvent.isOnlyOnline) null else filterEvent.distance.value,
+                    isOnline = filterEvent.isOnlineForRequest()
+                )
                 val event = interactor.getRandomEvent(randomEventRequest)
                 runOnMainThread {
                     viewState.showLoading(false)
@@ -42,7 +58,11 @@ class SwiperEventPresenter @Inject constructor(
             } catch (e: ApiException) {
                 runOnMainThread {
                     viewState.showLoading(false)
-                    viewState.showError(e.message)
+                    if (e.errorCode == Const.ERROR_CODE_NO_MATCHING) {
+                        viewState.showEmptySwipes()
+                    } else {
+                        viewState.showError(e.message)
+                    }
                 }
             }
         }
@@ -65,6 +85,27 @@ class SwiperEventPresenter @Inject constructor(
                         viewState.toAcceptedEvent(event!!.isOpenForInvitations, eventUid)
                         event = null
                         viewState.showLoading(false)
+                    }
+                } catch (e: ApiException) {
+                    runOnMainThread {
+                        viewState.showLoading(false)
+                        viewState.showError(e.message)
+                    }
+                }
+            }
+        }
+    }
+
+    fun rejectEvent() {
+        event?.eventUid?.let { eventUid ->
+            viewState.showLoading(true)
+            invokeSuspend {
+                try {
+                    interactor.rejectEvent(eventUid)
+                    runOnMainThread {
+                        event = null
+                        viewState.showLoading(false)
+                        loadRandomEvent()
                     }
                 } catch (e: ApiException) {
                     runOnMainThread {

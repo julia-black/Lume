@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
@@ -45,16 +46,42 @@ class AuthFragment : BaseFragment(), AuthView {
     }
 
     private fun setListeners() {
-        button_send_code.setOnClickListener {
-            edit_text_phone.fixHintsForMeizu(edit_text_phone as TextInputEditText, edit_text_phone)
-            if (edit_text_phone.isValid) {
-                presenter.onClickSendCode(edit_text_phone.unmaskText)
-            } else {
-                layout_phone.error = "Некорректный номер"
+        edit_text_phone.setOnEditorActionListener { _, actionId, _ ->
+            when (actionId) {
+                EditorInfo.IME_ACTION_DONE -> {
+                    onClickSendCode()
+                }
             }
+            false
+        }
+        edit_text_code.setOnEditorActionListener { _, actionId, _ ->
+            when (actionId) {
+                EditorInfo.IME_ACTION_DONE -> {
+                    onClickAuth()
+                }
+            }
+            false
+        }
+        button_send_code.setOnClickListener {
+            onClickSendCode()
         }
         button_auth.setOnClickListener {
-            presenter.onClickAuth(edit_text_code.text.toString())
+            onClickAuth()
+        }
+    }
+
+    private fun onClickAuth() {
+        hideKeyboard()
+        presenter.onClickAuth(edit_text_code.text.toString())
+    }
+
+    private fun onClickSendCode() {
+        hideKeyboard()
+        edit_text_phone.fixHintsForMeizu(edit_text_phone as TextInputEditText, edit_text_phone)
+        if (edit_text_phone.isValid) {
+            presenter.onClickSendCode(edit_text_phone.unmaskText)
+        } else {
+            layout_phone.error = "Некорректный номер"
         }
     }
 

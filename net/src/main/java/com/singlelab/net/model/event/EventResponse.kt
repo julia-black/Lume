@@ -19,7 +19,9 @@ class EventResponse(
     val administrator: PersonResponse? = null,
     val isOpenForInvitations: Boolean = true,
     val eventPrimaryImageContentUid: String? = null,
-    val images: List<String>? = null
+    val images: List<String>? = null,
+    val cityName: String? = null,
+    val isOnline: Boolean
 ) {
     fun getApprovedParticipants(): List<PersonResponse> {
         return participants.filter {

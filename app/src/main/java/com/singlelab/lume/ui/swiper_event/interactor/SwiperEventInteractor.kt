@@ -8,4 +8,6 @@ interface SwiperEventInteractor {
     suspend fun getRandomEvent(randomEventRequest: RandomEventRequest): Event?
 
     suspend fun acceptEvent(participantRequest: ParticipantRequest)
+
+    suspend fun rejectEvent(eventUid: String)
 }

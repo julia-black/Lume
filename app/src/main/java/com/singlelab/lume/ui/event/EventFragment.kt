@@ -62,6 +62,16 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             event.startTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
         end_date.text = event.endTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
         description.text = event.description
+
+        is_online.visibility = if (event.isOnline) View.VISIBLE else View.GONE
+
+        if (event.cityName == null) {
+            city.visibility = View.GONE
+        } else {
+            city.text = event.cityName
+            city.visibility = View.VISIBLE
+        }
+
         val eventType = EventType.findById(event.type)
 
         if (event.eventPrimaryImageContentUid == null) {
@@ -149,6 +159,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             }
         } else {
             button_search_participants.visibility = View.GONE
+            button_invite.visibility = if (event.isOpenForInvitations) View.VISIBLE else View.GONE
         }
 
         val currentUid = AuthData.uid

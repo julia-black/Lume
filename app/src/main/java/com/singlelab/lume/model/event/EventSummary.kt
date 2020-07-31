@@ -16,7 +16,8 @@ class EventSummary(
     val status: Int,
     val isAdministrator: Boolean = false,
     val participantStatus: ParticipantStatus,
-    val anyPersonWaitingForApprove: Boolean
+    val anyPersonWaitingForApprove: Boolean,
+    val isOnline: Boolean
 ) {
     companion object {
         fun fromResponse(eventSummaryResponse: EventSummaryResponse?): EventSummary? {
@@ -34,7 +35,8 @@ class EventSummary(
                     eventSummaryResponse.status,
                     eventSummaryResponse.isAdministrator,
                     ParticipantStatus.findStatus(eventSummaryResponse.participantStatus)!!,
-                    eventSummaryResponse.anyPersonWaitingForApprove
+                    eventSummaryResponse.anyPersonWaitingForApprove,
+                    eventSummaryResponse.isOnline
                 )
             } else {
                 null

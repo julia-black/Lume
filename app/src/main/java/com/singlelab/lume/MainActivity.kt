@@ -8,6 +8,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.base.listeners.OnFilterListener
 import com.singlelab.lume.base.listeners.OnLogoutListener
 import com.singlelab.lume.base.listeners.OnSearchListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,6 +20,8 @@ class MainActivity : AppCompatActivity() {
     private var logoutListener: OnLogoutListener? = null
 
     private var searchListener: OnSearchListener? = null
+
+    private var filterListener: OnFilterListener? = null
 
     private var activityResultListener: OnActivityResultListener? = null
 
@@ -43,6 +46,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.menu_search -> {
                     searchListener?.onClickSearch()
+                    return@setOnMenuItemClickListener true
+                }
+                R.id.menu_filter -> {
+                    filterListener?.onClickFilter()
                     return@setOnMenuItemClickListener true
                 }
             }
@@ -71,12 +78,20 @@ class MainActivity : AppCompatActivity() {
         this.activityResultListener = listener
     }
 
+    fun setFilterListener(listener: OnFilterListener) {
+        this.filterListener = listener
+    }
+
     fun showLogoutInToolbar(isShow: Boolean) {
         toolbar.menu.findItem(R.id.menu_logout).isVisible = isShow
     }
 
     fun showSearchInToolbar(isShow: Boolean) {
         toolbar.menu.findItem(R.id.menu_search).isVisible = isShow
+    }
+
+    fun showFilterInToolbar(isShow: Boolean) {
+        toolbar.menu.findItem(R.id.menu_filter).isVisible = isShow
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

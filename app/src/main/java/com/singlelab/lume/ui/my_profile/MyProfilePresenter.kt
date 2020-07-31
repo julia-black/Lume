@@ -20,21 +20,15 @@ class MyProfilePresenter @Inject constructor(
 
     private var profile: Profile? = null
 
-    override fun onFirstViewAttach() {
-        super.onFirstViewAttach()
-        if (AuthData.isAnon) {
-            viewState.navigateToAuth()
-        } else {
-            loadProfile()
-        }
-    }
-
-    private fun loadProfile() {
+    fun loadProfile() {
         viewState.showLoading(true)
         invokeSuspend {
             try {
                 if (!AuthData.isAnon) {
                     profile = interactor.loadProfile()
+                    profile?.let {
+                        preferences?.setCity(it.cityId, it.cityName)
+                    }
                     runOnMainThread {
                         viewState.showLoading(false)
                         if (profile != null) {
@@ -81,6 +75,4 @@ class MyProfilePresenter @Inject constructor(
             }
         }
     }
-
-    fun hasFriends() = !profile?.friends.isNullOrEmpty()
 }

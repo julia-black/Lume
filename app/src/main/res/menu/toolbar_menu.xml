@@ -16,4 +16,11 @@
         android:visible="false"
         app:showAsAction="ifRoom"
         tools:visible="true" />
+
+    <item
+        android:id="@+id/menu_filter"
+        android:icon="@drawable/ic_filter"
+        android:visible="false"
+        app:showAsAction="ifRoom"
+        tools:visible="true" />
 </menu>

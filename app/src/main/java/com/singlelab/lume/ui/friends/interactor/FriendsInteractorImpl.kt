@@ -4,6 +4,7 @@ import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.net.model.event.ParticipantRequest
 import com.singlelab.net.model.event.ParticipantStatus
+import com.singlelab.net.model.person.SearchPersonRequest
 import com.singlelab.net.repositories.BaseRepository
 import com.singlelab.net.repositories.friends.FriendsRepository
 
@@ -15,16 +16,8 @@ class FriendsInteractorImpl(private val repository: FriendsRepository) : Friends
         }
     }
 
-    override suspend fun search(
-        searchStr: String,
-        pageNumber: Int,
-        pageSize: Int
-    ): List<Person>? {
-        return repository.search(
-            searchStr,
-            pageNumber,
-            pageSize
-        )?.mapNotNull {
+    override suspend fun search(request: SearchPersonRequest): List<Person>? {
+        return repository.search(request)?.mapNotNull {
             Person.fromResponse(it)
         }
     }

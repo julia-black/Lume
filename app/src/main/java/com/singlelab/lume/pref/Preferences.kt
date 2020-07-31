@@ -11,10 +11,19 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
         const val PREF_REFRESH_TOKEN = "pref_refresh_token"
         const val PREF_UID = "pref_uid"
         const val PREF_IS_ANON = "pref_anon"
+        const val PREF_CITY_ID = "city_id"
+        const val PREF_CITY_NAME = "city_name"
     }
 
     init {
-        AuthData.setAuthData(getAccessToken(), getRefreshToken(), getUid(), isAnon())
+        AuthData.setAuthData(
+            getAccessToken(),
+            getRefreshToken(),
+            getUid(),
+            isAnon(),
+            getCityId(),
+            getCityName()
+        )
     }
 
     fun setAuth(auth: Auth) {
@@ -28,7 +37,7 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
         setRefreshToken(null)
         setUid(null)
         setAnon(true)
-        AuthData.setAuthData(null, null, null, true)
+        AuthData.setAuthData(null, null, null, true, null, null)
     }
 
     fun setUid(uid: String?) {
@@ -39,6 +48,13 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
     fun setAnon(isAnon: Boolean) {
         AuthData.isAnon = isAnon
         sharedPreferences?.edit()?.putBoolean(PREF_IS_ANON, isAnon)?.apply()
+    }
+
+    fun setCity(cityId: Int, cityName: String) {
+        setCityId(cityId)
+        setCityName(cityName)
+        AuthData.cityId = cityId
+        AuthData.cityName = cityName
     }
 
     private fun isAnon(): Boolean {
@@ -53,11 +69,21 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
         sharedPreferences?.edit()?.putString(PREF_REFRESH_TOKEN, refreshToken)?.apply()
     }
 
+    private fun setCityId(cityId: Int) {
+        sharedPreferences?.edit()?.putInt(PREF_CITY_ID, cityId)?.apply()
+    }
+
+    private fun setCityName(cityName: String) {
+        sharedPreferences?.edit()?.putString(PREF_CITY_NAME, cityName)?.apply()
+    }
+
     private fun getAccessToken() = sharedPreferences?.getString(PREF_ACCESS_TOKEN, "")
 
     private fun getUid() = sharedPreferences?.getString(PREF_UID, "")
 
     private fun getRefreshToken() = sharedPreferences?.getString(PREF_REFRESH_TOKEN, "")
 
+    private fun getCityId() = sharedPreferences?.getInt(PREF_CITY_ID, -1)
 
+    private fun getCityName() = sharedPreferences?.getString(PREF_CITY_NAME, "")
 }

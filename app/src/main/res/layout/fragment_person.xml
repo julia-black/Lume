@@ -41,12 +41,21 @@
             tools:text="Иван, 23" />
 
         <TextView
+            android:id="@+id/city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:textSize="@dimen/text_size_standart"
+            app:layout_constraintTop_toBottomOf="@id/name_age"
+            tools:text="Москва" />
+
+        <TextView
             android:id="@+id/count_events"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_medium"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/name_age"
+            android:textSize="@dimen/text_size_standart"
+            app:layout_constraintTop_toBottomOf="@id/city"
             tools:text="14 встреч" />
 
         <TextView
@@ -73,14 +82,14 @@
             android:textAllCaps="false"
             android:textColor="@color/colorAccent"
             android:textSize="16sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:visibility="gone"
-            tools:visibility="visible"
             app:rippleColor="@color/colorAccentLight"
             app:strokeColor="@color/colorAccent"
-            app:strokeWidth="1dp" />
+            app:strokeWidth="1dp"
+            tools:visibility="visible" />
 
         <Button
             android:id="@+id/button_remove_from_friends"

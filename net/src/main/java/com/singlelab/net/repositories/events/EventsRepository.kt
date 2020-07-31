@@ -22,4 +22,12 @@ interface EventsRepository {
     suspend fun search(searchEventRequest: SearchEventRequest): List<EventSummaryResponse>?
 
     suspend fun getRandomPerson(randomPersonRequest: RandomPersonRequest): PersonResponse?
+
+    suspend fun acceptRandomEvent(participantRequest: ParticipantRequest)
+
+    suspend fun rejectRandomEvent(eventUid: String)
+
+    suspend fun acceptRandomPerson(participantRequest: ParticipantRequest)
+
+    suspend fun rejectRandomPerson(eventUid: String, personUid: String)
 }

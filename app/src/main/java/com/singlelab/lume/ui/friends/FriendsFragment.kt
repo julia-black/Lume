@@ -56,9 +56,9 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
             if (isSearch) {
                 edit_text_search.requestFocus()
             }
-            presenter.hasFriends = FriendsFragmentArgs.fromBundle(it).hasFriends
             presenter.eventUid = FriendsFragmentArgs.fromBundle(it).eventUid
         }
+        showSearch(presenter.eventUid.isNullOrEmpty()) //если перешли из события, чтобы пригласить друзей - поиск отсутствует
         recycler_friends.apply {
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -145,5 +145,10 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
     }
 
     override fun onRejectClick(personUid: String, eventUid: String) {
+    }
+
+    private fun showSearch(isShow: Boolean) {
+        edit_text_search.visibility = if (isShow) View.VISIBLE else View.GONE
+        icon_search.visibility = if (isShow) View.VISIBLE else View.GONE
     }
 }

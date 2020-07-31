@@ -9,6 +9,7 @@
     <color name="colorLight">#9BD7D1</color>
     <color name="colorTransparentPart">#80FFFFFF</color>
     <color name="colorGray">#9A9A9A</color>
+    <color name="colorGrayLight">#D3D3D3</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorParty">#F24C56</color>
 

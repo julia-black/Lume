@@ -39,7 +39,7 @@
     <string name="date_end">Окончание события</string>
     <string name="enter_fields">Заполните обязательные параметры</string>
     <string name="party">Вечеринка</string>
-    <string name="boozy">Пьянка</string>
+    <string name="booze">Пьянка</string>
     <string name="administrator">%1$s (Организатор)</string>
     <string name="age_from_to">Возраст: %1$d-%2$d</string>
     <string name="age_from">Возраст: %1$d+</string>
@@ -47,6 +47,16 @@
     <string name="count_participants">Идут %1$d человек</string>
     <string name="waiting_for_approve_event">Ожидается подтверждение</string>
     <string name="waiting_for_approve_users">Ожидают подтверждения %1$d человек</string>
+    <string name="count_invited">Приглашены %1$d человек</string>
+    <string name="invite_friends">Пригласить друзей</string>
+    <string name="search_participants">Найти участников</string>
+    <string name="waiting_for_approve_user">Новое приглашение</string>
+    <string name="search_events">Поиск события</string>
+    <string name="search_event">Найти событие</string>
+    <string name="person_invited">Пользователь %1$s приглашен</string>
+    <string name="empty_swipes">К сожалению, новых событий нет\nПопробуйте расширить фильтры или создайте своё событие!</string>
+    <string name="online">Онлайн</string>
+    <string name="event_is_online">Онлайн-событие</string>
 
     <!-- Friends -->
     <string name="search_friends">Найти друзей</string>
@@ -56,19 +66,26 @@
     <string name="in_friends">В друзьях</string>
     <string name="remove_from_friends">Удалить из друзей</string>
 
+    <!-- Person -->
+    <string name="person_age">%1$d лет</string>
+
     <!-- Chats -->
     <string name="chats_title">Чаты</string>
 
     <!-- Chat -->
     <string name="chat_title">Чат</string>
     <string name="chat_message_hint">Сообщение</string>
-    <string name="count_invited">Приглашены %1$d человек</string>
-    <string name="search_events">Поиск события</string>
-    <string name="search_event">Найти событие</string>
-    <string name="invite_friends">Пригласить друзей</string>
-    <string name="search_participants">Найти участников</string>
-    <string name="person_invited">Пользователь %1$s приглашен</string>
-    <string name="person_age">%1$d лет</string>
-    <string name="waiting_for_approve_user">Новое приглашение</string>
 
+    <!-- City -->
+    <string name="city">Город</string>
+    <string name="title_cities">Выберите город</string>
+    <string name="search_city">Найти город</string>
+
+    <!-- Filters -->
+    <string name="title_filters">Фильтры</string>
+    <string name="choose_types">Выберите тип</string>
+    <string name="apply">Применить</string>
+    <string name="permission_location_denied">Разрешите доступ к местоположению в настройках</string>
+    <string name="events_is_online">Только онлайн-события</string>
+    <string name="events_not_online">Исключить онлайн-события</string>
 </resources>

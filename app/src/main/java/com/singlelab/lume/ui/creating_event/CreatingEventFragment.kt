@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.singlelab.lume.R
@@ -17,6 +18,8 @@ import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.city.City
+import com.singlelab.lume.ui.cities.CitiesFragment
 import com.singlelab.lume.ui.creating_event.adapter.EventImagesAdapter
 import com.singlelab.lume.ui.creating_event.adapter.OnImageClickListener
 import com.singlelab.lume.util.formatToUTC
@@ -70,6 +73,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         Toast.makeText(context, "Ура! Вы создали событие!", Toast.LENGTH_LONG).show()
         val action = CreatingEventFragmentDirections.actionCreatingEventToEvent(eventUid)
         findNavController().navigate(action)
+        findNavController().popBackStack(R.id.creating_event, true)
     }
 
     override fun showDateStart(dateStr: String) {
@@ -82,6 +86,14 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
 
     override fun addImage(bitmap: Bitmap) {
         (recycler_images.adapter as EventImagesAdapter).addImage(bitmap)
+    }
+
+    override fun showCurrentCity(cityId: Int?, cityName: String?) {
+        if (cityId != null && cityName != null) {
+            text_city.text = cityName
+        } else {
+            text_city.text = getString(R.string.city)
+        }
     }
 
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -97,13 +109,35 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         }
     }
 
+    override fun onClickNewImage() {
+        activity?.let { activity ->
+            CropImage.activity()
+                .setFixAspectRatio(true)
+                .setRequestedSize(500, 500, CropImageView.RequestSizeOptions.RESIZE_FIT)
+                .setCropShape(CropImageView.CropShape.RECTANGLE)
+                .start(activity)
+        }
+    }
+
+    override fun onClickDeleteImage(position: Int) {
+        (recycler_images.adapter as EventImagesAdapter).deleteImage(position)
+        presenter.deleteImage(position)
+    }
+
     private fun setListeners() {
+        text_city.setOnClickListener {
+            toChooseCity()
+        }
         start_date.setOnClickListener {
             showDatePicker(presenter.currentDateStart, isStart = true)
         }
         end_date.setOnClickListener {
             showDatePicker(presenter.currentDateEnd, isStart = false)
         }
+        switch_online.setOnCheckedChangeListener { _, isChecked ->
+            text_city.isEnabled = !isChecked
+        }
+
         button_create_event.setOnClickListener {
             if (validation()) {
                 val minAge =
@@ -115,19 +149,31 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                     description = description.text.toString(),
                     minAge = minAge,
                     maxAge = maxAge,
-                    xCoordinate = 51.5819596F,
-                    yCoordinate = 46.0621339F,
+                    xCoordinate = if (switch_online.isChecked) null else 51.5819596F,
+                    yCoordinate = if (switch_online.isChecked) null else 46.0621339F,
                     startTime = presenter.currentDateStart?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE),
                     endTime = presenter.currentDateEnd?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE),
                     isOpenForInvitations = switch_open_event.isChecked,
                     primaryImage = presenter.getPrimaryImage(),
-                    images = presenter.getImagesStr()
+                    images = presenter.getImagesStr(),
+                    cityId = if (switch_online.isChecked) null else presenter.cityId!!,
+                    isOnline = switch_online.isChecked
                 )
                 presenter.createEvent(event)
             } else {
                 showError(getString(R.string.enter_fields))
             }
         }
+        parentFragmentManager.setFragmentResultListener(
+            CitiesFragment.REQUEST_CITY,
+            this,
+            FragmentResultListener { requestKey, result ->
+                onFragmentResult(requestKey, result)
+            })
+    }
+
+    private fun toChooseCity() {
+        findNavController().navigate(CreatingEventFragmentDirections.actionCreatingEventToCities())
     }
 
     private fun validation(): Boolean {
@@ -142,6 +188,9 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                 return false
             }
             presenter.currentDateEnd == null -> {
+                return false
+            }
+            presenter.cityId == null || presenter.cityId!! < 0 -> {
                 return false
             }
         }
@@ -184,18 +233,10 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         }
     }
 
-    override fun onClickNewImage() {
-        activity?.let { activity ->
-            CropImage.activity()
-                .setFixAspectRatio(true)
-                .setRequestedSize(500, 500, CropImageView.RequestSizeOptions.RESIZE_FIT)
-                .setCropShape(CropImageView.CropShape.RECTANGLE)
-                .start(activity)
+    private fun onFragmentResult(requestKey: String, result: Bundle) {
+        if (requestKey == CitiesFragment.REQUEST_CITY) {
+            val city: City = result.getParcelable(CitiesFragment.RESULT_CITY) ?: return
+            presenter.setCity(city)
         }
-    }
-
-    override fun onClickDeleteImage(position: Int) {
-        (recycler_images.adapter as EventImagesAdapter).deleteImage(position)
-        presenter.deleteImage(position)
     }
 }
