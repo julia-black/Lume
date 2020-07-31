@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.maps.model.LatLng
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
@@ -22,6 +23,7 @@ import com.singlelab.lume.model.city.City
 import com.singlelab.lume.ui.cities.CitiesFragment
 import com.singlelab.lume.ui.creating_event.adapter.EventImagesAdapter
 import com.singlelab.lume.ui.creating_event.adapter.OnImageClickListener
+import com.singlelab.lume.ui.map.MapFragment
 import com.singlelab.lume.util.formatToUTC
 import com.singlelab.lume.util.getBitmap
 import com.singlelab.net.model.event.EventRequest
@@ -96,6 +98,14 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         }
     }
 
+    override fun showLocationName(locationName: String?) {
+        if (locationName != null) {
+            text_location.text = locationName
+        } else {
+            text_location.text = getString(R.string.choose_location)
+        }
+    }
+
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
@@ -128,6 +138,9 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         text_city.setOnClickListener {
             toChooseCity()
         }
+        text_location.setOnClickListener {
+            toChooseLocation()
+        }
         start_date.setOnClickListener {
             showDatePicker(presenter.currentDateStart, isStart = true)
         }
@@ -137,7 +150,6 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         switch_online.setOnCheckedChangeListener { _, isChecked ->
             text_city.isEnabled = !isChecked
         }
-
         button_create_event.setOnClickListener {
             if (validation()) {
                 val minAge =
@@ -149,8 +161,8 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                     description = description.text.toString(),
                     minAge = minAge,
                     maxAge = maxAge,
-                    xCoordinate = if (switch_online.isChecked) null else 51.5819596F,
-                    yCoordinate = if (switch_online.isChecked) null else 46.0621339F,
+                    xCoordinate = if (switch_online.isChecked) null else presenter.getLat(),
+                    yCoordinate = if (switch_online.isChecked) null else presenter.getLong(),
                     startTime = presenter.currentDateStart?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE),
                     endTime = presenter.currentDateEnd?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE),
                     isOpenForInvitations = switch_open_event.isChecked,
@@ -164,15 +176,27 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                 showError(getString(R.string.enter_fields))
             }
         }
+    }
+
+    private fun toChooseLocation() {
+        parentFragmentManager.setFragmentResultListener(MapFragment.REQUEST_LOCATION,
+            this,
+            FragmentResultListener { requestKey, result ->
+                onFragmentResult(requestKey, result)
+            })
+        val action = CreatingEventFragmentDirections.actionCreatingEventToMap(
+            presenter.locationName ?: presenter.cityName!!
+        )
+        findNavController().navigate(action)
+    }
+
+    private fun toChooseCity() {
         parentFragmentManager.setFragmentResultListener(
             CitiesFragment.REQUEST_CITY,
             this,
             FragmentResultListener { requestKey, result ->
                 onFragmentResult(requestKey, result)
             })
-    }
-
-    private fun toChooseCity() {
         findNavController().navigate(CreatingEventFragmentDirections.actionCreatingEventToCities())
     }
 
@@ -234,9 +258,18 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
     }
 
     private fun onFragmentResult(requestKey: String, result: Bundle) {
-        if (requestKey == CitiesFragment.REQUEST_CITY) {
-            val city: City = result.getParcelable(CitiesFragment.RESULT_CITY) ?: return
-            presenter.setCity(city)
+        when (requestKey) {
+            CitiesFragment.REQUEST_CITY -> {
+                val city: City = result.getParcelable(CitiesFragment.RESULT_CITY) ?: return
+                presenter.setCity(city)
+            }
+            MapFragment.REQUEST_LOCATION -> {
+                val locationName =
+                    result.getString(MapFragment.RESULT_LOCATION_NAME, null) ?: return
+                val locationCoordinate: LatLng =
+                    result.getParcelable(MapFragment.RESULT_LOCATION_COORDINATE) ?: return
+                presenter.setLocation(locationName, locationCoordinate)
+            }
         }
     }
 }

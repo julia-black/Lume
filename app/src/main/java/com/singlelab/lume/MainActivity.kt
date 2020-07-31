@@ -1,5 +1,6 @@
 package com.singlelab.lume
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -7,10 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.singlelab.lume.base.listeners.OnActivityResultListener
-import com.singlelab.lume.base.listeners.OnFilterListener
-import com.singlelab.lume.base.listeners.OnLogoutListener
-import com.singlelab.lume.base.listeners.OnSearchListener
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.single.PermissionListener
+import com.singlelab.lume.base.listeners.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -24,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     private var filterListener: OnFilterListener? = null
 
     private var activityResultListener: OnActivityResultListener? = null
+
+    private var permissionListener: OnPermissionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +88,10 @@ class MainActivity : AppCompatActivity() {
         this.filterListener = listener
     }
 
+    fun setPermissionListener(listener: OnPermissionListener) {
+        this.permissionListener = listener
+    }
+
     fun showLogoutInToolbar(isShow: Boolean) {
         toolbar.menu.findItem(R.id.menu_logout).isVisible = isShow
     }
@@ -92,6 +102,27 @@ class MainActivity : AppCompatActivity() {
 
     fun showFilterInToolbar(isShow: Boolean) {
         toolbar.menu.findItem(R.id.menu_filter).isVisible = isShow
+    }
+
+    fun checkLocationPermission() {
+        Dexter.withContext(this)
+            .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+            .withListener(object : PermissionListener {
+                override fun onPermissionGranted(response: PermissionGrantedResponse) {
+                    permissionListener?.onLocationPermissionGranted()
+                }
+
+                override fun onPermissionDenied(response: PermissionDeniedResponse) {
+                    permissionListener?.onLocationPermissionDenied()
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permission: PermissionRequest?,
+                    token: PermissionToken?
+                ) {
+                    permissionListener?.onLocationPermissionDenied()
+                }
+            }).check()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

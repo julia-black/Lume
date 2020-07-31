@@ -1,6 +1,5 @@
 package com.singlelab.lume.ui.filters
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
@@ -14,14 +13,10 @@ import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionDeniedResponse
-import com.karumi.dexter.listener.PermissionGrantedResponse
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.single.PermissionListener
+import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
+import com.singlelab.lume.base.listeners.OnPermissionListener
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.event.Distance
 import com.singlelab.lume.model.event.FilterEvent
@@ -35,7 +30,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class FilterFragment : BaseFragment(), FilterView {
+class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
 
     companion object {
         const val REQUEST_FILTER = "REQUEST_FILTER"
@@ -80,6 +75,14 @@ class FilterFragment : BaseFragment(), FilterView {
 
     override fun showCity(cityName: String) {
         text_city.text = cityName
+    }
+
+    override fun onLocationPermissionGranted() {
+        getLocation()
+    }
+
+    override fun onLocationPermissionDenied() {
+        onErrorGeo()
     }
 
     private fun showFilters(isEvent: Boolean) {
@@ -140,7 +143,7 @@ class FilterFragment : BaseFragment(), FilterView {
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
-                checkLocationPermission()
+                (activity as MainActivity).checkLocationPermission()
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
@@ -160,27 +163,6 @@ class FilterFragment : BaseFragment(), FilterView {
             FragmentResultListener { requestKey, result ->
                 onFragmentResult(requestKey, result)
             })
-    }
-
-    private fun checkLocationPermission() {
-        Dexter.withContext(context)
-            .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-            .withListener(object : PermissionListener {
-                override fun onPermissionGranted(response: PermissionGrantedResponse) {
-                    getLocation()
-                }
-
-                override fun onPermissionDenied(response: PermissionDeniedResponse) {
-                    onErrorGeo()
-                }
-
-                override fun onPermissionRationaleShouldBeShown(
-                    permission: PermissionRequest?,
-                    token: PermissionToken?
-                ) {
-                    onErrorGeo()
-                }
-            }).check()
     }
 
     @SuppressLint("MissingPermission")

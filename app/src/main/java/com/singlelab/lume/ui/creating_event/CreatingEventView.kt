@@ -22,4 +22,7 @@ interface CreatingEventView : LoadingView, ErrorView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showCurrentCity(cityId: Int?, cityName: String?)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showLocationName(locationName: String?)
 }

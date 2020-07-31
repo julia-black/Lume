@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_creating_event_to_cities"
             app:destination="@id/cities" />
+        <action
+            android:id="@+id/action_creating_event_to_map"
+            app:destination="@id/map" />
     </fragment>
 
     <fragment
@@ -267,8 +270,17 @@
             app:destination="@id/cities" />
         <argument
             android:name="filterEvent"
+            android:defaultValue="@null"
             app:argType="com.singlelab.lume.model.event.FilterEvent"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/map"
+        android:name="com.singlelab.lume.ui.map.MapFragment"
+        android:label="MapFragment"
+        tools:layout="@layout/fragment_map">
+        <argument
+            android:name="locationName"
+            app:argType="string" />
     </fragment>
 </navigation>

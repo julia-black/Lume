@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.singlelab.lume.model.event.Event
 
 class CardStackEventAdapter(
-    private var events: List<Event> = emptyList()
+    private var events: List<Event> = emptyList(),
+    private val listener: OnCardEventListener
 ) : RecyclerView.Adapter<CardEventViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardEventViewHolder {
@@ -15,7 +16,7 @@ class CardStackEventAdapter(
     }
 
     override fun onBindViewHolder(holder: CardEventViewHolder, position: Int) {
-        holder.bind(events[position])
+        holder.bind(events[position], listener)
     }
 
     override fun getItemCount(): Int {

@@ -1,5 +1,9 @@
 package com.singlelab.lume.ui.event
 
+import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,13 +23,17 @@ import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
 import com.singlelab.lume.util.generateImageLinkForEvent
 import com.singlelab.lume.util.generateImageLinkForPerson
 import com.singlelab.lume.util.parse
+import com.singlelab.lume.util.removePostalCode
 import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.event.ParticipantStatus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_event.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
+import java.io.IOException
+import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonImageClickListener {
@@ -35,6 +43,8 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
 
     @InjectPresenter
     lateinit var presenter: EventPresenter
+
+    private val geoCoder: Geocoder by lazy { Geocoder(context, Locale.getDefault()) }
 
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
@@ -63,7 +73,28 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         end_date.text = event.endTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
         description.text = event.description
 
-        is_online.visibility = if (event.isOnline) View.VISIBLE else View.GONE
+        if (event.isOnline) {
+            text_location.visibility = View.INVISIBLE
+            text_online.visibility = View.VISIBLE
+        } else {
+            text_online.visibility = View.INVISIBLE
+            text_location.visibility = View.VISIBLE
+            text_location.text = getLocationName(event.xCoordinate, event.yCoordinate) ?: getString(R.string.unavailable_location)
+            text_location.setOnClickListener {
+                val uri = String.format(
+                    Locale.ENGLISH,
+                    "geo:%f,%f?z=%d&q=%f,%f (%s)",
+                    event.xCoordinate,
+                    event.yCoordinate,
+                    13,
+                    event.xCoordinate,
+                    event.yCoordinate,
+                    event.name
+                )
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+                context?.startActivity(intent)
+            }
+        }
 
         if (event.cityName == null) {
             city.visibility = View.GONE
@@ -175,6 +206,23 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         } else {
             button_accept.visibility = View.GONE
             button_reject.visibility = View.GONE
+        }
+    }
+
+    private fun getLocationName(xCoordinate: Double?, yCoordinate: Double?): String? {
+        if (xCoordinate == null || yCoordinate == null) {
+            return null
+        }
+        return try {
+            val addresses: List<Address> =
+                geoCoder.getFromLocation(xCoordinate, yCoordinate, 1)
+            if (addresses.isNotEmpty()) {
+                addresses[0].getAddressLine(0).removePostalCode(addresses[0].postalCode)
+            } else {
+                null
+            }
+        } catch (e: IOException) {
+           null
         }
     }
 
