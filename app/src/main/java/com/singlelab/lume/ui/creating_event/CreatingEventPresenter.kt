@@ -1,6 +1,7 @@
 package com.singlelab.lume.ui.creating_event
 
 import android.graphics.Bitmap
+import com.google.android.gms.maps.model.LatLng
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.Const
@@ -23,12 +24,13 @@ class CreatingEventPresenter @Inject constructor(
 ) : BasePresenter<CreatingEventView>(preferences, interactor as BaseInteractor) {
 
     var currentDateStart: Calendar? = null
-
     var currentDateEnd: Calendar? = null
 
     var cityId = AuthData.cityId
-
     private var cityName = AuthData.cityName
+
+    var locationName: String? = null
+    private var locationCoordinate: LatLng? = null
 
     private var images: MutableList<Bitmap> = mutableListOf()
 
@@ -122,5 +124,11 @@ class CreatingEventPresenter @Inject constructor(
         this.cityId = city.cityId
         this.cityName = city.cityName
         viewState.showCurrentCity(cityId, cityName)
+    }
+
+    fun setLocation(locationName: String, locationCoordinate: LatLng) {
+        this.locationName = locationName
+        this.locationCoordinate = locationCoordinate
+        viewState.showLocationName(locationName)
     }
 }

@@ -47,6 +47,7 @@
             android:id="@+id/recycler_images"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
             android:orientation="horizontal"
             tools:itemCount="1"
             tools:listitem="@layout/item_event_image" />
@@ -57,6 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_medium"
             android:checked="false"
+            android:paddingStart="@dimen/margin_medium"
             android:text="@string/event_is_online" />
 
         <TextView
@@ -73,6 +75,21 @@
             android:text="@string/city"
             android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@id/layout_age" />
+
+        <TextView
+            android:id="@+id/text_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:drawableEnd="@drawable/ic_place"
+            android:paddingStart="@dimen/margin_medium"
+            android:paddingTop="@dimen/margin_medium"
+            android:paddingEnd="0dp"
+            android:paddingBottom="@dimen/margin_medium"
+            android:text="@string/choose_location"
+            android:textSize="16sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

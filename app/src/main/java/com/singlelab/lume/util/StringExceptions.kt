@@ -16,3 +16,11 @@ fun String?.maskPhone(): String {
         return this
     }
 }
+
+fun String.removePostalCode(code: String?): String {
+    return if (code != null) {
+        this.replace(", $code", "")
+    } else {
+        this
+    }
+}

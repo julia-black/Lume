@@ -82,5 +82,7 @@ dependencies {
     implementation "com.karumi:dexter:6.2.1"
 
     //Google services
+    implementation "com.google.android.gms:play-services-maps:17.0.0"
+    implementation "androidx.appcompat:appcompat:1.1.0"
     implementation "com.google.android.gms:play-services-location:17.0.0"
 }

@@ -58,6 +58,16 @@
     <string name="online">Онлайн</string>
     <string name="event_is_online">Онлайн-событие</string>
 
+    <!-- Map -->
+    <string name="title_activity_maps">Map</string>
+    <string name="location_event">Место проведения</string>
+    <string name="error_address">Не удалось найти местоположению</string>
+    <string name="title_location_events">Выберите место проведения</string>
+    <string name="choose_location">Укажи на карте место проведения</string>
+    <string name="search_location">Введите название или адрес</string>
+    <string name="accept_location">Подтвердить</string>
+    <string name="empty_location">Укажите место проведения кликом на карте или с помощью поиска</string>
+
     <!-- Friends -->
     <string name="search_friends">Найти друзей</string>
     <string name="empty_friends">У вас пока нет друзей\nНайдите их!</string>
