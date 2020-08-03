@@ -36,10 +36,7 @@ class PhoneEditText : TextInputEditText, OnFocusChangeListener, OnTouchListener 
             if (text != null) {
                 val s = text.toString()
                 if (!TextUtils.isEmpty(s)) {
-                    val unmaskedText = s.replace("\\D+".toRegex(), "")
-                    if (!TextUtils.isEmpty(unmaskedText)) {
-                        return unmaskedText.substring(1).trim { it <= ' ' }
-                    }
+                    return s.replace("[-()\\s]".toRegex(), "")
                 }
             }
             return ""
@@ -48,7 +45,7 @@ class PhoneEditText : TextInputEditText, OnFocusChangeListener, OnTouchListener 
     val isEmpty = if (text.isNullOrEmpty()) true else text.toString() == "+7"
 
     val isValid: Boolean
-        get() = unmaskText.length == 10
+        get() = unmaskText.length == 12
 
     fun fixHintsForMeizu(vararg editTexts: TextInputEditText) {
         val manufacturer = Build.MANUFACTURER.toUpperCase(Locale.US)
