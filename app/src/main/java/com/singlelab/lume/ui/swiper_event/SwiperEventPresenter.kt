@@ -58,7 +58,7 @@ class SwiperEventPresenter @Inject constructor(
             } catch (e: ApiException) {
                 runOnMainThread {
                     viewState.showLoading(false)
-                    if (e.errorCode == Const.ERROR_CODE_NO_MATCHING) {
+                    if (e.errorCode == Const.ERROR_CODE_NO_MATCHING_EVENTS) {
                         viewState.showEmptySwipes()
                     } else {
                         viewState.showError(e.message)

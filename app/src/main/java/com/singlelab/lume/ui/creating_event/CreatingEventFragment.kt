@@ -107,7 +107,11 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
     }
 
     override fun showWarningOtherCity(currentCity: String) {
-        Toast.makeText(context, getString(R.string.warning_other_city, currentCity), Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            context,
+            getString(R.string.warning_other_city, currentCity),
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -153,6 +157,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         }
         switch_online.setOnCheckedChangeListener { _, isChecked ->
             text_city.isEnabled = !isChecked
+            text_location.isEnabled = !isChecked
         }
         button_create_event.setOnClickListener {
             if (validation()) {

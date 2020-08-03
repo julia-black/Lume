@@ -23,6 +23,7 @@ class Event(
     val isOpenForInvitations: Boolean = true,
     val eventPrimaryImageContentUid: String? = null,
     val images: List<String>? = null,
+    val cityId: Int? = null,
     val cityName: String? = null,
     val isOnline: Boolean
 ) {
@@ -54,6 +55,7 @@ class Event(
                     eventResponse.isOpenForInvitations,
                     eventResponse.eventPrimaryImageContentUid,
                     eventResponse.images,
+                    eventResponse.cityId,
                     eventResponse.cityName,
                     eventResponse.isOnline
                 )

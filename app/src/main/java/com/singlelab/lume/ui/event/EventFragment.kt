@@ -16,6 +16,7 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.ui.view.image_person.ImagePersonAdapter
 import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
@@ -78,7 +79,9 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         } else {
             text_online.visibility = View.INVISIBLE
             text_location.visibility = View.VISIBLE
-            text_location.text = getLocationName(event.xCoordinate, event.yCoordinate) ?: getString(R.string.unavailable_location)
+            text_location.text = getLocationName(event.xCoordinate, event.yCoordinate) ?: getString(
+                R.string.unavailable_location
+            )
             text_location.setOnClickListener {
                 val uri = String.format(
                     Locale.ENGLISH,
@@ -185,7 +188,11 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         if (presenter.isAdministrator()) {
             button_search_participants.visibility = View.VISIBLE
             button_search_participants.setOnClickListener {
-                toSwiperPeople(event.eventUid)
+                if (event.cityId != null && event.cityName != null && !event.isOnline) {
+                    toSwiperPeople(event.eventUid, City(event.cityId, event.cityName))
+                } else {
+                    toSwiperPeople(event.eventUid)
+                }
             }
         } else {
             button_search_participants.visibility = View.GONE
@@ -221,13 +228,15 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                 null
             }
         } catch (e: IOException) {
-           null
+            null
         }
     }
 
-    private fun toSwiperPeople(eventUid: String?) {
+    private fun toSwiperPeople(eventUid: String?, city: City? = null) {
         eventUid?.let {
-            findNavController().navigate(EventFragmentDirections.actionEventToSwiperPerson(eventUid))
+            val action = EventFragmentDirections.actionEventToSwiperPerson(eventUid)
+            action.city = city
+            findNavController().navigate(action)
         }
     }
 

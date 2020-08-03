@@ -3,6 +3,7 @@ package com.singlelab.lume.ui.filters
 import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +18,14 @@ import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnPermissionListener
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.event.Distance
-import com.singlelab.lume.model.event.FilterEvent
 import com.singlelab.lume.ui.cities.CitiesFragment
 import com.singlelab.lume.ui.event.EventType
 import dagger.hilt.android.AndroidEntryPoint
+import io.apptik.widget.MultiSlider
+import io.apptik.widget.MultiSlider.Thumb
 import kotlinx.android.synthetic.main.fragment_filters.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -62,7 +65,7 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
         activity?.title = getString(R.string.title_filters)
         arguments?.let {
             presenter.filterEvent = FilterFragmentArgs.fromBundle(it).filterEvent
-            //todo будет еще filterPerson
+            presenter.filterPerson = FilterFragmentArgs.fromBundle(it).filterPerson
         }
         showFilters(presenter.isEvent())
         setListeners()
@@ -73,8 +76,8 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
         seek_bar_distance.progress = distance.id
     }
 
-    override fun showCity(cityName: String) {
-        text_city.text = cityName
+    override fun showCity(cityName: String?) {
+        text_city.text = cityName ?: getString(R.string.any_city)
     }
 
     override fun onLocationPermissionGranted() {
@@ -89,10 +92,16 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
         if (isEvent) {
             chip_groups.visibility = View.VISIBLE
             seek_bar_distance.visibility = View.VISIBLE
+            text_age.visibility = View.GONE
+            seek_bar_age.visibility = View.GONE
             presenter.filterEvent?.let {
                 seek_bar_distance.progress = it.distance.id
                 text_distance.text = it.distance.title
-                text_city.text = it.cityName
+                if (it.cityName != null) {
+                    text_city.text = it.cityName
+                } else {
+                    text_city.setText(R.string.any_city)
+                }
                 if (it.selectedTypes.contains(EventType.PARTY)) {
                     chip_party.isChecked = true
                 }
@@ -103,9 +112,34 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
                 switch_not_online.isChecked = it.isExceptOnline
             }
         } else {
+            text_age.visibility = View.VISIBLE
+            seek_bar_age.visibility = View.VISIBLE
+            title_types.visibility = View.GONE
             chip_groups.visibility = View.GONE
             seek_bar_distance.visibility = View.GONE
             text_distance.visibility = View.GONE
+            switch_online.visibility = View.GONE
+            switch_not_online.visibility = View.GONE
+            presenter.filterPerson?.let {
+                seek_bar_age.min = Const.MIN_AGE
+                seek_bar_age.max = Const.MAX_AGE
+                if (it.minAge == Const.MIN_AGE && it.maxAge == Const.MAX_AGE) {
+                    text_age.setText(R.string.any_age)
+                } else {
+                    seek_bar_age.getThumb(0).value = it.minAge
+                    seek_bar_age.getThumb(1).value = it.maxAge
+                    if (it.minAge == it.maxAge) {
+                        text_age.text = getString(R.string.age_exact, it.minAge)
+                    } else {
+                        text_age.text = getString(R.string.age_from_to, it.minAge, it.maxAge)
+                    }
+                }
+            }
+            if (presenter.filterPerson?.cityName != null) {
+                text_city.text = presenter.filterPerson!!.cityName
+            } else {
+                text_city.setText(R.string.any_city)
+            }
         }
     }
 
@@ -152,8 +186,41 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
         text_city.setOnClickListener {
             toChooseCity()
         }
+
+        seek_bar_age.setOnThumbValueChangeListener { _: MultiSlider?, _: Thumb?, thumbIndex: Int, value: Int ->
+            if (thumbIndex == 0) {
+                presenter.filterPerson?.minAge = value
+                if (value == presenter.filterPerson?.maxAge) {
+                    text_age.text = getString(R.string.age_exact, value)
+                } else {
+                    text_age.text = getString(
+                        R.string.age_from_to,
+                        presenter.filterPerson?.minAge,
+                        presenter.filterPerson?.maxAge
+                    )
+                }
+            } else {
+                presenter.filterPerson?.maxAge = value
+                if (value == presenter.filterPerson?.minAge) {
+                    text_age.text = getString(R.string.age_exact, value)
+                } else {
+                    text_age.text = getString(
+                        R.string.age_from_to,
+                        presenter.filterPerson?.minAge,
+                        presenter.filterPerson?.maxAge
+                    )
+                }
+            }
+            if (seek_bar_age.getThumb(0).value == Const.MIN_AGE && seek_bar_age.getThumb(1).value == Const.MAX_AGE) {
+                text_age.setText(R.string.any_age)
+            }
+        }
+
         button_apply.setOnClickListener {
             presenter.filterEvent?.let {
+                applyFilter(it)
+            }
+            presenter.filterPerson?.let {
                 applyFilter(it)
             }
         }
@@ -190,21 +257,31 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
     }
 
     private fun toChooseCity() {
-        findNavController().navigate(FilterFragmentDirections.actionFiltersToCities())
+        val action = FilterFragmentDirections.actionFiltersToCities()
+        action.containAnyCity = true
+        findNavController().navigate(action)
     }
 
     private fun onFragmentResult(requestKey: String, result: Bundle) {
         if (requestKey == CitiesFragment.REQUEST_CITY) {
-            val city: City = result.getParcelable(CitiesFragment.RESULT_CITY) ?: return
+            val city: City? = result.getParcelable(CitiesFragment.RESULT_CITY)
             presenter.setCity(city)
         }
     }
 
-    private fun applyFilter(filterEvent: FilterEvent) {
+    private fun applyFilter(filter: Parcelable) {
         parentFragmentManager.setFragmentResult(
             REQUEST_FILTER,
-            bundleOf(RESULT_FILTER to filterEvent)
+            bundleOf(RESULT_FILTER to filter)
         )
         parentFragmentManager.popBackStack()
     }
+
+//    private fun applyFilter(filterEvent: FilterEvent) {
+//        parentFragmentManager.setFragmentResult(
+//            REQUEST_FILTER,
+//            bundleOf(RESULT_FILTER to filterEvent)
+//        )
+//        parentFragmentManager.popBackStack()
+//    }
 }

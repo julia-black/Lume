@@ -16,9 +16,9 @@ class CitiesPresenter @Inject constructor(
     preferences: Preferences?
 ) : BasePresenter<CitiesView>(preferences, interactor as BaseInteractor) {
 
-    private var allCities: List<City>? = null
+    var containsAnyCity: Boolean = false
 
-    private val cities: MutableList<City> = mutableListOf()
+    private var allCities: List<City>? = null
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -32,7 +32,7 @@ class CitiesPresenter @Inject constructor(
                 allCities = interactor.getCities()
                 runOnMainThread {
                     viewState.showLoading(false)
-                    viewState.showCities(allCities)
+                    viewState.showCities(allCities, containsAnyCity)
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
@@ -45,7 +45,7 @@ class CitiesPresenter @Inject constructor(
 
     fun filter(queryStr: String) {
         if (queryStr.isBlank()) {
-            viewState.showCities(allCities)
+            viewState.showCities(allCities, containsAnyCity)
         } else {
             allCities?.let { allCities ->
                 viewState.showCities(allCities.filter {

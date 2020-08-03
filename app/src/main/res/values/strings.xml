@@ -58,6 +58,7 @@
     <string name="online">Онлайн</string>
     <string name="event_is_online">Онлайн-событие</string>
     <string name="unavailable_location">Неизвестное местоположение. Обратитесь к организатору в чате</string>
+    <string name="warning_other_city">Основной город события и город на карте не совпадают. Событие будет показано только для города %1$s</string>
 
     <!-- Map -->
     <string name="title_activity_maps">Map</string>
@@ -98,5 +99,9 @@
     <string name="permission_location_denied">Разрешите доступ к местоположению в настройках</string>
     <string name="events_is_online">Только онлайн-события</string>
     <string name="events_not_online">Исключить онлайн-события</string>
-    <string name="warning_other_city">Основной город события и город на карте не совпадают. Событие будет показано только для города %1$s</string>
+    <string name="any_city">Любой город</string>
+    <string name="any_age">Любой возраст</string>
+    <string name="age_exact">Возраст: %1$d</string>
+    <string name="empty_persons">К сожалению, люди по выбранным фильтрам не найдены. Попробуйте расширить фильтры</string>
+
 </resources>

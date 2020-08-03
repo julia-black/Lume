@@ -9,5 +9,5 @@ import moxy.viewstate.strategy.StateStrategyType
 interface CitiesView : LoadingView, ErrorView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showCities(cities: List<City>?)
+    fun showCities(cities: List<City>?, containsAnyCity: Boolean = false)
 }

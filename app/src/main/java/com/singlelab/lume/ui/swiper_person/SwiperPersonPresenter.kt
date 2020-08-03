@@ -2,6 +2,8 @@ package com.singlelab.lume.ui.swiper_person
 
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.profile.FilterPerson
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.swiper_person.interactor.SwiperPersonInteractor
@@ -22,6 +24,8 @@ class SwiperPersonPresenter @Inject constructor(
 
     var person: Person? = null
 
+    var filterPerson: FilterPerson? = null
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         loadRandomPerson()
@@ -32,7 +36,12 @@ class SwiperPersonPresenter @Inject constructor(
         viewState.showLoading(true)
         invokeSuspend {
             try {
-                val randomPersonRequest = RandomPersonRequest(eventUid = eventUid!!)
+                val randomPersonRequest = RandomPersonRequest(
+                    eventUid = eventUid!!,
+                    minAge = filterPerson?.minAge,
+                    maxAge = filterPerson?.maxAge,
+                    cityId = filterPerson?.cityId
+                )
                 person = interactor.getRandomPerson(randomPersonRequest)
                 runOnMainThread {
                     viewState.showLoading(false)
@@ -43,7 +52,11 @@ class SwiperPersonPresenter @Inject constructor(
             } catch (e: ApiException) {
                 runOnMainThread {
                     viewState.showLoading(false)
-                    viewState.showError(e.message)
+                    if (e.errorCode == Const.ERROR_CODE_NO_MATCHING_PERSONS) {
+                        viewState.showEmptySwipes()
+                    } else {
+                        viewState.showError(e.message)
+                    }
                 }
             }
         }
@@ -95,5 +108,10 @@ class SwiperPersonPresenter @Inject constructor(
                 }
             }
         }
+    }
+
+    fun applyFilter(filterPerson: FilterPerson) {
+        this.filterPerson = filterPerson
+        loadRandomPerson()
     }
 }

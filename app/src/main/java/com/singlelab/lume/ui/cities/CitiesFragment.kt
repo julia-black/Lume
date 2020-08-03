@@ -14,7 +14,6 @@ import com.singlelab.lume.ui.cities.adapter.OnCityClickListener
 import com.singlelab.lume.util.TextInputDebounce
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_cities.*
-import kotlinx.android.synthetic.main.fragment_search_event.edit_text_search
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
@@ -50,11 +49,20 @@ class CitiesFragment : BaseFragment(), CitiesView, OnCityClickListener {
         super.onViewCreated(view, savedInstanceState)
         activity?.title = getString(R.string.title_cities)
 
+        arguments?.let {
+            presenter.containsAnyCity = CitiesFragmentArgs.fromBundle(it).containAnyCity
+        }
+
         recycler_cities.apply {
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             visibility = View.VISIBLE
             adapter = CitiesAdapter(this@CitiesFragment)
+        }
+
+        choose_any_city.setOnClickListener {
+            parentFragmentManager.setFragmentResult(REQUEST_CITY, bundleOf(RESULT_CITY to null))
+            parentFragmentManager.popBackStack()
         }
 
         searchDebounce = TextInputDebounce(
@@ -66,10 +74,15 @@ class CitiesFragment : BaseFragment(), CitiesView, OnCityClickListener {
         }
     }
 
-    override fun showCities(cities: List<City>?) {
+    override fun showCities(cities: List<City>?, containsAnyCity: Boolean) {
         if (cities.isNullOrEmpty()) {
             showEmptySearch()
         } else {
+            if (containsAnyCity) {
+                choose_any_city.visibility = View.VISIBLE
+            } else {
+                choose_any_city.visibility = View.GONE
+            }
             title_empty_search.visibility = View.GONE
             recycler_cities.visibility = View.VISIBLE
             (recycler_cities.adapter as CitiesAdapter).setData(cities)

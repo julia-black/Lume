@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import android.widget.Toast
+import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.singlelab.lume.MainActivity
@@ -13,11 +14,13 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnFilterListener
+import com.singlelab.lume.model.profile.FilterPerson
 import com.singlelab.lume.model.profile.Person
+import com.singlelab.lume.ui.filters.FilterFragment
 import com.singlelab.lume.ui.swiper_person.adapter.CardStackPersonAdapter
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_swiper_event.*
+import kotlinx.android.synthetic.main.fragment_swiper_person.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
@@ -50,6 +53,8 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
         activity?.title = ""
         arguments?.let {
             presenter.eventUid = SwiperPersonFragmentArgs.fromBundle(it).eventUid
+            val city = SwiperPersonFragmentArgs.fromBundle(it).city
+            presenter.filterPerson = FilterPerson(city?.cityId, city?.cityName)
         }
         setListeners()
         initCardStack()
@@ -118,12 +123,28 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
     }
 
     private fun setListeners() {
+        parentFragmentManager.setFragmentResultListener(
+            FilterFragment.REQUEST_FILTER,
+            this,
+            FragmentResultListener { requestKey, result ->
+                onFragmentResult(requestKey, result)
+            })
+    }
+
+    private fun onFragmentResult(requestKey: String, result: Bundle) {
+        if (requestKey == FilterFragment.REQUEST_FILTER) {
+            val filterPerson: FilterPerson =
+                result.getParcelable(FilterFragment.RESULT_FILTER) ?: return
+            presenter.applyFilter(filterPerson)
+        }
     }
 
     override fun showPerson(person: Person) {
         if (presenter.person == null) {
             presenter.loadRandomPerson()
         } else {
+            card_stack_view.visibility = View.VISIBLE
+            text_empty_swipes.visibility = View.GONE
             (card_stack_view.adapter as CardStackPersonAdapter).setData(listOf(person))
         }
     }
@@ -137,9 +158,15 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
         presenter.loadRandomPerson()
     }
 
+    override fun showEmptySwipes() {
+        card_stack_view.visibility = View.GONE
+        text_empty_swipes.visibility = View.VISIBLE
+    }
+
     override fun onClickFilter() {
         val action = SwiperPersonFragmentDirections.actionSwiperPersonToFilters()
         action.isEvent = false
+        action.filterPerson = presenter.filterPerson
         findNavController().navigate(action)
     }
 }
