@@ -2,6 +2,7 @@ package com.singlelab.lume.ui.chat
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,8 @@ import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.ui.chat.common.*
 import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType.Common
+import com.singlelab.lume.util.getBitmap
+import com.singlelab.lume.util.toBase64
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chat.*
 import moxy.presenter.InjectPresenter
@@ -65,9 +68,9 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
     }
 
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == SELECT_IMAGE_REQUEST_CODE) {
-            val images = ImagePicker.getImages(data).map { it.uri.toString() }
-            if (resultCode == Activity.RESULT_OK) {
+        if (ImagePicker.shouldHandleResult(requestCode, resultCode, data, SELECT_IMAGE_REQUEST_CODE)) {
+            val images = ImagePicker.getImages(data).map { it.uri }
+            if (resultCode == Activity.RESULT_OK && images.isNotEmpty()) {
                 sendMessage(images)
             } else {
                 Toast.makeText(context, getString(R.string.error_pick_image), Toast.LENGTH_LONG).show()
@@ -84,14 +87,16 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         attachmentMessageView.setOnClickListener { addAttachment() }
     }
 
-    private fun sendMessage(images: List<String> = emptyList()) {
+    private fun sendMessage(imageUris: List<Uri> = emptyList()) {
         val currentText = messageInputView.text.toString().trim()
-        if (currentText.isNotEmpty()) {
+        if (currentText.isNotEmpty() || imageUris.isNotEmpty()) {
             val message = if (isChatGroup) {
-                GroupChatMessageItem("0", currentText, ChatMessageItem.Type.OUTGOING, "", "")
+                GroupChatMessageItem("0", currentText, ChatMessageItem.Type.OUTGOING, imageUris.map { it.toString() }, "", "")
             } else {
-                PrivateChatMessageItem("0", currentText, ChatMessageItem.Type.OUTGOING)
+                PrivateChatMessageItem("0", currentText, ChatMessageItem.Type.OUTGOING, imageUris.map { it.toString() })
             }
+            val images = imageUris.mapNotNull { it.getBitmap(activity?.contentResolver)?.toBase64() }
+
             chatMessagesAdapter.addMessage(message)
             chatMessagesAdapter.notifyDataSetChanged()
             chatView.scrollToPosition(chatMessagesAdapter.itemCount - 1)
@@ -101,23 +106,24 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
     }
 
     private fun addAttachment() {
-        ImagePicker.with(this)
-            .setFolderMode(true)
-            .setFolderTitle("Lume")
-            .setRootDirectoryName(ROOT_DIR_DCIM)
-            .setDirectoryName("Lume Images")
-            .setMultipleMode(true)
-            .setShowNumberIndicator(true)
-            .setMaxSize(SELECT_IMAGE_MAX_COUNT)
-            .setLimitMessage(getString(R.string.chat_select_images_limit, SELECT_IMAGE_MAX_COUNT))
-            //.setSelectedImages(images)
-            .setRequestCode(SELECT_IMAGE_REQUEST_CODE)
-            .start()
+        activity?.let {
+            ImagePicker.with(it)
+                .setFolderMode(true)
+                .setFolderTitle("Lume")
+                .setRootDirectoryName(ROOT_DIR_DCIM)
+                .setDirectoryName("Lume Images")
+                .setMultipleMode(true)
+                .setShowNumberIndicator(true)
+                .setMaxSize(SELECT_IMAGE_MAX_COUNT)
+                .setLimitMessage(getString(R.string.chat_select_images_limit, SELECT_IMAGE_MAX_COUNT))
+                .setRequestCode(SELECT_IMAGE_REQUEST_CODE)
+                .start()
+        }
     }
 
 
     companion object {
         private const val SELECT_IMAGE_MAX_COUNT = 10
-        private const val SELECT_IMAGE_REQUEST_CODE = 100
+        private const val SELECT_IMAGE_REQUEST_CODE = 101
     }
 }

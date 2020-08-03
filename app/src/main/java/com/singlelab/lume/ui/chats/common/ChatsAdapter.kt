@@ -7,13 +7,13 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.singlelab.lume.R
 import com.singlelab.lume.util.generateImageLinkForEvent
 import com.singlelab.lume.util.generateImageLinkForPerson
-import com.singlelab.lume.util.isVisible
 import com.singlelab.net.model.auth.AuthData
 import kotlinx.android.synthetic.main.chats_item.view.*
 

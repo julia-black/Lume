@@ -15,7 +15,8 @@ fun ChatMessageResponse.toDbEntity(chatUid: String?): ChatMessage? {
         text = messageContent ?: "",
         date = messageTime ?: "",
         personName = personName ?: "",
-        personPhoto = personImageUid ?: ""
+        personPhoto = personImageUid ?: "",
+        images = images ?: emptyList()
     )
 }
 
@@ -26,7 +27,8 @@ fun ChatMessage.toPrivateItems(currentPersonUid: String): PrivateChatMessageItem
     PrivateChatMessageItem(
         uid = uid,
         text = text,
-        type = if (personUid == currentPersonUid) Type.OUTGOING else Type.INCOMING
+        type = if (personUid == currentPersonUid) Type.OUTGOING else Type.INCOMING,
+        images = images
     )
 
 fun ChatMessage.toGroupItems(currentPersonUid: String): GroupChatMessageItem =
@@ -35,5 +37,6 @@ fun ChatMessage.toGroupItems(currentPersonUid: String): GroupChatMessageItem =
         text = text,
         type = if (personUid == currentPersonUid) Type.OUTGOING else Type.INCOMING,
         personPhoto = personPhoto,
-        personName = personName
+        personName = personName,
+        images = images
     )

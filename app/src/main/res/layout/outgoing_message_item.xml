@@ -3,27 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="30dp">
 
-    <TextView
-        android:id="@+id/outgoingMessageView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/outgoingMessageContainerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
         android:background="@drawable/private_outgoing_message_input_background"
         android:backgroundTint="@color/colorLight"
-        android:paddingStart="16dp"
-        android:paddingTop="6dp"
-        android:paddingEnd="10dp"
-        android:textSize="16sp"
-        android:paddingBottom="8dp"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Medium-Long Message" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/outgoingMessageImageView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:padding="10dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginBottom="10dp"
+            tools:src="@drawable/ic_event_image"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/outgoingMessageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="8dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/outgoingMessageImageView"
+            tools:text="Medium-Long Message"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
