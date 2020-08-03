@@ -39,7 +39,6 @@ class AuthFragment : BaseFragment(), AuthView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = "Авторизация"
         setListeners()
         layout_phone.hint = ""
         edit_text_phone.setCustomHint("")

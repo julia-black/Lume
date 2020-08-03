@@ -47,9 +47,6 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.let {
-            it.title = getString(R.string.title_my_friends)
-        }
         arguments?.let {
             val isSearch = FriendsFragmentArgs.fromBundle(it).isSearch
             if (isSearch) {

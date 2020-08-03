@@ -39,7 +39,6 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = getString(R.string.registration)
         setListeners()
     }
 

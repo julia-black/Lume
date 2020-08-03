@@ -67,7 +67,6 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = getString(R.string.title_location_events)
         initMap()
         searchDebounce =
             TextInputDebounce(editText = edit_text_search, minimumSymbols = 4, delayMillis = 500)

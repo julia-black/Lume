@@ -10,16 +10,14 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
-import com.singlelab.lume.base.listeners.OnLogoutListener
 import com.singlelab.lume.model.profile.Profile
-import com.singlelab.lume.ui.view.image_person.ImagePersonAdapter
 import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
+import com.singlelab.lume.ui.view.pager.listener.OnFriendsClickListener
+import com.singlelab.lume.ui.view.pager.listener.OnSettingsClickListener
 import com.singlelab.lume.util.generateImageLinkForPerson
 import com.singlelab.lume.util.getBitmap
 import com.singlelab.net.model.auth.AuthData
@@ -33,9 +31,10 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
-    OnActivityResultListener,
-    OnPersonImageClickListener {
+class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListener,
+    OnPersonImageClickListener,
+    OnSettingsClickListener,
+    OnFriendsClickListener {
 
     @Inject
     lateinit var daggerPresenter: MyProfilePresenter
@@ -56,9 +55,6 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.let {
-            it.title = getString(R.string.title_my_profile)
-        }
         view.findViewById<ImageView>(R.id.image)
             .setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_my_profile_to_auth))
 
@@ -67,16 +63,6 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
         } else {
             presenter.loadProfile()
         }
-    }
-
-    override fun onStop() {
-        (activity as MainActivity?)?.showLogoutInToolbar(false)
-        super.onStop()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        (activity as MainActivity?)?.showLogoutInToolbar(true)
     }
 
     override fun showProfile(profile: Profile) {
@@ -97,26 +83,9 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
                     .start(activity)
             }
         }
-        if (profile.friends.isEmpty()) {
-            search_friends.visibility = View.VISIBLE
-            search_friends.setOnClickListener {
-                toFriends(true)
-            }
-            recycler_friends.visibility = View.GONE
-        } else {
-            search_friends.visibility = View.GONE
-            recycler_friends.apply {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                visibility = View.VISIBLE
-                adapter = ImagePersonAdapter(
-                    profile.friends,
-                    this@MyProfileFragment
-                )
-            }
-        }
-        title_friends.setOnClickListener {
-            toFriends()
-        }
+        pager.setSettingsListener(this)
+        pager.setFriends(profile.friends)
+        pager.setFriendsListener(this, this)
     }
 
     override fun navigateToAuth() {
@@ -130,10 +99,6 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
                 .load(imageUid.generateImageLinkForPerson())
                 .into(image)
         }
-    }
-
-    override fun onClickLogout() {
-        presenter.logout()
     }
 
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -153,9 +118,17 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
         findNavController().navigate(MyProfileFragmentDirections.actionMyProfileToPerson(personUid))
     }
 
+    override fun onLogoutClick() {
+        presenter.logout()
+    }
+
     private fun toFriends(isSearch: Boolean = false) {
         val action = MyProfileFragmentDirections.actionMyProfileToFriends()
         action.isSearch = isSearch
         findNavController().navigate(action)
+    }
+
+    override fun onSearchFriendsClick() {
+        toFriends(true)
     }
 }

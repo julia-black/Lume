@@ -59,7 +59,6 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = getString(R.string.title_event)
         arguments?.let {
             presenter.loadEvent(EventFragmentArgs.fromBundle(it).eventUid)
         }

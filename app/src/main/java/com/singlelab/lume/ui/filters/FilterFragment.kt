@@ -62,7 +62,6 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = getString(R.string.title_filters)
         arguments?.let {
             presenter.filterEvent = FilterFragmentArgs.fromBundle(it).filterEvent
             presenter.filterPerson = FilterFragmentArgs.fromBundle(it).filterPerson

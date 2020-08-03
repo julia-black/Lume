@@ -37,9 +37,6 @@ class PersonFragment : BaseFragment(), PersonView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.let {
-            it.title = ""
-        }
         arguments?.let {
             presenter.loadProfile(PersonFragmentArgs.fromBundle(it).personUid)
         }

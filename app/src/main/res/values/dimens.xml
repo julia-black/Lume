@@ -18,4 +18,6 @@
     <dimen name="size_image_add_to_friends">40dp</dimen>
     <dimen name="size_image_event">124dp</dimen>
     <dimen name="size_icon_button">52dp</dimen>
+    <dimen name="width_tab">96dp</dimen>
+    <dimen name="height_tab">56dp</dimen>
 </resources>

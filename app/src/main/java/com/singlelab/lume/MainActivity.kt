@@ -21,12 +21,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private var logoutListener: OnLogoutListener? = null
-
-    private var searchListener: OnSearchListener? = null
-
-    private var filterListener: OnFilterListener? = null
-
     private var activityResultListener: OnActivityResultListener? = null
 
     private var permissionListener: OnPermissionListener? = null
@@ -36,72 +30,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
-//        val appBarConfiguration = AppBarConfiguration(
-//            setOf(
-//                R.id.navigation_home, R.id.navigation_events, R.id.navigation_my_profile
-//            )
-//        )
-        //setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-        toolbar.inflateMenu(R.menu.toolbar_menu)
-        toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.menu_logout -> {
-                    logoutListener?.onClickLogout()
-                    return@setOnMenuItemClickListener true
-                }
-                R.id.menu_search -> {
-                    searchListener?.onClickSearch()
-                    return@setOnMenuItemClickListener true
-                }
-                R.id.menu_filter -> {
-                    filterListener?.onClickFilter()
-                    return@setOnMenuItemClickListener true
-                }
-            }
-            return@setOnMenuItemClickListener false
-        }
-    }
-
-    override fun onTitleChanged(title: CharSequence?, color: Int) {
-        super.onTitleChanged(title, color)
-        toolbar.title = title ?: ""
     }
 
     fun showLoading(isShow: Boolean) {
         loading.visibility = if (isShow) View.VISIBLE else View.GONE
     }
 
-    fun setLogoutListener(listener: OnLogoutListener) {
-        this.logoutListener = listener
-    }
-
-    fun setSearchListener(listener: OnSearchListener) {
-        this.searchListener = listener
-    }
-
     fun setActivityListener(listener: OnActivityResultListener) {
         this.activityResultListener = listener
     }
 
-    fun setFilterListener(listener: OnFilterListener) {
-        this.filterListener = listener
-    }
-
     fun setPermissionListener(listener: OnPermissionListener) {
         this.permissionListener = listener
-    }
-
-    fun showLogoutInToolbar(isShow: Boolean) {
-        toolbar.menu.findItem(R.id.menu_logout).isVisible = isShow
-    }
-
-    fun showSearchInToolbar(isShow: Boolean) {
-        toolbar.menu.findItem(R.id.menu_search).isVisible = isShow
-    }
-
-    fun showFilterInToolbar(isShow: Boolean) {
-        toolbar.menu.findItem(R.id.menu_filter).isVisible = isShow
     }
 
     fun checkLocationPermission() {

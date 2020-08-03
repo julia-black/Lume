@@ -5,7 +5,7 @@
     <string name="title_event">Событие</string>
     <string name="title_my_profile">Мой профиль</string>
     <string name="title_auth">Авторизация</string>
-    <string name="title_my_friends">Мои друзья</string>
+    <string name="title_my_friends">Друзья</string>
     <string name="title_registration">Регистрация</string>
     <string name="title_creating_event">Создание события</string>
     <string name="title_new_event">Новое событие</string>
@@ -103,5 +103,10 @@
     <string name="any_age">Любой возраст</string>
     <string name="age_exact">Возраст: %1$d</string>
     <string name="empty_persons">К сожалению, люди по выбранным фильтрам не найдены. Попробуйте расширить фильтры</string>
+    <string name="tab_frineds">Друзья</string>
+    <string name="tab_bages">Бейджи</string>
+    <string name="tab_settings">Настройки</string>
+    <string name="person_info">Личная информация</string>
+    <string name="exit">Выход</string>
 
 </resources>

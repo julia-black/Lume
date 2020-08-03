@@ -42,9 +42,6 @@ class ParticipantsFragment : BaseFragment(), ParticipantsView, OnlyForAuthFragme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.let {
-            it.title = getString(R.string.title_participants)
-        }
         arguments?.let {
             ParticipantsFragmentArgs.fromBundle(it).let { args ->
                 presenter.withNotApproved = args.withNotApproved

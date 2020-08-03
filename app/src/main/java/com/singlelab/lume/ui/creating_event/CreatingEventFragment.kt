@@ -62,7 +62,6 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = getString(R.string.title_new_event)
         setListeners()
         recycler_images.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)

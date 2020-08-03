@@ -21,4 +21,6 @@
     <color name="colorReject">#88F24C56</color>
     <color name="colorOverlay">#80000000</color>
     <color name="colorTransparent">#00FFFFFF</color>
+    <color name="colorBackground">#121212</color>
+    <color name="colorTabNotSelected">#4C4C4C</color>
 </resources>

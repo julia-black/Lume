@@ -35,17 +35,8 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
             // пользователь не залогинен, то с некоторых экранов должен осуществляться переход на авторизацию
             toAuth()
         } else {
-            if (this is OnLogoutListener) {
-                (activity as MainActivity?)?.setLogoutListener(this)
-            }
-            if (this is OnSearchListener) {
-                (activity as MainActivity?)?.setSearchListener(this)
-            }
             if (this is OnActivityResultListener) {
                 (activity as MainActivity?)?.setActivityListener(this)
-            }
-            if (this is OnFilterListener) {
-                (activity as MainActivity?)?.setFilterListener(this)
             }
             if (this is OnPermissionListener) {
                 (activity as MainActivity?)?.setPermissionListener(this)
