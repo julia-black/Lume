@@ -13,13 +13,13 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.maps.model.LatLng
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
+import com.singlelab.lume.model.location.MapLocation
 import com.singlelab.lume.ui.cities.CitiesFragment
 import com.singlelab.lume.ui.creating_event.adapter.EventImagesAdapter
 import com.singlelab.lume.ui.creating_event.adapter.OnImageClickListener
@@ -106,6 +106,10 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         }
     }
 
+    override fun showWarningOtherCity(currentCity: String) {
+        Toast.makeText(context, getString(R.string.warning_other_city, currentCity), Toast.LENGTH_LONG).show()
+    }
+
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
@@ -185,7 +189,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                 onFragmentResult(requestKey, result)
             })
         val action = CreatingEventFragmentDirections.actionCreatingEventToMap(
-            presenter.locationName ?: presenter.cityName!!
+            presenter.getAddress() ?: presenter.cityName!!
         )
         findNavController().navigate(action)
     }
@@ -264,11 +268,9 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                 presenter.setCity(city)
             }
             MapFragment.REQUEST_LOCATION -> {
-                val locationName =
-                    result.getString(MapFragment.RESULT_LOCATION_NAME, null) ?: return
-                val locationCoordinate: LatLng =
-                    result.getParcelable(MapFragment.RESULT_LOCATION_COORDINATE) ?: return
-                presenter.setLocation(locationName, locationCoordinate)
+                val location: MapLocation =
+                    result.getParcelable(MapFragment.RESULT_LOCATION) ?: return
+                presenter.setMapLocation(location)
             }
         }
     }

@@ -1,11 +1,11 @@
 package com.singlelab.lume.ui.creating_event
 
 import android.graphics.Bitmap
-import com.google.android.gms.maps.model.LatLng
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
+import com.singlelab.lume.model.location.MapLocation
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.creating_event.interactor.CreatingEventInteractor
 import com.singlelab.lume.util.parseToString
@@ -29,8 +29,7 @@ class CreatingEventPresenter @Inject constructor(
     var cityId = AuthData.cityId
     var cityName = AuthData.cityName
 
-    var locationName: String? = null
-    private var locationCoordinate: LatLng? = null
+    var location: MapLocation? = null
 
     private var images: MutableList<Bitmap> = mutableListOf()
 
@@ -127,23 +126,27 @@ class CreatingEventPresenter @Inject constructor(
         this.cityId = city.cityId
         this.cityName = city.cityName
         viewState.showCurrentCity(cityId, cityName)
-
-        this.locationName = null
-        this.locationCoordinate = null
+        this.location = null
         viewState.showLocationName(null)
     }
 
-    fun setLocation(locationName: String, locationCoordinate: LatLng) {
-        this.locationName = locationName
-        this.locationCoordinate = locationCoordinate
-        viewState.showLocationName(locationName)
+    fun setMapLocation(location: MapLocation) {
+        this.location = location
+        if (cityName != null && cityName != location.city) {
+            viewState.showWarningOtherCity(cityName!!)
+        }
+        viewState.showLocationName(location.address)
     }
 
     fun getLat(): Double? {
-        return locationCoordinate?.latitude
+        return location?.latLong?.latitude
     }
 
     fun getLong(): Double? {
-        return locationCoordinate?.longitude
+        return location?.latLong?.longitude
+    }
+
+    fun getAddress(): String? {
+        return location?.address
     }
 }
