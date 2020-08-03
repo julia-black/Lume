@@ -30,8 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:textColor="@color/colorGray"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:textColor="@color/colorGray" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -44,10 +44,10 @@
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:hint="@string/enter_code"
+        android:visibility="invisible"
         app:boxBackgroundColor="@android:color/transparent"
         app:boxCornerRadiusTopEnd="4dp"
         app:boxCornerRadiusTopStart="4dp"
-        android:visibility="invisible"
         app:boxStrokeColor="@color/colorGray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,18 +60,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:maxLength="4"
             android:inputType="number"
-            android:textColor="@color/colorGray"
-            android:maxLines="1" />
+            android:maxLength="6"
+            android:maxLines="1"
+            android:textColor="@color/colorGray" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/text_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
         android:layout_marginTop="16dp"
+        android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button_send_code"
