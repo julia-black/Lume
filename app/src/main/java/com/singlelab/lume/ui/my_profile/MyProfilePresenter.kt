@@ -23,8 +23,8 @@ class MyProfilePresenter @Inject constructor(
 
     var selectedTab: PagerTab = PagerTab.FRIENDS
 
-    fun loadProfile() {
-        viewState.showLoading(isShow = true, withoutBackground = true)
+    fun loadProfile(isFirstAttach: Boolean = false) {
+        viewState.showLoading(isShow = true, withoutBackground = !isFirstAttach)
         invokeSuspend {
             try {
                 if (!AuthData.isAnon) {
@@ -33,7 +33,7 @@ class MyProfilePresenter @Inject constructor(
                         preferences?.setCity(it.cityId, it.cityName)
                     }
                     runOnMainThread {
-                        viewState.showLoading(isShow = false, withoutBackground = true)
+                        viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
                         if (profile != null) {
                             viewState.showProfile(profile!!)
                         } else {
@@ -48,7 +48,7 @@ class MyProfilePresenter @Inject constructor(
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
-                    viewState.showLoading(isShow = false, withoutBackground = true)
+                    viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
                     viewState.showError(e.message)
                 }
             }

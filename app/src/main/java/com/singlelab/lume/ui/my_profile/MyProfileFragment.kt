@@ -82,7 +82,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         if (AuthData.isAnon) {
             navigateToAuth()
         } else {
-            presenter.loadProfile()
+            presenter.loadProfile(presenter.profile == null)
         }
     }
 
