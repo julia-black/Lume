@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.profile.Profile
+import com.singlelab.lume.model.view.PagerTab
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.my_profile.interactor.MyProfileInteractor
 import com.singlelab.lume.util.toBase64
@@ -18,10 +19,12 @@ class MyProfilePresenter @Inject constructor(
     preferences: Preferences?
 ) : BasePresenter<MyProfileView>(preferences, interactor as BaseInteractor) {
 
-    private var profile: Profile? = null
+    var profile: Profile? = null
+
+    var selectedTab: PagerTab = PagerTab.FRIENDS
 
     fun loadProfile() {
-        viewState.showLoading(true)
+        viewState.showLoading(isShow = true, withoutBackground = true)
         invokeSuspend {
             try {
                 if (!AuthData.isAnon) {
@@ -30,7 +33,7 @@ class MyProfilePresenter @Inject constructor(
                         preferences?.setCity(it.cityId, it.cityName)
                     }
                     runOnMainThread {
-                        viewState.showLoading(false)
+                        viewState.showLoading(isShow = false, withoutBackground = true)
                         if (profile != null) {
                             viewState.showProfile(profile!!)
                         } else {
@@ -45,7 +48,7 @@ class MyProfilePresenter @Inject constructor(
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                     viewState.showError(e.message)
                 }
             }
@@ -59,17 +62,17 @@ class MyProfilePresenter @Inject constructor(
 
     fun updateImageProfile(image: Bitmap?) {
         image ?: return
-        viewState.showLoading(true)
+        viewState.showLoading(isShow = true, withoutBackground = true)
         invokeSuspend {
             try {
                 val uid = interactor.updateImageProfile(image.toBase64())
                 runOnMainThread {
                     viewState.loadImage(uid)
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                     viewState.showError(e.message)
                 }
             }

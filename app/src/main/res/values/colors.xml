@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#858585</color>
+    <color name="colorPrimaryBright">#2B2B2B</color>
     <color name="colorPrimaryDark">#0B0604</color>
     <color name="colorDark">#325D79</color>
     <color name="colorAccent">#F26627</color>
@@ -23,4 +24,5 @@
     <color name="colorTransparent">#00FFFFFF</color>
     <color name="colorBackground">#121212</color>
     <color name="colorTabNotSelected">#4C4C4C</color>
+    <color name="colorBackgroundLoading">#80FFFFFF</color>
 </resources>

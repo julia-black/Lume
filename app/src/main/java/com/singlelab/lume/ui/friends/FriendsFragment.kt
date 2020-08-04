@@ -54,7 +54,6 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
             }
             presenter.eventUid = FriendsFragmentArgs.fromBundle(it).eventUid
         }
-        showSearch(presenter.eventUid.isNullOrEmpty()) //если перешли из события, чтобы пригласить друзей - поиск отсутствует
         recycler_friends.apply {
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -70,6 +69,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
     }
 
     override fun showFriends(friends: MutableList<Person>?) {
+        showSearch(presenter.eventUid.isNullOrEmpty()) //если перешли из события, чтобы пригласить друзей - поиск отсутствует
         isSearchResults = false
         title_empty_search.visibility = View.GONE
         recycler_search_results.visibility = View.GONE

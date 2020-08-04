@@ -8,7 +8,8 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
-import com.singlelab.lume.base.listeners.*
+import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.base.listeners.OnPermissionListener
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
 import com.singlelab.net.model.auth.AuthData
@@ -53,8 +54,8 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun showLoading(isShow: Boolean) {
-        (activity as MainActivity?)?.showLoading(isShow)
+    override fun showLoading(isShow: Boolean, withoutBackground: Boolean) {
+        (activity as MainActivity?)?.showLoading(isShow, withoutBackground)
     }
 
     override fun toAuth() {

@@ -32,6 +32,7 @@
     <string name="tab_settings">Настройки</string>
     <string name="person_info">Личная информация</string>
     <string name="exit">Выход</string>
+    <string name="update_profile">Обновить профиль</string>
 
     <plurals name="age_plurals">
         <item quantity="one">%1$d год</item>

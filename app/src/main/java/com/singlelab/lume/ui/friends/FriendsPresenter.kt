@@ -35,17 +35,17 @@ class FriendsPresenter @Inject constructor(
 
     private fun loadFriends() {
         val uid = AuthData.uid ?: return
-        viewState.showLoading(true)
+        viewState.showLoading(isShow = true, withoutBackground = true)
         invokeSuspend {
             try {
                 friends = interactor.getFriends(uid)?.toMutableList()
                 runOnMainThread {
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                     viewState.showFriends(friends)
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                     viewState.showError(e.message)
                 }
             }
@@ -56,18 +56,18 @@ class FriendsPresenter @Inject constructor(
         if (searchStr.isEmpty()) {
             viewState.showFriends(friends)
         } else {
-            viewState.showLoading(true)
+            viewState.showLoading(isShow = true, withoutBackground = true)
             invokeSuspend {
                 try {
                     val request = SearchPersonRequest(pageNumber, pageSize, searchStr)
                     searchResults = interactor.search(request)?.toMutableList()
                     runOnMainThread {
-                        viewState.showLoading(false)
+                        viewState.showLoading(isShow = false, withoutBackground = true)
                         viewState.showSearchResult(searchResults)
                     }
                 } catch (e: ApiException) {
                     runOnMainThread {
-                        viewState.showLoading(false)
+                        viewState.showLoading(isShow = false, withoutBackground = true)
                         viewState.showError(e.message)
                     }
                 }
@@ -76,7 +76,7 @@ class FriendsPresenter @Inject constructor(
     }
 
     fun addToFriends(personUid: String) {
-        viewState.showLoading(true)
+        viewState.showLoading(isShow = true, withoutBackground = true)
         invokeSuspend {
             try {
                 interactor.addToFriends(personUid)
@@ -84,12 +84,12 @@ class FriendsPresenter @Inject constructor(
                     searchResults?.find {
                         it.personUid == personUid
                     }?.isFriend = true
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                     viewState.showSearchResult(searchResults)
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                     viewState.showError(e.message)
                 }
             }
@@ -97,7 +97,7 @@ class FriendsPresenter @Inject constructor(
     }
 
     fun invitePerson(personUid: String, eventUid: String, isSearchResult: Boolean) {
-        viewState.showLoading(true)
+        viewState.showLoading(isShow = true, withoutBackground = true)
         invokeSuspend {
             try {
                 interactor.invitePerson(personUid, eventUid)
@@ -113,11 +113,11 @@ class FriendsPresenter @Inject constructor(
                         }?.isInvited = true
                         viewState.showFriends(friends)
                     }
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                     viewState.showError(e.message)
                 }
             }

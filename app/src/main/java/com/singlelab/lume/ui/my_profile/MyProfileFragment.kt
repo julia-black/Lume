@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -50,6 +51,13 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
     private lateinit var settingsView: SettingsView
 
     private lateinit var friendsView: FriendsView
+
+    private val callbackBackPressed: OnBackPressedCallback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                onBackPressed()
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -97,61 +105,9 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
                     .start(activity)
             }
         }
-        selectTab(PagerTab.FRIENDS)
+        selectTab(presenter.selectedTab)
         setTabListeners()
         friendsView.setFriends(profile.friends)
-    }
-
-    private fun setTabListeners() {
-        context?.let {
-            text_tab_one.setOnClickListener { _ ->
-                text_tab_one.backgroundTintList =
-                    ContextCompat.getColorStateList(it, R.color.colorWhite)
-                text_tab_one.setTextColor(ContextCompat.getColor(it, R.color.colorPrimaryDark))
-
-                text_tab_two.backgroundTintList =
-                    ContextCompat.getColorStateList(it, R.color.colorPrimary)
-                text_tab_two.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
-
-                text_tab_three.backgroundTintList =
-                    ContextCompat.getColorStateList(it, R.color.colorPrimary)
-                text_tab_three.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
-
-                selectTab(PagerTab.FRIENDS)
-            }
-
-            text_tab_two.setOnClickListener { _ ->
-                text_tab_one.backgroundTintList =
-                    ContextCompat.getColorStateList(it, R.color.colorPrimary)
-                text_tab_one.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
-
-                text_tab_two.backgroundTintList =
-                    ContextCompat.getColorStateList(it, R.color.colorWhite)
-                text_tab_two.setTextColor(ContextCompat.getColor(it, R.color.colorPrimaryDark))
-
-                text_tab_three.backgroundTintList =
-                    ContextCompat.getColorStateList(it, R.color.colorPrimary)
-                text_tab_three.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
-
-                selectTab(PagerTab.BADGES)
-            }
-
-            text_tab_three.setOnClickListener { _ ->
-                text_tab_one.backgroundTintList =
-                    ContextCompat.getColorStateList(it, R.color.colorPrimary)
-                text_tab_one.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
-
-                text_tab_two.backgroundTintList =
-                    ContextCompat.getColorStateList(it, R.color.colorPrimary)
-                text_tab_two.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
-
-                text_tab_three.backgroundTintList =
-                    ContextCompat.getColorStateList(it, R.color.colorWhite)
-                text_tab_three.setTextColor(ContextCompat.getColor(it, R.color.colorPrimaryDark))
-
-                selectTab(PagerTab.SETTINGS)
-            }
-        }
     }
 
     override fun navigateToAuth() {
@@ -184,6 +140,12 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         findNavController().navigate(MyProfileFragmentDirections.actionMyProfileToPerson(personUid))
     }
 
+    override fun onPersonInfoClick() {
+        presenter.profile?.let {
+            findNavController().navigate(MyProfileFragmentDirections.actionMyProfileToEditProfile(it))
+        }
+    }
+
     override fun onLogoutClick() {
         presenter.logout()
     }
@@ -199,6 +161,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
     }
 
     private fun selectTab(tab: PagerTab) {
+        presenter.selectedTab = tab
         when (tab) {
             PagerTab.FRIENDS -> {
                 showFriends()
@@ -212,7 +175,33 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         }
     }
 
+    private fun setTabListeners() {
+        text_tab_one.setOnClickListener {
+            selectTab(PagerTab.FRIENDS)
+        }
+        text_tab_two.setOnClickListener {
+            selectTab(PagerTab.BADGES)
+        }
+        text_tab_three.setOnClickListener {
+            selectTab(PagerTab.SETTINGS)
+        }
+    }
+
     private fun showFriends() {
+        context?.let {
+            text_tab_one.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorWhite)
+            text_tab_one.setTextColor(ContextCompat.getColor(it, R.color.colorPrimaryDark))
+
+            text_tab_two.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorPrimary)
+            text_tab_two.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+
+            text_tab_three.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorPrimary)
+            text_tab_three.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+        }
+
         card_content.removeAllViews()
         card_content.addView(
             friendsView,
@@ -225,10 +214,38 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
     }
 
     private fun showBadges() {
+        context?.let {
+            text_tab_one.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorPrimary)
+            text_tab_one.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+
+            text_tab_two.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorWhite)
+            text_tab_two.setTextColor(ContextCompat.getColor(it, R.color.colorPrimaryDark))
+
+            text_tab_three.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorPrimary)
+            text_tab_three.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+        }
+
         card_content.removeAllViews()
     }
 
     private fun showSettings() {
+        context?.let {
+            text_tab_one.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorPrimary)
+            text_tab_one.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+
+            text_tab_two.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorPrimary)
+            text_tab_two.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+
+            text_tab_three.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorWhite)
+            text_tab_three.setTextColor(ContextCompat.getColor(it, R.color.colorPrimaryDark))
+        }
+
         card_content.removeAllViews()
         card_content.addView(
             settingsView,
@@ -238,5 +255,10 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
         )
+    }
+
+    fun onBackPressed() {
+        frame_container.visibility = View.GONE
+        callbackBackPressed.remove()
     }
 }

@@ -1,8 +1,8 @@
 package com.singlelab.net.repositories.person
 
 import com.singlelab.net.model.ImageUidResponse
-import com.singlelab.net.model.MessageResponse
 import com.singlelab.net.model.person.ProfileResponse
+import com.singlelab.net.model.person.UpdateProfileRequest
 
 interface PersonRepository {
 
@@ -15,4 +15,6 @@ interface PersonRepository {
     suspend fun addToFriends(personUid: String)
 
     suspend fun removeFromFriends(personUid: String)
+
+    suspend fun updateProfile(updateProfileRequest: UpdateProfileRequest)
 }

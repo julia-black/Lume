@@ -5,15 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_friends"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
-        android:orientation="horizontal"
-        tools:itemCount="1"
-        tools:listitem="@layout/item_image_person" />
-
     <TextView
         android:id="@+id/search_friends"
         android:layout_width="wrap_content"
@@ -23,5 +14,13 @@
         android:drawableEnd="@drawable/ic_search"
         android:drawablePadding="@dimen/margin_very_small"
         android:text="@string/search_friends" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_friends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:itemCount="1"
+        tools:listitem="@layout/item_image_person" />
 
 </LinearLayout>

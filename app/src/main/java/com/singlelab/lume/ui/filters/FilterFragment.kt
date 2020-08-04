@@ -275,12 +275,4 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
         )
         parentFragmentManager.popBackStack()
     }
-
-//    private fun applyFilter(filterEvent: FilterEvent) {
-//        parentFragmentManager.setFragmentResult(
-//            REQUEST_FILTER,
-//            bundleOf(RESULT_FILTER to filterEvent)
-//        )
-//        parentFragmentManager.popBackStack()
-//    }
 }

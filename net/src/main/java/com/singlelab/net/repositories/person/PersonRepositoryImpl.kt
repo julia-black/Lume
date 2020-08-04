@@ -1,10 +1,10 @@
 package com.singlelab.net.repositories.person
 
 import com.singlelab.net.ApiUnit
-import com.singlelab.net.model.person.ContentRequest
 import com.singlelab.net.model.ImageUidResponse
-import com.singlelab.net.model.MessageResponse
+import com.singlelab.net.model.person.ContentRequest
 import com.singlelab.net.model.person.ProfileResponse
+import com.singlelab.net.model.person.UpdateProfileRequest
 import com.singlelab.net.repositories.BaseRepository
 
 class PersonRepositoryImpl(private val apiUnit: ApiUnit) : PersonRepository,
@@ -29,11 +29,13 @@ class PersonRepositoryImpl(private val apiUnit: ApiUnit) : PersonRepository,
     override suspend fun updateImageProfile(imageStr: String): ImageUidResponse? {
         return safeApiCall(
             apiUnit = apiUnit,
-            call = { apiUnit.personApi.updateImageProfileAsync(
-                ContentRequest(
-                    imageStr
-                )
-            ).await() },
+            call = {
+                apiUnit.personApi.updateImageProfileAsync(
+                    ContentRequest(
+                        imageStr
+                    )
+                ).await()
+            },
             errorMessage = "Не удалось получить профиль"
         )
     }
@@ -51,6 +53,14 @@ class PersonRepositoryImpl(private val apiUnit: ApiUnit) : PersonRepository,
             apiUnit = apiUnit,
             call = { apiUnit.personApi.removeFromFriendsAsync(personUid).await() },
             errorMessage = "Не удалось удалить из друзей"
+        )
+    }
+
+    override suspend fun updateProfile(updateProfileRequest: UpdateProfileRequest) {
+        safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.personApi.updateProfileAsync(updateProfileRequest).await() },
+            errorMessage = "Не удалось обновить профиль"
         )
     }
 }

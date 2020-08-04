@@ -14,7 +14,8 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
-import com.singlelab.lume.base.listeners.*
+import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.base.listeners.OnPermissionListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -33,8 +34,12 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
-    fun showLoading(isShow: Boolean) {
-        loading.visibility = if (isShow) View.VISIBLE else View.GONE
+    fun showLoading(isShow: Boolean, withoutBackground: Boolean = false) {
+        if (withoutBackground) {
+            loading_without_back.visibility = if (isShow) View.VISIBLE else View.GONE
+        } else {
+            loading.visibility = if (isShow) View.VISIBLE else View.GONE
+        }
     }
 
     fun setActivityListener(listener: OnActivityResultListener) {
@@ -72,5 +77,9 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    fun showBottomNavigation(isShow: Boolean) {
+        nav_view.visibility = if (isShow) View.VISIBLE else View.GONE
     }
 }

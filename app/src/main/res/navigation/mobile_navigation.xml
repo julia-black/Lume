@@ -87,6 +87,9 @@
         <action
             android:id="@+id/action_my_profile_to_person"
             app:destination="@id/person" />
+        <action
+            android:id="@+id/action_my_profile_to_edit_profile"
+            app:destination="@id/edit_profile" />
     </fragment>
 
     <fragment
@@ -251,5 +254,18 @@
         <argument
             android:name="locationName"
             app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/edit_profile"
+        android:name="com.singlelab.lume.ui.edit_profile.EditProfileFragment"
+        android:label="EditProfileFragment"
+        tools:layout="@layout/fragment_edit_profile">
+        <argument
+            android:name="profile"
+            app:argType="com.singlelab.lume.model.profile.Profile" />
+        <action
+            android:id="@+id/action_edit_profile_to_cities"
+            app:destination="@id/cities" />
     </fragment>
 </navigation>

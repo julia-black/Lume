@@ -1,7 +1,10 @@
 package com.singlelab.lume.model.profile
 
+import android.os.Parcelable
 import com.singlelab.net.model.person.ProfileResponse
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 class Profile(
     val personUid: String,
     val name: String,
@@ -12,7 +15,7 @@ class Profile(
     val imageContentUid: String? = null,
     val isFriend: Boolean = false,
     val friends: List<Person> = arrayListOf()
-) {
+) : Parcelable {
     companion object {
         fun fromResponse(profileResponse: ProfileResponse?): Profile? {
             return if (profileResponse != null) {

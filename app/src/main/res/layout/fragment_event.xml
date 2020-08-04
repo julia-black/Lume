@@ -70,6 +70,7 @@
             android:drawablePadding="@dimen/margin_small"
             android:text="@string/online"
             android:textSize="16sp"
+            android:visibility="invisible"
             app:layout_constraintTop_toBottomOf="@id/title" />
 
         <TextView
@@ -119,11 +120,13 @@
             android:textAllCaps="false"
             android:textColor="@color/colorAccent"
             android:textSize="16sp"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/button_invite"
             app:rippleColor="@color/colorAccentLight"
             app:strokeColor="@color/colorAccent"
-            app:strokeWidth="1dp" />
+            app:strokeWidth="1dp"
+            tools:visibility="visible" />
 
         <Button
             android:id="@+id/button_invite"

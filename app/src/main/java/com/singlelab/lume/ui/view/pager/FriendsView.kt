@@ -39,9 +39,9 @@ class FriendsView @JvmOverloads constructor(
     fun setFriends(friends: List<Person>) {
         this.friends = friends
         if (friends.isEmpty()) {
-            search_friends.visibility = View.VISIBLE
+            recycler_friends.visibility = View.GONE
         } else {
-            search_friends.visibility = View.GONE
+            recycler_friends.visibility = View.VISIBLE
         }
         search_friends.setOnClickListener {
             clickListener?.onSearchFriendsClick()
