@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -62,6 +63,8 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
                     age.text.toString().toInt(),
                     description.text.toString()
                 )
+            } else {
+                Toast.makeText(context, getString(R.string.enter_fields), Toast.LENGTH_LONG).show()
             }
         }
         parentFragmentManager.setFragmentResultListener(
@@ -77,7 +80,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
     }
 
     private fun validation(): Boolean {
-        return true
+        return !(name.text.isNullOrEmpty() || description.text.isNullOrEmpty() || age.text.isNullOrEmpty())
     }
 
     private fun onFragmentResult(requestKey: String, result: Bundle) {

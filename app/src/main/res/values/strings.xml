@@ -26,6 +26,21 @@
     <string name="to_registration">Зарегистрироваться</string>
     <string name="error_pick_image">Не удалось выбрать изображение</string>
 
+    <!-- My Profile -->
+    <string name="tab_frineds">Друзья</string>
+    <string name="tab_bages">Бейджи</string>
+    <string name="tab_settings">Настройки</string>
+    <string name="person_info">Личная информация</string>
+    <string name="exit">Выход</string>
+
+    <plurals name="age_plurals">
+        <item quantity="one">%1$d год</item>
+        <item quantity="two">%1$d года</item>
+        <item quantity="few">%1$d года</item>
+        <item quantity="many">%1$d лет</item>
+        <item quantity="other">%1$d лет</item>
+    </plurals>
+
     <!-- Event -->
     <string name="create_event">Создать событие</string>
     <string name="type_event">Тип события</string>
@@ -103,10 +118,5 @@
     <string name="any_age">Любой возраст</string>
     <string name="age_exact">Возраст: %1$d</string>
     <string name="empty_persons">К сожалению, люди по выбранным фильтрам не найдены. Попробуйте расширить фильтры</string>
-    <string name="tab_frineds">Друзья</string>
-    <string name="tab_bages">Бейджи</string>
-    <string name="tab_settings">Настройки</string>
-    <string name="person_info">Личная информация</string>
-    <string name="exit">Выход</string>
 
 </resources>

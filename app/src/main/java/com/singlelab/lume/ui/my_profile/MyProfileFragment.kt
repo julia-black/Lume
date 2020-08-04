@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -15,7 +16,10 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.model.profile.Profile
+import com.singlelab.lume.model.view.PagerTab
 import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
+import com.singlelab.lume.ui.view.pager.FriendsView
+import com.singlelab.lume.ui.view.pager.SettingsView
 import com.singlelab.lume.ui.view.pager.listener.OnFriendsClickListener
 import com.singlelab.lume.ui.view.pager.listener.OnSettingsClickListener
 import com.singlelab.lume.util.generateImageLinkForPerson
@@ -32,9 +36,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListener,
-    OnPersonImageClickListener,
-    OnSettingsClickListener,
-    OnFriendsClickListener {
+    OnPersonImageClickListener, OnSettingsClickListener, OnFriendsClickListener {
 
     @Inject
     lateinit var daggerPresenter: MyProfilePresenter
@@ -44,6 +46,10 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
 
     @ProvidePresenter
     fun provideMyProfilePresenter() = daggerPresenter
+
+    private lateinit var settingsView: SettingsView
+
+    private lateinit var friendsView: FriendsView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,6 +64,13 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         view.findViewById<ImageView>(R.id.image)
             .setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_my_profile_to_auth))
 
+        context?.let {
+            settingsView = SettingsView(it)
+            settingsView.setSettingsListener(this)
+            friendsView = FriendsView(it)
+            friendsView.setFriendsListener(this, this)
+        }
+
         if (AuthData.isAnon) {
             navigateToAuth()
         } else {
@@ -66,7 +79,8 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
     }
 
     override fun showProfile(profile: Profile) {
-        name_age.text = "${profile.name}, ${profile.age}"
+        name.text = profile.name
+        age.text = resources.getQuantityString(R.plurals.age_plurals, profile.age, profile.age)
         description.text = profile.description
         city.text = profile.cityName
         if (!profile.imageContentUid.isNullOrEmpty()) {
@@ -83,9 +97,61 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
                     .start(activity)
             }
         }
-        pager.setSettingsListener(this)
-        pager.setFriends(profile.friends)
-        pager.setFriendsListener(this, this)
+        selectTab(PagerTab.FRIENDS)
+        setTabListeners()
+        friendsView.setFriends(profile.friends)
+    }
+
+    private fun setTabListeners() {
+        context?.let {
+            text_tab_one.setOnClickListener { _ ->
+                text_tab_one.backgroundTintList =
+                    ContextCompat.getColorStateList(it, R.color.colorWhite)
+                text_tab_one.setTextColor(ContextCompat.getColor(it, R.color.colorPrimaryDark))
+
+                text_tab_two.backgroundTintList =
+                    ContextCompat.getColorStateList(it, R.color.colorPrimary)
+                text_tab_two.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+
+                text_tab_three.backgroundTintList =
+                    ContextCompat.getColorStateList(it, R.color.colorPrimary)
+                text_tab_three.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+
+                selectTab(PagerTab.FRIENDS)
+            }
+
+            text_tab_two.setOnClickListener { _ ->
+                text_tab_one.backgroundTintList =
+                    ContextCompat.getColorStateList(it, R.color.colorPrimary)
+                text_tab_one.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+
+                text_tab_two.backgroundTintList =
+                    ContextCompat.getColorStateList(it, R.color.colorWhite)
+                text_tab_two.setTextColor(ContextCompat.getColor(it, R.color.colorPrimaryDark))
+
+                text_tab_three.backgroundTintList =
+                    ContextCompat.getColorStateList(it, R.color.colorPrimary)
+                text_tab_three.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+
+                selectTab(PagerTab.BADGES)
+            }
+
+            text_tab_three.setOnClickListener { _ ->
+                text_tab_one.backgroundTintList =
+                    ContextCompat.getColorStateList(it, R.color.colorPrimary)
+                text_tab_one.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+
+                text_tab_two.backgroundTintList =
+                    ContextCompat.getColorStateList(it, R.color.colorPrimary)
+                text_tab_two.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+
+                text_tab_three.backgroundTintList =
+                    ContextCompat.getColorStateList(it, R.color.colorWhite)
+                text_tab_three.setTextColor(ContextCompat.getColor(it, R.color.colorPrimaryDark))
+
+                selectTab(PagerTab.SETTINGS)
+            }
+        }
     }
 
     override fun navigateToAuth() {
@@ -122,13 +188,55 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         presenter.logout()
     }
 
+    override fun onSearchFriendsClick() {
+        toFriends(true)
+    }
+
     private fun toFriends(isSearch: Boolean = false) {
         val action = MyProfileFragmentDirections.actionMyProfileToFriends()
         action.isSearch = isSearch
         findNavController().navigate(action)
     }
 
-    override fun onSearchFriendsClick() {
-        toFriends(true)
+    private fun selectTab(tab: PagerTab) {
+        when (tab) {
+            PagerTab.FRIENDS -> {
+                showFriends()
+            }
+            PagerTab.BADGES -> {
+                showBadges()
+            }
+            PagerTab.SETTINGS -> {
+                showSettings()
+            }
+        }
+    }
+
+    private fun showFriends() {
+        card_content.removeAllViews()
+        card_content.addView(
+            friendsView,
+            0,
+            ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        )
+    }
+
+    private fun showBadges() {
+        card_content.removeAllViews()
+    }
+
+    private fun showSettings() {
+        card_content.removeAllViews()
+        card_content.addView(
+            settingsView,
+            0,
+            ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        )
     }
 }

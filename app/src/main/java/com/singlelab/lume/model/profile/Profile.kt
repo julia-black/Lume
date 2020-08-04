@@ -8,7 +8,7 @@ class Profile(
     val description: String? = null,
     val cityId: Int,
     val cityName: String,
-    val age: Int? = null,
+    val age: Int,
     val imageContentUid: String? = null,
     val isFriend: Boolean = false,
     val friends: List<Person> = arrayListOf()
