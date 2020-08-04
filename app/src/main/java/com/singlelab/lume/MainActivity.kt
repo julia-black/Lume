@@ -40,7 +40,9 @@ class MainActivity : AppCompatActivity() {
     fun showLoading(isShow: Boolean, withoutBackground: Boolean = false) {
         if (withoutBackground) {
             loading_without_back.visibility = if (isShow) View.VISIBLE else View.GONE
+            loading.visibility = View.GONE
         } else {
+            loading_without_back.visibility = View.GONE
             loading.visibility = if (isShow) View.VISIBLE else View.GONE
         }
     }
