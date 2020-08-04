@@ -18,13 +18,15 @@ class FriendsPresenter @Inject constructor(
     preferences: Preferences?
 ) : BasePresenter<FriendsView>(preferences, interactor as BaseInteractor) {
 
+    var pageNumber = 1
+
     var eventUid: String? = null
+
+    var isLoading = false
 
     private var friends: MutableList<Person>? = null
 
     private var searchResults: MutableList<Person>? = null
-
-    private var pageNumber = 1
 
     private var pageSize = Const.PAGE_SIZE
 
@@ -52,20 +54,26 @@ class FriendsPresenter @Inject constructor(
         }
     }
 
-    fun search(searchStr: String) {
+    fun search(searchStr: String, page: Int = 1) {
+        pageNumber = page
         if (searchStr.isEmpty()) {
             viewState.showFriends(friends)
         } else {
+            isLoading = true
             viewState.showLoading(isShow = true, withoutBackground = true)
             invokeSuspend {
                 try {
                     val request = SearchPersonRequest(pageNumber, pageSize, searchStr)
                     searchResults = interactor.search(request)?.toMutableList()
+                    isLoading = false
                     runOnMainThread {
                         viewState.showLoading(isShow = false, withoutBackground = true)
-                        viewState.showSearchResult(searchResults)
+                        searchResults?.let {
+                            viewState.showSearchResult(it, pageNumber)
+                        }
                     }
                 } catch (e: ApiException) {
+                    isLoading = false
                     runOnMainThread {
                         viewState.showLoading(isShow = false, withoutBackground = true)
                         viewState.showError(e.message)
@@ -85,7 +93,9 @@ class FriendsPresenter @Inject constructor(
                         it.personUid == personUid
                     }?.isFriend = true
                     viewState.showLoading(isShow = false, withoutBackground = true)
-                    viewState.showSearchResult(searchResults)
+                    searchResults?.let {
+                        viewState.showSearchResult(it, pageNumber)
+                    }
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
@@ -106,7 +116,9 @@ class FriendsPresenter @Inject constructor(
                         searchResults?.find {
                             it.personUid == personUid
                         }?.isInvited = true
-                        viewState.showSearchResult(searchResults)
+                        searchResults?.let {
+                            viewState.showSearchResult(it, pageNumber)
+                        }
                     } else {
                         friends?.find {
                             it.personUid == personUid

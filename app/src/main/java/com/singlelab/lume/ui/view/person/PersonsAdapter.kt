@@ -27,6 +27,11 @@ class PersonsAdapter(
 
     override fun getItemCount(): Int = list.size
 
+    fun addData(list: List<Person>) {
+        this.list.addAll(list)
+        notifyDataSetChanged()
+    }
+
     fun setData(list: List<Person>) {
         this.list.clear()
         this.list.addAll(list)

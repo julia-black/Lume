@@ -15,6 +15,7 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.base.listeners.OnBackPressListener
 import com.singlelab.lume.base.listeners.OnPermissionListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     private var activityResultListener: OnActivityResultListener? = null
 
     private var permissionListener: OnPermissionListener? = null
+
+    private var backPressListener: OnBackPressListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +51,10 @@ class MainActivity : AppCompatActivity() {
 
     fun setPermissionListener(listener: OnPermissionListener) {
         this.permissionListener = listener
+    }
+
+    fun setBackPressListener(listener: OnBackPressListener?) {
+        this.backPressListener = listener
     }
 
     fun checkLocationPermission() {
@@ -81,5 +88,13 @@ class MainActivity : AppCompatActivity() {
 
     fun showBottomNavigation(isShow: Boolean) {
         nav_view.visibility = if (isShow) View.VISIBLE else View.GONE
+    }
+
+    override fun onBackPressed() {
+        if (backPressListener != null) {
+            backPressListener!!.onBackPressed()
+        } else {
+            super.onBackPressed()
+        }
     }
 }

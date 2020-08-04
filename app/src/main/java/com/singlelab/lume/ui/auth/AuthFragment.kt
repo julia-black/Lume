@@ -8,8 +8,10 @@ import android.view.inputmethod.EditorInfo
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
+import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
+import com.singlelab.lume.base.listeners.OnBackPressListener
 import com.singlelab.lume.util.maskPhone
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_auth.*
@@ -18,7 +20,7 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AuthFragment : BaseFragment(), AuthView {
+class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
 
     @Inject
     lateinit var daggerPresenter: AuthPresenter
@@ -85,6 +87,7 @@ class AuthFragment : BaseFragment(), AuthView {
     }
 
     override fun onCodeSend(phone: String) {
+        (activity as MainActivity).setBackPressListener(this)
         text_info.visibility = View.VISIBLE
         text_info.text = "СМС-код отправлен на номер ${phone.maskPhone()}"
         layout_code.visibility = View.VISIBLE
@@ -102,5 +105,15 @@ class AuthFragment : BaseFragment(), AuthView {
     override fun toRegistration() {
         Navigation.createNavigateOnClickListener(R.id.action_auth_to_registration)
             .onClick(view)
+    }
+
+    override fun onBackPressed() {
+        text_info.visibility = View.GONE
+        layout_code.visibility = View.INVISIBLE
+        button_auth.visibility = View.INVISIBLE
+
+        layout_phone.visibility = View.VISIBLE
+        button_send_code.visibility = View.VISIBLE
+        (activity as MainActivity).setBackPressListener(null)
     }
 }

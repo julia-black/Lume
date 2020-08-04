@@ -8,8 +8,8 @@
         android:id="@+id/person_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_large"
-        android:layout_marginVertical="@dimen/margin_medium"
+        android:paddingHorizontal="@dimen/margin_large"
+        android:paddingVertical="@dimen/margin_medium"
         android:text="@string/person_info"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/text_size_small" />
@@ -25,8 +25,8 @@
         android:id="@+id/exit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_large"
-        android:layout_marginVertical="@dimen/margin_medium"
+        android:paddingHorizontal="@dimen/margin_large"
+        android:paddingVertical="@dimen/margin_medium"
         android:text="@string/exit"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/text_size_small" />

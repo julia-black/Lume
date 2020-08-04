@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
@@ -36,6 +37,8 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
     private var searchDebounce: TextInputDebounce? = null
 
     private var isSearchResults = false
+
+    private var searchAdapter: PersonsAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -88,24 +91,44 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
         }
     }
 
-    override fun showSearchResult(searchResults: MutableList<Person>?) {
+    override fun showSearchResult(searchResults: MutableList<Person>, page: Int) {
         isSearchResults = true
         recycler_friends.visibility = View.GONE
         title_empty_friends.visibility = View.GONE
-        if (searchResults.isNullOrEmpty()) {
+        if (searchResults.isNullOrEmpty() && page == 1) {
             title_empty_search.visibility = View.VISIBLE
             recycler_search_results.visibility = View.GONE
-        } else {
+        } else if (searchResults.isNotEmpty()) {
             title_empty_search.visibility = View.GONE
             recycler_search_results.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 visibility = View.VISIBLE
-                adapter = PersonsAdapter(
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        if (layoutManager != null) {
+                            val layoutManager = layoutManager as LinearLayoutManager
+                            if (dy > 0 && !presenter.isLoading &&
+                                (layoutManager.childCount + layoutManager.findFirstVisibleItemPosition()) >= layoutManager.itemCount
+                            ) {
+                                presenter.search(
+                                    edit_text_search.text.toString(),
+                                    ++presenter.pageNumber
+                                )
+                            }
+                        }
+                    }
+                })
+            }
+            if (searchAdapter == null || page == 1) {
+                searchAdapter = PersonsAdapter(
                     searchResults,
                     presenter.eventUid,
                     true,
                     this@FriendsFragment
                 )
+                recycler_search_results.adapter = searchAdapter
+            } else {
+                (recycler_search_results.adapter as PersonsAdapter).addData(searchResults)
             }
         }
     }
