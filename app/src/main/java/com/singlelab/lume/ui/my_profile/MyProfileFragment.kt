@@ -29,7 +29,6 @@ import com.singlelab.lume.util.generateImageLinkForPerson
 import com.singlelab.lume.util.getBitmap
 import com.singlelab.net.model.auth.AuthData
 import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_my_profile.*
 import moxy.presenter.InjectPresenter
@@ -90,6 +89,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
 
     override fun showProfile(profile: Profile) {
         name.text = profile.name
+        login.text = profile.login
         age.text = resources.getQuantityString(R.plurals.age_plurals, profile.age, profile.age)
         description.text = profile.description
         city.text = profile.cityName
@@ -100,7 +100,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         }
         image.setOnClickListener {
             if (profile.imageContentUid == null) {
-                changeImage()
+                onClickChangeImage()
             } else {
                 onClickImage(profile.imageContentUid)
             }
@@ -119,7 +119,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
             ), DialogInterface.OnClickListener { _, which ->
                 when (which) {
                     0 -> showFullScreenImage(imageContentUid)
-                    1 -> changeImage()
+                    1 -> onClickChangeImage()
                 }
             }
         )
@@ -129,16 +129,6 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         context?.let {
             val links = listOf(imageContentUid.generateImageLinkForPerson())
             SliderImage.openfullScreen(it, links, 0)
-        }
-    }
-
-    private fun changeImage() {
-        activity?.let { activity ->
-            CropImage.activity()
-                .setFixAspectRatio(true)
-                .setRequestedSize(500, 500, CropImageView.RequestSizeOptions.RESIZE_FIT)
-                .setCropShape(CropImageView.CropShape.RECTANGLE)
-                .start(activity)
         }
     }
 

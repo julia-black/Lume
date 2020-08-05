@@ -14,7 +14,10 @@ import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.base.listeners.OnPermissionListener
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
+import com.singlelab.lume.model.Const
 import com.singlelab.net.model.auth.AuthData
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -97,6 +100,20 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
             builder.setItems(list, listener)
             val dialog = builder.create()
             dialog.show()
+        }
+    }
+
+    fun onClickChangeImage() {
+        activity?.let { activity ->
+            CropImage.activity()
+                .setFixAspectRatio(true)
+                .setRequestedSize(
+                    Const.IMAGE_RESOLUTION_WIDTH,
+                    Const.IMAGE_RESOLUTION_HEIGHT,
+                    CropImageView.RequestSizeOptions.RESIZE_FIT
+                )
+                .setCropShape(CropImageView.CropShape.RECTANGLE)
+                .start(activity)
         }
     }
 }

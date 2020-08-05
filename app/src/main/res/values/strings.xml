@@ -19,8 +19,10 @@
     <string name="auth">Авторизоваться</string>
     <string name="registration">Регистрация</string>
     <string name="welcome">Добро пожаловать в Lume! \nПожалуйста, заполните небольшую анкету:</string>
+    <string name="login">Логин</string>
     <string name="name">Имя</string>
     <string name="age">Возраст</string>
+    <string name="add_photo">Будет замечательно, если на фото будете именно вы. Все мы любим милых котиков, но не каждый захочет идти куда-то только в их компании</string>
     <string name="about_yourself">Пару слов о себе</string>
     <string name="description">Расскажи подробнее о событии</string>
     <string name="to_registration">Зарегистрироваться</string>
@@ -33,6 +35,8 @@
     <string name="person_info">Личная информация</string>
     <string name="exit">Выход</string>
     <string name="update_profile">Обновить профиль</string>
+    <string name="show_image">Открыть изображение</string>
+    <string name="change_image">Выбрать изображение</string>
 
     <plurals name="age_plurals">
         <item quantity="one">%1$d год</item>
@@ -97,9 +101,6 @@
     <string name="in_friends">В друзьях</string>
     <string name="remove_from_friends">Удалить из друзей</string>
 
-    <!-- Person -->
-    <string name="person_age">%1$d лет</string>
-
     <!-- Chats -->
     <string name="chats_title">Чаты</string>
 
@@ -122,7 +123,4 @@
     <string name="any_age">Любой возраст</string>
     <string name="age_exact">Возраст: %1$d</string>
     <string name="empty_persons">К сожалению, люди по выбранным фильтрам не найдены. Попробуйте расширить фильтры</string>
-    <string name="show_image">Открыть изображение</string>
-    <string name="change_image">Выбрать изображение</string>
-
 </resources>

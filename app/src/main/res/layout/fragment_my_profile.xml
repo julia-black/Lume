@@ -52,13 +52,13 @@
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/text_size_medium"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/age"
+        app:layout_constraintBottom_toTopOf="@id/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/card_image"
         tools:text="Иван Иванович Ивнавнов" />
 
     <TextView
-        android:id="@+id/age"
+        android:id="@+id/login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_medium"
@@ -68,7 +68,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/name"
         app:layout_constraintTop_toTopOf="@id/card_image"
-        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintVertical_bias="0.4"
+        tools:text="\@login" />
+
+    <TextView
+        android:id="@+id/age"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_standart"
+        app:layout_constraintStart_toStartOf="@id/name"
+        app:layout_constraintTop_toBottomOf="@id/login"
         tools:text="24 года" />
 
     <ImageView

@@ -1,5 +1,8 @@
 package com.singlelab.lume.ui.reg
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +13,11 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
+import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.ui.cities.CitiesFragment
+import com.singlelab.lume.util.getBitmap
+import com.theartofdev.edmodo.cropper.CropImage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_registration.*
 import moxy.presenter.InjectPresenter
@@ -19,7 +25,7 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RegistrationFragment : BaseFragment(), RegistrationView {
+class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultListener {
 
     @Inject
     lateinit var daggerPresenter: RegistrationPresenter
@@ -52,13 +58,34 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
         text_city.text = cityName
     }
 
+    override fun showImage(bitmap: Bitmap?) {
+        image.setImageBitmap(bitmap)
+    }
+
+    override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data)
+            if (resultCode == Activity.RESULT_OK) {
+                val bitmap = result.uri.getBitmap(activity?.contentResolver)
+                presenter.addImage(bitmap)
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(context, getString(R.string.error_pick_image), Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
     private fun setListeners() {
+        image.setOnClickListener {
+            onClickChangeImage()
+        }
         text_city.setOnClickListener {
             toCityChoose()
         }
         button_registration.setOnClickListener {
             if (validation()) {
                 presenter.registration(
+                    login.text.toString(),
                     name.text.toString(),
                     age.text.toString().toInt(),
                     description.text.toString()
@@ -80,7 +107,12 @@ class RegistrationFragment : BaseFragment(), RegistrationView {
     }
 
     private fun validation(): Boolean {
-        return !(name.text.isNullOrEmpty() || description.text.isNullOrEmpty() || age.text.isNullOrEmpty())
+        return presenter.validation(
+            login.text.toString(),
+            name.text.toString(),
+            description.text.toString(),
+            age.text.toString()
+        )
     }
 
     private fun onFragmentResult(requestKey: String, result: Bundle) {

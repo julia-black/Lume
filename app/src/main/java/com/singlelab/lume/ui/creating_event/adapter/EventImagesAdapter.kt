@@ -41,11 +41,6 @@ class EventImagesAdapter :
         notifyDataSetChanged()
     }
 
-    fun deleteImage(position: Int) {
-        images.removeAt(position)
-        notifyDataSetChanged()
-    }
-
     fun setData(images: MutableList<Bitmap>) {
         this.images.clear()
         this.images.addAll(images)

@@ -12,7 +12,7 @@
         android:paddingVertical="@dimen/margin_medium"
         android:text="@string/person_info"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/text_size_small" />
+        android:textSize="@dimen/text_size_standart" />
 
     <View
         android:layout_width="match_parent"
@@ -29,5 +29,5 @@
         android:paddingVertical="@dimen/margin_medium"
         android:text="@string/exit"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/text_size_small" />
+        android:textSize="@dimen/text_size_standart" />
 </LinearLayout>

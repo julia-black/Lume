@@ -49,6 +49,7 @@ class EditProfileFragment : BaseFragment(), EditProfileView {
     }
 
     override fun showProfile(profile: NewProfile) {
+        login.setText(profile.login)
         name.setText(profile.name)
         age.setText(profile.age.toString())
         text_city.text = profile.city?.cityName
@@ -60,6 +61,19 @@ class EditProfileFragment : BaseFragment(), EditProfileView {
     }
 
     private fun setListeners() {
+        login.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                presenter.setLogin(s.toString())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+        })
+
         name.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 presenter.setName(s.toString())

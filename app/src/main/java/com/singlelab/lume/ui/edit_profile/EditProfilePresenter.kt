@@ -32,6 +32,10 @@ class EditProfilePresenter @Inject constructor(
         }
     }
 
+    fun setLogin(login: String) {
+        newProfile.login = login
+    }
+
     fun setName(name: String) {
         newProfile.name = name
     }

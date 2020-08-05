@@ -3,8 +3,8 @@ package com.singlelab.net.repositories.person
 import com.singlelab.net.ApiUnit
 import com.singlelab.net.model.ImageUidResponse
 import com.singlelab.net.model.person.ContentRequest
+import com.singlelab.net.model.person.ProfileRequest
 import com.singlelab.net.model.person.ProfileResponse
-import com.singlelab.net.model.person.UpdateProfileRequest
 import com.singlelab.net.repositories.BaseRepository
 
 class PersonRepositoryImpl(private val apiUnit: ApiUnit) : PersonRepository,
@@ -56,10 +56,10 @@ class PersonRepositoryImpl(private val apiUnit: ApiUnit) : PersonRepository,
         )
     }
 
-    override suspend fun updateProfile(updateProfileRequest: UpdateProfileRequest) {
+    override suspend fun updateProfile(profileRequest: ProfileRequest) {
         safeApiCall(
             apiUnit = apiUnit,
-            call = { apiUnit.personApi.updateProfileAsync(updateProfileRequest).await() },
+            call = { apiUnit.personApi.updateProfileAsync(profileRequest).await() },
             errorMessage = "Не удалось обновить профиль"
         )
     }

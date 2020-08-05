@@ -16,7 +16,11 @@ class CardPersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     fun bind(person: Person) {
         itemView.name.text = person.name
         itemView.description.text = person.description
-        itemView.age.text = itemView.context.getString(R.string.person_age, person.age)
+        itemView.age.text = itemView.context.resources.getQuantityString(
+            R.plurals.age_plurals,
+            person.age,
+            person.age
+        )
         if (person.imageContentUid == null) {
             itemView.image.visibility = View.INVISIBLE
         } else {

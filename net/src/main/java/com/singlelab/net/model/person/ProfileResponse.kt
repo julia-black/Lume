@@ -2,6 +2,7 @@ package com.singlelab.net.model.person
 
 class ProfileResponse(
     val personUid: String,
+    val login: String? = null,
     val name: String,
     val description: String? = null,
     val cityId: Int,

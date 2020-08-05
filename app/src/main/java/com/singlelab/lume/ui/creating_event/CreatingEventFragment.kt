@@ -29,7 +29,6 @@ import com.singlelab.lume.util.formatToUTC
 import com.singlelab.lume.util.getBitmap
 import com.singlelab.net.model.event.EventRequest
 import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_creating_event.*
 import kotlinx.android.synthetic.main.fragment_creating_event.description
@@ -132,13 +131,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
     }
 
     override fun onClickNewImage() {
-        activity?.let { activity ->
-            CropImage.activity()
-                .setFixAspectRatio(true)
-                .setRequestedSize(500, 500, CropImageView.RequestSizeOptions.RESIZE_FIT)
-                .setCropShape(CropImageView.CropShape.RECTANGLE)
-                .start(activity)
-        }
+        onClickChangeImage()
     }
 
     override fun onClickImage(position: Int) {

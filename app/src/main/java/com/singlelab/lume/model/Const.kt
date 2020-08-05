@@ -17,4 +17,7 @@ object Const {
 
     const val MIN_AGE = 0
     const val MAX_AGE = 100
+
+    const val IMAGE_RESOLUTION_WIDTH = 500
+    const val IMAGE_RESOLUTION_HEIGHT = 500
 }

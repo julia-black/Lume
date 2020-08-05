@@ -15,20 +15,37 @@
             android:id="@+id/text_welcome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
             android:text="@string/welcome"
             android:textSize="@dimen/text_size_standart"
             app:layout_constraintStart_toStartOf="parent"
-
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:hint="@string/login"
+            app:boxBackgroundColor="@android:color/white"
+            app:layout_constraintTop_toBottomOf="@id/text_welcome">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:digits="abcdefghijklmnopqrstuvwxyz0123456789_-"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
             android:hint="@string/name"
             app:boxBackgroundColor="@android:color/white"
-            app:layout_constraintTop_toBottomOf="@id/text_welcome">
+            app:layout_constraintTop_toBottomOf="@id/layout_login">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
@@ -52,6 +69,35 @@
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            app:cardCornerRadius="2dp"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_age">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/shape_border" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/text_add_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/add_photo"
+            android:textSize="@dimen/text_size_standart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_image" />
+
         <TextView
             android:id="@+id/text_city"
             android:layout_width="match_parent"
@@ -64,7 +110,7 @@
             android:paddingBottom="@dimen/margin_medium"
             android:text="@string/city"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/layout_age" />
+            app:layout_constraintTop_toBottomOf="@id/text_add_photo" />
 
         <View
             android:layout_width="match_parent"

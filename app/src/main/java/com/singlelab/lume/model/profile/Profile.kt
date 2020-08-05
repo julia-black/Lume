@@ -7,6 +7,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 class Profile(
     val personUid: String,
+    val login: String? = null,
     val name: String,
     val description: String? = null,
     val cityId: Int,
@@ -21,6 +22,7 @@ class Profile(
             return if (profileResponse != null) {
                 Profile(
                     profileResponse.personUid,
+                    profileResponse.login,
                     profileResponse.name,
                     profileResponse.description,
                     profileResponse.cityId,
