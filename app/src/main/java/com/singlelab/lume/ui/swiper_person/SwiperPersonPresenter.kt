@@ -28,12 +28,12 @@ class SwiperPersonPresenter @Inject constructor(
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        loadRandomPerson()
+        loadRandomPerson(true)
     }
 
-    fun loadRandomPerson() {
+    fun loadRandomPerson(isFirstAttach: Boolean = false) {
         eventUid ?: return
-        viewState.showLoading(true)
+        viewState.showLoading(isShow = true, withoutBackground = !isFirstAttach)
         invokeSuspend {
             try {
                 val randomPersonRequest = RandomPersonRequest(
@@ -44,14 +44,14 @@ class SwiperPersonPresenter @Inject constructor(
                 )
                 person = interactor.getRandomPerson(randomPersonRequest)
                 runOnMainThread {
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
                     person?.let {
                         viewState.showPerson(it)
                     }
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
                     if (e.errorCode == Const.ERROR_CODE_NO_MATCHING_PERSONS) {
                         viewState.showEmptySwipes()
                     } else {
@@ -65,7 +65,7 @@ class SwiperPersonPresenter @Inject constructor(
     fun invitePerson() {
         eventUid ?: return
         person ?: return
-        viewState.showLoading(true)
+        viewState.showLoading(isShow = true, withoutBackground = true)
         invokeSuspend {
             try {
                 interactor.invitePerson(
@@ -78,11 +78,11 @@ class SwiperPersonPresenter @Inject constructor(
                 runOnMainThread {
                     viewState.toAcceptedPerson(person!!, eventUid!!)
                     person = null
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                     viewState.showError(e.message)
                 }
             }
@@ -92,18 +92,18 @@ class SwiperPersonPresenter @Inject constructor(
     fun rejectPerson() {
         eventUid ?: return
         person ?: return
-        viewState.showLoading(true)
+        viewState.showLoading(isShow = true, withoutBackground = true)
         invokeSuspend {
             try {
                 interactor.rejectPerson(eventUid!!, person!!.personUid)
                 runOnMainThread {
                     person = null
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                     loadRandomPerson()
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                     viewState.showError(e.message)
                 }
             }
