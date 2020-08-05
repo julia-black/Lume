@@ -4,94 +4,219 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/margin_medium">
+    android:background="@color/colorBackground">
+
+    <View
+        android:id="@+id/divider_one"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:minHeight="@dimen/margin_medium"
+        app:layout_constraintBottom_toTopOf="@id/card_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="0.1" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_image"
-        android:layout_width="146dp"
-        android:layout_height="146dp"
-        app:cardCornerRadius="73dp"
+        android:layout_width="132dp"
+        android:layout_height="132dp"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        app:cardCornerRadius="66dp"
         app:cardElevation="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/divider_two"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider_one">
 
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="146dp"
-            android:layout_height="146dp"
-            tools:src="@drawable/ic_profile" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_image_inside"
+            android:layout_width="116dp"
+            android:layout_height="116dp"
+            android:layout_margin="@dimen/margin_small"
+            app:cardCornerRadius="58dp"
+            app:cardElevation="0dp">
 
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="118dp"
+                android:layout_height="118dp"
+                tools:src="@drawable/ic_profile" />
+        </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/name_age"
-        android:layout_width="match_parent"
+        android:id="@+id/name"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_medium"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/text_size_large"
-        app:layout_constraintTop_toBottomOf="@id/card_image"
-        tools:text="Иван, 23" />
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_size_medium"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/card_image"
+        tools:text="Иван Иванович Ивнавнов" />
+
+    <TextView
+        android:id="@+id/login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_standart"
+        app:layout_constraintBottom_toBottomOf="@id/card_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/name"
+        app:layout_constraintTop_toTopOf="@id/card_image"
+        app:layout_constraintVertical_bias="0.35"
+        tools:text="\@login" />
+
+    <TextView
+        android:id="@+id/age"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_standart"
+        app:layout_constraintStart_toStartOf="@id/name"
+        app:layout_constraintTop_toBottomOf="@id/login"
+        tools:text="24 года" />
+
+    <ImageView
+        android:id="@+id/icon_city"
+        android:layout_width="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:src="@drawable/ic_place_profile"
+        app:layout_constraintBottom_toBottomOf="@id/city"
+        app:layout_constraintStart_toEndOf="@id/card_image"
+        app:layout_constraintTop_toTopOf="@id/city" />
 
     <TextView
         android:id="@+id/city"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_very_small"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:textColor="@color/colorGray"
         android:textSize="@dimen/text_size_standart"
-        app:layout_constraintTop_toBottomOf="@id/name_age"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/icon_city"
+        app:layout_constraintTop_toBottomOf="@id/age"
         tools:text="Москва" />
 
-    <TextView
-        android:id="@+id/count_events"
+    <View
+        android:id="@+id/divider_two"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_medium"
-        android:textSize="@dimen/text_size_standart"
-        app:layout_constraintTop_toBottomOf="@id/city"
-        tools:text="14 встреч" />
+        android:layout_height="0dp"
+        android:minHeight="@dimen/margin_medium"
+        app:layout_constraintBottom_toTopOf="@id/description"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_image"
+        app:layout_constraintVertical_weight="0.1" />
 
     <TextView
         android:id="@+id/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:background="@drawable/shape_full_card"
+        android:backgroundTint="@color/colorPrimary"
+        android:minHeight="80dp"
+        android:padding="@dimen/margin_medium"
+        android:textColor="@color/colorWhite"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/count_events"
+        app:layout_constraintBottom_toTopOf="@id/divider_three"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider_two"
         tools:text="Программист, никогда не против выпить пару кружек пива в баре" />
 
-    <TextView
-        android:id="@+id/title_friends"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_medium"
-        android:text="@string/title_my_friends"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/text_size_medium"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/description" />
-
-    <TextView
-        android:id="@+id/search_friends"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
-        android:drawableEnd="@drawable/ic_search"
-        android:drawablePadding="@dimen/margin_very_small"
-        android:text="@string/search_friends"
-        app:layout_constraintStart_toStartOf="@id/title_friends"
-        app:layout_constraintTop_toBottomOf="@id/title_friends" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_friends"
+    <View
+        android:id="@+id/divider_three"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
-        android:orientation="horizontal"
+        android:layout_height="0dp"
+        android:minHeight="@dimen/margin_medium"
+        app:layout_constraintBottom_toTopOf="@id/text_tab_one"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_friends"
-        tools:itemCount="1"
-        tools:listitem="@layout/item_image_person" />
+        app:layout_constraintTop_toBottomOf="@id/description"
+        app:layout_constraintVertical_weight="0.1" />
+
+    <TextView
+        android:id="@+id/text_tab_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:background="@drawable/shape_card"
+        android:gravity="center_horizontal"
+        android:minWidth="@dimen/width_tab"
+        android:padding="14dp"
+        android:text="@string/tab_frineds"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/card_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider_three"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/text_tab_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/shape_card"
+        android:backgroundTint="@color/colorPrimary"
+        android:gravity="center_horizontal"
+        android:minWidth="@dimen/width_tab"
+        android:padding="14dp"
+        android:paddingBottom="25dp"
+        android:text="@string/tab_bages"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@id/text_tab_three"
+        app:layout_constraintStart_toEndOf="@id/text_tab_one"
+        app:layout_constraintTop_toTopOf="@id/text_tab_one" />
+
+    <TextView
+        android:id="@+id/text_tab_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:layout_marginBottom="6dp"
+        android:background="@drawable/shape_card"
+        android:backgroundTint="@color/colorPrimary"
+        android:gravity="center_horizontal"
+        android:lines="1"
+        android:minWidth="@dimen/width_tab"
+        android:padding="14dp"
+        android:text="@string/tab_settings"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_tab_one" />
+
+    <LinearLayout
+        android:id="@+id/card_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/shape_card"
+        android:minHeight="250dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_tab_one"
+        app:layout_constraintVertical_weight="1" />
+
+    <FrameLayout
+        android:id="@+id/frame_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_large"
+        android:background="@drawable/shape_card"
+        android:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,7 @@ import retrofit2.http.Query
 
 interface AuthApi {
 
-    @POST("authorization/get-code")
+    @POST("authorization/get-sms-code")
     fun sendCodeAsync(@Query("phoneNumber") phone: String): Deferred<Response<PersonUidResponse>>
 
     @POST("authorization/set-code")

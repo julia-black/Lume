@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
+import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
+import com.singlelab.lume.base.listeners.OnBackPressListener
 import com.singlelab.lume.util.maskPhone
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_auth.*
@@ -18,7 +19,7 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AuthFragment : BaseFragment(), AuthView {
+class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
 
     @Inject
     lateinit var daggerPresenter: AuthPresenter
@@ -39,7 +40,6 @@ class AuthFragment : BaseFragment(), AuthView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = "Авторизация"
         setListeners()
         layout_phone.hint = ""
         edit_text_phone.setCustomHint("")
@@ -72,6 +72,7 @@ class AuthFragment : BaseFragment(), AuthView {
 
     private fun onClickAuth() {
         hideKeyboard()
+        (activity as MainActivity).setBackPressListener(null)
         presenter.onClickAuth(edit_text_code.text.toString())
     }
 
@@ -86,9 +87,11 @@ class AuthFragment : BaseFragment(), AuthView {
     }
 
     override fun onCodeSend(phone: String) {
+        (activity as MainActivity).setBackPressListener(this)
         text_info.visibility = View.VISIBLE
         text_info.text = "СМС-код отправлен на номер ${phone.maskPhone()}"
         layout_code.visibility = View.VISIBLE
+        edit_text_code.setText("")
         button_auth.visibility = View.VISIBLE
 
         layout_phone.visibility = View.INVISIBLE
@@ -101,7 +104,22 @@ class AuthFragment : BaseFragment(), AuthView {
     }
 
     override fun toRegistration() {
-        Navigation.createNavigateOnClickListener(R.id.action_auth_to_registration)
-            .onClick(view)
+        showInputPhone()
+        (activity as MainActivity).setBackPressListener(null)
+        findNavController().navigate(AuthFragmentDirections.actionAuthToRegistration())
+    }
+
+    override fun onBackPressed() {
+        showInputPhone()
+        (activity as MainActivity).setBackPressListener(null)
+    }
+
+    private fun showInputPhone() {
+        text_info.visibility = View.GONE
+        layout_code.visibility = View.INVISIBLE
+        button_auth.visibility = View.INVISIBLE
+
+        layout_phone.visibility = View.VISIBLE
+        button_send_code.visibility = View.VISIBLE
     }
 }

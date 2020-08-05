@@ -5,7 +5,7 @@
     <string name="title_event">Событие</string>
     <string name="title_my_profile">Мой профиль</string>
     <string name="title_auth">Авторизация</string>
-    <string name="title_my_friends">Мои друзья</string>
+    <string name="title_my_friends">Друзья</string>
     <string name="title_registration">Регистрация</string>
     <string name="title_creating_event">Создание события</string>
     <string name="title_new_event">Новое событие</string>
@@ -19,12 +19,32 @@
     <string name="auth">Авторизоваться</string>
     <string name="registration">Регистрация</string>
     <string name="welcome">Добро пожаловать в Lume! \nПожалуйста, заполните небольшую анкету:</string>
+    <string name="login">Логин</string>
     <string name="name">Имя</string>
     <string name="age">Возраст</string>
+    <string name="add_photo">Будет замечательно, если на фото будете именно вы. Все мы любим милых котиков, но не каждый захочет идти куда-то только в их компании</string>
     <string name="about_yourself">Пару слов о себе</string>
     <string name="description">Расскажи подробнее о событии</string>
     <string name="to_registration">Зарегистрироваться</string>
     <string name="error_pick_image">Не удалось выбрать изображение</string>
+
+    <!-- My Profile -->
+    <string name="tab_frineds">Друзья</string>
+    <string name="tab_bages">Бейджи</string>
+    <string name="tab_settings">Настройки</string>
+    <string name="person_info">Редактировать профиль</string>
+    <string name="exit">Выход</string>
+    <string name="update_profile">Обновить профиль</string>
+    <string name="show_image">Открыть изображение</string>
+    <string name="change_image">Выбрать изображение</string>
+
+    <plurals name="age_plurals">
+        <item quantity="one">%1$d год</item>
+        <item quantity="two">%1$d года</item>
+        <item quantity="few">%1$d года</item>
+        <item quantity="many">%1$d лет</item>
+        <item quantity="other">%1$d лет</item>
+    </plurals>
 
     <!-- Event -->
     <string name="create_event">Создать событие</string>
@@ -58,6 +78,10 @@
     <string name="online">Онлайн</string>
     <string name="event_is_online">Онлайн-событие</string>
     <string name="unavailable_location">Неизвестное местоположение. Обратитесь к организатору в чате</string>
+    <string name="warning_other_city">Основной город события и город на карте не совпадают. Событие будет показано только для города %1$s</string>
+    <string name="choose_action">Выберите действие</string>
+    <string name="set_main">Сделать основной</string>
+    <string name="remove_image">Удалить изображение</string>
 
     <!-- Map -->
     <string name="title_activity_maps">Map</string>
@@ -76,9 +100,6 @@
     <string name="add_to_friends">Добавить в друзья</string>
     <string name="in_friends">В друзьях</string>
     <string name="remove_from_friends">Удалить из друзей</string>
-
-    <!-- Person -->
-    <string name="person_age">%1$d лет</string>
 
     <!-- Chats -->
     <string name="chats_title">Чаты</string>
@@ -101,4 +122,8 @@
     <string name="permission_location_denied">Разрешите доступ к местоположению в настройках</string>
     <string name="events_is_online">Только онлайн-события</string>
     <string name="events_not_online">Исключить онлайн-события</string>
+    <string name="any_city">Любой город</string>
+    <string name="any_age">Любой возраст</string>
+    <string name="age_exact">Возраст: %1$d</string>
+    <string name="empty_persons">К сожалению, люди по выбранным фильтрам не найдены. Попробуйте расширить фильтры</string>
 </resources>

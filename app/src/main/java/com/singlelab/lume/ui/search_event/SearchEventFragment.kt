@@ -41,8 +41,6 @@ class SearchEventFragment : BaseFragment(), SearchEventView, OnEventItemClickLis
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = getString(R.string.search_events)
-
         recycler_search_results.apply {
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

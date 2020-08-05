@@ -13,4 +13,7 @@ interface SwiperPersonView : LoadingView, ErrorView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun toAcceptedPerson(person: Person, eventUid: String)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showEmptySwipes()
 }

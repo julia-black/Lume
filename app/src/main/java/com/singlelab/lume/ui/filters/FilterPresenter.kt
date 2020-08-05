@@ -3,6 +3,7 @@ package com.singlelab.lume.ui.filters
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.event.Distance
 import com.singlelab.lume.model.event.FilterEvent
+import com.singlelab.lume.model.profile.FilterPerson
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.event.EventType
 import moxy.InjectViewState
@@ -13,6 +14,7 @@ import javax.inject.Inject
 class FilterPresenter @Inject constructor(preferences: Preferences?) : MvpPresenter<FilterView>() {
 
     var filterEvent: FilterEvent? = null
+    var filterPerson: FilterPerson? = null
 
     fun isEvent() = filterEvent != null
 
@@ -23,11 +25,16 @@ class FilterPresenter @Inject constructor(preferences: Preferences?) : MvpPresen
         }
     }
 
-    fun setCity(city: City) {
+    fun setCity(city: City?) {
         filterEvent?.let {
-            it.cityId = city.cityId
-            it.cityName = city.cityName
-            viewState.showCity(city.cityName)
+            it.cityId = city?.cityId
+            it.cityName = city?.cityName
+            viewState.showCity(city?.cityName)
+        }
+        filterPerson?.let {
+            it.cityId = city?.cityId
+            it.cityName = city?.cityName
+            viewState.showCity(city?.cityName)
         }
     }
 

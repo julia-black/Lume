@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
+import com.custom.sliderimage.logic.SliderImage
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.model.profile.Profile
@@ -37,9 +38,6 @@ class PersonFragment : BaseFragment(), PersonView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.let {
-            it.title = ""
-        }
         arguments?.let {
             presenter.loadProfile(PersonFragmentArgs.fromBundle(it).personUid)
         }
@@ -51,6 +49,9 @@ class PersonFragment : BaseFragment(), PersonView {
         city.text = profile.cityName
         if (!profile.imageContentUid.isNullOrEmpty()) {
             showImage(profile.imageContentUid)
+            image.setOnClickListener {
+                showFullScreenImage(profile.imageContentUid)
+            }
         } else {
             image.setImageDrawable(context?.getDrawable(R.drawable.ic_profile))
         }
@@ -67,6 +68,13 @@ class PersonFragment : BaseFragment(), PersonView {
         }
         button_remove_from_friends.setOnClickListener {
             presenter.removeFromFriends(profile.personUid)
+        }
+    }
+
+    private fun showFullScreenImage(imageContentUid: String) {
+        context?.let {
+            val links = listOf(imageContentUid.generateImageLinkForPerson())
+            SliderImage.openfullScreen(it, links, 0)
         }
     }
 

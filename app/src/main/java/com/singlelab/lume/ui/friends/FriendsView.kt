@@ -12,7 +12,7 @@ interface FriendsView : LoadingView, ErrorView {
     fun showFriends(friends: MutableList<Person>?)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showSearchResult(searchResults: MutableList<Person>?)
+    fun showSearchResult(searchResults: MutableList<Person>, page: Int)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showEmptyFriends()

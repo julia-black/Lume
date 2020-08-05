@@ -1,5 +1,6 @@
 package com.singlelab.lume.ui.reg
 
+import android.graphics.Bitmap
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
 import moxy.viewstate.strategy.AddToEndSingleStrategy
@@ -12,4 +13,7 @@ interface RegistrationView : LoadingView, ErrorView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showCity(cityName: String)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showImage(bitmap: Bitmap?)
 }

@@ -5,5 +5,5 @@ import moxy.viewstate.strategy.StateStrategyType
 
 interface LoadingView : BaseView {
     @StateStrategyType(OneExecutionStateStrategy::class)
-    fun showLoading(isShow: Boolean)
+    fun showLoading(isShow: Boolean, withoutBackground: Boolean = false)
 }

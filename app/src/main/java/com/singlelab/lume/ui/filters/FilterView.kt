@@ -11,5 +11,5 @@ interface FilterView : MvpView {
     fun showDistance(distance: Distance)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showCity(cityName: String)
+    fun showCity(cityName: String?)
 }

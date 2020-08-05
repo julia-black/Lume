@@ -27,7 +27,7 @@ class SwiperEventPresenter @Inject constructor(
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        loadRandomEvent()
+        loadRandomEvent(true)
     }
 
     fun applyFilter(filterEvent: FilterEvent) {
@@ -35,8 +35,8 @@ class SwiperEventPresenter @Inject constructor(
         loadRandomEvent()
     }
 
-    fun loadRandomEvent() {
-        viewState.showLoading(true)
+    fun loadRandomEvent(isFirstAttach: Boolean = false) {
+        viewState.showLoading(isShow = true, withoutBackground = !isFirstAttach)
         invokeSuspend {
             try {
                 val randomEventRequest = RandomEventRequest(
@@ -49,7 +49,7 @@ class SwiperEventPresenter @Inject constructor(
                 )
                 val event = interactor.getRandomEvent(randomEventRequest)
                 runOnMainThread {
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
                     this.event = event
                     event?.let {
                         viewState.showEvent(it)
@@ -57,8 +57,8 @@ class SwiperEventPresenter @Inject constructor(
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
-                    viewState.showLoading(false)
-                    if (e.errorCode == Const.ERROR_CODE_NO_MATCHING) {
+                    viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
+                    if (e.errorCode == Const.ERROR_CODE_NO_MATCHING_EVENTS) {
                         viewState.showEmptySwipes()
                     } else {
                         viewState.showError(e.message)
@@ -71,7 +71,7 @@ class SwiperEventPresenter @Inject constructor(
     fun acceptEvent() {
         val uid = AuthData.uid ?: return
         event?.eventUid?.let { eventUid ->
-            viewState.showLoading(true)
+            viewState.showLoading(isShow = true, withoutBackground = true)
             invokeSuspend {
                 try {
                     interactor.acceptEvent(
@@ -84,11 +84,11 @@ class SwiperEventPresenter @Inject constructor(
                     runOnMainThread {
                         viewState.toAcceptedEvent(event!!.isOpenForInvitations, eventUid)
                         event = null
-                        viewState.showLoading(false)
+                        viewState.showLoading(isShow = false, withoutBackground = true)
                     }
                 } catch (e: ApiException) {
                     runOnMainThread {
-                        viewState.showLoading(false)
+                        viewState.showLoading(isShow = false, withoutBackground = true)
                         viewState.showError(e.message)
                     }
                 }
@@ -98,18 +98,18 @@ class SwiperEventPresenter @Inject constructor(
 
     fun rejectEvent() {
         event?.eventUid?.let { eventUid ->
-            viewState.showLoading(true)
+            viewState.showLoading(isShow = true, withoutBackground = true)
             invokeSuspend {
                 try {
                     interactor.rejectEvent(eventUid)
                     runOnMainThread {
                         event = null
-                        viewState.showLoading(false)
+                        viewState.showLoading(isShow = false, withoutBackground = true)
                         loadRandomEvent()
                     }
                 } catch (e: ApiException) {
                     runOnMainThread {
-                        viewState.showLoading(false)
+                        viewState.showLoading(isShow = false, withoutBackground = true)
                         viewState.showError(e.message)
                     }
                 }

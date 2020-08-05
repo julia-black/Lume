@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.singlelab.lume.model.profile.Person
 
-class PersonsAdapter(
+class PersonAdapter(
     private val list: MutableList<Person>,
     private val eventUid: String? = null,
     private val isInviting: Boolean = false,
@@ -26,6 +26,11 @@ class PersonsAdapter(
     }
 
     override fun getItemCount(): Int = list.size
+
+    fun addData(list: List<Person>) {
+        this.list.addAll(list)
+        notifyDataSetChanged()
+    }
 
     fun setData(list: List<Person>) {
         this.list.clear()

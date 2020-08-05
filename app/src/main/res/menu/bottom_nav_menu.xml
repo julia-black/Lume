@@ -3,22 +3,22 @@
 
     <item
         android:id="@+id/swiper_event"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_nav_swipe"
         android:title="@string/title_home" />
 
     <item
         android:id="@+id/events"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/ic_nav_events"
         android:title="@string/title_events" />
 
     <item
         android:id="@+id/chats"
-        android:icon="@drawable/ic_baseline_chat_24"
+        android:icon="@drawable/ic_nav_chat"
         android:title="@string/chats_title" />
 
     <item
         android:id="@+id/my_profile"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/ic_nav_profile"
         android:title="@string/title_my_profile" />
 
 </menu>

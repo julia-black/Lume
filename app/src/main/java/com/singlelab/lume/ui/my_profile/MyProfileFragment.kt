@@ -1,6 +1,7 @@
 package com.singlelab.lume.ui.my_profile
 
 import android.app.Activity.RESULT_OK
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,23 +9,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.singlelab.lume.MainActivity
+import com.custom.sliderimage.logic.SliderImage
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
-import com.singlelab.lume.base.listeners.OnLogoutListener
+import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.model.profile.Profile
-import com.singlelab.lume.ui.view.image_person.ImagePersonAdapter
-import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
+import com.singlelab.lume.model.view.PagerTab
+import com.singlelab.lume.ui.view.pager.FriendsView
+import com.singlelab.lume.ui.view.pager.SettingsView
+import com.singlelab.lume.ui.view.pager.listener.OnFriendsClickListener
+import com.singlelab.lume.ui.view.pager.listener.OnSettingsClickListener
+import com.singlelab.lume.ui.view.person_short.OnPersonShortClickListener
 import com.singlelab.lume.util.generateImageLinkForPerson
 import com.singlelab.lume.util.getBitmap
 import com.singlelab.net.model.auth.AuthData
 import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_my_profile.*
 import moxy.presenter.InjectPresenter
@@ -33,9 +38,8 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
-    OnActivityResultListener,
-    OnPersonImageClickListener {
+class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListener,
+    OnPersonShortClickListener, OnSettingsClickListener, OnFriendsClickListener {
 
     @Inject
     lateinit var daggerPresenter: MyProfilePresenter
@@ -45,6 +49,17 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
 
     @ProvidePresenter
     fun provideMyProfilePresenter() = daggerPresenter
+
+    private lateinit var settingsView: SettingsView
+
+    private lateinit var friendsView: FriendsView
+
+    private val callbackBackPressed: OnBackPressedCallback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                onBackPressed()
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,31 +71,27 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.let {
-            it.title = getString(R.string.title_my_profile)
-        }
         view.findViewById<ImageView>(R.id.image)
             .setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_my_profile_to_auth))
+
+        context?.let {
+            settingsView = SettingsView(it)
+            settingsView.setSettingsListener(this)
+            friendsView = FriendsView(it)
+            friendsView.setFriendsListener(this, this)
+        }
 
         if (AuthData.isAnon) {
             navigateToAuth()
         } else {
-            presenter.loadProfile()
+            presenter.loadProfile(presenter.profile == null)
         }
     }
 
-    override fun onStop() {
-        (activity as MainActivity?)?.showLogoutInToolbar(false)
-        super.onStop()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        (activity as MainActivity?)?.showLogoutInToolbar(true)
-    }
-
     override fun showProfile(profile: Profile) {
-        name_age.text = "${profile.name}, ${profile.age}"
+        name.text = profile.name
+        login.text = "@${profile.login}"
+        age.text = resources.getQuantityString(R.plurals.age_plurals, profile.age, profile.age)
         description.text = profile.description
         city.text = profile.cityName
         if (!profile.imageContentUid.isNullOrEmpty()) {
@@ -89,34 +100,18 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
             image.setImageDrawable(context?.getDrawable(R.drawable.ic_profile))
         }
         image.setOnClickListener {
-            activity?.let { activity ->
-                CropImage.activity()
-                    .setFixAspectRatio(true)
-                    .setRequestedSize(500, 500, CropImageView.RequestSizeOptions.RESIZE_FIT)
-                    .setCropShape(CropImageView.CropShape.RECTANGLE)
-                    .start(activity)
+            if (profile.imageContentUid == null) {
+                onClickChangeImage()
+            } else {
+                onClickImage(profile.imageContentUid)
             }
         }
-        if (profile.friends.isEmpty()) {
-            search_friends.visibility = View.VISIBLE
-            search_friends.setOnClickListener {
-                toFriends(true)
-            }
-            recycler_friends.visibility = View.GONE
-        } else {
-            search_friends.visibility = View.GONE
-            recycler_friends.apply {
-                layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-                visibility = View.VISIBLE
-                adapter = ImagePersonAdapter(
-                    profile.friends,
-                    this@MyProfileFragment
-                )
-            }
-        }
-        title_friends.setOnClickListener {
-            toFriends()
-        }
+        selectTab(presenter.selectedTab)
+        setTabListeners()
+    }
+
+    override fun showFriends(friends: List<Person>?) {
+        friendsView.setFriends(friends)
     }
 
     override fun navigateToAuth() {
@@ -130,10 +125,6 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
                 .load(imageUid.generateImageLinkForPerson())
                 .into(image)
         }
-    }
-
-    override fun onClickLogout() {
-        presenter.logout()
     }
 
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -153,9 +144,147 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnLogoutListener,
         findNavController().navigate(MyProfileFragmentDirections.actionMyProfileToPerson(personUid))
     }
 
+    override fun onPersonInfoClick() {
+        presenter.profile?.let {
+            findNavController().navigate(MyProfileFragmentDirections.actionMyProfileToEditProfile(it))
+        }
+    }
+
+    override fun onLogoutClick() {
+        presenter.logout()
+    }
+
+    override fun onSearchFriendsClick() {
+        toFriends(true)
+    }
+
+    private fun onClickImage(imageContentUid: String) {
+        showListDialog(
+            getString(R.string.choose_action),
+            arrayOf(
+                getString(R.string.show_image),
+                getString(R.string.change_image)
+            ), DialogInterface.OnClickListener { _, which ->
+                when (which) {
+                    0 -> showFullScreenImage(imageContentUid)
+                    1 -> onClickChangeImage()
+                }
+            }
+        )
+    }
+
+    private fun showFullScreenImage(imageContentUid: String) {
+        context?.let {
+            val links = listOf(imageContentUid.generateImageLinkForPerson())
+            SliderImage.openfullScreen(it, links, 0)
+        }
+    }
+
     private fun toFriends(isSearch: Boolean = false) {
         val action = MyProfileFragmentDirections.actionMyProfileToFriends()
         action.isSearch = isSearch
         findNavController().navigate(action)
+    }
+
+    private fun selectTab(tab: PagerTab) {
+        presenter.selectedTab = tab
+        when (tab) {
+            PagerTab.FRIENDS -> {
+                showFriends()
+            }
+            PagerTab.BADGES -> {
+                showBadges()
+            }
+            PagerTab.SETTINGS -> {
+                showSettings()
+            }
+        }
+    }
+
+    private fun setTabListeners() {
+        text_tab_one.setOnClickListener {
+            selectTab(PagerTab.FRIENDS)
+        }
+        text_tab_two.setOnClickListener {
+            selectTab(PagerTab.BADGES)
+        }
+        text_tab_three.setOnClickListener {
+            selectTab(PagerTab.SETTINGS)
+        }
+    }
+
+    private fun showFriends() {
+        context?.let {
+            text_tab_one.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorWhite)
+            text_tab_one.setTextColor(ContextCompat.getColor(it, R.color.colorPrimaryDark))
+
+            text_tab_two.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorPrimary)
+            text_tab_two.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+
+            text_tab_three.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorPrimary)
+            text_tab_three.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+        }
+
+        card_content.removeAllViews()
+        card_content.addView(
+            friendsView,
+            0,
+            ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        )
+    }
+
+    private fun showBadges() {
+        context?.let {
+            text_tab_one.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorPrimary)
+            text_tab_one.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+
+            text_tab_two.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorWhite)
+            text_tab_two.setTextColor(ContextCompat.getColor(it, R.color.colorPrimaryDark))
+
+            text_tab_three.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorPrimary)
+            text_tab_three.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+        }
+
+        card_content.removeAllViews()
+    }
+
+    private fun showSettings() {
+        context?.let {
+            text_tab_one.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorPrimary)
+            text_tab_one.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+
+            text_tab_two.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorPrimary)
+            text_tab_two.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
+
+            text_tab_three.backgroundTintList =
+                ContextCompat.getColorStateList(it, R.color.colorWhite)
+            text_tab_three.setTextColor(ContextCompat.getColor(it, R.color.colorPrimaryDark))
+        }
+
+        card_content.removeAllViews()
+        card_content.addView(
+            settingsView,
+            0,
+            ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        )
+    }
+
+    fun onBackPressed() {
+        frame_container.visibility = View.GONE
+        callbackBackPressed.remove()
     }
 }

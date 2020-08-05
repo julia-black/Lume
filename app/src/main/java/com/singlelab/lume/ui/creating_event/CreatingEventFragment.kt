@@ -3,6 +3,7 @@ package com.singlelab.lume.ui.creating_event
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -13,13 +14,13 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.maps.model.LatLng
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
+import com.singlelab.lume.model.location.MapLocation
 import com.singlelab.lume.ui.cities.CitiesFragment
 import com.singlelab.lume.ui.creating_event.adapter.EventImagesAdapter
 import com.singlelab.lume.ui.creating_event.adapter.OnImageClickListener
@@ -28,7 +29,6 @@ import com.singlelab.lume.util.formatToUTC
 import com.singlelab.lume.util.getBitmap
 import com.singlelab.net.model.event.EventRequest
 import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_creating_event.*
 import kotlinx.android.synthetic.main.fragment_creating_event.description
@@ -62,7 +62,6 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = getString(R.string.title_new_event)
         setListeners()
         recycler_images.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -106,6 +105,18 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         }
     }
 
+    override fun showWarningOtherCity(currentCity: String) {
+        Toast.makeText(
+            context,
+            getString(R.string.warning_other_city, currentCity),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    override fun showImages(images: MutableList<Bitmap>) {
+        (recycler_images.adapter as EventImagesAdapter).setData(images)
+    }
+
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
@@ -120,17 +131,23 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
     }
 
     override fun onClickNewImage() {
-        activity?.let { activity ->
-            CropImage.activity()
-                .setFixAspectRatio(true)
-                .setRequestedSize(500, 500, CropImageView.RequestSizeOptions.RESIZE_FIT)
-                .setCropShape(CropImageView.CropShape.RECTANGLE)
-                .start(activity)
-        }
+        onClickChangeImage()
     }
 
-    override fun onClickDeleteImage(position: Int) {
-        (recycler_images.adapter as EventImagesAdapter).deleteImage(position)
+    override fun onClickImage(position: Int) {
+        showListDialog(
+            getString(R.string.choose_action),
+            arrayOf(getString(R.string.set_main), getString(R.string.remove_image)),
+            DialogInterface.OnClickListener { _, which ->
+                when (which) {
+                    0 -> presenter.setMainImage(position)
+                    1 -> onClickDeleteImage(position)
+                }
+            }
+        )
+    }
+
+    private fun onClickDeleteImage(position: Int) {
         presenter.deleteImage(position)
     }
 
@@ -149,6 +166,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         }
         switch_online.setOnCheckedChangeListener { _, isChecked ->
             text_city.isEnabled = !isChecked
+            text_location.isEnabled = !isChecked
         }
         button_create_event.setOnClickListener {
             if (validation()) {
@@ -185,7 +203,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                 onFragmentResult(requestKey, result)
             })
         val action = CreatingEventFragmentDirections.actionCreatingEventToMap(
-            presenter.locationName ?: presenter.cityName!!
+            presenter.getAddress() ?: presenter.cityName!!
         )
         findNavController().navigate(action)
     }
@@ -264,11 +282,9 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                 presenter.setCity(city)
             }
             MapFragment.REQUEST_LOCATION -> {
-                val locationName =
-                    result.getString(MapFragment.RESULT_LOCATION_NAME, null) ?: return
-                val locationCoordinate: LatLng =
-                    result.getParcelable(MapFragment.RESULT_LOCATION_COORDINATE) ?: return
-                presenter.setLocation(locationName, locationCoordinate)
+                val location: MapLocation =
+                    result.getParcelable(MapFragment.RESULT_LOCATION) ?: return
+                presenter.setMapLocation(location)
             }
         }
     }

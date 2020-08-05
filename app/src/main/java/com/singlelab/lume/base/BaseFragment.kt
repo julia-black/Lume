@@ -1,17 +1,23 @@
 package com.singlelab.lume.base
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
-import com.singlelab.lume.base.listeners.*
+import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.base.listeners.OnPermissionListener
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
+import com.singlelab.lume.model.Const
 import com.singlelab.net.model.auth.AuthData
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -35,17 +41,8 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
             // пользователь не залогинен, то с некоторых экранов должен осуществляться переход на авторизацию
             toAuth()
         } else {
-            if (this is OnLogoutListener) {
-                (activity as MainActivity?)?.setLogoutListener(this)
-            }
-            if (this is OnSearchListener) {
-                (activity as MainActivity?)?.setSearchListener(this)
-            }
             if (this is OnActivityResultListener) {
                 (activity as MainActivity?)?.setActivityListener(this)
-            }
-            if (this is OnFilterListener) {
-                (activity as MainActivity?)?.setFilterListener(this)
             }
             if (this is OnPermissionListener) {
                 (activity as MainActivity?)?.setPermissionListener(this)
@@ -62,8 +59,8 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun showLoading(isShow: Boolean) {
-        (activity as MainActivity?)?.showLoading(isShow)
+    override fun showLoading(isShow: Boolean, withoutBackground: Boolean) {
+        (activity as MainActivity?)?.showLoading(isShow, withoutBackground)
     }
 
     override fun toAuth() {
@@ -90,5 +87,33 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
             view = View(activity)
         }
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    fun showListDialog(
+        title: String,
+        list: Array<String>,
+        listener: DialogInterface.OnClickListener
+    ) {
+        context?.let {
+            val builder = AlertDialog.Builder(it)
+            builder.setTitle(title)
+            builder.setItems(list, listener)
+            val dialog = builder.create()
+            dialog.show()
+        }
+    }
+
+    fun onClickChangeImage() {
+        activity?.let { activity ->
+            CropImage.activity()
+                .setFixAspectRatio(true)
+                .setRequestedSize(
+                    Const.IMAGE_RESOLUTION_WIDTH,
+                    Const.IMAGE_RESOLUTION_HEIGHT,
+                    CropImageView.RequestSizeOptions.RESIZE_FIT
+                )
+                .setCropShape(CropImageView.CropShape.RECTANGLE)
+                .start(activity)
+        }
     }
 }

@@ -2,6 +2,8 @@ package com.singlelab.lume.ui.swiper_person
 
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.profile.FilterPerson
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.swiper_person.interactor.SwiperPersonInteractor
@@ -22,28 +24,39 @@ class SwiperPersonPresenter @Inject constructor(
 
     var person: Person? = null
 
+    var filterPerson: FilterPerson? = null
+
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        loadRandomPerson()
+        loadRandomPerson(true)
     }
 
-    fun loadRandomPerson() {
+    fun loadRandomPerson(isFirstAttach: Boolean = false) {
         eventUid ?: return
-        viewState.showLoading(true)
+        viewState.showLoading(isShow = true, withoutBackground = !isFirstAttach)
         invokeSuspend {
             try {
-                val randomPersonRequest = RandomPersonRequest(eventUid = eventUid!!)
+                val randomPersonRequest = RandomPersonRequest(
+                    eventUid = eventUid!!,
+                    minAge = filterPerson?.minAge,
+                    maxAge = filterPerson?.maxAge,
+                    cityId = filterPerson?.cityId
+                )
                 person = interactor.getRandomPerson(randomPersonRequest)
                 runOnMainThread {
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
                     person?.let {
                         viewState.showPerson(it)
                     }
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
-                    viewState.showLoading(false)
-                    viewState.showError(e.message)
+                    viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
+                    if (e.errorCode == Const.ERROR_CODE_NO_MATCHING_PERSONS) {
+                        viewState.showEmptySwipes()
+                    } else {
+                        viewState.showError(e.message)
+                    }
                 }
             }
         }
@@ -52,7 +65,7 @@ class SwiperPersonPresenter @Inject constructor(
     fun invitePerson() {
         eventUid ?: return
         person ?: return
-        viewState.showLoading(true)
+        viewState.showLoading(isShow = true, withoutBackground = true)
         invokeSuspend {
             try {
                 interactor.invitePerson(
@@ -65,11 +78,11 @@ class SwiperPersonPresenter @Inject constructor(
                 runOnMainThread {
                     viewState.toAcceptedPerson(person!!, eventUid!!)
                     person = null
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                     viewState.showError(e.message)
                 }
             }
@@ -79,21 +92,26 @@ class SwiperPersonPresenter @Inject constructor(
     fun rejectPerson() {
         eventUid ?: return
         person ?: return
-        viewState.showLoading(true)
+        viewState.showLoading(isShow = true, withoutBackground = true)
         invokeSuspend {
             try {
                 interactor.rejectPerson(eventUid!!, person!!.personUid)
                 runOnMainThread {
                     person = null
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                     loadRandomPerson()
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                     viewState.showError(e.message)
                 }
             }
         }
+    }
+
+    fun applyFilter(filterPerson: FilterPerson) {
+        this.filterPerson = filterPerson
+        loadRandomPerson()
     }
 }

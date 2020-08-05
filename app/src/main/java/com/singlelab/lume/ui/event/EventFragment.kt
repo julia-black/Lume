@@ -12,10 +12,12 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.custom.sliderimage.logic.SliderImage
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
 import com.singlelab.lume.ui.view.image_person.ImagePersonAdapter
@@ -59,7 +61,6 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = getString(R.string.title_event)
         arguments?.let {
             presenter.loadEvent(EventFragmentArgs.fromBundle(it).eventUid)
         }
@@ -79,7 +80,9 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         } else {
             text_online.visibility = View.INVISIBLE
             text_location.visibility = View.VISIBLE
-            text_location.text = getLocationName(event.xCoordinate, event.yCoordinate) ?: getString(R.string.unavailable_location)
+            text_location.text = getLocationName(event.xCoordinate, event.yCoordinate) ?: getString(
+                R.string.unavailable_location
+            )
             text_location.setOnClickListener {
                 val uri = String.format(
                     Locale.ENGLISH,
@@ -186,7 +189,11 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         if (presenter.isAdministrator()) {
             button_search_participants.visibility = View.VISIBLE
             button_search_participants.setOnClickListener {
-                toSwiperPeople(event.eventUid)
+                if (event.cityId != null && event.cityName != null && !event.isOnline) {
+                    toSwiperPeople(event.eventUid, City(event.cityId, event.cityName))
+                } else {
+                    toSwiperPeople(event.eventUid)
+                }
             }
         } else {
             button_search_participants.visibility = View.GONE
@@ -207,6 +214,24 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             button_accept.visibility = View.GONE
             button_reject.visibility = View.GONE
         }
+        if (event.eventPrimaryImageContentUid != null) {
+            image.setOnClickListener {
+                showFullScreenImages(event.eventPrimaryImageContentUid, event.images)
+            }
+        }
+    }
+
+    private fun showFullScreenImages(primaryImageContentUid: String, images: List<String>?) {
+        context?.let {
+            val allImages = mutableListOf(primaryImageContentUid)
+            if (!images.isNullOrEmpty()) {
+                allImages.addAll(images)
+            }
+            val links = allImages.map { image ->
+                image.generateImageLinkForEvent()
+            }
+            SliderImage.openfullScreen(it, links, 0)
+        }
     }
 
     private fun getLocationName(xCoordinate: Double?, yCoordinate: Double?): String? {
@@ -222,13 +247,15 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                 null
             }
         } catch (e: IOException) {
-           null
+            null
         }
     }
 
-    private fun toSwiperPeople(eventUid: String?) {
+    private fun toSwiperPeople(eventUid: String?, city: City? = null) {
         eventUid?.let {
-            findNavController().navigate(EventFragmentDirections.actionEventToSwiperPerson(eventUid))
+            val action = EventFragmentDirections.actionEventToSwiperPerson(eventUid)
+            action.city = city
+            findNavController().navigate(action)
         }
     }
 

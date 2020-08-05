@@ -12,5 +12,12 @@ object Const {
 
     const val PAGE_SIZE = 20
 
-    const val ERROR_CODE_NO_MATCHING = 25
+    const val ERROR_CODE_NO_MATCHING_EVENTS = 25
+    const val ERROR_CODE_NO_MATCHING_PERSONS = 27
+
+    const val MIN_AGE = 0
+    const val MAX_AGE = 100
+
+    const val IMAGE_RESOLUTION_WIDTH = 500
+    const val IMAGE_RESOLUTION_HEIGHT = 500
 }

@@ -19,6 +19,7 @@ import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnPermissionListener
+import com.singlelab.lume.model.location.MapLocation
 import com.singlelab.lume.util.TextInputDebounce
 import com.singlelab.lume.util.removePostalCode
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,8 +35,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
 
     companion object {
         const val REQUEST_LOCATION = "REQUEST_LOCATION"
-        const val RESULT_LOCATION_NAME = "RESULT_LOCATION_NAME"
-        const val RESULT_LOCATION_COORDINATE = "RESULT_LOCATION_COORDINATE"
+        const val RESULT_LOCATION = "RESULT_LOCATION"
     }
 
     @Inject
@@ -53,9 +53,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
 
     private var locationMap: GoogleMap? = null
 
-    private var locationName: String? = null
-
-    private var locationCoordinate: LatLng? = null
+    private var location = MapLocation()
 
     private val geoCoder: Geocoder by lazy { Geocoder(context, Locale.getDefault()) }
 
@@ -69,7 +67,6 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = getString(R.string.title_location_events)
         initMap()
         searchDebounce =
             TextInputDebounce(editText = edit_text_search, minimumSymbols = 4, delayMillis = 500)
@@ -79,7 +76,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
             }
         }
         arguments?.let {
-            locationName = MapFragmentArgs.fromBundle(it).locationName
+            location.address = MapFragmentArgs.fromBundle(it).locationName
         }
         button_accept_location.setOnClickListener {
             if (edit_text_search.text.isBlank()) {
@@ -113,10 +110,11 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
                 if (addresses.isNotEmpty()) {
                     val lat = addresses[0].latitude
                     val lon = addresses[0].longitude
-                    locationCoordinate = LatLng(lat, lon)
-                    locationCoordinate?.let {
-                        locationName =
+                    location.latLong = LatLng(lat, lon)
+                    location.latLong?.let {
+                        location.address =
                             addresses[0].getAddressLine(0).removePostalCode(addresses[0].postalCode)
+                        location.city = addresses[0].locality
                         map.clear()
                         map.addMarker(MarkerOptions().position(it))
                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(it, 17f))
@@ -134,7 +132,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
             val addresses: List<Address> =
                 geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
             if (addresses.isNotEmpty()) {
-                locationCoordinate = latLng
+                location.latLong = latLng
                 setLocationName(addresses[0])
             }
         } catch (e: IOException) {
@@ -153,7 +151,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
                 map.addMarker(MarkerOptions().position(it))
                 presenter.searchPlace(it)
             }
-            locationName?.let {
+            location.address?.let {
                 edit_text_search.setText(it)
                 presenter.searchPlace(it)
             }
@@ -161,13 +159,10 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
     }
 
     private fun acceptLocation() {
-        locationName?.let {
+        location.address?.let {
             parentFragmentManager.setFragmentResult(
                 REQUEST_LOCATION,
-                bundleOf(
-                    RESULT_LOCATION_NAME to locationName,
-                    RESULT_LOCATION_COORDINATE to locationCoordinate
-                )
+                bundleOf(RESULT_LOCATION to location)
             )
             parentFragmentManager.popBackStack()
         }
@@ -183,7 +178,8 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
     }
 
     private fun setLocationName(address: Address) {
-        locationName = address.getAddressLine(0).removePostalCode(address.postalCode)
-        edit_text_search.setText(locationName)
+        location.address = address.getAddressLine(0).removePostalCode(address.postalCode)
+        location.city = address.locality
+        edit_text_search.setText(location.address)
     }
 }

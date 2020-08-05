@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/margin_medium"
     android:paddingTop="@dimen/margin_small">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_image"
         android:layout_width="@dimen/size_image_person"
         android:layout_height="@dimen/size_image_person"
-        android:layout_marginStart="@dimen/margin_medium"
         app:cardCornerRadius="36dp"
         app:cardElevation="0dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,7 +77,6 @@
         android:id="@+id/button_chat"
         android:layout_width="@dimen/size_image_chat"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_small"
         android:background="@drawable/ic_chat_button"
         android:backgroundTint="@color/selector_button"
         android:clickable="true"
@@ -92,7 +91,6 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginHorizontal="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_small"
         android:background="@color/colorGray"
         app:layout_constraintStart_toStartOf="parent"

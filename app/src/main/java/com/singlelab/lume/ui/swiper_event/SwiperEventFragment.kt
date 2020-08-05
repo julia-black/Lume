@@ -10,12 +10,9 @@ import android.view.animation.LinearInterpolator
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
-import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
-import com.singlelab.lume.base.listeners.OnFilterListener
-import com.singlelab.lume.base.listeners.OnSearchListener
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.model.event.FilterEvent
 import com.singlelab.lume.ui.filters.FilterFragment
@@ -31,7 +28,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragments,
-    CardStackListener, OnSearchListener, OnFilterListener, OnCardEventListener {
+    CardStackListener, OnCardEventListener {
 
     @Inject
     lateinit var daggerPresenter: SwiperEventPresenter
@@ -54,21 +51,8 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.title = ""
         setListeners()
         initCardStack()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        (activity as MainActivity?)?.showSearchInToolbar(true)
-        (activity as MainActivity?)?.showFilterInToolbar(true)
-    }
-
-    override fun onStop() {
-        (activity as MainActivity?)?.showSearchInToolbar(false)
-        (activity as MainActivity?)?.showFilterInToolbar(false)
-        super.onStop()
     }
 
     override fun showEvent(event: Event) {
@@ -96,17 +80,6 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
     override fun showEmptySwipes() {
         card_stack_view.visibility = View.GONE
         text_empty_swipes.visibility = View.VISIBLE
-    }
-
-    override fun onClickSearch() {
-        findNavController().navigate(SwiperEventFragmentDirections.actionSwiperEventToSearchEvent())
-    }
-
-    override fun onClickFilter() {
-        val action = SwiperEventFragmentDirections.actionSwiperEventToFilterFragment()
-        action.isEvent = true
-        action.filterEvent = presenter.filterEvent
-        findNavController().navigate(action)
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {
@@ -162,6 +135,15 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
     }
 
     private fun setListeners() {
+        button_search.setOnClickListener {
+            findNavController().navigate(SwiperEventFragmentDirections.actionSwiperEventToSearchEvent())
+        }
+        button_filter.setOnClickListener {
+            val action = SwiperEventFragmentDirections.actionSwiperEventToFilterFragment()
+            action.isEvent = true
+            action.filterEvent = presenter.filterEvent
+            findNavController().navigate(action)
+        }
         parentFragmentManager.setFragmentResultListener(
             FilterFragment.REQUEST_FILTER,
             this,
