@@ -68,7 +68,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/name"
         app:layout_constraintTop_toTopOf="@id/card_image"
-        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintVertical_bias="0.35"
         tools:text="\@login" />
 
     <TextView
@@ -145,16 +145,17 @@
 
     <TextView
         android:id="@+id/text_tab_one"
-        android:layout_width="@dimen/width_tab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="@dimen/margin_medium"
         android:background="@drawable/shape_card"
         android:gravity="center_horizontal"
+        android:minWidth="@dimen/width_tab"
         android:padding="14dp"
         android:text="@string/tab_frineds"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="13sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@id/card_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider_three"
@@ -162,25 +163,26 @@
 
     <TextView
         android:id="@+id/text_tab_two"
-        android:layout_width="@dimen/width_tab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="6dp"
         android:background="@drawable/shape_card"
         android:backgroundTint="@color/colorPrimary"
         android:gravity="center_horizontal"
+        android:minWidth="@dimen/width_tab"
         android:padding="14dp"
         android:paddingBottom="25dp"
         android:text="@string/tab_bages"
         android:textColor="@color/colorWhite"
-        android:textSize="13sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@id/text_tab_three"
         app:layout_constraintStart_toEndOf="@id/text_tab_one"
         app:layout_constraintTop_toTopOf="@id/text_tab_one" />
 
     <TextView
         android:id="@+id/text_tab_three"
-        android:layout_width="@dimen/width_tab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="@dimen/margin_medium"
@@ -189,10 +191,11 @@
         android:backgroundTint="@color/colorPrimary"
         android:gravity="center_horizontal"
         android:lines="1"
+        android:minWidth="@dimen/width_tab"
         android:padding="14dp"
         android:text="@string/tab_settings"
         android:textColor="@color/colorWhite"
-        android:textSize="13sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/text_tab_one" />
 

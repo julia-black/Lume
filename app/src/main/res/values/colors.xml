@@ -25,4 +25,9 @@
     <color name="colorBackground">#121212</color>
     <color name="colorTabNotSelected">#4C4C4C</color>
     <color name="colorBackgroundLoading">#80FFFFFF</color>
+
+    <color name="colorNavSelected">#4C4C4C</color>
+    <color name="colorNavNotSelected">#C6C6C6</color>
+
+    <color name="colorBackgroundEvent">#FFE37F</color>
 </resources>

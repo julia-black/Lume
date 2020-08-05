@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/colorBackgroundEvent"
     android:layout_height="match_parent">
 
     <ImageView
@@ -27,7 +28,7 @@
         android:id="@+id/card_stack_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_small"
         android:clipToPadding="false"
         android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_medium"
         android:gravity="center"
+        android:textColor="@color/colorBackground"
         android:text="@string/empty_swipes"
         android:textSize="@dimen/text_size_medium"
         android:visibility="gone"
