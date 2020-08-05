@@ -11,13 +11,13 @@ abstract class ChatMessagesAdapter : RecyclerView.Adapter<ChatMessagesAdapter.Ch
 
     override fun getItemCount() = messages.size
 
-    open fun setMessages(messages: List<ChatMessageItem>) {
-        this.messages.clear()
-        this.messages.addAll(messages)
+    open fun setMessages(newMessages: List<ChatMessageItem>) {
+        messages.clear()
+        messages.addAll(newMessages)
     }
 
-    fun addMessage(message: ChatMessageItem) {
-        messages.add(message)
+    open fun addMessage(newMessage: ChatMessageItem) {
+        messages.add(newMessage)
     }
 
     abstract class ChatMessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {

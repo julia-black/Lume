@@ -21,7 +21,10 @@ fun ChatMessageResponse.toDbEntity(chatUid: String?): ChatMessage? {
 }
 
 fun List<ChatMessage>.toUiEntities(isChatGroup: Boolean, currentPersonUid: String): List<ChatMessageItem> =
-    map { if (isChatGroup) it.toGroupItems(currentPersonUid) else it.toPrivateItems(currentPersonUid) }
+    map { it.toUiEntity(isChatGroup, currentPersonUid) }
+
+fun ChatMessage.toUiEntity(isChatGroup: Boolean, currentPersonUid: String): ChatMessageItem =
+    if (isChatGroup) toGroupItems(currentPersonUid) else toPrivateItems(currentPersonUid)
 
 fun ChatMessage.toPrivateItems(currentPersonUid: String): PrivateChatMessageItem =
     PrivateChatMessageItem(

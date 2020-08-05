@@ -15,11 +15,15 @@ import kotlinx.android.synthetic.main.outgoing_message_item.view.*
 
 class GroupChatMessagesAdapter : ChatMessagesAdapter() {
 
-    override fun setMessages(messages: List<ChatMessageItem>) {
-        val diffResult = DiffUtil.calculateDiff(GroupChatMessagesDiffCallback(this.messages, messages), true)
-        this.messages.clear()
-        this.messages.addAll(messages)
+    override fun setMessages(newMessages: List<ChatMessageItem>) {
+        val diffResult = DiffUtil.calculateDiff(GroupChatMessagesDiffCallback(messages, newMessages), true)
+        messages.clear()
+        messages.addAll(newMessages)
         diffResult.dispatchUpdatesTo(this)
+    }
+
+    override fun addMessage(newMessage: ChatMessageItem) {
+        setMessages(messages + newMessage)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatMessageViewHolder {
@@ -67,6 +71,7 @@ class GroupChatMessagesAdapter : ChatMessagesAdapter() {
 
     class GroupOutgoingMessageViewHolder(view: View) : ChatMessageViewHolder(view) {
         override fun bind(messageItem: ChatMessageItem) {
+
             itemView.outgoingMessageView.text = messageItem.text
 
             val hasImages = messageItem.images.any { it.isNotEmpty() }
@@ -98,8 +103,7 @@ class GroupChatMessagesAdapter : ChatMessagesAdapter() {
         override fun getNewListSize() = newMessages.size
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-            oldMessages[oldItemPosition].uid == newMessages[newItemPosition].uid ||
-                    oldMessages[oldItemPosition].uid == "-1"
+            oldMessages[oldItemPosition].uid == newMessages[newItemPosition].uid
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             val oldMessage = oldMessages[oldItemPosition] as? GroupChatMessageItem ?: return false
@@ -107,7 +111,8 @@ class GroupChatMessagesAdapter : ChatMessagesAdapter() {
 
             return oldMessage.type == newMessage.type &&
                     oldMessage.personName == newMessage.personName &&
-                    oldMessage.text == newMessage.text
+                    oldMessage.text == newMessage.text &&
+                    oldMessage.images == newMessage.images
         }
 
     }

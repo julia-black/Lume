@@ -2,7 +2,6 @@ package com.singlelab.lume.ui.chat
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,6 @@ import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.ui.chat.common.*
-import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType.Common
 import com.singlelab.lume.util.getBitmap
 import com.singlelab.lume.util.toBase64
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,22 +36,17 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
 
     private lateinit var chatMessagesAdapter: ChatMessagesAdapter
 
-    private var isChatGroup: Boolean = false
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_chat, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val chatType = arguments?.let { ChatFragmentArgs.fromBundle(it).chatType }
-        isChatGroup = (chatType as? Common)?.isGroup ?: false
-        activity?.title = chatType?.title ?: getString(R.string.chat_title)
-
-        initViews()
-
-        chatType?.let {
-            presenter.showChat(it)
+        if (chatType != null) {
+            initViews(chatType)
+            presenter.showChat(chatType)
+        } else {
+            showError("Неизвестный тип чата")
         }
     }
 
@@ -67,9 +60,18 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         showError("Чат пуст")
     }
 
+    override fun showNewMessage(message: ChatMessageItem) {
+        chatMessagesAdapter.addMessage(message)
+        chatMessagesAdapter.notifyDataSetChanged()
+        chatView.scrollToPosition(chatMessagesAdapter.itemCount - 1)
+    }
+
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
         if (ImagePicker.shouldHandleResult(requestCode, resultCode, data, SELECT_IMAGE_REQUEST_CODE)) {
-            val images = ImagePicker.getImages(data).map { it.uri }
+            val images = ImagePicker.getImages(data)
+                .map { it.uri }
+                .mapNotNull { it.getBitmap(activity?.contentResolver)?.toBase64() }
+
             if (resultCode == Activity.RESULT_OK && images.isNotEmpty()) {
                 sendMessage(images)
             } else {
@@ -78,8 +80,9 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         }
     }
 
-    private fun initViews() {
-        chatMessagesAdapter = if (isChatGroup) GroupChatMessagesAdapter() else PrivateChatMessagesAdapter()
+    private fun initViews(chatType: ChatOpeningInvocationType) {
+        activity?.title = chatType.title
+        chatMessagesAdapter = if (chatType.isGroup) GroupChatMessagesAdapter() else PrivateChatMessagesAdapter()
         chatView.adapter = chatMessagesAdapter
         chatView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false).apply { stackFromEnd = true; }
         chatView.addItemDecoration(SpaceDivider(4))
@@ -87,19 +90,9 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         attachmentMessageView.setOnClickListener { addAttachment() }
     }
 
-    private fun sendMessage(imageUris: List<Uri> = emptyList()) {
+    private fun sendMessage(images: List<String> = emptyList()) {
         val currentText = messageInputView.text.toString().trim()
-        if (currentText.isNotEmpty() || imageUris.isNotEmpty()) {
-            val message = if (isChatGroup) {
-                GroupChatMessageItem("0", currentText, ChatMessageItem.Type.OUTGOING, imageUris.map { it.toString() }, "", "")
-            } else {
-                PrivateChatMessageItem("0", currentText, ChatMessageItem.Type.OUTGOING, imageUris.map { it.toString() })
-            }
-            val images = imageUris.mapNotNull { it.getBitmap(activity?.contentResolver)?.toBase64() }
-
-            chatMessagesAdapter.addMessage(message)
-            chatMessagesAdapter.notifyDataSetChanged()
-            chatView.scrollToPosition(chatMessagesAdapter.itemCount - 1)
+        if (currentText.isNotEmpty() || images.isNotEmpty()) {
             presenter.sendMessage(currentText, images)
             messageInputView.setText("")
         }

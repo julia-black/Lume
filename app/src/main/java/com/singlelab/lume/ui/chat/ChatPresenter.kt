@@ -3,9 +3,7 @@ package com.singlelab.lume.ui.chat
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.pref.Preferences
-import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
-import com.singlelab.lume.ui.chat.common.toDbEntities
-import com.singlelab.lume.ui.chat.common.toUiEntities
+import com.singlelab.lume.ui.chat.common.*
 import com.singlelab.lume.ui.chat.interactor.ChatInteractor
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.exceptions.TimeoutException
@@ -27,20 +25,6 @@ constructor(
 ) {
     private val chatSettings = ChatSettings()
 
-    fun sendMessage(messageText: String, images: List<String>) {
-        invokeSuspend {
-            try {
-                chatSettings.chatUid?.let { chatUid ->
-                    interactor.sendMessage(ChatMessageRequest(chatUid, messageText, images))
-                }
-            } catch (e: ApiException) {
-                runOnMainThread {
-                    viewState.showError(e.message)
-                }
-            }
-        }
-    }
-
     fun showChat(type: ChatOpeningInvocationType) {
         // TODO: Сделать прогресс бар для загрузки сообщений с сервера, изначально показывать сообщения из бд?
         viewState.showLoading(true)
@@ -57,7 +41,6 @@ constructor(
                     chatSettings.chatUid = chatResponse.chatUid
                     chatSettings.setLastMessageUid(chatResponse.messages)
                     saveChatMessages(chatResponse.messages)
-
                     showLocalMessages()
                     syncMessages()
                 } else {
@@ -71,13 +54,41 @@ constructor(
         }
     }
 
+    fun sendMessage(messageText: String, images: List<String>) {
+        invokeSuspend {
+            try {
+                val chatUid = chatSettings.chatUid
+                if (chatUid != null) {
+                    val newMessage = interactor.sendMessage(ChatMessageRequest(chatUid, messageText, images))
+                    if (newMessage != null) {
+                        val messageEntity = newMessage.toDbEntity(chatUid)
+                        if (messageEntity != null) {
+                            interactor.saveChatMessage(messageEntity)
+                            val currentPersonUid = AuthData.uid
+                            val chatType = chatSettings.chatType
+                            if (chatType != null && currentPersonUid != null) {
+                                val message = messageEntity.toUiEntity(chatType.isGroup, currentPersonUid)
+                                runOnMainThread {
+                                    viewState.showNewMessage(message)
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (e: ApiException) {
+                runOnMainThread {
+                    viewState.showError(e.message)
+                }
+            }
+        }
+    }
+
     private suspend fun showLocalMessages() {
         val chatUid = chatSettings.chatUid
         val chatType = chatSettings.chatType
         val currentPersonUid = AuthData.uid
         val messages = if (chatUid != null && chatType != null && currentPersonUid != null) {
-            val isChatGroup = (chatType as? ChatOpeningInvocationType.Common)?.isGroup ?: false
-            interactor.byChatUid(chatUid).toUiEntities(isChatGroup, currentPersonUid)
+            interactor.byChatUid(chatUid).toUiEntities(chatType.isGroup, currentPersonUid)
         } else {
             emptyList()
         }
