@@ -92,7 +92,6 @@ constructor(
         } else {
             emptyList()
         }
-
         runOnMainThread {
             viewState.showLoading(false)
             if (messages.isEmpty()) {
