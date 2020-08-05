@@ -78,6 +78,7 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:4.11.0"
     kapt "com.github.bumptech.glide:compiler:4.11.0"
     api "com.theartofdev.edmodo:android-image-cropper:2.8.0"
+    implementation "io.github.ivanespitiac:imageslider:1.0.3"
 
     //Permission
     implementation "com.karumi:dexter:6.2.1"

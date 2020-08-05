@@ -1,10 +1,12 @@
 package com.singlelab.lume.base
 
 import android.app.Activity
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
@@ -82,5 +84,19 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
             view = View(activity)
         }
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    fun showListDialog(
+        title: String,
+        list: Array<String>,
+        listener: DialogInterface.OnClickListener
+    ) {
+        context?.let {
+            val builder = AlertDialog.Builder(it)
+            builder.setTitle(title)
+            builder.setItems(list, listener)
+            val dialog = builder.create()
+            dialog.show()
+        }
     }
 }

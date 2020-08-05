@@ -3,6 +3,7 @@ package com.singlelab.lume.ui.creating_event
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -113,6 +114,10 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         ).show()
     }
 
+    override fun showImages(images: MutableList<Bitmap>) {
+        (recycler_images.adapter as EventImagesAdapter).setData(images)
+    }
+
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
@@ -136,8 +141,20 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         }
     }
 
-    override fun onClickDeleteImage(position: Int) {
-        (recycler_images.adapter as EventImagesAdapter).deleteImage(position)
+    override fun onClickImage(position: Int) {
+        showListDialog(
+            getString(R.string.choose_action),
+            arrayOf(getString(R.string.set_main), getString(R.string.remove_image)),
+            DialogInterface.OnClickListener { _, which ->
+                when (which) {
+                    0 -> presenter.setMainImage(position)
+                    1 -> onClickDeleteImage(position)
+                }
+            }
+        )
+    }
+
+    private fun onClickDeleteImage(position: Int) {
         presenter.deleteImage(position)
     }
 

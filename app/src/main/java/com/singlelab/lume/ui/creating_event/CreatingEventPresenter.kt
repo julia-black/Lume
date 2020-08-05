@@ -103,6 +103,7 @@ class CreatingEventPresenter @Inject constructor(
 
     fun deleteImage(position: Int) {
         images.removeAt(position)
+        viewState.showImages(images)
     }
 
     fun getPrimaryImage(): String? {
@@ -148,5 +149,12 @@ class CreatingEventPresenter @Inject constructor(
 
     fun getAddress(): String? {
         return location?.address
+    }
+
+    fun setMainImage(position: Int) {
+        val mainImage = images[position]
+        images.removeAt(position)
+        images.add(0, mainImage)
+        viewState.showImages(images)
     }
 }

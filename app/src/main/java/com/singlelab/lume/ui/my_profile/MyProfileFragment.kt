@@ -1,6 +1,7 @@
 package com.singlelab.lume.ui.my_profile
 
 import android.app.Activity.RESULT_OK
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.custom.sliderimage.logic.SliderImage
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
@@ -97,17 +99,47 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
             image.setImageDrawable(context?.getDrawable(R.drawable.ic_profile))
         }
         image.setOnClickListener {
-            activity?.let { activity ->
-                CropImage.activity()
-                    .setFixAspectRatio(true)
-                    .setRequestedSize(500, 500, CropImageView.RequestSizeOptions.RESIZE_FIT)
-                    .setCropShape(CropImageView.CropShape.RECTANGLE)
-                    .start(activity)
+            if (profile.imageContentUid == null) {
+                changeImage()
+            } else {
+                onClickImage(profile.imageContentUid)
             }
         }
         selectTab(presenter.selectedTab)
         setTabListeners()
         friendsView.setFriends(profile.friends)
+    }
+
+    private fun onClickImage(imageContentUid: String) {
+        showListDialog(
+            getString(R.string.choose_action),
+            arrayOf(
+                getString(R.string.show_image),
+                getString(R.string.change_image)
+            ), DialogInterface.OnClickListener { _, which ->
+                when (which) {
+                    0 -> showFullScreenImage(imageContentUid)
+                    1 -> changeImage()
+                }
+            }
+        )
+    }
+
+    private fun showFullScreenImage(imageContentUid: String) {
+        context?.let {
+            val links = listOf(imageContentUid.generateImageLinkForPerson())
+            SliderImage.openfullScreen(it, links, 0)
+        }
+    }
+
+    private fun changeImage() {
+        activity?.let { activity ->
+            CropImage.activity()
+                .setFixAspectRatio(true)
+                .setRequestedSize(500, 500, CropImageView.RequestSizeOptions.RESIZE_FIT)
+                .setCropShape(CropImageView.CropShape.RECTANGLE)
+                .start(activity)
+        }
     }
 
     override fun navigateToAuth() {

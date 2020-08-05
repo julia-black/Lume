@@ -20,9 +20,8 @@ class ImageViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         } else {
             itemView.image_event.setImageBitmap(bitmap)
             itemView.setOnClickListener {
-                listener?.onClickDeleteImage(position)
+                listener?.onClickImage(position)
             }
         }
-
     }
 }

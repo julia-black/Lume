@@ -28,4 +28,7 @@ interface CreatingEventView : LoadingView, ErrorView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun showWarningOtherCity(currentCity: String)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showImages(images: MutableList<Bitmap>)
 }

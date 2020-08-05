@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.custom.sliderimage.logic.SliderImage
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
@@ -211,6 +212,24 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         } else {
             button_accept.visibility = View.GONE
             button_reject.visibility = View.GONE
+        }
+        if (event.eventPrimaryImageContentUid != null) {
+            image.setOnClickListener {
+                showFullScreenImages(event.eventPrimaryImageContentUid, event.images)
+            }
+        }
+    }
+
+    private fun showFullScreenImages(primaryImageContentUid: String, images: List<String>?) {
+        context?.let {
+            val allImages = mutableListOf(primaryImageContentUid)
+            if (!images.isNullOrEmpty()) {
+                allImages.addAll(images)
+            }
+            val links = allImages.map { image ->
+                image.generateImageLinkForEvent()
+            }
+            SliderImage.openfullScreen(it, links, 0)
         }
     }
 
