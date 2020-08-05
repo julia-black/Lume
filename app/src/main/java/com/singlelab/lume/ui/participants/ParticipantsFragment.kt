@@ -11,7 +11,7 @@ import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.ui.view.person.OnPersonItemClickListener
-import com.singlelab.lume.ui.view.person.PersonsAdapter
+import com.singlelab.lume.ui.view.person.PersonAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_participants.*
 import moxy.presenter.InjectPresenter
@@ -54,7 +54,7 @@ class ParticipantsFragment : BaseFragment(), ParticipantsView, OnlyForAuthFragme
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             visibility = View.VISIBLE
             presenter.participants?.let { list ->
-                adapter = PersonsAdapter(
+                adapter = PersonAdapter(
                     list,
                     presenter.eventUid,
                     false,
@@ -87,6 +87,6 @@ class ParticipantsFragment : BaseFragment(), ParticipantsView, OnlyForAuthFragme
     }
 
     override fun showParticipants(list: List<Person>) {
-        (recycler_participants.adapter as PersonsAdapter).setData(list)
+        (recycler_participants.adapter as PersonAdapter).setData(list)
     }
 }

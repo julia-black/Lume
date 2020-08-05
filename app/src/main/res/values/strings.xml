@@ -32,7 +32,7 @@
     <string name="tab_frineds">Друзья</string>
     <string name="tab_bages">Бейджи</string>
     <string name="tab_settings">Настройки</string>
-    <string name="person_info">Личная информация</string>
+    <string name="person_info">Редактировать профиль</string>
     <string name="exit">Выход</string>
     <string name="update_profile">Обновить профиль</string>
     <string name="show_image">Открыть изображение</string>

@@ -11,7 +11,7 @@ class FriendsRepositoryImpl(private val apiUnit: ApiUnit) : FriendsRepository, B
         return safeApiCall(
             apiUnit = apiUnit,
             call = { apiUnit.personApi.getFriendsAsync(personUid).await() },
-            errorMessage = "Не удалось выполнить поиск"
+            errorMessage = "Не удалось получить друзей"
         )
     }
 

@@ -12,7 +12,7 @@ import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.ui.view.person.OnPersonItemClickListener
-import com.singlelab.lume.ui.view.person.PersonsAdapter
+import com.singlelab.lume.ui.view.person.PersonAdapter
 import com.singlelab.lume.util.TextInputDebounce
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_friends.*
@@ -38,7 +38,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
 
     private var isSearchResults = false
 
-    private var searchAdapter: PersonsAdapter? = null
+    private var searchAdapter: PersonAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -82,7 +82,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
             title_empty_friends.visibility = View.GONE
             recycler_friends.visibility = View.VISIBLE
             recycler_friends.adapter =
-                PersonsAdapter(
+                PersonAdapter(
                     friends,
                     presenter.eventUid,
                     true,
@@ -120,7 +120,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
                 })
             }
             if (searchAdapter == null || page == 1) {
-                searchAdapter = PersonsAdapter(
+                searchAdapter = PersonAdapter(
                     searchResults,
                     presenter.eventUid,
                     true,
@@ -128,7 +128,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
                 )
                 recycler_search_results.adapter = searchAdapter
             } else {
-                (recycler_search_results.adapter as PersonsAdapter).addData(searchResults)
+                (recycler_search_results.adapter as PersonAdapter).addData(searchResults)
             }
         }
     }

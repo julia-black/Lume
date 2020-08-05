@@ -18,13 +18,14 @@ import com.custom.sliderimage.logic.SliderImage
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.model.profile.Profile
 import com.singlelab.lume.model.view.PagerTab
-import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
 import com.singlelab.lume.ui.view.pager.FriendsView
 import com.singlelab.lume.ui.view.pager.SettingsView
 import com.singlelab.lume.ui.view.pager.listener.OnFriendsClickListener
 import com.singlelab.lume.ui.view.pager.listener.OnSettingsClickListener
+import com.singlelab.lume.ui.view.person_short.OnPersonShortClickListener
 import com.singlelab.lume.util.generateImageLinkForPerson
 import com.singlelab.lume.util.getBitmap
 import com.singlelab.net.model.auth.AuthData
@@ -38,7 +39,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListener,
-    OnPersonImageClickListener, OnSettingsClickListener, OnFriendsClickListener {
+    OnPersonShortClickListener, OnSettingsClickListener, OnFriendsClickListener {
 
     @Inject
     lateinit var daggerPresenter: MyProfilePresenter
@@ -89,7 +90,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
 
     override fun showProfile(profile: Profile) {
         name.text = profile.name
-        login.text = profile.login
+        login.text = "@${profile.login}"
         age.text = resources.getQuantityString(R.plurals.age_plurals, profile.age, profile.age)
         description.text = profile.description
         city.text = profile.cityName
@@ -107,29 +108,10 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         }
         selectTab(presenter.selectedTab)
         setTabListeners()
-        friendsView.setFriends(profile.friends)
     }
 
-    private fun onClickImage(imageContentUid: String) {
-        showListDialog(
-            getString(R.string.choose_action),
-            arrayOf(
-                getString(R.string.show_image),
-                getString(R.string.change_image)
-            ), DialogInterface.OnClickListener { _, which ->
-                when (which) {
-                    0 -> showFullScreenImage(imageContentUid)
-                    1 -> onClickChangeImage()
-                }
-            }
-        )
-    }
-
-    private fun showFullScreenImage(imageContentUid: String) {
-        context?.let {
-            val links = listOf(imageContentUid.generateImageLinkForPerson())
-            SliderImage.openfullScreen(it, links, 0)
-        }
+    override fun showFriends(friends: List<Person>?) {
+        friendsView.setFriends(friends)
     }
 
     override fun navigateToAuth() {
@@ -174,6 +156,28 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
 
     override fun onSearchFriendsClick() {
         toFriends(true)
+    }
+
+    private fun onClickImage(imageContentUid: String) {
+        showListDialog(
+            getString(R.string.choose_action),
+            arrayOf(
+                getString(R.string.show_image),
+                getString(R.string.change_image)
+            ), DialogInterface.OnClickListener { _, which ->
+                when (which) {
+                    0 -> showFullScreenImage(imageContentUid)
+                    1 -> onClickChangeImage()
+                }
+            }
+        )
+    }
+
+    private fun showFullScreenImage(imageContentUid: String) {
+        context?.let {
+            val links = listOf(imageContentUid.generateImageLinkForPerson())
+            SliderImage.openfullScreen(it, links, 0)
+        }
     }
 
     private fun toFriends(isSearch: Boolean = false) {

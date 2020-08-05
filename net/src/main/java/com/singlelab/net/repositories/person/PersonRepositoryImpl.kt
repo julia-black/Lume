@@ -3,6 +3,7 @@ package com.singlelab.net.repositories.person
 import com.singlelab.net.ApiUnit
 import com.singlelab.net.model.ImageUidResponse
 import com.singlelab.net.model.person.ContentRequest
+import com.singlelab.net.model.person.PersonResponse
 import com.singlelab.net.model.person.ProfileRequest
 import com.singlelab.net.model.person.ProfileResponse
 import com.singlelab.net.repositories.BaseRepository
@@ -23,6 +24,14 @@ class PersonRepositoryImpl(private val apiUnit: ApiUnit) : PersonRepository,
             apiUnit = apiUnit,
             call = { apiUnit.personApi.getProfileAsync(personUid).await() },
             errorMessage = "Не удалось получить профиль"
+        )
+    }
+
+    override suspend fun getFriends(personUid: String): List<PersonResponse>? {
+        return safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.personApi.getFriendsAsync(personUid).await() },
+            errorMessage = "Не удалось получить друзей"
         )
     }
 

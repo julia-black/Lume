@@ -8,9 +8,9 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.singlelab.lume.R
 import com.singlelab.lume.model.profile.Person
-import com.singlelab.lume.ui.view.image_person.ImagePersonAdapter
-import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
 import com.singlelab.lume.ui.view.pager.listener.OnFriendsClickListener
+import com.singlelab.lume.ui.view.person_short.OnPersonShortClickListener
+import com.singlelab.lume.ui.view.person_short.PersonShortAdapter
 import kotlinx.android.synthetic.main.view_friends.view.*
 
 
@@ -20,7 +20,7 @@ class FriendsView @JvmOverloads constructor(
 
     private var clickListener: OnFriendsClickListener? = null
 
-    private var personClickListener: OnPersonImageClickListener? = null
+    private var personClickListener: OnPersonShortClickListener? = null
 
     private var friends: List<Person>? = null
 
@@ -30,29 +30,26 @@ class FriendsView @JvmOverloads constructor(
 
     fun setFriendsListener(
         listener: OnFriendsClickListener,
-        personImageClickListener: OnPersonImageClickListener
+        personClickListener: OnPersonShortClickListener
     ) {
         this.clickListener = listener
-        this.personClickListener = personImageClickListener
-    }
-
-    fun setFriends(friends: List<Person>) {
-        this.friends = friends
-        if (friends.isEmpty()) {
-            recycler_friends.visibility = View.GONE
-        } else {
-            recycler_friends.visibility = View.VISIBLE
-        }
+        this.personClickListener = personClickListener
         search_friends.setOnClickListener {
             clickListener?.onSearchFriendsClick()
         }
-        recycler_friends.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            visibility = View.VISIBLE
-            adapter = ImagePersonAdapter(
-                friends,
-                personClickListener
-            )
+    }
+
+    fun setFriends(friends: List<Person>?) {
+        this.friends = friends
+        if (friends.isNullOrEmpty()) {
+            recycler_friends.visibility = View.GONE
+        } else {
+            recycler_friends.visibility = View.VISIBLE
+            recycler_friends.apply {
+                layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                visibility = View.VISIBLE
+                adapter = PersonShortAdapter(friends, personClickListener)
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ package com.singlelab.lume.ui.my_profile
 import android.graphics.Bitmap
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.model.profile.Profile
 import com.singlelab.lume.model.view.PagerTab
 import com.singlelab.lume.pref.Preferences
@@ -21,6 +22,8 @@ class MyProfilePresenter @Inject constructor(
 
     var profile: Profile? = null
 
+    var friends: List<Person>? = null
+
     var selectedTab: PagerTab = PagerTab.FRIENDS
 
     fun loadProfile(isFirstAttach: Boolean = false) {
@@ -36,6 +39,7 @@ class MyProfilePresenter @Inject constructor(
                         viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
                         if (profile != null) {
                             viewState.showProfile(profile!!)
+                            loadFriends(profile!!.personUid)
                         } else {
                             viewState.showError("Не удалось получить профиль")
                         }
@@ -49,6 +53,21 @@ class MyProfilePresenter @Inject constructor(
             } catch (e: ApiException) {
                 runOnMainThread {
                     viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
+                    viewState.showError(e.message)
+                }
+            }
+        }
+    }
+
+    private fun loadFriends(personUid: String) {
+        invokeSuspend {
+            try {
+                friends = interactor.loadFriends(personUid)
+                runOnMainThread {
+                    viewState.showFriends(friends)
+                }
+            } catch (e: ApiException) {
+                runOnMainThread {
                     viewState.showError(e.message)
                 }
             }
