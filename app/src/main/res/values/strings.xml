@@ -47,7 +47,7 @@
     </plurals>
 
     <!-- Event -->
-    <string name="create_event">Создать событие</string>
+    <string name="create_event">Создать</string>
     <string name="type_event">Тип события</string>
     <string name="title">Название</string>
     <string name="min_age">Минимальный возраст</string>
@@ -124,6 +124,7 @@
     <string name="age_exact">Возраст: %1$d</string>
     <string name="empty_persons">К сожалению, люди по выбранным фильтрам не найдены. Попробуйте расширить фильтры</string>
 
+    <!-- Arrays -->
     <string-array name="custom_weekdays">
         <item>Пн</item>
         <item>Вт</item>
@@ -132,5 +133,20 @@
         <item>Пт</item>
         <item>Сб</item>
         <item>Вс</item>
+    </string-array>
+
+    <string-array name="months">
+        <item>Январь</item>
+        <item>Февраль</item>
+        <item>Март</item>
+        <item>Апрель</item>
+        <item>Май</item>
+        <item>Июнь</item>
+        <item>Июль</item>
+        <item>Август</item>
+        <item>Сентябрь</item>
+        <item>Октябрь</item>
+        <item>Ноябрь</item>
+        <item>Декабрь</item>
     </string-array>
 </resources>

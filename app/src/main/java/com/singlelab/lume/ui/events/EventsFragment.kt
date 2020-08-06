@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,6 +51,13 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
 
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
+
+    private val callbackBackPressed: OnBackPressedCallback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                onBackPressed()
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -109,7 +118,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
                 daysWithEvent = inviteDaysWithEvent
             )
 
-            calendar_view.addDecorators(
+            calendar_week_view.addDecorators(
                 pastDecorator, futureDecorator,
                 inviteDecorator
             )
@@ -154,8 +163,8 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
 
         val today = CalendarDay.today()
 
-        calendar_view.apply {
-            calendar_view.addDecorators(
+        calendar_week_view.apply {
+            addDecorators(
                 SelectorDecorator(context),
                 PastDaysDecorator(today),
                 FutureDaysDecorator(today)
@@ -168,5 +177,24 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
                 .setMaximumDate(CalendarDay.from(yearSun, monthSun, daySun))
                 .commit()
         }
+
+        calendar_full_view.showView(this)
+
+        button_calendar.setOnClickListener {
+            showFullCalendar(!calendar_full_view.isVisible)
+        }
+    }
+
+    private fun showFullCalendar(isShow: Boolean) {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            callbackBackPressed
+        )
+        calendar_full_view.visibility = if (isShow) View.VISIBLE else View.INVISIBLE
+    }
+
+    private fun onBackPressed() {
+        showFullCalendar(false)
+        callbackBackPressed.remove()
     }
 }

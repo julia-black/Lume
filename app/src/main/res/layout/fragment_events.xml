@@ -29,7 +29,7 @@
         tools:text="19 августа 2020" />
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-        android:id="@+id/calendar_view"
+        android:id="@+id/calendar_week_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_medium"
@@ -39,6 +39,16 @@
         app:layout_constraintTop_toBottomOf="@id/date"
         app:mcv_firstDayOfWeek="monday"
         app:mcv_weekDayLabels="@array/custom_weekdays" />
+
+    <ImageView
+        android:id="@+id/button_calendar"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:src="@drawable/ic_calendar"
+        app:layout_constraintBottom_toBottomOf="@id/button_create_event"
+        app:layout_constraintEnd_toStartOf="@id/button_create_event"
+        app:layout_constraintTop_toTopOf="@id/button_create_event" />
 
     <Button
         android:id="@+id/button_create_event"
@@ -68,6 +78,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/calendar_view"
+        app:layout_constraintTop_toBottomOf="@id/calendar_week_view"
+        tools:itemCount="3"
         tools:listitem="@layout/item_event" />
+
+    <com.singlelab.lume.ui.view.calendar.FullCalendarView
+        android:id="@+id/calendar_full_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorWhite"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/date" />
 </androidx.constraintlayout.widget.ConstraintLayout>
