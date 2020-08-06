@@ -8,6 +8,7 @@ object Const {
 
     const val DATE_FORMAT_TIME_ZONE = "yyyy-MM-dd'T'HH:mm:ss.SSS"
     const val DATE_FORMAT_OUTPUT = "dd.MM.yyyy HH:mm"
+    const val DATE_FORMAT_ISO = "yyyy-MM-dd"
     const val UTC = "UTC"
 
     const val PAGE_SIZE = 20

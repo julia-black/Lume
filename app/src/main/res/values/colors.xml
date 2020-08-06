@@ -30,4 +30,5 @@
     <color name="colorNavNotSelected">#C6C6C6</color>
 
     <color name="colorBackgroundEvent">#FFE37F</color>
+    <color name="colorNewInvite">#F24C56</color>
 </resources>
