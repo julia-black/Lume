@@ -27,7 +27,9 @@ import com.singlelab.lume.ui.view.calendar.CircleDecorator
 import com.singlelab.lume.ui.view.calendar.FutureDaysDecorator
 import com.singlelab.lume.ui.view.calendar.PastDaysDecorator
 import com.singlelab.lume.ui.view.calendar.SelectorDecorator
+import com.singlelab.lume.util.parseToString
 import com.singlelab.lume.util.toCalendarDays
+import com.singlelab.lume.util.toUpFirstSymbol
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_events.*
 import moxy.presenter.InjectPresenter
@@ -133,6 +135,13 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
 
     private fun showCalendar(context: Context) {
         val calendar = Calendar.getInstance()
+
+        val dayOfWeek =
+            calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+        day_of_week.text = dayOfWeek?.toUpFirstSymbol()
+
+        date.text = calendar.parseToString(Const.DATE_FORMAT_SIMPLE)
+
         calendar[Calendar.DAY_OF_WEEK] = 2
         val yearMon = calendar[Calendar.YEAR]
         val monthMon = calendar[Calendar.MONTH] + 1

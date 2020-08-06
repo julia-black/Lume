@@ -24,3 +24,8 @@ fun String.removePostalCode(code: String?): String {
         this
     }
 }
+
+fun String.toUpFirstSymbol(): String {
+    val first = this[0].toUpperCase()
+    return "$first${substring(1, length)}"
+}
