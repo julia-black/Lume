@@ -15,6 +15,9 @@ import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.ui.chat.common.*
+import com.singlelab.lume.ui.chat.common.ChatMessageItem.Companion.PENDING_MESSAGE_UID
+import com.singlelab.lume.ui.chat.common.ChatMessageItem.Status
+import com.singlelab.lume.ui.chat.common.ChatMessageItem.Type
 import com.singlelab.lume.util.getBitmap
 import com.singlelab.lume.util.toBase64
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,23 +39,21 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
 
     private lateinit var chatMessagesAdapter: ChatMessagesAdapter
 
+    private lateinit var chatType: ChatOpeningInvocationType
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_chat, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val chatType = arguments?.let { ChatFragmentArgs.fromBundle(it).chatType }
-        if (chatType != null) {
-            initViews(chatType)
-            presenter.showChat(chatType)
-        } else {
-            showError("Неизвестный тип чата")
-        }
+        chatType = arguments?.let { ChatFragmentArgs.fromBundle(it).chatType } ?: return
+        initViews()
+        presenter.showChat(chatType)
     }
 
     override fun showChat(messages: List<ChatMessageItem>) {
         chatMessagesAdapter.setMessages(messages)
-        chatMessagesAdapter.notifyDataSetChanged()
+        chatView.scrollToPosition(chatMessagesAdapter.itemCount - 1)
     }
 
     override fun showEmptyChat() {
@@ -62,7 +63,6 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
 
     override fun showNewMessage(message: ChatMessageItem) {
         chatMessagesAdapter.addMessage(message)
-        chatMessagesAdapter.notifyDataSetChanged()
         chatView.scrollToPosition(chatMessagesAdapter.itemCount - 1)
     }
 
@@ -71,7 +71,6 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
             val images = ImagePicker.getImages(data)
                 .map { it.uri }
                 .mapNotNull { it.getBitmap(activity?.contentResolver)?.toBase64() }
-
             if (resultCode == Activity.RESULT_OK && images.isNotEmpty()) {
                 sendMessage(images)
             } else {
@@ -80,7 +79,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         }
     }
 
-    private fun initViews(chatType: ChatOpeningInvocationType) {
+    private fun initViews() {
         activity?.title = chatType.title
         chatMessagesAdapter = if (chatType.isGroup) GroupChatMessagesAdapter() else PrivateChatMessagesAdapter()
         chatView.adapter = chatMessagesAdapter
@@ -93,6 +92,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
     private fun sendMessage(images: List<String> = emptyList()) {
         val currentText = messageInputView.text.toString().trim()
         if (currentText.isNotEmpty() || images.isNotEmpty()) {
+            showPendingMessage(currentText, images)
             presenter.sendMessage(currentText, images)
             messageInputView.setText("")
         }
@@ -114,6 +114,30 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         }
     }
 
+    private fun showPendingMessage(text: String, images: List<String>) {
+        val pendingMessage = if (chatType.isGroup) {
+            GroupChatMessageItem(
+                uid = PENDING_MESSAGE_UID,
+                text = text,
+                type = Type.OUTGOING,
+                images = images,
+                status = Status.PENDING,
+                date = "",
+                personPhoto = "",
+                personName = ""
+            )
+        } else {
+            PrivateChatMessageItem(
+                uid = PENDING_MESSAGE_UID,
+                text = text,
+                type = Type.OUTGOING,
+                images = images,
+                status = Status.PENDING,
+                date = ""
+            )
+        }
+        showNewMessage(pendingMessage)
+    }
 
     companion object {
         private const val SELECT_IMAGE_MAX_COUNT = 10

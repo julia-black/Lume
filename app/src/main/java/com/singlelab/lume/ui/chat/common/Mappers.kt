@@ -1,6 +1,7 @@
 package com.singlelab.lume.ui.chat.common
 
 import com.singlelab.lume.database.entity.ChatMessage
+import com.singlelab.lume.ui.chat.common.ChatMessageItem.Status
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Type
 import com.singlelab.net.model.chat.ChatMessageResponse
 
@@ -31,7 +32,9 @@ fun ChatMessage.toPrivateItems(currentPersonUid: String): PrivateChatMessageItem
         uid = uid,
         text = text,
         type = if (personUid == currentPersonUid) Type.OUTGOING else Type.INCOMING,
-        images = images
+        images = images,
+        status = Status.SYNCED,
+        date = date
     )
 
 fun ChatMessage.toGroupItems(currentPersonUid: String): GroupChatMessageItem =
@@ -41,5 +44,7 @@ fun ChatMessage.toGroupItems(currentPersonUid: String): GroupChatMessageItem =
         type = if (personUid == currentPersonUid) Type.OUTGOING else Type.INCOMING,
         personPhoto = personPhoto,
         personName = personName,
-        images = images
+        images = images,
+        status = Status.SYNCED,
+        date = date
     )

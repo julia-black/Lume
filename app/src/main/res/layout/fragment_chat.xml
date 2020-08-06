@@ -3,15 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/colorBackgroundChat"
     android:layout_height="match_parent">
 
+    <!-- Margin bottom = 20dp у messageInputView нужен для того чтобы вьюха не отоб ражалась под панелью навигации-->
     <EditText
         android:id="@+id/messageInputView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginEnd="6dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/group_message_input_background"
         android:focusable="true"
         android:focusableInTouchMode="true"

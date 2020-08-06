@@ -11,14 +11,11 @@ import kotlinx.android.synthetic.main.outgoing_message_item.view.*
 
 class GroupChatMessagesAdapter : ChatMessagesAdapter(Type.GROUP) {
     override fun setMessages(newMessages: List<ChatMessageItem>) {
-        val diffResult = DiffUtil.calculateDiff(GroupChatMessagesDiffCallback(messages, newMessages), true)
+        val syncedMessages = newMessages.syncLast()
+        val diffResult = DiffUtil.calculateDiff(GroupChatMessagesDiffCallback(messages, syncedMessages), false)
         messages.clear()
-        messages.addAll(newMessages)
+        messages.addAll(syncedMessages)
         diffResult.dispatchUpdatesTo(this)
-    }
-
-    override fun addMessage(newMessage: ChatMessageItem) {
-        setMessages(messages + newMessage)
     }
 
     class GroupIncomingMessageViewHolder(view: View) : ChatMessageViewHolder(view) {
@@ -43,29 +40,22 @@ class GroupChatMessagesAdapter : ChatMessagesAdapter(Type.GROUP) {
         override fun bind(messageItem: ChatMessageItem) {
             itemView.outgoingMessageView.setMessageText(messageItem.text)
             itemView.outgoingMessageImageView.setImages(messageItem.images)
+            itemView.outgoingMessageImageProgressView.setProgress(itemView.outgoingMessageContainerView, messageItem.status)
         }
     }
 
     private class GroupChatMessagesDiffCallback(
         private val oldMessages: List<ChatMessageItem>,
         private val newMessages: List<ChatMessageItem>
-    ) : DiffUtil.Callback() {
-
-        override fun getOldListSize() = oldMessages.size
-
-        override fun getNewListSize() = newMessages.size
-
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-            oldMessages[oldItemPosition].uid == newMessages[newItemPosition].uid
+    ) : ChatMessagesDiffCallback(oldMessages, newMessages) {
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             val oldMessage = oldMessages[oldItemPosition] as? GroupChatMessageItem ?: return false
             val newMessage = newMessages[newItemPosition] as? GroupChatMessageItem ?: return false
 
-            return oldMessage.type == newMessage.type &&
+            return super.areContentsTheSame(oldItemPosition, newItemPosition) &&
                     oldMessage.personName == newMessage.personName &&
-                    oldMessage.text == newMessage.text &&
-                    oldMessage.images == newMessage.images
+                    oldMessage.personPhoto == newMessage.personPhoto
         }
     }
 }
