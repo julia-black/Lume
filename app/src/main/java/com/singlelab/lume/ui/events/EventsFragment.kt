@@ -1,26 +1,47 @@
 package com.singlelab.lume.ui.events
 
+import android.content.Context
+import android.graphics.Color
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.CalendarMode
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.EventSummary
 import com.singlelab.lume.ui.events.adapter.EventsAdapter
 import com.singlelab.lume.ui.events.adapter.OnEventItemClickListener
+import com.singlelab.lume.ui.view.calendar.CircleDecorator
+import com.singlelab.lume.ui.view.calendar.FutureDaysDecorator
+import com.singlelab.lume.ui.view.calendar.PastDaysDecorator
+import com.singlelab.lume.ui.view.calendar.SelectorDecorator
+import com.singlelab.lume.util.parseToString
+import com.singlelab.lume.util.toCalendarDays
+import com.singlelab.lume.util.toUpFirstSymbol
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_events.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEventItemClickListener {
+class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEventItemClickListener,
+    OnDateSelectedListener {
 
     @Inject
     lateinit var daggerPresenter: EventsPresenter
@@ -30,6 +51,13 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
 
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
+
+    private val callbackBackPressed: OnBackPressedCallback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                onBackPressed()
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,12 +70,15 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recycler_events.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         button_create_event.setOnClickListener {
             Navigation.createNavigateOnClickListener(R.id.action_events_to_creating_event)
                 .onClick(view)
         }
         presenter.loadEvents()
+        context?.let {
+            showCalendar(it)
+        }
     }
 
     override fun showEvents(events: List<EventSummary>) {
@@ -56,8 +87,120 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
         }
     }
 
+    override fun showEventsOnCalendar(
+        pastEvents: MutableList<EventSummary>,
+        newInviteEvents: MutableList<EventSummary>,
+        futureEvents: MutableList<EventSummary>
+    ) {
+        context?.let { context ->
+            val pastDaysWithEvent =
+                pastEvents.map { it.startTime }.toCalendarDays(Const.DATE_FORMAT_TIME_ZONE)
+            val pastDecorator = CircleDecorator(
+                color = ContextCompat.getColor(context, R.color.colorGray),
+                style = Paint.Style.STROKE,
+                daysWithEvent = pastDaysWithEvent
+            )
+
+            val futureDaysWithEvent =
+                futureEvents.map { it.startTime }.toCalendarDays(Const.DATE_FORMAT_TIME_ZONE)
+            val futureDecorator = CircleDecorator(
+                color = ContextCompat.getColor(context, R.color.colorAccent),
+                style = Paint.Style.STROKE,
+                daysWithEvent = futureDaysWithEvent
+            )
+
+            val inviteDaysWithEvent =
+                newInviteEvents.map { it.startTime }.toCalendarDays(Const.DATE_FORMAT_TIME_ZONE)
+            val inviteDecorator = CircleDecorator(
+                color = ContextCompat.getColor(context, R.color.colorNewInvite),
+                style = Paint.Style.FILL,
+                textColor = Color.WHITE,
+                daysWithEvent = inviteDaysWithEvent
+            )
+            val decorators = listOf(pastDecorator, futureDecorator, inviteDecorator)
+            calendar_week_view.addDecorators(decorators)
+            calendar_full_view.showView(this, decorators)
+        }
+    }
+
     override fun onClickEvent(uid: String) {
         val action = EventsFragmentDirections.actionEventsToEvent(uid)
         findNavController().navigate(action)
+    }
+
+    override fun onDateSelected(
+        widget: MaterialCalendarView,
+        date: CalendarDay,
+        selected: Boolean
+    ) {
+        Toast.makeText(
+            context,
+            date.date.toString(),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    private fun showCalendar(context: Context) {
+        val calendar = Calendar.getInstance()
+
+        val dayOfWeek =
+            calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
+        day_of_week.text = dayOfWeek?.toUpFirstSymbol()
+
+        date.text = calendar.parseToString(Const.DATE_FORMAT_SIMPLE)
+
+        calendar[Calendar.DAY_OF_WEEK] = 2
+        val yearMon = calendar[Calendar.YEAR]
+        val monthMon = calendar[Calendar.MONTH] + 1
+        val dayMon = calendar[Calendar.DAY_OF_MONTH]
+
+        calendar[Calendar.DAY_OF_WEEK] = 1
+        val yearSun = calendar[Calendar.YEAR]
+        val monthSun = calendar[Calendar.MONTH] + 1
+        val daySun = calendar[Calendar.DAY_OF_MONTH]
+
+        val today = CalendarDay.today()
+
+        calendar_week_view.apply {
+            addDecorators(
+                SelectorDecorator(context),
+                PastDaysDecorator(today),
+                FutureDaysDecorator(today)
+            )
+            topbarVisible = false
+            setOnDateChangedListener(this@EventsFragment)
+            state().edit()
+                .setCalendarDisplayMode(CalendarMode.WEEKS)
+                .setMinimumDate(CalendarDay.from(yearMon, monthMon, dayMon))
+                .setMaximumDate(CalendarDay.from(yearSun, monthSun, daySun))
+                .commit()
+        }
+
+        button_calendar.setOnClickListener {
+            showFullCalendar(!calendar_full_view.isVisible)
+        }
+    }
+
+    private fun showFullCalendar(isShow: Boolean) {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            callbackBackPressed
+        )
+        calendar_full_view.visibility = if (isShow) View.VISIBLE else View.INVISIBLE
+    }
+
+    private fun showCurrentDay(day: CalendarDay) {
+        context?.let {
+            val currentDecorator = CircleDecorator(
+                color = ContextCompat.getColor(it, R.color.colorGray),
+                style = Paint.Style.STROKE,
+                daysWithEvent = listOf(day)
+            )
+        }
+    }
+
+    private fun onBackPressed() {
+        showFullCalendar(false)
+        callbackBackPressed.remove()
     }
 }

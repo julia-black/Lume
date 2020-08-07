@@ -1,6 +1,8 @@
 package com.singlelab.lume.util
 
+import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.singlelab.lume.model.Const
+import org.threeten.bp.LocalDate
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -24,4 +26,11 @@ fun Date?.formatToUTC(outputDateFormat: String): String {
     val dateFormat = SimpleDateFormat(outputDateFormat, Locale.getDefault())
     dateFormat.timeZone = TimeZone.getTimeZone(Const.UTC)
     return if (this != null) dateFormat.format(this) else ""
+}
+
+fun List<String>.toCalendarDays(inputDateFormat: String): List<CalendarDay> {
+    return this.map {
+        val isoDate = it.parse(inputDateFormat, Const.DATE_FORMAT_ISO)
+        CalendarDay.from(LocalDate.parse(isoDate))
+    }
 }

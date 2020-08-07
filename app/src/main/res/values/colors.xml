@@ -31,4 +31,5 @@
 
     <color name="colorBackgroundEvent">#FFE37F</color>
     <color name="colorBackgroundChat">#FFFCFB</color>
+    <color name="colorNewInvite">#F24C56</color>
 </resources>

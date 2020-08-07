@@ -6,7 +6,7 @@ class EventSummaryResponse(
     val description: String,
     val startTime: String,
     val endTime: String,
-    val type: String,
+    val types: List<Int>,
     val eventPrimaryImageContentUid: String?,
     val xCoordinate: Float,
     val yCoordinate: Float,

@@ -2,13 +2,14 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="margin_medium">16dp</dimen>
+    <dimen name="margin_big">24dp</dimen>
     <dimen name="margin_large">32dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_very_small">4dp</dimen>
     <dimen name="text_size_medium">18sp</dimen>
     <dimen name="text_size_large">24sp</dimen>
     <dimen name="text_size_standart">16sp</dimen>
-    <dimen name="event_item_height">112dp</dimen>
+    <dimen name="event_item_height">264dp</dimen>
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="action_swipe_size">150dp</dimen>
     <dimen name="size_image_person">72dp</dimen>
@@ -20,4 +21,5 @@
     <dimen name="width_tab">108dp</dimen>
     <dimen name="height_tab">56dp</dimen>
     <dimen name="size_image_person_short">56dp</dimen>
+    <dimen name="margin_very_large">72dp</dimen>
 </resources>
