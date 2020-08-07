@@ -2,6 +2,7 @@ package com.singlelab.lume.ui.chat
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -66,11 +67,14 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         chatView.scrollToPosition(chatMessagesAdapter.itemCount - 1)
     }
 
+    override fun enableMessageSending(isEnabled: Boolean) {
+        sendMessageView.isEnabled = isEnabled
+        attachmentMessageView.isEnabled = isEnabled
+    }
+
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
         if (ImagePicker.shouldHandleResult(requestCode, resultCode, data, SELECT_IMAGE_REQUEST_CODE)) {
-            val images = ImagePicker.getImages(data)
-                .map { it.uri }
-                .mapNotNull { it.getBitmap(activity?.contentResolver)?.toBase64() }
+            val images = ImagePicker.getImages(data).mapNotNull { it.uri.getBitmap(activity?.contentResolver) }
             if (resultCode == Activity.RESULT_OK && images.isNotEmpty()) {
                 sendMessage(images)
             } else {
@@ -89,7 +93,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         attachmentMessageView.setOnClickListener { addAttachment() }
     }
 
-    private fun sendMessage(images: List<String> = emptyList()) {
+    private fun sendMessage(images: List<Bitmap> = emptyList()) {
         val currentText = messageInputView.text.toString().trim()
         if (currentText.isNotEmpty() || images.isNotEmpty()) {
             showPendingMessage(currentText, images)
@@ -114,13 +118,13 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         }
     }
 
-    private fun showPendingMessage(text: String, images: List<String>) {
+    private fun showPendingMessage(text: String, images: List<Bitmap>) {
         val pendingMessage = if (chatType.isGroup) {
             GroupChatMessageItem(
                 uid = PENDING_MESSAGE_UID,
                 text = text,
                 type = Type.OUTGOING,
-                images = images,
+                images = images.map { it.toBase64(20) },
                 status = Status.PENDING,
                 date = "",
                 personPhoto = "",
@@ -131,7 +135,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
                 uid = PENDING_MESSAGE_UID,
                 text = text,
                 type = Type.OUTGOING,
-                images = images,
+                images = images.map { it.toBase64(20) },
                 status = Status.PENDING,
                 date = ""
             )

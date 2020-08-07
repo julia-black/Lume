@@ -26,7 +26,7 @@ interface ChatsApi {
     fun chatWithPersonAsync(
         @Query("personUid") personUid: String,
         @Query("pageNumber") pageNumber: Int? = 1,
-        @Query("pageSize") pageSize: Int? = 1
+        @Query("pageSize") pageSize: Int? = 10
     ): Deferred<Response<ChatMessagesResponse>>
 
     @GET("chat/get-person-chat-list")

@@ -2,18 +2,20 @@ package com.singlelab.lume.util
 
 import android.content.ContentResolver
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Base64
 import com.singlelab.lume.model.Const
+import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 
 
-fun Bitmap.toBase64(): String {
+fun Bitmap.toBase64(quality: Int = 100): String {
     val outputStream = ByteArrayOutputStream()
-    this.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+    this.compress(Bitmap.CompressFormat.PNG, quality, outputStream)
     return Base64.encodeToString(outputStream.toByteArray(), Base64.NO_WRAP)
 }
 

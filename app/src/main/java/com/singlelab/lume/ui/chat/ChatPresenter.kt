@@ -1,10 +1,12 @@
 package com.singlelab.lume.ui.chat
 
+import android.graphics.Bitmap
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.chat.common.*
 import com.singlelab.lume.ui.chat.interactor.ChatInteractor
+import com.singlelab.lume.util.toBase64
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.exceptions.TimeoutException
 import com.singlelab.net.model.auth.AuthData
@@ -44,9 +46,7 @@ constructor(
                     showLocalMessages()
                     syncMessages()
                 } else {
-                    runOnMainThread {
-                        viewState.showError("Ошибка при загрузке чата")
-                    }
+                    runOnMainThread { viewState.showError("Ошибка при загрузке чата") }
                 }
             } catch (e: Exception) {
                 showLocalMessages()
@@ -54,13 +54,16 @@ constructor(
         }
     }
 
-    fun sendMessage(messageText: String, images: List<String>) {
+    fun sendMessage(messageText: String, images: List<Bitmap>) {
         invokeSuspend {
             try {
+                runOnMainThread { viewState.enableMessageSending(false) }
                 val chatUid = chatSettings.chatUid
                 if (chatUid != null) {
-                    val newMessage = interactor.sendMessage(ChatMessageRequest(chatUid, messageText, images))
+                    val compressedImages = images.map { it.toBase64(80) }
+                    val newMessage = interactor.sendMessage(ChatMessageRequest(chatUid, messageText, compressedImages))
                     if (newMessage != null) {
+                        chatSettings.setLastMessageUid(newMessage)
                         val messageEntity = newMessage.toDbEntity(chatUid)
                         if (messageEntity != null) {
                             interactor.saveChatMessage(messageEntity)
@@ -75,9 +78,11 @@ constructor(
                         }
                     }
                 }
+                runOnMainThread { viewState.enableMessageSending(true) }
             } catch (e: ApiException) {
                 runOnMainThread {
                     viewState.showError(e.message)
+                    viewState.enableMessageSending(true)
                 }
             }
         }
@@ -117,9 +122,7 @@ constructor(
             if (e is TimeoutException) {
                 syncMessages()
             } else {
-                runOnMainThread {
-                    viewState.showError(e.message)
-                }
+                runOnMainThread { viewState.showError(e.message) }
             }
         }
     }
@@ -144,6 +147,10 @@ constructor(
                     _lastMessageUid = lastMessageUid
                 }
             }
+        }
+
+        fun setLastMessageUid(messageResponse: ChatMessageResponse) {
+            _lastMessageUid = messageResponse.messageUid
         }
     }
 }

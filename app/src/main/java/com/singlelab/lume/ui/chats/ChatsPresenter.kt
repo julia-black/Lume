@@ -22,9 +22,6 @@ constructor(
 ) {
     override fun attachView(view: ChatsView?) {
         super.attachView(view)
-        invokeSuspend {
-            showLocalChats()
-        }
         showChats()
     }
 
