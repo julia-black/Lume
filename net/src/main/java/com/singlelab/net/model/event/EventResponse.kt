@@ -12,6 +12,7 @@ class EventResponse(
     val description: String?,
     val startTime: String,
     val endTime: String,
+    val chatUid: String? = null,
     val status: Int = 0,
     val types: List<Int>,
     val participants: List<PersonResponse> = listOf(),

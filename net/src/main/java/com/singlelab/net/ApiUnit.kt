@@ -7,14 +7,17 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 class ApiUnit(baseUrl: String) {
+
+    private val headerInterceptor = HeaderInterceptor()
 
     private val loggingInterceptor =
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
     private val client = OkHttpClient().newBuilder()
-        .addInterceptor(HeaderInterceptor())
+        .addInterceptor(headerInterceptor)
         .addInterceptor(loggingInterceptor)
         .build()
 
@@ -37,9 +40,22 @@ class ApiUnit(baseUrl: String) {
         EventsApi::class.java
     )
 
-    val chatsApi: ChatsApi = retrofit.create(
-        ChatsApi::class.java
-    )
+    val chatsApi: ChatsApi = Retrofit.Builder()
+        .client(
+            OkHttpClient()
+                .newBuilder()
+                .readTimeout(105, TimeUnit.SECONDS)
+                .connectTimeout(125, TimeUnit.SECONDS)
+                .callTimeout(145, TimeUnit.SECONDS)
+                .addInterceptor(headerInterceptor)
+                .addInterceptor(loggingInterceptor)
+                .build()
+        )
+        .baseUrl(baseUrl)
+        .addConverterFactory(GsonConverterFactory.create())
+        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .build()
+        .create(ChatsApi::class.java)
 
     val citiesApi: CitiesApi = retrofit.create(
         CitiesApi::class.java

@@ -1,9 +1,6 @@
 package com.singlelab.net.api
 
-import com.singlelab.net.model.chat.ChatMessageRequest
-import com.singlelab.net.model.chat.ChatMessageResponse
-import com.singlelab.net.model.chat.ChatPreviewResponse
-import com.singlelab.net.model.chat.ChatResponse
+import com.singlelab.net.model.chat.*
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.Body
@@ -12,19 +9,29 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface ChatsApi {
+    @GET("chat/get-new-chat-messages")
+    fun loadNewMessageAsync(
+        @Query("chatUid") chatUid: String,
+        @Query("messageUid") lastMessageUid: String?
+    ): Deferred<Response<List<ChatMessageResponse>>>
+
     @GET("chat/get-chat")
-    fun chat(
-        @Query("chatUid") chatUid: String
-    ): Deferred<Response<ChatResponse>>
+    fun chatAsync(
+        @Query("chatUid") chatUid: String,
+        @Query("pageNumber") pageNumber: Int? = 1,
+        @Query("pageSize") pageSize: Int? = 1
+    ): Deferred<Response<ChatMessagesResponse>>
 
     @GET("chat/get-person-chat")
-    fun chatWithPerson(
-        @Query("personUid") personUid: String
-    ): Deferred<Response<ChatResponse>>
+    fun chatWithPersonAsync(
+        @Query("personUid") personUid: String,
+        @Query("pageNumber") pageNumber: Int? = 1,
+        @Query("pageSize") pageSize: Int? = 10
+    ): Deferred<Response<ChatMessagesResponse>>
 
     @GET("chat/get-person-chat-list")
-    fun chats(): Deferred<Response<List<ChatPreviewResponse>>>
+    fun chatsAsync(): Deferred<Response<List<ChatResponse>>>
 
     @POST("chat/add-chat-message")
-    fun sendMessage(@Body message: ChatMessageRequest): Deferred<Response<ChatMessageResponse>>
+    fun sendMessageAsync(@Body message: ChatMessageRequest): Deferred<Response<ChatMessageResponse>>
 }

@@ -78,6 +78,7 @@ dependencies {
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
 
     //Image
+    implementation 'com.github.nguyenhoanglam:ImagePicker:1.4.3'
     implementation "com.github.bumptech.glide:glide:4.11.0"
     kapt "com.github.bumptech.glide:compiler:4.11.0"
     api "com.theartofdev.edmodo:android-image-cropper:2.8.0"

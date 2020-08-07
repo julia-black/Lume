@@ -11,6 +11,7 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.profile.Person
+import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
 import com.singlelab.lume.ui.view.person.OnPersonItemClickListener
 import com.singlelab.lume.ui.view.person.PersonAdapter
 import com.singlelab.lume.util.TextInputDebounce
@@ -144,8 +145,15 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
         findNavController().navigate(FriendsFragmentDirections.actionFriendsToPerson(personUid))
     }
 
-    override fun onChatClick(personUid: String) {
-        //todo переход на чат
+    override fun onChatClick(personName: String, personUid: String) {
+        findNavController().navigate(
+            FriendsFragmentDirections.actionFromFriendsToChat(
+                ChatOpeningInvocationType.Person(
+                    title = personName,
+                    personUid = personUid
+                )
+            )
+        )
     }
 
     override fun onAddToFriends(personUid: String) {

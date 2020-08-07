@@ -4,18 +4,22 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.singlelab.lume.database.dao.ChatMessagesDao
 import com.singlelab.lume.database.dao.ChatsDao
 import com.singlelab.lume.database.entity.Chat
+import com.singlelab.lume.database.entity.ChatMessage
 
 @Database(
     version = 1,
     entities = [
-        Chat::class
+        Chat::class,
+        ChatMessage::class
     ],
     exportSchema = false
 )
 abstract class LumeDatabase : RoomDatabase() {
     internal abstract fun chatsDao(): ChatsDao
+    internal abstract fun chatMessagesDao(): ChatMessagesDao
 
     companion object {
         fun create(context: Context): LumeDatabase =

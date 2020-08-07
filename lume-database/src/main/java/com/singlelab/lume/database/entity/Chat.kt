@@ -6,6 +6,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "chats")
 data class Chat(
     @PrimaryKey
-    val uId: String,
-    val lastMessage: String
+    val uid: String,
+    val title: String,
+    val isGroup: Boolean,
+    val image: String,
+    val lastMessage: String,
+    val lastMessagePersonUid: String
 )

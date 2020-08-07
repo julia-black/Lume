@@ -14,6 +14,7 @@ class Event(
     val description: String?,
     val startTime: String,
     val endTime: String,
+    val chatUid: String? = null,
     val status: EventStatus,
     val types: List<Int>,
     val participants: List<Person> = listOf(),
@@ -42,6 +43,7 @@ class Event(
                     eventResponse.description,
                     eventResponse.startTime,
                     eventResponse.endTime,
+                    eventResponse.chatUid,
                     EventStatus.findById(eventResponse.status),
                     eventResponse.types,
                     eventResponse.getApprovedParticipants().mapNotNull {

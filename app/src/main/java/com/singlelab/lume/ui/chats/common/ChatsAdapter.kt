@@ -1,25 +1,32 @@
 package com.singlelab.lume.ui.chats.common
 
+import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.singlelab.net.model.chat.ChatInfo
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.singlelab.lume.R
+import com.singlelab.lume.util.generateImageLinkForEvent
+import com.singlelab.lume.util.generateImageLinkForPerson
+import com.singlelab.net.model.auth.AuthData
 import kotlinx.android.synthetic.main.chats_item.view.*
 
 class ChatsAdapter(
-    private val onClickAction: (ChatInfo) -> Unit,
-    private val onLongClickAction: (ChatInfo) -> Boolean
+    private val onClickAction: (ChatItem) -> Unit
 ) : RecyclerView.Adapter<ChatsAdapter.ChatsItemViewHolder>() {
 
-    private var chats = mutableListOf<ChatInfo>()
+    private var chats = mutableListOf<ChatItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ChatsItemViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.chats_item, parent, false),
-            onClickAction,
-            onLongClickAction
+            onClickAction
         )
 
     override fun onBindViewHolder(holder: ChatsItemViewHolder, position: Int) =
@@ -27,24 +34,47 @@ class ChatsAdapter(
 
     override fun getItemCount() = chats.size
 
-    fun setChats(chats: List<ChatInfo>) {
+    fun setChats(chats: List<ChatItem>) {
         this.chats.clear()
         this.chats.addAll(chats)
     }
 
     class ChatsItemViewHolder(
         view: View,
-        private val onClickAction: (ChatInfo) -> Unit,
-        private val onLongClickAction: (ChatInfo) -> Boolean
+        private val onClickAction: (ChatItem) -> Unit
     ) : RecyclerView.ViewHolder(view) {
-        fun bind(chat: ChatInfo) {
+        fun bind(chat: ChatItem) {
             itemView.chatsTitleView.text = chat.title
-            //view.setImage(chat.image)
-            //val image = itemView.context.resources.getIdentifier("ic_baseline_image_50", "drawable", itemView.context.packageName)
-            //view.setImage(image)
+            itemView.chatsLastMessageView.isVisible = chat.lastMessage.isNotEmpty()
+            itemView.chatsLastMessageView.text = if (chat.lastMessagePersonUid == AuthData.uid) {
+                val lastMessage =  itemView.context.getString(R.string.chats_last_message_author, chat.lastMessage)
+                SpannableString(lastMessage).apply {
+                    setSpan(ForegroundColorSpan(Color.BLACK), 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                }
+            } else {
+                chat.lastMessage
+            }
+
+            if (chat.chatImage != null) {
+                Glide.with(itemView)
+                    .load(chat.chatImage)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(itemView.chatsImageView)
+            }
 
             itemView.setOnClickListener { onClickAction(chat) }
-            itemView.setOnLongClickListener { onLongClickAction(chat) }
         }
+
+        private val ChatItem.chatImage: String?
+            get() {
+                if (image.isNotEmpty()) {
+                    return if (isGroup) {
+                        image.generateImageLinkForEvent()
+                    } else {
+                        image.generateImageLinkForPerson()
+                    }
+                }
+                return null
+            }
     }
 }

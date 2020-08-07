@@ -1,11 +1,12 @@
 package com.singlelab.lume.ui.chats
 
-import com.singlelab.net.exceptions.ApiException
-import com.singlelab.net.model.auth.AuthData
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.pref.Preferences
+import com.singlelab.lume.ui.chats.common.toDbEntities
+import com.singlelab.lume.ui.chats.common.toUiEntities
 import com.singlelab.lume.ui.chats.interactor.ChatsInteractor
+import com.singlelab.net.exceptions.ApiException
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -15,39 +16,39 @@ class ChatsPresenter
 constructor(
     private val interactor: ChatsInteractor,
     preferences: Preferences?
-) : BasePresenter<ChatsView>(preferences, interactor as BaseInteractor) {
-
+) : BasePresenter<ChatsView>(
+    preferences,
+    interactor as BaseInteractor
+) {
     override fun attachView(view: ChatsView?) {
         super.attachView(view)
-        loadChats()
+        showChats()
     }
 
-    private fun loadChats() {
+    private fun showChats() {
         viewState.showLoading(true)
         invokeSuspend {
             try {
-                if (!AuthData.isAnon) {
-                    val chats = interactor.loadChats()
-                    runOnMainThread {
-                        viewState.showLoading(false)
-                        if (chats != null) {
-                            viewState.showChats(chats)
-                        } else {
-                            viewState.showError("Не удалость загрузить чаты")
-                        }
-                    }
-                } else {
-                    runOnMainThread {
-                        preferences?.clearAuth()
-                        viewState.showLoading(false)
-                        viewState.showError("Для использования чатов сначала необходимо авторизоваться")
-                    }
+                // TODO: Сделать прогресс бар для загрузки чатов с сервера, изначально показывать чаты из бд?
+                val remoteChats = interactor.remoteChats()
+                if (remoteChats != null) {
+                    interactor.saveChats(remoteChats.toDbEntities())
                 }
+                showLocalChats()
             } catch (e: ApiException) {
-                runOnMainThread {
-                    viewState.showLoading(false)
-                    viewState.showError(e.message)
-                }
+                showLocalChats()
+            }
+        }
+    }
+
+    private suspend fun showLocalChats() {
+        val chats = interactor.localChats().toUiEntities()
+        runOnMainThread {
+            viewState.showLoading(false)
+            if (chats.isEmpty()) {
+                viewState.showEmptyChats()
+            } else {
+                viewState.showChats(chats)
             }
         }
     }
