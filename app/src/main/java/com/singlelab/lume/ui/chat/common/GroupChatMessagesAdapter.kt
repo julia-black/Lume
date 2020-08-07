@@ -6,8 +6,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.singlelab.lume.util.generateImageLinkForPerson
 import kotlinx.android.synthetic.main.group_incoming_message_item.view.*
-import kotlinx.android.synthetic.main.outgoing_message_item.view.*
-
 
 class GroupChatMessagesAdapter : ChatMessagesAdapter(Type.GROUP) {
     override fun setMessages(newMessages: List<ChatMessageItem>) {
@@ -33,14 +31,6 @@ class GroupChatMessagesAdapter : ChatMessagesAdapter(Type.GROUP) {
                     .apply(RequestOptions.circleCropTransform())
                     .into(itemView.incomingMessagePhotoView)
             }
-        }
-    }
-
-    class GroupOutgoingMessageViewHolder(view: View) : ChatMessageViewHolder(view) {
-        override fun bind(messageItem: ChatMessageItem) {
-            itemView.outgoingMessageView.setMessageText(messageItem.text)
-            itemView.outgoingMessageImageView.setImages(messageItem.images)
-            itemView.outgoingMessageImageProgressView.setProgress(itemView.outgoingMessageContainerView, messageItem.status)
         }
     }
 

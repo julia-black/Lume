@@ -4,9 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -16,9 +14,9 @@ import com.singlelab.lume.R
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Status
 import com.singlelab.lume.ui.chat.common.GroupChatMessagesAdapter.GroupIncomingMessageViewHolder
-import com.singlelab.lume.ui.chat.common.GroupChatMessagesAdapter.GroupOutgoingMessageViewHolder
 import com.singlelab.lume.ui.chat.common.PrivateChatMessagesAdapter.PrivateIncomingMessageViewHolder
-import com.singlelab.lume.ui.chat.common.PrivateChatMessagesAdapter.PrivateOutgoingMessageViewHolder
+import com.singlelab.lume.util.parse
+import kotlinx.android.synthetic.main.outgoing_message_item.view.*
 
 abstract class ChatMessagesAdapter(
     private val chatType: Type
@@ -37,18 +35,14 @@ abstract class ChatMessagesAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatMessageViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return if (chatType == Type.GROUP) {
-            when (viewType) {
-                ChatMessageItem.Type.INCOMING.code -> GroupIncomingMessageViewHolder(inflater.inflate(R.layout.group_incoming_message_item, parent, false))
-                else -> GroupOutgoingMessageViewHolder(inflater.inflate(R.layout.outgoing_message_item, parent, false))
-            }
-        } else {
-            when (viewType) {
-                ChatMessageItem.Type.INCOMING.code -> PrivateIncomingMessageViewHolder(inflater.inflate(R.layout.private_incoming_message_item, parent, false))
-                else -> PrivateOutgoingMessageViewHolder(inflater.inflate(R.layout.outgoing_message_item, parent, false))
+        return when (viewType) {
+            ChatMessageItem.Type.OUTGOING.code -> OutgoingMessageViewHolder(inflater.inflate(R.layout.outgoing_message_item, parent, false))
+            else -> if (chatType == Type.GROUP) {
+                GroupIncomingMessageViewHolder(inflater.inflate(R.layout.group_incoming_message_item, parent, false))
+            } else {
+                PrivateIncomingMessageViewHolder(inflater.inflate(R.layout.private_incoming_message_item, parent, false))
             }
         }
-
     }
 
     override fun onBindViewHolder(holder: ChatMessageViewHolder, position: Int) =
@@ -105,17 +99,28 @@ abstract class ChatMessagesAdapter(
             }
         }
 
-        protected fun ProgressBar.setProgress(messageView: ConstraintLayout, status: Status) {
-            val isPending = status == Status.PENDING
-            isVisible = isPending
-            if (isPending) {
-                messageView.background = context.getDrawable(R.drawable.group_message_input_background)
-            } else {
-                messageView.background = context.getDrawable(R.drawable.private_outgoing_message_input_background)
+        protected fun TextView.setDate(date: String) {
+            val isDateNotEmpty = date.isNotEmpty()
+            isVisible = isDateNotEmpty
+            if (isDateNotEmpty) {
+                this.text = date.parse(Const.DATE_FORMAT_TIME_ZONE, CHAT_MESSAGE_DATE_FORMAT_OUTPUT)
             }
         }
 
         private val String.url: String get() = "${Const.BASE_URL}image/get-chat-message-image?imageUid=$this"
+    }
+
+    class OutgoingMessageViewHolder(view: View) : ChatMessageViewHolder(view) {
+        override fun bind(messageItem: ChatMessageItem) {
+            itemView.outgoingMessageView.setMessageText(messageItem.text)
+            itemView.outgoingMessageImageView.setImages(messageItem.images)
+            itemView.outgoingMessageDateView.setDate(messageItem.date)
+
+            val isPending = messageItem.status == Status.PENDING
+            val background = if (isPending) R.drawable.group_message_input_background else R.drawable.private_outgoing_message_input_background
+            itemView.outgoingMessageImageProgressView.isVisible = isPending
+            itemView.outgoingMessageContainerView.background = itemView.context.getDrawable(background)
+        }
     }
 
     open class ChatMessagesDiffCallback(
@@ -141,5 +146,9 @@ abstract class ChatMessagesAdapter(
                     oldMessage.date == newMessage.date &&
                     oldMessage.status == newMessage.status
         }
+    }
+
+    companion object {
+        private const val CHAT_MESSAGE_DATE_FORMAT_OUTPUT = "HH:mm"
     }
 }
