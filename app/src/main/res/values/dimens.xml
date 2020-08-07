@@ -9,7 +9,7 @@
     <dimen name="text_size_medium">18sp</dimen>
     <dimen name="text_size_large">24sp</dimen>
     <dimen name="text_size_standart">16sp</dimen>
-    <dimen name="event_item_height">112dp</dimen>
+    <dimen name="event_item_height">264dp</dimen>
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="action_swipe_size">150dp</dimen>
     <dimen name="size_image_person">72dp</dimen>
@@ -21,4 +21,5 @@
     <dimen name="width_tab">108dp</dimen>
     <dimen name="height_tab">56dp</dimen>
     <dimen name="size_image_person_short">56dp</dimen>
+    <dimen name="margin_very_large">72dp</dimen>
 </resources>

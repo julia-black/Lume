@@ -3,7 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <View
+        android:id="@+id/background_card"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/shape_card_bottom"
+        app:layout_constraintBottom_toBottomOf="@id/calendar_week_view"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/day_of_week"
@@ -32,8 +41,9 @@
         android:id="@+id/calendar_week_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_medium"
-        android:orientation="vertical"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:paddingBottom="@dimen/margin_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/date"
@@ -74,12 +84,13 @@
         android:id="@+id/recycler_events"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:scrollbars="vertical"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/calendar_week_view"
-        tools:itemCount="3"
+        app:layout_constraintTop_toBottomOf="@id/background_card"
+        tools:itemCount="1"
         tools:listitem="@layout/item_event" />
 
     <com.singlelab.lume.ui.view.calendar.FullCalendarView

@@ -70,7 +70,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recycler_events.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         button_create_event.setOnClickListener {
             Navigation.createNavigateOnClickListener(R.id.action_events_to_creating_event)
                 .onClick(view)
@@ -117,11 +117,9 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
                 textColor = Color.WHITE,
                 daysWithEvent = inviteDaysWithEvent
             )
-
-            calendar_week_view.addDecorators(
-                pastDecorator, futureDecorator,
-                inviteDecorator
-            )
+            val decorators = listOf(pastDecorator, futureDecorator, inviteDecorator)
+            calendar_week_view.addDecorators(decorators)
+            calendar_full_view.showView(this, decorators)
         }
     }
 
@@ -178,8 +176,6 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
                 .commit()
         }
 
-        calendar_full_view.showView(this)
-
         button_calendar.setOnClickListener {
             showFullCalendar(!calendar_full_view.isVisible)
         }
@@ -191,6 +187,16 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
             callbackBackPressed
         )
         calendar_full_view.visibility = if (isShow) View.VISIBLE else View.INVISIBLE
+    }
+
+    private fun showCurrentDay(day: CalendarDay) {
+        context?.let {
+            val currentDecorator = CircleDecorator(
+                color = ContextCompat.getColor(it, R.color.colorGray),
+                style = Paint.Style.STROKE,
+                daysWithEvent = listOf(day)
+            )
+        }
     }
 
     private fun onBackPressed() {

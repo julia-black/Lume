@@ -8,10 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import com.prolificinteractive.materialcalendarview.CalendarDay
-import com.prolificinteractive.materialcalendarview.CalendarMode
-import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
+import com.prolificinteractive.materialcalendarview.*
 import com.singlelab.lume.R
 import kotlinx.android.synthetic.main.view_calendar.view.*
 import java.util.*
@@ -26,15 +23,20 @@ class FullCalendarView @JvmOverloads constructor(
         LayoutInflater.from(context).inflate(R.layout.view_calendar, this, true)
     }
 
-    fun showView(listener: OnDateSelectedListener?, countMonth: Int = 6) {
+    fun showView(
+        listener: OnDateSelectedListener?,
+        decorators: List<DayViewDecorator> = listOf(),
+        countMonth: Int = 6
+    ) {
         this.dateClickListener = listener
         layout.removeAllViews()
         var countViews = 0
-        for (i in 0 until countMonth) {
+        for (i in -1 until countMonth - 1) {
             val calendar = MaterialCalendarView(context)
             val month = TextView(context)
+            month.id = i
             month.gravity = Gravity.CENTER_HORIZONTAL
-            showCalendar(calendar, month, i)
+            showCalendar(calendar, month, i, decorators)
             layout.addView(
                 month, countViews++, ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
@@ -47,11 +49,21 @@ class FullCalendarView @JvmOverloads constructor(
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
             )
+            if (i == 0) {
+                scroll_view.post {
+                    scroll_view.scrollTo(0, month.height + calendar.height)
+                }
+            }
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private fun showCalendar(calendar: MaterialCalendarView, month: TextView, offset: Int = 0) {
+    private fun showCalendar(
+        calendar: MaterialCalendarView,
+        month: TextView,
+        offset: Int = 0,
+        decorators: List<DayViewDecorator> = listOf()
+    ) {
         val today = CalendarDay.today()
         calendar.apply {
             addDecorators(
@@ -59,6 +71,7 @@ class FullCalendarView @JvmOverloads constructor(
                 PastDaysDecorator(today),
                 FutureDaysDecorator(today)
             )
+            addDecorators(decorators)
             setWeekDayLabels(context.resources.getStringArray(R.array.custom_weekdays))
             topbarVisible = false
             setOnDateChangedListener(dateClickListener)
