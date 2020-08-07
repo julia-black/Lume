@@ -19,6 +19,10 @@ class FullCalendarView @JvmOverloads constructor(
 
     private var dateClickListener: OnDateSelectedListener? = null
 
+    private var calendars: MutableList<MaterialCalendarView> = mutableListOf()
+
+    private var currentDayDecorator: CircleDecorator? = null
+
     init {
         LayoutInflater.from(context).inflate(R.layout.view_calendar, this, true)
     }
@@ -28,11 +32,13 @@ class FullCalendarView @JvmOverloads constructor(
         decorators: List<DayViewDecorator> = listOf(),
         countMonth: Int = 6
     ) {
+        calendars.clear()
         this.dateClickListener = listener
         layout.removeAllViews()
         var countViews = 0
         for (i in -1 until countMonth - 1) {
             val calendar = MaterialCalendarView(context)
+            calendars.add(calendar)
             val month = TextView(context)
             month.id = i
             month.gravity = Gravity.CENTER_HORIZONTAL
@@ -93,5 +99,23 @@ class FullCalendarView @JvmOverloads constructor(
         val calendar = Calendar.getInstance()
         calendar[Calendar.MONTH] = calendar.get(Calendar.MONTH) + offset
         return calendar
+    }
+
+    fun addDecorator(decorator: CircleDecorator?) {
+        decorator ?: return
+        if (currentDayDecorator != null) {
+            removeDecorator(currentDayDecorator)
+        }
+        currentDayDecorator = decorator
+        calendars.forEach {
+            it.addDecorator(decorator)
+        }
+    }
+
+    private fun removeDecorator(decorator: CircleDecorator?) {
+        decorator ?: return
+        calendars.forEach {
+            it.removeDecorator(decorator)
+        }
     }
 }

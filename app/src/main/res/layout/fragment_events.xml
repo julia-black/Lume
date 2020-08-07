@@ -80,18 +80,15 @@
         app:strokeColor="@color/colorAccent"
         app:strokeWidth="1dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_events"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager_events"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="@dimen/margin_small"
-        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/background_card"
-        tools:itemCount="1"
-        tools:listitem="@layout/item_event" />
+        app:layout_constraintTop_toBottomOf="@id/background_card" />
 
     <com.singlelab.lume.ui.view.calendar.FullCalendarView
         android:id="@+id/calendar_full_view"

@@ -22,4 +22,6 @@
     <dimen name="height_tab">56dp</dimen>
     <dimen name="size_image_person_short">56dp</dimen>
     <dimen name="margin_very_large">72dp</dimen>
+    <dimen name="page_margin">20dp</dimen>
+    <dimen name="page_offset">40dp</dimen>
 </resources>

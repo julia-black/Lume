@@ -30,7 +30,17 @@ fun Date?.formatToUTC(outputDateFormat: String): String {
 
 fun List<String>.toCalendarDays(inputDateFormat: String): List<CalendarDay> {
     return this.map {
-        val isoDate = it.parse(inputDateFormat, Const.DATE_FORMAT_ISO)
-        CalendarDay.from(LocalDate.parse(isoDate))
+        it.toCalendarDay(inputDateFormat)
     }
+}
+
+fun String.toCalendarDay(inputDateFormat: String): CalendarDay {
+    val isoDate = this.parse(inputDateFormat, Const.DATE_FORMAT_ISO)
+    return CalendarDay.from(LocalDate.parse(isoDate))
+}
+
+fun CalendarDay.toCalendar(): Calendar {
+    val calendar = Calendar.getInstance()
+    calendar.set(this.year, this.month - 1, this.day)
+    return calendar
 }
