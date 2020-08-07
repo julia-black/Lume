@@ -1,19 +1,18 @@
 package com.singlelab.lume.ui.events
 
-import android.content.Context
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.CalendarMode
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
@@ -23,15 +22,17 @@ import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.EventSummary
-import com.singlelab.lume.ui.events.adapter.EventsAdapter
+import com.singlelab.lume.ui.events.adapter.DaysAdapter
 import com.singlelab.lume.ui.events.adapter.OnEventItemClickListener
 import com.singlelab.lume.ui.view.calendar.CircleDecorator
 import com.singlelab.lume.ui.view.calendar.FutureDaysDecorator
 import com.singlelab.lume.ui.view.calendar.PastDaysDecorator
 import com.singlelab.lume.ui.view.calendar.SelectorDecorator
 import com.singlelab.lume.util.parseToString
+import com.singlelab.lume.util.toCalendar
 import com.singlelab.lume.util.toCalendarDays
 import com.singlelab.lume.util.toUpFirstSymbol
+import com.singlelab.net.model.event.ParticipantStatus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_events.*
 import moxy.presenter.InjectPresenter
@@ -52,6 +53,10 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
 
+    private var currentDayDecorator: CircleDecorator? = null
+
+    private var firstDayInWeek: Int? = null
+
     private val callbackBackPressed: OnBackPressedCallback =
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -69,21 +74,66 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recycler_events.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        showViewPager()
         button_create_event.setOnClickListener {
             Navigation.createNavigateOnClickListener(R.id.action_events_to_creating_event)
                 .onClick(view)
         }
-        presenter.loadEvents()
-        context?.let {
-            showCalendar(it)
+        initWeekCalendar()
+        showToday()
+        showCalendar(Calendar.getInstance())
+        button_calendar.setOnClickListener {
+            showFullCalendar(!calendar_full_view.isVisible)
         }
     }
 
-    override fun showEvents(events: List<EventSummary>) {
-        recycler_events.apply {
-            adapter = EventsAdapter(events.toMutableList(), this@EventsFragment)
+    private fun initWeekCalendar() {
+        val today = CalendarDay.today()
+        calendar_week_view.apply {
+            addDecorators(
+                SelectorDecorator(context),
+                PastDaysDecorator(today),
+                FutureDaysDecorator(today)
+            )
+            topbarVisible = false
+            setOnDateChangedListener(this@EventsFragment)
+            state().edit()
+                .setCalendarDisplayMode(CalendarMode.WEEKS)
+                .commit()
+        }
+    }
+
+    private fun showViewPager() {
+        val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.page_margin)
+        val offsetPx = resources.getDimensionPixelOffset(R.dimen.page_offset)
+        view_pager_events?.apply {
+            clipToPadding = false
+            clipChildren = false
+            offscreenPageLimit = 3
+            setPageTransformer { page, position ->
+                val viewPager = page.parent.parent as ViewPager2
+                val offset = position * -(2 * offsetPx + pageMarginPx)
+                if (viewPager.orientation == ViewPager2.ORIENTATION_HORIZONTAL) {
+                    if (ViewCompat.getLayoutDirection(viewPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                        page.translationX = -offset
+                    } else {
+                        page.translationX = offset
+                    }
+                } else {
+                    page.translationY = offset
+                }
+            }
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    onDaySelected(position)
+                }
+            })
+        }
+    }
+
+    override fun showEvents(days: List<Pair<CalendarDay, List<EventSummary>>>) {
+        view_pager_events?.apply {
+            adapter = DaysAdapter(days, this@EventsFragment)
         }
     }
 
@@ -120,6 +170,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
             val decorators = listOf(pastDecorator, futureDecorator, inviteDecorator)
             calendar_week_view.addDecorators(decorators)
             calendar_full_view.showView(this, decorators)
+            presenter.onShowCurrentDay(futureDaysWithEvent, pastDaysWithEvent)
         }
     }
 
@@ -133,51 +184,50 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
         date: CalendarDay,
         selected: Boolean
     ) {
-        Toast.makeText(
-            context,
-            date.date.toString(),
-            Toast.LENGTH_LONG
-        ).show()
+        val days = (view_pager_events.adapter as DaysAdapter).getList()
+        val position = days.indexOfFirst { it.first == date }
+        if (position > 0) {
+            showFullCalendar(false)
+            view_pager_events.setCurrentItem(position, true)
+        }
     }
 
-    private fun showCalendar(context: Context) {
-        val calendar = Calendar.getInstance()
+    override fun showCurrentDayOnPager(day: CalendarDay) {
+        view_pager_events.apply {
+            val days = (view_pager_events.adapter as DaysAdapter).getList()
+            val position = days.indexOfFirst { it.first == day }
+            if (presenter.currentDayPosition != position) {
+                presenter.currentDayPosition = position
+                setCurrentItem(position, true)
+            }
+        }
+    }
 
+    private fun showToday() {
+        val calendar = Calendar.getInstance()
         val dayOfWeek =
             calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
         day_of_week.text = dayOfWeek?.toUpFirstSymbol()
-
         date.text = calendar.parseToString(Const.DATE_FORMAT_SIMPLE)
+    }
 
+    private fun showCalendar(calendar: Calendar) {
+        calendar.time
         calendar[Calendar.DAY_OF_WEEK] = 2
-        val yearMon = calendar[Calendar.YEAR]
-        val monthMon = calendar[Calendar.MONTH] + 1
         val dayMon = calendar[Calendar.DAY_OF_MONTH]
+        if (dayMon != firstDayInWeek) {
+            firstDayInWeek = dayMon
+            val monthMon = calendar[Calendar.MONTH] + 1
+            val yearMon = calendar[Calendar.YEAR]
 
-        calendar[Calendar.DAY_OF_WEEK] = 1
-        val yearSun = calendar[Calendar.YEAR]
-        val monthSun = calendar[Calendar.MONTH] + 1
-        val daySun = calendar[Calendar.DAY_OF_MONTH]
-
-        val today = CalendarDay.today()
-
-        calendar_week_view.apply {
-            addDecorators(
-                SelectorDecorator(context),
-                PastDaysDecorator(today),
-                FutureDaysDecorator(today)
-            )
-            topbarVisible = false
-            setOnDateChangedListener(this@EventsFragment)
-            state().edit()
-                .setCalendarDisplayMode(CalendarMode.WEEKS)
-                .setMinimumDate(CalendarDay.from(yearMon, monthMon, dayMon))
+            calendar[Calendar.DAY_OF_WEEK] = 1
+            val daySun = calendar[Calendar.DAY_OF_MONTH]
+            val monthSun = calendar[Calendar.MONTH] + 1
+            val yearSun = calendar[Calendar.YEAR]
+            calendar_week_view.state().edit()
+                .setMinimumDate(CalendarDay.from(yearMon, monthMon, firstDayInWeek!!))
                 .setMaximumDate(CalendarDay.from(yearSun, monthSun, daySun))
                 .commit()
-        }
-
-        button_calendar.setOnClickListener {
-            showFullCalendar(!calendar_full_view.isVisible)
         }
     }
 
@@ -186,16 +236,29 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
             viewLifecycleOwner,
             callbackBackPressed
         )
+        calendar_full_view.addDecorator(currentDayDecorator)
         calendar_full_view.visibility = if (isShow) View.VISIBLE else View.INVISIBLE
     }
 
-    private fun showCurrentDay(day: CalendarDay) {
+    private fun onDaySelected(position: Int) {
+        val dayWithEvent = (view_pager_events.adapter as DaysAdapter).getList()[position]
+        val isInvite = dayWithEvent.second.find { it.participantStatus == ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER } != null
+        val day = dayWithEvent.first
         context?.let {
-            val currentDecorator = CircleDecorator(
-                color = ContextCompat.getColor(it, R.color.colorGray),
-                style = Paint.Style.STROKE,
-                daysWithEvent = listOf(day)
-            )
+            showCalendar(day.toCalendar())
+            calendar_week_view.removeDecorator(currentDayDecorator)
+            if (!isInvite) {
+                currentDayDecorator = CircleDecorator(
+                    color = ContextCompat.getColor(
+                        it,
+                        if (day.isAfter(CalendarDay.today())) R.color.colorAccent else R.color.colorGray
+                    ),
+                    style = Paint.Style.FILL,
+                    daysWithEvent = listOf(day),
+                    textColor = Color.WHITE
+                )
+                calendar_week_view.addDecorator(currentDayDecorator)
+            }
         }
     }
 

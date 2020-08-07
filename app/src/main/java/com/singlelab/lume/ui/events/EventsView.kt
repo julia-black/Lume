@@ -1,5 +1,6 @@
 package com.singlelab.lume.ui.events
 
+import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
 import com.singlelab.lume.model.event.EventSummary
@@ -9,7 +10,7 @@ import moxy.viewstate.strategy.StateStrategyType
 interface EventsView : LoadingView, ErrorView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showEvents(events: List<EventSummary>)
+    fun showEvents(days: List<Pair<CalendarDay, List<EventSummary>>>)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showEventsOnCalendar(
@@ -17,4 +18,7 @@ interface EventsView : LoadingView, ErrorView {
         newInviteEvents: MutableList<EventSummary>,
         futureEvents: MutableList<EventSummary>
     )
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showCurrentDayOnPager(day: CalendarDay)
 }

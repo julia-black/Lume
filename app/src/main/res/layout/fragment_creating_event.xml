@@ -132,7 +132,7 @@
             android:layout_marginStart="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_medium"
             android:layout_marginEnd="@dimen/margin_medium"
-            android:drawableStart="@drawable/ic_calendar"
+            android:drawableStart="@drawable/ic_date"
             android:drawablePadding="@dimen/margin_small"
             android:text="@string/date_start" />
 
@@ -143,7 +143,7 @@
             android:layout_marginStart="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_medium"
             android:layout_marginEnd="@dimen/margin_medium"
-            android:drawableStart="@drawable/ic_calendar"
+            android:drawableStart="@drawable/ic_date"
             android:drawablePadding="@dimen/margin_small"
             android:text="@string/date_end" />
 
