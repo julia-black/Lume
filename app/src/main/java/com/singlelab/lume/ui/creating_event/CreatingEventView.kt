@@ -31,4 +31,7 @@ interface CreatingEventView : LoadingView, ErrorView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showImages(images: MutableList<Bitmap>)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showTypes(types: MutableList<Int>)
 }

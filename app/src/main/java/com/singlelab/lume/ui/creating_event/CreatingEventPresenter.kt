@@ -23,6 +23,10 @@ class CreatingEventPresenter @Inject constructor(
     preferences: Preferences?
 ) : BasePresenter<CreatingEventView>(preferences, interactor as BaseInteractor) {
 
+    companion object {
+        private const val MAX_TYPES_SIZE = 3
+    }
+
     var currentDateStart: Calendar? = null
     var currentDateEnd: Calendar? = null
 
@@ -31,11 +35,14 @@ class CreatingEventPresenter @Inject constructor(
 
     var location: MapLocation? = null
 
+    private var types: MutableList<Int> = mutableListOf()
+
     private var images: MutableList<Bitmap> = mutableListOf()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.showCurrentCity(cityId, cityName)
+        viewState.showTypes(types)
     }
 
     fun createEvent(event: EventRequest) {
@@ -156,5 +163,27 @@ class CreatingEventPresenter @Inject constructor(
         images.removeAt(position)
         images.add(0, mainImage)
         viewState.showImages(images)
+    }
+
+    fun onClickType(type: Int) {
+        if (types.contains(type)) {
+            removeType(type)
+        } else {
+            addType(type)
+        }
+    }
+
+    fun getTypes() = types
+
+    private fun addType(type: Int) {
+        if (types.size < MAX_TYPES_SIZE) {
+            types.add(type)
+            viewState.showTypes(types)
+        }
+    }
+
+    private fun removeType(type: Int) {
+        types.remove(type)
+        viewState.showTypes(types)
     }
 }

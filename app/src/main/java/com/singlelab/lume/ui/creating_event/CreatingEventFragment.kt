@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.core.view.children
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,6 +35,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_creating_event.*
 import kotlinx.android.synthetic.main.fragment_creating_event.description
 import kotlinx.android.synthetic.main.fragment_events.button_create_event
+import kotlinx.android.synthetic.main.view_grid_emoji.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import java.util.*
@@ -117,6 +119,16 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         (recycler_images.adapter as EventImagesAdapter).setData(images)
     }
 
+    override fun showTypes(types: MutableList<Int>) {
+        emoji_grid.children.forEachIndexed { index, view ->
+            if (types.contains(index)) {
+                view.alpha = 1f
+            } else {
+                view.alpha = 0.2f
+            }
+        }
+    }
+
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
@@ -168,6 +180,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
             text_city.isEnabled = !isChecked
             text_location.isEnabled = !isChecked
         }
+        setGridLayoutListeners()
         button_create_event.setOnClickListener {
             if (validation()) {
                 val minAge =
@@ -185,7 +198,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                     endTime = presenter.currentDateEnd?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE),
                     isOpenForInvitations = switch_open_event.isChecked,
                     primaryImage = presenter.getPrimaryImage(),
-                    types = arrayOf(0),
+                    types = presenter.getTypes().toTypedArray(),
                     images = presenter.getImagesStr(),
                     cityId = if (switch_online.isChecked) null else presenter.cityId!!,
                     isOnline = switch_online.isChecked
@@ -193,6 +206,14 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                 presenter.createEvent(event)
             } else {
                 showError(getString(R.string.enter_fields))
+            }
+        }
+    }
+
+    private fun setGridLayoutListeners() {
+        emoji_grid.children.forEachIndexed { index, view ->
+            view.setOnClickListener {
+                presenter.onClickType(index)
             }
         }
     }

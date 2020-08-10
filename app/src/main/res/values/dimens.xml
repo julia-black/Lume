@@ -24,4 +24,5 @@
     <dimen name="margin_very_large">72dp</dimen>
     <dimen name="page_margin">20dp</dimen>
     <dimen name="page_offset">40dp</dimen>
+    <dimen name="emoji_size">30dp</dimen>
 </resources>

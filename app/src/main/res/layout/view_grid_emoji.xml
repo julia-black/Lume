@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/emoji_grid"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/margin_small"
+    android:columnCount="5"
+    android:rowCount="2">
+
+    <ImageView
+        android:layout_width="@dimen/emoji_size"
+        android:layout_height="@dimen/emoji_size"
+        android:layout_row="0"
+        android:layout_column="0"
+        android:layout_columnWeight="1"
+        android:layout_marginBottom="@dimen/margin_medium"
+        android:src="@drawable/ic_emoji_party" />
+
+    <ImageView
+        android:layout_width="@dimen/emoji_size"
+        android:layout_height="@dimen/emoji_size"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:layout_columnWeight="1"
+        android:src="@drawable/ic_emoji_picture" />
+
+    <ImageView
+        android:layout_width="@dimen/emoji_size"
+        android:layout_height="@dimen/emoji_size"
+        android:layout_row="0"
+        android:layout_column="2"
+        android:layout_columnWeight="1"
+        android:src="@drawable/ic_emoji_sport" />
+
+    <ImageView
+        android:layout_width="@dimen/emoji_size"
+        android:layout_height="@dimen/emoji_size"
+        android:layout_row="0"
+        android:layout_column="3"
+        android:layout_columnWeight="1"
+        android:src="@drawable/ic_emoji_nature" />
+
+    <ImageView
+        android:layout_width="@dimen/emoji_size"
+        android:layout_height="@dimen/emoji_size"
+        android:layout_row="0"
+        android:layout_column="4"
+        android:layout_columnWeight="1"
+        android:layout_marginBottom="@dimen/margin_medium"
+        android:src="@drawable/ic_emoji_talk" />
+
+    <ImageView
+        android:layout_width="@dimen/emoji_size"
+        android:layout_height="@dimen/emoji_size"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:layout_columnWeight="1"
+        android:src="@drawable/ic_emoji_game" />
+
+    <ImageView
+        android:layout_width="@dimen/emoji_size"
+        android:layout_height="@dimen/emoji_size"
+        android:layout_row="1"
+        android:layout_column="1"
+        android:layout_columnWeight="1"
+        android:src="@drawable/ic_emoji_book" />
+
+    <ImageView
+        android:layout_width="@dimen/emoji_size"
+        android:layout_height="@dimen/emoji_size"
+        android:layout_row="1"
+        android:layout_column="2"
+        android:layout_columnWeight="1"
+        android:src="@drawable/ic_emoji_food" />
+
+    <ImageView
+        android:layout_width="@dimen/emoji_size"
+        android:layout_height="@dimen/emoji_size"
+        android:layout_row="1"
+        android:layout_column="3"
+        android:layout_columnWeight="1"
+        android:src="@drawable/ic_emoji_speech" />
+
+    <ImageView
+        android:layout_width="@dimen/emoji_size"
+        android:layout_height="@dimen/emoji_size"
+        android:layout_row="1"
+        android:layout_column="4"
+        android:layout_columnWeight="1"
+        android:src="@drawable/ic_emoji_travel" />
+
+</GridLayout>

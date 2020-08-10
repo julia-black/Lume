@@ -82,6 +82,7 @@
     <string name="choose_action">Выберите действие</string>
     <string name="set_main">Сделать основной</string>
     <string name="remove_image">Удалить изображение</string>
+    <string name="choose_emoji">Выберите до 3-х иконок, которыми можно кратко описать ваше событие:</string>
 
     <!-- Map -->
     <string name="title_activity_maps">Map</string>

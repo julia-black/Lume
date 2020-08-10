@@ -1,177 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="vertical">
+    android:background="@color/colorBackground">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginTop="@dimen/margin_large"
+        android:background="@drawable/shape_card"
+        android:scrollbars="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:hint="@string/title"
-            app:boxBackgroundColor="@android:color/white">
+            android:layout_height="match_parent"
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/title"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_large">
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:hint="@string/title"
+                app:boxBackgroundColor="@android:color/white">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:hint="@string/description"
-            app:boxBackgroundColor="@android:color/white">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/description"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="3" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:hint="@string/description"
+                app:boxBackgroundColor="@android:color/white">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_images"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:orientation="horizontal"
-            tools:itemCount="1"
-            tools:listitem="@layout/item_event_image" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="3" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <Switch
-            android:id="@+id/switch_online"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:checked="false"
-            android:paddingStart="@dimen/margin_medium"
-            android:text="@string/event_is_online" />
-
-        <TextView
-            android:id="@+id/text_city"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:drawableEnd="@drawable/ic_arrow"
-            android:paddingStart="@dimen/margin_medium"
-            android:paddingTop="@dimen/margin_medium"
-            android:paddingEnd="0dp"
-            android:paddingBottom="@dimen/margin_medium"
-            android:text="@string/city"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/layout_age" />
-
-        <TextView
-            android:id="@+id/text_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:drawableEnd="@drawable/ic_place"
-            android:paddingStart="@dimen/margin_medium"
-            android:paddingTop="@dimen/margin_medium"
-            android:paddingEnd="0dp"
-            android:paddingBottom="@dimen/margin_medium"
-            android:text="@string/choose_location"
-            android:textSize="16sp" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:hint="@string/min_age"
-            app:boxBackgroundColor="@android:color/white">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/min_age"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_images"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:lines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="@dimen/margin_medium"
+                android:orientation="horizontal"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_event_image" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:hint="@string/max_age"
-            app:boxBackgroundColor="@android:color/white">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/max_age"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
-                android:lines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_margin="@dimen/margin_medium"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingEnd="0dp"
+                android:text="@string/choose_emoji" />
 
-        <TextView
-            android:id="@+id/start_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:drawableStart="@drawable/ic_date"
-            android:drawablePadding="@dimen/margin_small"
-            android:text="@string/date_start" />
+            <include layout="@layout/view_grid_emoji" />
 
-        <TextView
-            android:id="@+id/end_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:drawableStart="@drawable/ic_date"
-            android:drawablePadding="@dimen/margin_small"
-            android:text="@string/date_end" />
+            <Switch
+                android:id="@+id/switch_online"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_medium"
+                android:checked="false"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingEnd="0dp"
+                android:text="@string/event_is_online" />
 
-        <Switch
-            android:id="@+id/switch_open_event"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:checked="true"
-            android:text="@string/event_is_open" />
+            <TextView
+                android:id="@+id/text_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:drawableEnd="@drawable/ic_arrow"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_medium"
+                android:paddingEnd="0dp"
+                android:paddingBottom="@dimen/margin_medium"
+                android:text="@string/city"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/layout_age" />
 
-        <Button
-            android:id="@+id/button_create_event"
-            style="?attr/materialButtonOutlinedStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/margin_small"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="16dp"
-            android:text="@string/publish_event"
-            android:textAllCaps="false"
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp"
-            app:rippleColor="@color/colorAccentLight"
-            app:strokeColor="@color/colorAccent"
-            app:strokeWidth="1dp" />
+            <TextView
+                android:id="@+id/text_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:drawableEnd="@drawable/ic_place"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_medium"
+                android:paddingEnd="0dp"
+                android:paddingBottom="@dimen/margin_medium"
+                android:text="@string/choose_location"
+                android:textSize="16sp" />
 
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:hint="@string/min_age"
+                app:boxBackgroundColor="@android:color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/min_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:lines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:hint="@string/max_age"
+                app:boxBackgroundColor="@android:color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/max_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:lines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/start_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:drawableStart="@drawable/ic_date"
+                android:drawablePadding="@dimen/margin_small"
+                android:text="@string/date_start" />
+
+            <TextView
+                android:id="@+id/end_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:drawableStart="@drawable/ic_date"
+                android:drawablePadding="@dimen/margin_small"
+                android:text="@string/date_end" />
+
+            <Switch
+                android:id="@+id/switch_open_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_medium"
+                android:checked="true"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingEnd="0dp"
+                android:text="@string/event_is_open" />
+
+            <Button
+                android:id="@+id/button_create_event"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/margin_small"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="16dp"
+                android:text="@string/publish_event"
+                android:textAllCaps="false"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"
+                app:rippleColor="@color/colorAccentLight"
+                app:strokeColor="@color/colorAccent"
+                app:strokeWidth="1dp" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
