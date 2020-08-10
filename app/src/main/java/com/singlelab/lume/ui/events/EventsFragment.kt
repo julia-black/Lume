@@ -230,6 +230,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
     }
 
     private fun onDaySelected(position: Int) {
+        (view_pager_events.adapter as DaysAdapter).collapseCards()
         val dayWithEvent = (view_pager_events.adapter as DaysAdapter).getList()[position]
         val isInvite =
             dayWithEvent.second.find { it.participantStatus == ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER } != null
@@ -238,7 +239,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
         context?.let {
             showCalendar(day.toCalendar())
             calendar_week_view.removeDecorator(currentDayDecorator)
-            if (!isInvite || day.isAfter(today)) {
+            if (!isInvite || day.isBefore(today)) {
                 currentDayDecorator = CircleDecorator(
                     color = ContextCompat.getColor(
                         it,
