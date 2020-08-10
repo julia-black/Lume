@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -72,9 +73,8 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
 
     override fun onCompleteCreateEvent(eventUid: String) {
         Toast.makeText(context, "Ура! Вы создали событие!", Toast.LENGTH_LONG).show()
-        val action = CreatingEventFragmentDirections.actionCreatingEventToEvent(eventUid)
-        findNavController().navigate(action)
-        findNavController().popBackStack(R.id.creating_event, true)
+        findNavController().popBackStack()
+        findNavController().navigate(R.id.event, bundleOf("eventUid" to eventUid))
     }
 
     override fun showDateStart(dateStr: String) {
@@ -185,6 +185,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                     endTime = presenter.currentDateEnd?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE),
                     isOpenForInvitations = switch_open_event.isChecked,
                     primaryImage = presenter.getPrimaryImage(),
+                    types = arrayOf(0),
                     images = presenter.getImagesStr(),
                     cityId = if (switch_online.isChecked) null else presenter.cityId!!,
                     isOnline = switch_online.isChecked

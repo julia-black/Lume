@@ -9,7 +9,7 @@ class EventRequest(
     val description: String?,
     val startTime: String,
     val endTime: String,
-    val type: Int = 0,
+    val types: Array<Int> = arrayOf(0),
     val isOpenForInvitations: Boolean = true,
     val primaryImage: String? = null,
     val images: List<String>? = null,

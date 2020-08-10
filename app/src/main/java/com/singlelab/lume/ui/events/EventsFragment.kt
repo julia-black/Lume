@@ -28,10 +28,7 @@ import com.singlelab.lume.ui.view.calendar.CircleDecorator
 import com.singlelab.lume.ui.view.calendar.FutureDaysDecorator
 import com.singlelab.lume.ui.view.calendar.PastDaysDecorator
 import com.singlelab.lume.ui.view.calendar.SelectorDecorator
-import com.singlelab.lume.util.parseToString
-import com.singlelab.lume.util.toCalendar
-import com.singlelab.lume.util.toCalendarDays
-import com.singlelab.lume.util.toUpFirstSymbol
+import com.singlelab.lume.util.*
 import com.singlelab.net.model.event.ParticipantStatus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_events.*
@@ -213,20 +210,12 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
 
     private fun showCalendar(calendar: Calendar) {
         calendar.time
-        calendar[Calendar.DAY_OF_WEEK] = 2
-        val dayMon = calendar[Calendar.DAY_OF_MONTH]
-        if (dayMon != firstDayInWeek) {
-            firstDayInWeek = dayMon
-            val monthMon = calendar[Calendar.MONTH] + 1
-            val yearMon = calendar[Calendar.YEAR]
-
-            calendar[Calendar.DAY_OF_WEEK] = 1
-            val daySun = calendar[Calendar.DAY_OF_MONTH]
-            val monthSun = calendar[Calendar.MONTH] + 1
-            val yearSun = calendar[Calendar.YEAR]
+        val firstAndLastWeekDays = calendar.getFirstAndLastDayOfWeek()
+        if (firstAndLastWeekDays.first.day != firstDayInWeek) {
+            firstDayInWeek = firstAndLastWeekDays.first.day
             calendar_week_view.state().edit()
-                .setMinimumDate(CalendarDay.from(yearMon, monthMon, firstDayInWeek!!))
-                .setMaximumDate(CalendarDay.from(yearSun, monthSun, daySun))
+                .setMinimumDate(firstAndLastWeekDays.first)
+                .setMaximumDate(firstAndLastWeekDays.second)
                 .commit()
         }
     }
@@ -242,12 +231,14 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
 
     private fun onDaySelected(position: Int) {
         val dayWithEvent = (view_pager_events.adapter as DaysAdapter).getList()[position]
-        val isInvite = dayWithEvent.second.find { it.participantStatus == ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER } != null
+        val isInvite =
+            dayWithEvent.second.find { it.participantStatus == ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER } != null
         val day = dayWithEvent.first
+        val today = CalendarDay.today()
         context?.let {
             showCalendar(day.toCalendar())
             calendar_week_view.removeDecorator(currentDayDecorator)
-            if (!isInvite) {
+            if (!isInvite || day.isAfter(today)) {
                 currentDayDecorator = CircleDecorator(
                     color = ContextCompat.getColor(
                         it,

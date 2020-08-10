@@ -22,6 +22,26 @@ fun Calendar.parseToString(outputDateFormat: String): String {
     return date.parseToString(outputDateFormat)
 }
 
+fun Calendar.getFirstAndLastDayOfWeek(): Pair<CalendarDay, CalendarDay> {
+    this[Calendar.DAY_OF_WEEK] = this.firstDayOfWeek
+    val dayFirst = this[Calendar.DAY_OF_MONTH]
+    val monthFirst = this[Calendar.MONTH] + 1
+    val yearFirst = this[Calendar.YEAR]
+
+    if (this.firstDayOfWeek == 2) {
+        this[Calendar.DAY_OF_WEEK] = 1
+    } else {
+        this[Calendar.DAY_OF_WEEK] = 7
+    }
+    val dayLast = this[Calendar.DAY_OF_MONTH]
+    val monthLast = this[Calendar.MONTH] + 1
+    val yearLast = this[Calendar.YEAR]
+    return Pair(
+        CalendarDay.from(yearFirst, monthFirst, dayFirst),
+        CalendarDay.from(yearLast, monthLast, dayLast)
+    )
+}
+
 fun Date?.formatToUTC(outputDateFormat: String): String {
     val dateFormat = SimpleDateFormat(outputDateFormat, Locale.getDefault())
     dateFormat.timeZone = TimeZone.getTimeZone(Const.UTC)
