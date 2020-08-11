@@ -25,35 +25,70 @@
                 android:background="@color/colorAccent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:padding="@dimen/margin_small"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/strip">
 
+                <ImageView
+                    android:id="@+id/emoji_one"
+                    android:layout_width="@dimen/size_emoji_calendar"
+                    android:layout_height="@dimen/size_emoji_calendar"
+                    android:layout_margin="@dimen/margin_small"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toStartOf="@id/emoji_two"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_emoji_talk"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/emoji_two"
+                    android:layout_width="@dimen/size_emoji_calendar"
+                    android:layout_height="@dimen/size_emoji_calendar"
+                    android:layout_margin="@dimen/margin_small"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toStartOf="@id/emoji_three"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_emoji_nature"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/emoji_three"
+                    android:layout_width="@dimen/size_emoji_calendar"
+                    android:layout_height="@dimen/size_emoji_calendar"
+                    android:layout_margin="@dimen/margin_small"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_emoji_travel"
+                    tools:visibility="visible" />
+
                 <TextView
                     android:id="@+id/name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_medium"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    android:maxLines="2"
+                    android:layout_margin="@dimen/margin_small"
+                    android:gravity="center_vertical"
+                    android:minLines="2"
                     android:textSize="@dimen/text_size_medium"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/emoji_one"
+                    app:layout_constraintEnd_toStartOf="@id/emoji_one"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/strip"
+                    app:layout_constraintTop_toTopOf="@id/emoji_one"
                     tools:text="Название" />
 
                 <TextView
                     android:id="@+id/description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_medium"
+                    android:layout_margin="@dimen/margin_small"
                     android:maxLines="1"
                     android:textSize="@dimen/text_size_standart"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/name"
                     tools:text="Описание события" />
@@ -62,15 +97,14 @@
                     android:id="@+id/participant_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_medium"
+                    android:layout_margin="@dimen/margin_small"
                     android:text="@string/waiting_for_approve_event"
                     android:textColor="@color/colorPrimaryDark"
                     android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/description"
                     tools:visibility="visible" />
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/date"

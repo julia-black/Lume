@@ -8,7 +8,6 @@ import com.singlelab.lume.model.profile.Profile
 import com.singlelab.lume.model.view.PagerTab
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.my_profile.interactor.MyProfileInteractor
-import com.singlelab.lume.util.toBase64
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.auth.AuthData
 import moxy.InjectViewState
@@ -80,21 +79,22 @@ class MyProfilePresenter @Inject constructor(
     }
 
     fun updateImageProfile(image: Bitmap?) {
-        image ?: return
-        viewState.showLoading(isShow = true, withoutBackground = true)
-        invokeSuspend {
-            try {
-                val uid = interactor.updateImageProfile(image.toBase64())
-                runOnMainThread {
-                    viewState.loadImage(uid)
-                    viewState.showLoading(isShow = false, withoutBackground = true)
-                }
-            } catch (e: ApiException) {
-                runOnMainThread {
-                    viewState.showLoading(isShow = false, withoutBackground = true)
-                    viewState.showError(e.message)
-                }
-            }
-        }
+        //todo изменить изменение изображения
+//        image ?: return
+//        viewState.showLoading(isShow = true, withoutBackground = true)
+//        invokeSuspend {
+//            try {
+//                val uid = interactor.updateImageProfile(image.toBase64())
+//                runOnMainThread {
+//                    viewState.loadImage(uid)
+//                    viewState.showLoading(isShow = false, withoutBackground = true)
+//                }
+//            } catch (e: ApiException) {
+//                runOnMainThread {
+//                    viewState.showLoading(isShow = false, withoutBackground = true)
+//                    viewState.showError(e.message)
+//                }
+//            }
+//        }
     }
 }

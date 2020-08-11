@@ -34,11 +34,11 @@ class RegistrationPresenter @Inject constructor(
                     name = name,
                     age = age,
                     description = description,
-                    cityId = city!!.cityId
+                    cityId = city!!.cityId,
+                    image = image!!.toBase64()
                 )
                 try {
                     interactor.registration(profile)
-                    interactor.addPhoto(image!!.toBase64())
                     preferences?.setAnon(false)
                     runOnMainThread {
                         viewState.onRegistration()

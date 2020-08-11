@@ -1,7 +1,6 @@
 package com.singlelab.lume.model.event
 
 import android.os.Parcelable
-import com.singlelab.lume.ui.event.EventType
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

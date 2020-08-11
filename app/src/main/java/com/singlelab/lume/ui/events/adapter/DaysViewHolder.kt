@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.loopeer.cardstack.CardStackView
 import com.singlelab.lume.R
 import com.singlelab.lume.model.event.EventSummary
-import com.singlelab.lume.ui.view.card_event.CardDayEventAdapter
-import com.singlelab.lume.ui.view.card_event.OnCollapseListener
+import com.singlelab.lume.ui.events.adapter.card_event.CardDayEventAdapter
+import com.singlelab.lume.ui.events.adapter.card_event.OnCollapseListener
+import com.singlelab.lume.ui.view.event.OnEventItemClickListener
 import kotlinx.android.synthetic.main.item_cards_events.view.*
 
 class DaysViewHolder(inflater: LayoutInflater, parent: ViewGroup) :

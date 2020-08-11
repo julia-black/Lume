@@ -1,4 +1,4 @@
-package com.singlelab.lume.ui.view.card_event
+package com.singlelab.lume.ui.events.adapter.card_event
 
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -6,7 +6,7 @@ import com.loopeer.cardstack.CardStackView
 import com.singlelab.lume.R
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.EventSummary
-import com.singlelab.lume.ui.events.adapter.OnEventItemClickListener
+import com.singlelab.lume.ui.view.event.OnEventItemClickListener
 import com.singlelab.lume.util.parse
 import com.singlelab.net.model.event.ParticipantStatus
 import kotlinx.android.synthetic.main.item_day_event.view.*
@@ -26,6 +26,24 @@ class CardDayEventViewHolder(view: View) :
         itemView.content.setOnClickListener {
             listener.onClickEvent(event.eventUid)
         }
+
+        event.types.forEachIndexed { index, eventType ->
+            when (index) {
+                0 -> {
+                    itemView.emoji_one.visibility = View.VISIBLE
+                    itemView.emoji_one.setImageResource(eventType.resId)
+                }
+                1 -> {
+                    itemView.emoji_two.visibility = View.VISIBLE
+                    itemView.emoji_two.setImageResource(eventType.resId)
+                }
+                2 -> {
+                    itemView.emoji_three.visibility = View.VISIBLE
+                    itemView.emoji_three.setImageResource(eventType.resId)
+                }
+            }
+        }
+
         if (position % 2 == 0) {
             itemView.strip.setBackgroundColor(
                 ContextCompat.getColor(

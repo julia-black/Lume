@@ -84,6 +84,17 @@
     <string name="remove_image">Удалить изображение</string>
     <string name="choose_emoji">Выберите до 3-х иконок, которыми можно кратко описать ваше событие:</string>
 
+    <!-- Types of events -->
+    <string name="culture">Искусство</string>
+    <string name="sport">Спорт</string>
+    <string name="nature">Природа</string>
+    <string name="talk">Общение</string>
+    <string name="game">Игры</string>
+    <string name="study">Обучение</string>
+    <string name="food">Гастрономия</string>
+    <string name="concert">Выступление</string>
+    <string name="travel">Путешествие</string>
+
     <!-- Map -->
     <string name="title_activity_maps">Map</string>
     <string name="location_event">Место проведения</string>

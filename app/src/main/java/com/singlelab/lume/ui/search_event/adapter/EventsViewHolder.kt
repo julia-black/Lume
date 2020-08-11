@@ -1,4 +1,4 @@
-package com.singlelab.lume.ui.events.adapter
+package com.singlelab.lume.ui.search_event.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,8 @@ import com.bumptech.glide.Glide
 import com.singlelab.lume.R
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.EventSummary
-import com.singlelab.lume.util.generateImageLinkForEvent
+import com.singlelab.lume.ui.view.event.OnEventItemClickListener
+import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
 import com.singlelab.net.model.event.ParticipantStatus
 import kotlinx.android.synthetic.main.item_event.view.*
@@ -26,7 +27,7 @@ class EventsViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             itemView.image.setImageResource(R.drawable.ic_event_image)
         } else {
             Glide.with(itemView)
-                .load(event.eventPrimaryImageContentUid.generateImageLinkForEvent())
+                .load(event.eventPrimaryImageContentUid.generateImageLink())
                 .into(itemView.image)
         }
         itemView.setOnClickListener {

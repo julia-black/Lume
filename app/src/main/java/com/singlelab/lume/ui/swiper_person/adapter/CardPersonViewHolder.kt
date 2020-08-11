@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.singlelab.lume.R
 import com.singlelab.lume.model.profile.Person
-import com.singlelab.lume.util.generateImageLinkForPerson
+import com.singlelab.lume.util.generateImageLink
 import kotlinx.android.synthetic.main.item_card_person.view.*
 
 class CardPersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
@@ -26,7 +26,7 @@ class CardPersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         } else {
             itemView.image.visibility = View.VISIBLE
             Glide.with(itemView)
-                .load(person.imageContentUid.generateImageLinkForPerson())
+                .load(person.imageContentUid.generateImageLink())
                 .into(itemView.image)
         }
     }

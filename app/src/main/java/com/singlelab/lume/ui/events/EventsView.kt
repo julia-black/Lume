@@ -16,7 +16,8 @@ interface EventsView : LoadingView, ErrorView {
     fun showEventsOnCalendar(
         pastEvents: MutableList<EventSummary>,
         newInviteEvents: MutableList<EventSummary>,
-        futureEvents: MutableList<EventSummary>
+        futureEvents: MutableList<EventSummary>,
+        currentDay: CalendarDay? = null
     )
 
     @StateStrategyType(AddToEndSingleStrategy::class)

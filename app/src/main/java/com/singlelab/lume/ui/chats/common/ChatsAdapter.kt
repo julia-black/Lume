@@ -12,8 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.singlelab.lume.R
-import com.singlelab.lume.util.generateImageLinkForEvent
-import com.singlelab.lume.util.generateImageLinkForPerson
+import com.singlelab.lume.util.generateImageLink
 import com.singlelab.net.model.auth.AuthData
 import kotlinx.android.synthetic.main.chats_item.view.*
 
@@ -69,9 +68,9 @@ class ChatsAdapter(
             get() {
                 if (image.isNotEmpty()) {
                     return if (isGroup) {
-                        image.generateImageLinkForEvent()
+                        image.generateImageLink()
                     } else {
-                        image.generateImageLinkForPerson()
+                        image.generateImageLink()
                     }
                 }
                 return null

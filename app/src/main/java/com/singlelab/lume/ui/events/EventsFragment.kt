@@ -10,7 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
-import androidx.navigation.Navigation
+import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -22,12 +22,13 @@ import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.EventSummary
+import com.singlelab.lume.ui.creating_event.CreatingEventFragment
 import com.singlelab.lume.ui.events.adapter.DaysAdapter
-import com.singlelab.lume.ui.events.adapter.OnEventItemClickListener
 import com.singlelab.lume.ui.view.calendar.CircleDecorator
 import com.singlelab.lume.ui.view.calendar.FutureDaysDecorator
 import com.singlelab.lume.ui.view.calendar.PastDaysDecorator
 import com.singlelab.lume.ui.view.calendar.SelectorDecorator
+import com.singlelab.lume.ui.view.event.OnEventItemClickListener
 import com.singlelab.lume.util.*
 import com.singlelab.net.model.event.ParticipantStatus
 import dagger.hilt.android.AndroidEntryPoint
@@ -38,8 +39,8 @@ import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEventItemClickListener,
-    OnDateSelectedListener {
+class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
+    OnEventItemClickListener, OnDateSelectedListener{
 
     @Inject
     lateinit var daggerPresenter: EventsPresenter
@@ -73,14 +74,34 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
         super.onViewCreated(view, savedInstanceState)
         showViewPager()
         button_create_event.setOnClickListener {
-            Navigation.createNavigateOnClickListener(R.id.action_events_to_creating_event)
-                .onClick(view)
+            toCreateEvent()
         }
         initWeekCalendar()
         showToday()
         showCalendar(Calendar.getInstance())
         button_calendar.setOnClickListener {
             showFullCalendar(!calendar_full_view.isVisible)
+        }
+    }
+
+    private fun toCreateEvent() {
+        parentFragmentManager.setFragmentResultListener(
+            CreatingEventFragment.REQUEST_CREATING_EVENT,
+            this,
+            FragmentResultListener { requestKey, result ->
+                onFragmentResult(requestKey, result)
+            })
+        val action = EventsFragmentDirections.actionEventsToCreatingEvent()
+        findNavController().navigate(action)
+    }
+
+    private fun onFragmentResult(requestKey: String, result: Bundle) {
+        when (requestKey) {
+            CreatingEventFragment.REQUEST_CREATING_EVENT -> {
+                val eventUid: String =
+                    result.getString(CreatingEventFragment.RESULT_CREATING_EVENT) ?: return
+                presenter.loadEvents(eventUid)
+            }
         }
     }
 
@@ -137,7 +158,8 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
     override fun showEventsOnCalendar(
         pastEvents: MutableList<EventSummary>,
         newInviteEvents: MutableList<EventSummary>,
-        futureEvents: MutableList<EventSummary>
+        futureEvents: MutableList<EventSummary>,
+        currentDay: CalendarDay?
     ) {
         context?.let { context ->
             val pastDaysWithEvent =
@@ -167,7 +189,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments, OnEvent
             val decorators = listOf(pastDecorator, futureDecorator, inviteDecorator)
             calendar_week_view.addDecorators(decorators)
             calendar_full_view.showView(this, decorators)
-            presenter.onShowCurrentDay(futureDaysWithEvent, pastDaysWithEvent)
+            presenter.onShowCurrentDay(futureDaysWithEvent, pastDaysWithEvent, currentDay)
         }
     }
 

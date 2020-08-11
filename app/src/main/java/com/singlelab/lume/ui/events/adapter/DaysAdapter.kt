@@ -5,7 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.singlelab.lume.model.event.EventSummary
-import com.singlelab.lume.ui.view.card_event.OnCollapseListener
+import com.singlelab.lume.ui.events.adapter.card_event.OnCollapseListener
+import com.singlelab.lume.ui.view.event.OnEventItemClickListener
 
 
 class DaysAdapter(

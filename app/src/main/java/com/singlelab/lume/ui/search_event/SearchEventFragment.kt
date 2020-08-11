@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.model.event.EventSummary
-import com.singlelab.lume.ui.events.adapter.EventsAdapter
-import com.singlelab.lume.ui.events.adapter.OnEventItemClickListener
+import com.singlelab.lume.ui.search_event.adapter.EventsAdapter
+import com.singlelab.lume.ui.view.event.OnEventItemClickListener
 import com.singlelab.lume.util.TextInputDebounce
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_search_event.*
@@ -18,7 +18,8 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SearchEventFragment : BaseFragment(), SearchEventView, OnEventItemClickListener {
+class SearchEventFragment : BaseFragment(), SearchEventView,
+    OnEventItemClickListener {
 
     @Inject
     lateinit var daggerPresenter: SearchEventPresenter
@@ -45,7 +46,10 @@ class SearchEventFragment : BaseFragment(), SearchEventView, OnEventItemClickLis
             layoutManager =
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             visibility = View.VISIBLE
-            adapter = EventsAdapter(mutableListOf(), this@SearchEventFragment)
+            adapter = EventsAdapter(
+                mutableListOf(),
+                this@SearchEventFragment
+            )
         }
 
         searchDebounce = TextInputDebounce(

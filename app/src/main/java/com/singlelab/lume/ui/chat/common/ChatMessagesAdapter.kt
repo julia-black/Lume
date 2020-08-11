@@ -107,7 +107,7 @@ abstract class ChatMessagesAdapter(
             }
         }
 
-        private val String.url: String get() = "${Const.BASE_URL}image/get-chat-message-image?imageUid=$this"
+        private val String.url: String get() = "${Const.BASE_URL}image/get-image?imageUid=$this"
     }
 
     class OutgoingMessageViewHolder(view: View) : ChatMessageViewHolder(view) {

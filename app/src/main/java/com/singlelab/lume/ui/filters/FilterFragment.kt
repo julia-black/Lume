@@ -21,8 +21,8 @@ import com.singlelab.lume.base.listeners.OnPermissionListener
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.event.Distance
+import com.singlelab.lume.model.event.EventType
 import com.singlelab.lume.ui.cities.CitiesFragment
-import com.singlelab.lume.ui.event.EventType
 import dagger.hilt.android.AndroidEntryPoint
 import io.apptik.widget.MultiSlider
 import io.apptik.widget.MultiSlider.Thumb
@@ -101,12 +101,13 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
                 } else {
                     text_city.setText(R.string.any_city)
                 }
-                if (it.selectedTypes.contains(EventType.PARTY)) {
-                    chip_party.isChecked = true
-                }
-                if (it.selectedTypes.contains(EventType.BOOZE)) {
-                    chip_booze.isChecked = true
-                }
+                //todo переделать под новые типы
+//                if (it.selectedTypes.contains(EventType.PARTY)) {
+//                    chip_party.isChecked = true
+//                }
+//                if (it.selectedTypes.contains(EventType.BOOZE)) {
+//                    chip_booze.isChecked = true
+//                }
                 switch_online.isChecked = it.isOnlyOnline
                 switch_not_online.isChecked = it.isExceptOnline
             }
@@ -146,9 +147,9 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
         chip_party.setOnCheckedChangeListener { _, isChecked ->
             presenter.setCheckedEventType(EventType.PARTY, isChecked)
         }
-        chip_booze.setOnCheckedChangeListener { _, isChecked ->
-            presenter.setCheckedEventType(EventType.BOOZE, isChecked)
-        }
+//        chip_booze.setOnCheckedChangeListener { _, isChecked ->
+//            presenter.setCheckedEventType(EventType.BOOZE, isChecked)
+//        }
         switch_online.setOnCheckedChangeListener { _, isChecked ->
             presenter.filterEvent?.isOnlyOnline = isChecked
             if (isChecked) {

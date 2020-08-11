@@ -4,7 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.singlelab.lume.util.generateImageLinkForPerson
+import com.singlelab.lume.util.generateImageLink
 import kotlinx.android.synthetic.main.group_incoming_message_item.view.*
 
 class GroupChatMessagesAdapter : ChatMessagesAdapter(Type.GROUP) {
@@ -27,7 +27,7 @@ class GroupChatMessagesAdapter : ChatMessagesAdapter(Type.GROUP) {
 
             if (messageItem.personPhoto.isNotEmpty()) {
                 Glide.with(itemView)
-                    .load(messageItem.personPhoto.generateImageLinkForPerson())
+                    .load(messageItem.personPhoto.generateImageLink())
                     .apply(RequestOptions.circleCropTransform())
                     .into(itemView.incomingMessagePhotoView)
             }

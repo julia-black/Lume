@@ -2,10 +2,10 @@ package com.singlelab.lume.ui.filters
 
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.event.Distance
+import com.singlelab.lume.model.event.EventType
 import com.singlelab.lume.model.event.FilterEvent
 import com.singlelab.lume.model.profile.FilterPerson
 import com.singlelab.lume.pref.Preferences
-import com.singlelab.lume.ui.event.EventType
 import moxy.InjectViewState
 import moxy.MvpPresenter
 import javax.inject.Inject

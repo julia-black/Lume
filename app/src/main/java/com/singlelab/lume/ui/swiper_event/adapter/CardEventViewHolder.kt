@@ -5,15 +5,12 @@ import android.location.Geocoder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.singlelab.lume.R
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.Event
-import com.singlelab.lume.ui.event.EventType
-import com.singlelab.lume.util.generateImageLinkForEvent
-import com.singlelab.lume.util.generateImageLinkForPerson
+import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
 import com.singlelab.lume.util.removePostalCode
 import kotlinx.android.synthetic.main.item_card_event.view.*
@@ -37,16 +34,25 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             itemView.image.visibility = View.VISIBLE
             event.eventPrimaryImageContentUid.let {
                 Glide.with(itemView)
-                    .load(it.generateImageLinkForEvent())
+                    .load(it.generateImageLink())
                     .into(itemView.image)
             }
         }
-        val eventType = EventType.findById(event.type)
-        eventType?.let {
-            itemView.context.let { safeContext ->
-                itemView.type.text = itemView.context.getString(it.titleRes)
-                itemView.type.backgroundTintList =
-                    ContextCompat.getColorStateList(safeContext, it.colorRes)
+
+        event.types.forEachIndexed { index, eventType ->
+            when (index) {
+                0 -> {
+                    itemView.emoji_card_one.visibility = View.VISIBLE
+                    itemView.emoji_one.setImageResource(eventType.resId)
+                }
+                1 -> {
+                    itemView.emoji_card_two.visibility = View.VISIBLE
+                    itemView.emoji_two.setImageResource(eventType.resId)
+                }
+                2 -> {
+                    itemView.emoji_card_three.visibility = View.VISIBLE
+                    itemView.emoji_three.setImageResource(eventType.resId)
+                }
             }
         }
         if (event.minAge == null && event.maxAge == null) {
@@ -70,7 +76,7 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
                 itemView.image_administrator.setImageResource(R.drawable.ic_profile)
             } else {
                 Glide.with(itemView.context)
-                    .load(it.imageContentUid.generateImageLinkForPerson())
+                    .load(it.imageContentUid.generateImageLink())
                     .into(itemView.image_administrator)
             }
         }

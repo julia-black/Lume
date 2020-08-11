@@ -34,7 +34,7 @@ class EventsPresenter @Inject constructor(
         loadEvents()
     }
 
-    private fun loadEvents() {
+    fun loadEvents(currentEventUid: String? = null) {
         viewState.showLoading(true)
         invokeSuspend {
             try {
@@ -45,7 +45,12 @@ class EventsPresenter @Inject constructor(
                     viewState.showLoading(false)
                     allEvents?.let {
                         viewState.showEvents(parseToList(allDays))
-                        viewState.showEventsOnCalendar(pastEvents, newInviteEvents, futureEvents)
+                        viewState.showEventsOnCalendar(
+                            pastEvents,
+                            newInviteEvents,
+                            futureEvents,
+                            getCurrentDay(currentEventUid)
+                        )
                     }
                 }
             } catch (e: ApiException) {
@@ -55,6 +60,16 @@ class EventsPresenter @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun getCurrentDay(currentEventUid: String?): CalendarDay? {
+        currentEventUid ?: return null
+        allDays.forEach {
+            if (it.value.find { event -> event.eventUid == currentEventUid } != null) {
+                return it.key
+            }
+        }
+        return null
     }
 
     private fun parseToList(allDays: MutableMap<CalendarDay, MutableList<EventSummary>>): List<Pair<CalendarDay, List<EventSummary>>> {
@@ -95,16 +110,21 @@ class EventsPresenter @Inject constructor(
 
     fun onShowCurrentDay(
         futureDaysWithEvent: List<CalendarDay>,
-        pastDaysWithEvent: List<CalendarDay>
+        pastDaysWithEvent: List<CalendarDay>,
+        currentDay: CalendarDay?
     ) {
-        if (futureDaysWithEvent.isEmpty()) {
-            if (pastDaysWithEvent.isNotEmpty()) {
-                val lastDay = pastDaysWithEvent.last()
-                viewState.showCurrentDayOnPager(lastDay)
+        if (currentDay == null) {
+            if (futureDaysWithEvent.isEmpty()) {
+                if (pastDaysWithEvent.isNotEmpty()) {
+                    val lastDay = pastDaysWithEvent.last()
+                    viewState.showCurrentDayOnPager(lastDay)
+                }
+            } else {
+                val nextDay = futureDaysWithEvent[0]
+                viewState.showCurrentDayOnPager(nextDay)
             }
         } else {
-            val nextDay = futureDaysWithEvent[0]
-            viewState.showCurrentDayOnPager(nextDay)
+            viewState.showCurrentDayOnPager(currentDay)
         }
     }
 }

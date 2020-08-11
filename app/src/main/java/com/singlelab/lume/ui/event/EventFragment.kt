@@ -22,8 +22,7 @@ import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
 import com.singlelab.lume.ui.view.image_person.ImagePersonAdapter
 import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
-import com.singlelab.lume.util.generateImageLinkForEvent
-import com.singlelab.lume.util.generateImageLinkForPerson
+import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
 import com.singlelab.lume.util.removePostalCode
 import com.singlelab.net.model.auth.AuthData
@@ -106,22 +105,31 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             city.visibility = View.VISIBLE
         }
 
-        val eventType = EventType.findById(event.type)
-
         if (event.eventPrimaryImageContentUid == null) {
             image.setImageResource(R.drawable.ic_event_image)
         } else {
             Glide.with(this)
-                .load(event.eventPrimaryImageContentUid.generateImageLinkForEvent())
+                .load(event.eventPrimaryImageContentUid.generateImageLink())
                 .into(image)
         }
 
-        eventType?.let {
-            context?.let { safeContext ->
-                type.text = getString(it.titleRes)
-                type.backgroundTintList = ContextCompat.getColorStateList(safeContext, it.colorRes)
+        event.types.forEachIndexed { index, eventType ->
+            when (index) {
+                0 -> {
+                    emoji_one.visibility = View.VISIBLE
+                    emoji_one.setImageResource(eventType.resId)
+                }
+                1 -> {
+                    emoji_two.visibility = View.VISIBLE
+                    emoji_two.setImageResource(eventType.resId)
+                }
+                2 -> {
+                    emoji_three.visibility = View.VISIBLE
+                    emoji_three.setImageResource(eventType.resId)
+                }
             }
         }
+
         if (event.minAge == null && event.maxAge == null) {
             age.visibility = View.GONE
         } else if (event.maxAge == null) {
@@ -149,7 +157,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                 image_administrator.setImageResource(R.drawable.ic_profile)
             } else {
                 Glide.with(this)
-                    .load(it.imageContentUid.generateImageLinkForPerson())
+                    .load(it.imageContentUid.generateImageLink())
                     .into(image_administrator)
             }
         }
@@ -228,7 +236,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                 allImages.addAll(images)
             }
             val links = allImages.map { image ->
-                image.generateImageLinkForEvent()
+                image.generateImageLink()
             }
             SliderImage.openfullScreen(it, links, 0)
         }

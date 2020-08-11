@@ -1,9 +1,10 @@
-package com.singlelab.lume.ui.events.adapter
+package com.singlelab.lume.ui.search_event.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.singlelab.lume.model.event.EventSummary
+import com.singlelab.lume.ui.view.event.OnEventItemClickListener
 
 class EventsAdapter(
     private val list: MutableList<EventSummary>,
@@ -12,7 +13,10 @@ class EventsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return EventsViewHolder(inflater, parent)
+        return EventsViewHolder(
+            inflater,
+            parent
+        )
     }
 
     override fun onBindViewHolder(holder: EventsViewHolder, position: Int) {

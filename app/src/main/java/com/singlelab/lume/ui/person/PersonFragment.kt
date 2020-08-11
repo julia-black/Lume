@@ -9,7 +9,7 @@ import com.custom.sliderimage.logic.SliderImage
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.model.profile.Profile
-import com.singlelab.lume.util.generateImageLinkForPerson
+import com.singlelab.lume.util.generateImageLink
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_person.*
 import moxy.presenter.InjectPresenter
@@ -73,7 +73,7 @@ class PersonFragment : BaseFragment(), PersonView {
 
     private fun showFullScreenImage(imageContentUid: String) {
         context?.let {
-            val links = listOf(imageContentUid.generateImageLinkForPerson())
+            val links = listOf(imageContentUid.generateImageLink())
             SliderImage.openfullScreen(it, links, 0)
         }
     }
@@ -91,7 +91,7 @@ class PersonFragment : BaseFragment(), PersonView {
     private fun showImage(imageUid: String?) {
         imageUid?.let {
             Glide.with(this)
-                .load(imageUid.generateImageLinkForPerson())
+                .load(imageUid.generateImageLink())
                 .into(image)
         }
     }

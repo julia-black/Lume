@@ -46,6 +46,11 @@ import javax.inject.Inject
 class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFragments,
     OnActivityResultListener, OnImageClickListener {
 
+    companion object {
+        const val REQUEST_CREATING_EVENT = "CREATING_EVENT_REQUEST"
+        const val RESULT_CREATING_EVENT = "CREATING_EVENT_RESULT"
+    }
+
     @Inject
     lateinit var daggerPresenter: CreatingEventPresenter
 
@@ -75,8 +80,12 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
 
     override fun onCompleteCreateEvent(eventUid: String) {
         Toast.makeText(context, "Ура! Вы создали событие!", Toast.LENGTH_LONG).show()
-        findNavController().popBackStack()
-        findNavController().navigate(R.id.event, bundleOf("eventUid" to eventUid))
+        parentFragmentManager.setFragmentResult(
+            REQUEST_CREATING_EVENT, bundleOf(
+                RESULT_CREATING_EVENT to eventUid
+            )
+        )
+        parentFragmentManager.popBackStack()
     }
 
     override fun showDateStart(dateStr: String) {

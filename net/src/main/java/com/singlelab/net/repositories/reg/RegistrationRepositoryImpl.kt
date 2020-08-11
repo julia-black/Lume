@@ -14,18 +14,4 @@ class RegistrationRepositoryImpl(private val apiUnit: ApiUnit) : RegistrationRep
             errorMessage = "Не удалось зарегистрироваться"
         )
     }
-
-    override suspend fun addPhoto(imageStr: String) {
-        safeApiCall(
-            apiUnit,
-            call = {
-                apiUnit.personApi.updateImageProfileAsync(
-                    ContentRequest(
-                        imageStr
-                    )
-                ).await()
-            },
-            errorMessage = "Не удалось зарегистрироваться"
-        )
-    }
 }

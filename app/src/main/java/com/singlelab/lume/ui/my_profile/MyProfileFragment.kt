@@ -26,7 +26,7 @@ import com.singlelab.lume.ui.view.pager.SettingsView
 import com.singlelab.lume.ui.view.pager.listener.OnFriendsClickListener
 import com.singlelab.lume.ui.view.pager.listener.OnSettingsClickListener
 import com.singlelab.lume.ui.view.person_short.OnPersonShortClickListener
-import com.singlelab.lume.util.generateImageLinkForPerson
+import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.getBitmap
 import com.singlelab.net.model.auth.AuthData
 import com.theartofdev.edmodo.cropper.CropImage
@@ -122,7 +122,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
     override fun loadImage(imageUid: String?) {
         imageUid?.let {
             Glide.with(this)
-                .load(imageUid.generateImageLinkForPerson())
+                .load(imageUid.generateImageLink())
                 .into(image)
         }
     }
@@ -175,7 +175,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
 
     private fun showFullScreenImage(imageContentUid: String) {
         context?.let {
-            val links = listOf(imageContentUid.generateImageLinkForPerson())
+            val links = listOf(imageContentUid.generateImageLink())
             SliderImage.openfullScreen(it, links, 0)
         }
     }

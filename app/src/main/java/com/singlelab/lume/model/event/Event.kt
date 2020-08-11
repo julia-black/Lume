@@ -16,7 +16,7 @@ class Event(
     val endTime: String,
     val chatUid: String? = null,
     val status: EventStatus,
-    val types: List<Int>,
+    val types: List<EventType>,
     val participants: List<Person> = listOf(),
     val notApprovedParticipants: List<Person> = listOf(),
     val invitedParticipants: List<Person> = listOf(),
@@ -28,7 +28,6 @@ class Event(
     val cityName: String? = null,
     val isOnline: Boolean
 ) {
-    val type = if (types.isEmpty()) 0 else types[0]
 
     companion object {
         fun fromResponse(eventResponse: EventResponse?): Event? {
@@ -45,7 +44,7 @@ class Event(
                     eventResponse.endTime,
                     eventResponse.chatUid,
                     EventStatus.findById(eventResponse.status),
-                    eventResponse.types,
+                    eventResponse.types.map { EventType.findById(it) },
                     eventResponse.getApprovedParticipants().mapNotNull {
                         Person.fromResponse(it)
                     },

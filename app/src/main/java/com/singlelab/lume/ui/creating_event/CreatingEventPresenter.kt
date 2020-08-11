@@ -122,12 +122,12 @@ class CreatingEventPresenter @Inject constructor(
     }
 
     fun getImagesStr(): List<String>? {
-        if (images.isNotEmpty()) {
-            images.removeAt(0)
+        val newImages = mutableListOf<String>()
+        newImages.addAll(images.map { it.toBase64() })
+        if (newImages.isNotEmpty()) {
+            newImages.removeAt(0)
         }
-        return images.map {
-            it.toBase64()
-        }
+        return newImages
     }
 
     fun setCity(city: City) {

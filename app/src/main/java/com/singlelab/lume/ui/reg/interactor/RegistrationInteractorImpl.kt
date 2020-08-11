@@ -10,8 +10,4 @@ class RegistrationInteractorImpl(private val repository: RegistrationRepository)
     override suspend fun registration(profile: ProfileRequest) {
         return repository.registration(profile)
     }
-
-    override suspend fun addPhoto(imageStr: String) {
-        return repository.addPhoto(imageStr)
-    }
 }

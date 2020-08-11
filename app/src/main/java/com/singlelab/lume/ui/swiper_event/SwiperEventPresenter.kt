@@ -41,7 +41,7 @@ class SwiperEventPresenter @Inject constructor(
             try {
                 val randomEventRequest = RandomEventRequest(
                     cityId = if (filterEvent.isOnlyOnline) null else filterEvent.cityId,
-                    eventTypes = filterEvent.selectedTypes.map { it.typeId },
+                    eventTypes = filterEvent.selectedTypes.map { it.id },
                     personXCoordinate = if (filterEvent.isOnlyOnline) null else filterEvent.latitude,
                     personYCoordinate = if (filterEvent.isOnlyOnline) null else filterEvent.longitude,
                     distance = if (filterEvent.isOnlyOnline) null else filterEvent.distance.value,
