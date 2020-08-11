@@ -179,21 +179,15 @@
 
             <Button
                 android:id="@+id/button_create_event"
-                style="?attr/materialButtonOutlinedStyle"
+                style="@style/ButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="@dimen/margin_small"
                 android:clickable="true"
                 android:focusable="true"
-                android:padding="16dp"
                 android:text="@string/publish_event"
-                android:textAllCaps="false"
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp"
-                app:rippleColor="@color/colorAccentLight"
-                app:strokeColor="@color/colorAccent"
-                app:strokeWidth="1dp" />
+                android:textAllCaps="false" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

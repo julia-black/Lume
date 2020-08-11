@@ -43,6 +43,7 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
         setListeners()
         layout_phone.hint = ""
         edit_text_phone.setCustomHint("")
+        edit_text_phone.requestFocus()
     }
 
     private fun setListeners() {

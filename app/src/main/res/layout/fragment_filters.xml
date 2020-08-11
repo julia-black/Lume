@@ -100,21 +100,15 @@
 
         <Button
             android:id="@+id/button_apply"
-            style="?attr/materialButtonOutlinedStyle"
+            style="@style/ButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="16dp"
             android:clickable="true"
             android:focusable="true"
-            android:padding="16dp"
             android:text="@string/apply"
-            android:textAllCaps="false"
-            android:textColor="@color/colorAccent"
-            android:textSize="16sp"
-            app:rippleColor="@color/colorAccentLight"
-            app:strokeColor="@color/colorAccent"
-            app:strokeWidth="1dp" />
+            android:textAllCaps="false"/>
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
