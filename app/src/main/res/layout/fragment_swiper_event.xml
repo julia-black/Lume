@@ -6,24 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackgroundEvent">
 
-    <ImageView
-        android:id="@+id/button_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_medium"
-        android:src="@drawable/ic_search_menu"
-        app:layout_constraintEnd_toStartOf="@id/button_filter"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/button_filter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_medium"
-        android:src="@drawable/ic_filter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.yuyakaido.android.cardstackview.CardStackView
         android:id="@+id/card_stack_view"
         android:layout_width="match_parent"
@@ -33,7 +15,7 @@
         android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_search" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_empty_swipes"
@@ -49,5 +31,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/button_filter"
+        android:layout_width="@dimen/size_filter_button"
+        android:layout_height="@dimen/size_filter_button"
+        android:layout_marginBottom="47dp"
+        app:cardBackgroundColor="@color/colorAccent"
+        app:cardCornerRadius="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_filter"
+            android:tint="@color/white" />
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -88,6 +88,7 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             itemView.text_online.visibility = View.INVISIBLE
             itemView.text_location.visibility = View.VISIBLE
             itemView.text_location.text = getLocationName(event.xCoordinate, event.yCoordinate)
+                ?: itemView.context.getString(R.string.unavailable_location_short)
             if (event.xCoordinate != null && event.yCoordinate != null) {
                 itemView.text_location.setOnClickListener {
                     listener.onLocationClick(event.xCoordinate, event.yCoordinate, event.name)

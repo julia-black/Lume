@@ -135,9 +135,9 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
     }
 
     private fun setListeners() {
-        button_search.setOnClickListener {
-            findNavController().navigate(SwiperEventFragmentDirections.actionSwiperEventToSearchEvent())
-        }
+//        button_search.setOnClickListener {
+//            findNavController().navigate(SwiperEventFragmentDirections.actionSwiperEventToSearchEvent())
+//        }
         button_filter.setOnClickListener {
             val action = SwiperEventFragmentDirections.actionSwiperEventToFilterFragment()
             action.isEvent = true

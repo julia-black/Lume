@@ -4,9 +4,9 @@
     <color name="colorPrimaryBright">#2B2B2B</color>
     <color name="colorPrimaryDark">#0B0604</color>
     <color name="colorDark">#325D79</color>
-    <color name="colorAccent">#F26627</color>
+    <color name="colorAccent">#FFB800</color>
 
-    <color name="colorAccentLight">#F4A582</color>
+    <color name="colorAccentLight">#FFDE88</color>
     <color name="colorLight">#9BD7D1</color>
     <color name="colorTransparentPart">#80FFFFFF</color>
     <color name="colorGray">#9A9A9A</color>
