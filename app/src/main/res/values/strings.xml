@@ -129,7 +129,7 @@
 
     <!-- Filters -->
     <string name="title_filters">Фильтры</string>
-    <string name="choose_types">Выберите тип</string>
+    <string name="choose_types">Выберите интересующие вас типы событий:</string>
     <string name="apply">Применить</string>
     <string name="permission_location_denied">Разрешите доступ к местоположению в настройках</string>
     <string name="events_is_online">Только онлайн-события</string>
@@ -138,6 +138,8 @@
     <string name="any_age">Любой возраст</string>
     <string name="age_exact">Возраст: %1$d</string>
     <string name="empty_persons">К сожалению, люди по выбранным фильтрам не найдены. Попробуйте расширить фильтры</string>
+    <string name="selected_types">Выбрано:</string>
+    <string name="selected_all">Любое событие</string>
 
     <!-- Arrays -->
     <string-array name="custom_weekdays">

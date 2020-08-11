@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 class FilterEvent(
     var distance: Distance = Distance.FAR,
-    val selectedTypes: MutableList<EventType> = mutableListOf(),
+    val selectedTypes: MutableList<EventType> = EventType.values().toMutableList(),
     var cityId: Int? = null,
     var cityName: String? = null,
     var longitude: Double? = null,

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.core.view.children
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -27,6 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.apptik.widget.MultiSlider
 import io.apptik.widget.MultiSlider.Thumb
 import kotlinx.android.synthetic.main.fragment_filters.*
+import kotlinx.android.synthetic.main.view_grid_emoji.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
@@ -89,7 +91,9 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
 
     private fun showFilters(isEvent: Boolean) {
         if (isEvent) {
-            chip_groups.visibility = View.VISIBLE
+            emoji_grid.visibility = View.VISIBLE
+            title_types.visibility = View.VISIBLE
+            choose_types.visibility = View.VISIBLE
             seek_bar_distance.visibility = View.VISIBLE
             text_age.visibility = View.GONE
             seek_bar_age.visibility = View.GONE
@@ -101,21 +105,17 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
                 } else {
                     text_city.setText(R.string.any_city)
                 }
-                //todo переделать под новые типы
-//                if (it.selectedTypes.contains(EventType.PARTY)) {
-//                    chip_party.isChecked = true
-//                }
-//                if (it.selectedTypes.contains(EventType.BOOZE)) {
-//                    chip_booze.isChecked = true
-//                }
                 switch_online.isChecked = it.isOnlyOnline
                 switch_not_online.isChecked = it.isExceptOnline
+
             }
         } else {
             text_age.visibility = View.VISIBLE
             seek_bar_age.visibility = View.VISIBLE
             title_types.visibility = View.GONE
-            chip_groups.visibility = View.GONE
+            choose_types.visibility = View.GONE
+            emoji_grid.visibility = View.GONE
+            title_types.visibility = View.GONE
             seek_bar_distance.visibility = View.GONE
             text_distance.visibility = View.GONE
             switch_online.visibility = View.GONE
@@ -143,13 +143,34 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
         }
     }
 
-    private fun setListeners() {
-        chip_party.setOnCheckedChangeListener { _, isChecked ->
-            presenter.setCheckedEventType(EventType.PARTY, isChecked)
+    override fun showTypes(selectedTypes: List<EventType>) {
+        if (selectedTypes.isEmpty() || selectedTypes.size == EventType.values().size) {
+            title_types.text = getString(R.string.selected_all)
+        } else {
+            var text = getString(R.string.selected_types)
+            selectedTypes.forEachIndexed { index, eventType ->
+                text = "$text ${getString(eventType.titleRes)}"
+                if (selectedTypes.size > 1 && index < selectedTypes.size - 1) {
+                    text = "$text,"
+                }
+            }
+            title_types.text = text
         }
-//        chip_booze.setOnCheckedChangeListener { _, isChecked ->
-//            presenter.setCheckedEventType(EventType.BOOZE, isChecked)
-//        }
+        emoji_grid.children.forEachIndexed { index, view ->
+            if (selectedTypes.find { it.id == index } != null) {
+                view.alpha = 1f
+            } else {
+                view.alpha = 0.2f
+            }
+        }
+    }
+
+    private fun setListeners() {
+        emoji_grid.children.forEachIndexed { index, view ->
+            view.setOnClickListener {
+                presenter.onClickType(index)
+            }
+        }
         switch_online.setOnCheckedChangeListener { _, isChecked ->
             presenter.filterEvent?.isOnlyOnline = isChecked
             if (isChecked) {

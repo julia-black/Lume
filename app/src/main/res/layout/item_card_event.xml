@@ -37,6 +37,7 @@
                 android:layout_margin="@dimen/margin_small"
                 android:visibility="gone"
                 app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
                 app:layout_constraintEnd_toStartOf="@id/emoji_card_two"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:visibility="visible">
@@ -58,6 +59,7 @@
                 android:layout_margin="@dimen/margin_small"
                 android:visibility="gone"
                 app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
                 app:layout_constraintEnd_toStartOf="@id/emoji_card_three"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:visibility="visible">
@@ -78,6 +80,7 @@
                 android:layout_margin="@dimen/margin_small"
                 android:visibility="gone"
                 app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:visibility="visible">
@@ -86,6 +89,7 @@
                     android:id="@+id/emoji_three"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
+                    android:layout_gravity="center"
                     android:layout_margin="@dimen/margin_small"
                     tools:src="@drawable/ic_emoji_travel" />
 

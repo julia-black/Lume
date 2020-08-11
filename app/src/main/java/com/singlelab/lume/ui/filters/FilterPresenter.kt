@@ -18,6 +18,13 @@ class FilterPresenter @Inject constructor(preferences: Preferences?) : MvpPresen
 
     fun isEvent() = filterEvent != null
 
+    override fun attachView(view: FilterView?) {
+        super.attachView(view)
+        filterEvent?.let {
+            viewState.showTypes(it.selectedTypes)
+        }
+    }
+
     fun changeDistance(distance: Int) {
         filterEvent?.let {
             it.distance = Distance.find(distance)
@@ -52,6 +59,29 @@ class FilterPresenter @Inject constructor(preferences: Preferences?) : MvpPresen
         filterEvent?.let {
             it.longitude = longitude
             it.latitude = latitude
+        }
+    }
+
+    fun onClickType(type: Int) {
+        filterEvent ?: return
+        if (filterEvent!!.selectedTypes.find { it.id == type } != null) {
+            removeType(type)
+        } else {
+            addType(type)
+        }
+    }
+
+    private fun addType(type: Int) {
+        filterEvent?.selectedTypes?.apply {
+            add(EventType.findById(type))
+            viewState.showTypes(this)
+        }
+    }
+
+    private fun removeType(type: Int) {
+        filterEvent?.selectedTypes?.apply {
+            removeAll { it.id == type }
+            viewState.showTypes(this)
         }
     }
 }
