@@ -35,20 +35,6 @@ class PersonRepositoryImpl(private val apiUnit: ApiUnit) : PersonRepository,
         )
     }
 
-    override suspend fun updateImageProfile(imageStr: String): ImageUidResponse? {
-        return safeApiCall(
-            apiUnit = apiUnit,
-            call = {
-                apiUnit.personApi.updateImageProfileAsync(
-                    ContentRequest(
-                        imageStr
-                    )
-                ).await()
-            },
-            errorMessage = "Не удалось получить профиль"
-        )
-    }
-
     override suspend fun addToFriends(personUid: String) {
         safeApiCall(
             apiUnit = apiUnit,
@@ -65,8 +51,8 @@ class PersonRepositoryImpl(private val apiUnit: ApiUnit) : PersonRepository,
         )
     }
 
-    override suspend fun updateProfile(profileRequest: ProfileRequest) {
-        safeApiCall(
+    override suspend fun updateProfile(profileRequest: ProfileRequest) : ProfileResponse? {
+        return safeApiCall(
             apiUnit = apiUnit,
             call = { apiUnit.personApi.updateProfileAsync(profileRequest).await() },
             errorMessage = "Не удалось обновить профиль"

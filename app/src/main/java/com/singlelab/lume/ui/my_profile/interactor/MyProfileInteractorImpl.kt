@@ -3,6 +3,7 @@ package com.singlelab.lume.ui.my_profile.interactor
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.model.profile.Profile
+import com.singlelab.net.model.person.ProfileRequest
 import com.singlelab.net.repositories.BaseRepository
 import com.singlelab.net.repositories.person.PersonRepository
 
@@ -17,6 +18,8 @@ class MyProfileInteractorImpl(private val repository: PersonRepository) : MyProf
         }
     }
 
-    override suspend fun updateImageProfile(imageStr: String) =
-        repository.updateImageProfile(imageStr)?.imageUid
+    override suspend fun updateImageProfile(imageStr: String): String? {
+        val profileResponse = repository.updateProfile(ProfileRequest(image = imageStr))
+        return profileResponse?.imageContentUid
+    }
 }

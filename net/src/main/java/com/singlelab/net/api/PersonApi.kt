@@ -19,7 +19,7 @@ interface PersonApi {
     fun searchPersonAsync(@Body request: SearchPersonRequest): Deferred<Response<List<PersonResponse>>>
 
     @POST("person/update-person")
-    fun updateProfileAsync(@Body profile: ProfileRequest): Deferred<Response<MessageResponse>>
+    fun updateProfileAsync(@Body profile: ProfileRequest): Deferred<Response<ProfileResponse>>
 
     @POST("image/add-person-image")
     fun updateImageProfileAsync(@Body content: ContentRequest): Deferred<Response<ImageUidResponse>>
