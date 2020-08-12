@@ -13,7 +13,7 @@ interface EventsRepository {
 
     suspend fun getRandomEvent(randomEventRequest: RandomEventRequest): EventResponse?
 
-    suspend fun addParticipants(participantRequest: ParticipantRequest)
+    suspend fun addParticipants(participantRequest: ParticipantRequest): EventResponse?
 
     suspend fun updateParticipants(participantRequest: ParticipantRequest): EventResponse?
 

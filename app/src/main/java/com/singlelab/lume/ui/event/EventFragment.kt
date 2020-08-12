@@ -207,23 +207,53 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             button_invite.visibility = if (event.isOpenForInvitations) View.VISIBLE else View.GONE
         }
 
-        val currentUid = AuthData.uid
-        if (currentUid != null && event.getParticipantStatus(currentUid) == ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER) {
-            button_accept.visibility = View.VISIBLE
-            button_reject.visibility = View.VISIBLE
-            button_accept.setOnClickListener {
-                presenter.acceptEvent(currentUid, event.eventUid)
-            }
-            button_reject.setOnClickListener {
-                presenter.rejectEvent(currentUid, event.eventUid)
-            }
-        } else {
-            button_accept.visibility = View.GONE
-            button_reject.visibility = View.GONE
-        }
         if (event.eventPrimaryImageContentUid != null) {
             image.setOnClickListener {
                 showFullScreenImages(event.eventPrimaryImageContentUid, event.images)
+            }
+        }
+
+        if (event.isOpenForInvitations) {
+            button_join.text = getString(R.string.join)
+        } else {
+            button_join.text = getString(R.string.add_request)
+        }
+
+        val currentUid = AuthData.uid ?: return
+
+        when (event.getParticipantStatus(currentUid)) {
+            ParticipantStatus.ACTIVE -> {
+                button_join.visibility = View.GONE
+                button_chat.visibility = View.VISIBLE
+                button_accept.visibility = View.GONE
+                button_reject.visibility = View.GONE
+            }
+            ParticipantStatus.WAITING_FOR_APPROVE_FROM_EVENT -> {
+                button_join.visibility = View.VISIBLE
+                button_join.isEnabled = false
+                button_chat.visibility = View.GONE
+                button_accept.visibility = View.GONE
+                button_reject.visibility = View.GONE
+            }
+            ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER -> {
+                button_chat.visibility = View.GONE
+                button_join.visibility = View.GONE
+                button_invite.visibility = View.GONE
+                button_accept.visibility = View.VISIBLE
+                button_reject.visibility = View.VISIBLE
+                button_accept.setOnClickListener {
+                    presenter.acceptEvent(currentUid, event.eventUid)
+                }
+                button_reject.setOnClickListener {
+                    presenter.rejectEvent(currentUid, event.eventUid)
+                }
+            }
+            null -> {
+                button_accept.visibility = View.GONE
+                button_reject.visibility = View.GONE
+                button_chat.visibility = View.GONE
+                button_invite.visibility = View.GONE
+                button_join.visibility = View.VISIBLE
             }
         }
     }
@@ -310,6 +340,9 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             presenter.event?.eventUid?.let { eventUid ->
                 toInvite(eventUid)
             }
+        }
+        button_join.setOnClickListener {
+            presenter.joinEvent()
         }
     }
 

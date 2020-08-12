@@ -17,6 +17,10 @@ class EventInteractorImpl(private val repository: EventsRepository) : EventInter
         return Event.fromResponse(repository.updateParticipants(participantRequest))
     }
 
+    override suspend fun joinEvent(participantRequest: ParticipantRequest) : Event? {
+        return Event.fromResponse(repository.addParticipants(participantRequest))
+    }
+
     override suspend fun rejectEvent(personUid: String, eventUid: String) {
         repository.removeParticipants(personUid, eventUid)
     }

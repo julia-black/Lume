@@ -8,5 +8,7 @@ interface EventInteractor {
 
     suspend fun acceptEvent(participantRequest: ParticipantRequest): Event?
 
+    suspend fun joinEvent(participantRequest: ParticipantRequest): Event?
+
     suspend fun rejectEvent(personUid: String, eventUid: String)
 }

@@ -39,8 +39,8 @@ class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository, Bas
         )
     }
 
-    override suspend fun addParticipants(participantRequest: ParticipantRequest) {
-        safeApiCall(
+    override suspend fun addParticipants(participantRequest: ParticipantRequest) : EventResponse? {
+        return safeApiCall(
             apiUnit = apiUnit,
             call = { apiUnit.eventsApi.addParticipantsAsync(participantRequest).await() },
             errorMessage = "Не удалось пригласить пользователя"

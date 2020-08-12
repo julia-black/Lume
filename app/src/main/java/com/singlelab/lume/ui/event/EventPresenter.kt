@@ -95,6 +95,36 @@ class EventPresenter @Inject constructor(
         }
     }
 
+    fun joinEvent() {
+        val uid = AuthData.uid ?: return
+        event?.eventUid?.let { eventUid ->
+            viewState.showLoading(isShow = true, withoutBackground = true)
+            invokeSuspend {
+                try {
+                    event = interactor.joinEvent(
+                        ParticipantRequest(
+                            uid,
+                            eventUid,
+                            if (event!!.isOpenForInvitations)
+                                ParticipantStatus.ACTIVE.id
+                            else
+                                ParticipantStatus.WAITING_FOR_APPROVE_FROM_EVENT.id
+                        )
+                    )
+                    runOnMainThread {
+                        viewState.showEvent(event!!)
+                        viewState.showLoading(isShow = false, withoutBackground = true)
+                    }
+                } catch (e: ApiException) {
+                    runOnMainThread {
+                        viewState.showLoading(isShow = false, withoutBackground = true)
+                        viewState.showError(e.message)
+                    }
+                }
+            }
+        }
+    }
+
     fun rejectEvent(personUid: String, eventUid: String?) {
         eventUid ?: return
         viewState.showLoading(true)

@@ -157,6 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
                 android:clickable="true"
+                android:enabled="true"
                 android:focusable="true"
                 android:text="@string/join"
                 android:textAllCaps="false"

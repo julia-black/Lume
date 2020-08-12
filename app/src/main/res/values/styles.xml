@@ -39,9 +39,7 @@
         <item name="android:padding">16dp</item>
         <item name="android:textColor">@color/colorBackground</item>
         <item name="android:textSize">16sp</item>
-        <item name="rippleColor">@color/colorAccentLight</item>
-        <item name="strokeColor">@color/colorAccent</item>
-        <item name="android:backgroundTint">@color/colorAccent</item>
+        <item name="android:backgroundTint">@color/selector_action_button</item>
         <item name="cornerRadius">10dp</item>
     </style>
 </resources>
