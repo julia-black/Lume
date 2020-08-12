@@ -18,38 +18,78 @@
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="10:10"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/name"
+            android:id="@+id/name_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/description"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_margin="@dimen/margin_small"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/text_size_large"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            tools:text="Иван, 22" />
+
+        <TextView
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
+            android:textSize="@dimen/text_size_standart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name_age"
+            tools:text="\@ivan" />
+
+        <ImageView
+            android:id="@+id/icon_city"
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:src="@drawable/ic_place_profile"
+            app:layout_constraintBottom_toBottomOf="@id/city"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/city" />
+
+        <TextView
+            android:id="@+id/city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_very_small"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:textColor="@color/colorGray"
+            android:textSize="@dimen/text_size_standart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/icon_city"
+            app:layout_constraintTop_toBottomOf="@id/login"
+            tools:text="Москва" />
+
+        <TextView
+            android:id="@+id/count_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:textSize="@dimen/text_size_standart"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/city"
+            tools:text="14 встреч" />
 
         <TextView
             android:id="@+id/description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:textSize="@dimen/text_size_standart"
-            app:layout_constraintBottom_toTopOf="@id/age"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
+            android:layout_margin="@dimen/margin_small"
+            android:maxLines="3"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="18 лет" />
+            app:layout_constraintTop_toBottomOf="@id/count_events"
+            tools:text="Программист, никогда не против выпить пару кружек пива в баре" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

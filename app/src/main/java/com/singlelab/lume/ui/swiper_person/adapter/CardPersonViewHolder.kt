@@ -14,13 +14,10 @@ class CardPersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.item_card_person, parent, false)) {
 
     fun bind(person: Person) {
-        itemView.name.text = person.name
+        itemView.name_age.text = "${person.name}, ${person.age}"
+        itemView.login.text = "@${person.login}"
         itemView.description.text = person.description
-        itemView.age.text = itemView.context.resources.getQuantityString(
-            R.plurals.age_plurals,
-            person.age,
-            person.age
-        )
+        itemView.city.text = person.cityName
         if (person.imageContentUid == null) {
             itemView.image.visibility = View.INVISIBLE
         } else {
