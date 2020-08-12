@@ -241,6 +241,10 @@
         <action
             android:id="@+id/action_participants_to_person"
             app:destination="@id/person" />
+        <argument
+            android:name="isAdministrator"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/swiper_person"

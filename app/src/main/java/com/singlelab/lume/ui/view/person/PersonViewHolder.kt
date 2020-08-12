@@ -19,6 +19,7 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         person: Person,
         eventUid: String? = null,
         isInviting: Boolean = false,
+        isAdministrator: Boolean = false,
         listener: OnPersonItemClickListener
     ) {
         itemView.name.text = person.name
@@ -48,9 +49,17 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         if (eventUid != null) {
             itemView.button_chat.visibility = View.GONE
             itemView.button_add_to_friends.visibility = View.GONE
+
+            itemView.button_reject.setOnClickListener {
+                listener.onRejectClick(person.personUid, eventUid)
+            }
+
             if (person.isInvited || person.participantStatus == ParticipantStatus.ACTIVE) {
                 itemView.button_invite.visibility = View.GONE
                 itemView.button_reject.visibility = View.GONE
+                if (isAdministrator) {
+                    itemView.button_reject.visibility = View.VISIBLE
+                }
             } else {
                 itemView.button_invite.visibility = View.VISIBLE
                 itemView.button_invite.setOnClickListener {
@@ -61,9 +70,6 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
                     itemView.button_reject.visibility = View.GONE
                 } else {
                     itemView.button_reject.visibility = View.VISIBLE
-                    itemView.button_reject.setOnClickListener {
-                        listener.onRejectClick(person.personUid, eventUid)
-                    }
                 }
             }
         } else {

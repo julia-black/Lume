@@ -84,10 +84,11 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
             recycler_friends.visibility = View.VISIBLE
             recycler_friends.adapter =
                 PersonAdapter(
-                    friends,
-                    presenter.eventUid,
-                    true,
-                    this
+                    list = friends,
+                    eventUid = presenter.eventUid,
+                    isInviting = true,
+                    isAdministrator = false,
+                    listener = this
                 )
         }
     }
@@ -122,10 +123,11 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
             }
             if (searchAdapter == null || page == 1) {
                 searchAdapter = PersonAdapter(
-                    searchResults,
-                    presenter.eventUid,
-                    true,
-                    this@FriendsFragment
+                    list = searchResults,
+                    eventUid = presenter.eventUid,
+                    isInviting = true,
+                    isAdministrator = false,
+                    listener = this@FriendsFragment
                 )
                 recycler_search_results.adapter = searchAdapter
             } else {

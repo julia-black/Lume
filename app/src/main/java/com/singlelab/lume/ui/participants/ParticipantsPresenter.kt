@@ -23,6 +23,8 @@ class ParticipantsPresenter @Inject constructor(
 
     var participants: MutableList<Person>? = null
 
+    var isAdministrator: Boolean = false
+
     fun approvePerson(personUid: String, eventUid: String) {
         viewState.showLoading(true)
         invokeSuspend {

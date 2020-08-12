@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -148,7 +147,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             event.participants.size
         )
         count_participants.setOnClickListener {
-            toParticipants(false)
+            toParticipants(false, presenter.isAdministrator())
         }
         event.administrator?.let {
             administrator.text = getString(R.string.administrator, it.name)
@@ -183,7 +182,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             count_not_approved.text =
                 getString(R.string.waiting_for_approve_users, event.notApprovedParticipants.size)
             count_not_approved.setOnClickListener {
-                toParticipants(true)
+                toParticipants(true, presenter.isAdministrator())
             }
         }
 
@@ -267,12 +266,13 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         }
     }
 
-    private fun toParticipants(withNotApproved: Boolean) {
+    private fun toParticipants(withNotApproved: Boolean, isAdministrator: Boolean = false) {
         presenter.getEventUid() ?: return
         presenter.getParticipant(withNotApproved)?.let {
             val action =
                 EventFragmentDirections.actionEventToParticipants(presenter.getEventUid()!!, it)
             action.withNotApproved = withNotApproved
+            action.isAdministrator = isAdministrator
             findNavController().navigate(action)
         }
     }

@@ -47,6 +47,7 @@ class ParticipantsFragment : BaseFragment(), ParticipantsView, OnlyForAuthFragme
                 presenter.withNotApproved = args.withNotApproved
                 presenter.eventUid = args.eventUid
                 presenter.participants = args.participants.toMutableList()
+                presenter.isAdministrator = args.isAdministrator
             }
         }
         recycler_participants.apply {
@@ -55,10 +56,11 @@ class ParticipantsFragment : BaseFragment(), ParticipantsView, OnlyForAuthFragme
             visibility = View.VISIBLE
             presenter.participants?.let { list ->
                 adapter = PersonAdapter(
-                    list,
-                    presenter.eventUid,
-                    false,
-                    this@ParticipantsFragment
+                    list = list,
+                    eventUid = presenter.eventUid,
+                    isInviting = false,
+                    isAdministrator = presenter.isAdministrator,
+                    listener = this@ParticipantsFragment
                 )
             }
         }
