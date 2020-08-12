@@ -1,5 +1,8 @@
 package com.singlelab.lume.util
 
+import com.singlelab.lume.model.target.Target
+import com.singlelab.lume.model.target.TargetType
+
 fun String?.maskPhone(): String {
     if (isNullOrEmpty()) {
         return ""
@@ -28,4 +31,11 @@ fun String.removePostalCode(code: String?): String {
 fun String.toUpFirstSymbol(): String {
     val first = this[0].toUpperCase()
     return "$first${substring(1, length)}"
+}
+
+fun String.parseDeepLink(): Target? {
+    val parts = this.split("/")
+    val targetType = TargetType.findByTitle(parts[3]) ?: return null
+    val targetId = parts[4]
+    return Target(targetType, targetId)
 }
