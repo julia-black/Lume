@@ -44,7 +44,9 @@ class PersonFragment : BaseFragment(), PersonView {
     }
 
     override fun showProfile(profile: Profile) {
-        name_age.text = "${profile.name}, ${profile.age}"
+        name.text = profile.name
+        login.text = "@${profile.login}"
+        age.text = resources.getQuantityString(R.plurals.age_plurals, profile.age, profile.age)
         description.text = profile.description
         city.text = profile.cityName
         if (!profile.imageContentUid.isNullOrEmpty()) {

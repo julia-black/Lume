@@ -1,105 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/margin_large"
-    android:elevation="2dp">
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/margin_medium">
+        android:layout_marginTop="@dimen/margin_large"
+        android:background="@drawable/shape_card"
+        android:scrollbars="vertical">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_image"
-            android:layout_width="146dp"
-            android:layout_height="146dp"
-            app:cardCornerRadius="73dp"
-            app:cardElevation="0dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/margin_medium">
 
-            <ImageView
-                android:id="@+id/image"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_image"
                 android:layout_width="146dp"
                 android:layout_height="146dp"
-                tools:src="@drawable/ic_profile" />
+                android:layout_marginTop="@dimen/margin_medium"
+                app:cardCornerRadius="73dp"
+                app:cardElevation="0dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="146dp"
+                    android:layout_height="146dp"
+                    tools:src="@drawable/ic_profile" />
 
-        <TextView
-            android:id="@+id/name_age"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/text_size_large"
-            app:layout_constraintTop_toBottomOf="@id/card_image"
-            tools:text="Иван, 23" />
+            </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/city"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:textSize="@dimen/text_size_standart"
-            app:layout_constraintTop_toBottomOf="@id/name_age"
-            tools:text="Москва" />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_medium"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_size_large"
+                app:layout_constraintTop_toBottomOf="@id/card_image"
+                tools:text="Иван" />
 
-        <TextView
-            android:id="@+id/count_events"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:textSize="@dimen/text_size_standart"
-            app:layout_constraintTop_toBottomOf="@id/city"
-            tools:text="14 встреч" />
+            <TextView
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_medium"
+                android:textSize="@dimen/text_size_standart"
+                app:layout_constraintTop_toBottomOf="@id/name"
+                tools:text="\@ivan" />
 
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_large"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/count_events"
-            tools:text="Программист, никогда не против выпить пару кружек пива в баре" />
+            <TextView
+                android:id="@+id/age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_medium"
+                android:textSize="@dimen/text_size_standart"
+                app:layout_constraintTop_toBottomOf="@id/login"
+                tools:text="22 года" />
 
-        <Button
-            android:id="@+id/button_add_to_friends"
-            style="@style/ButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/margin_small"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/add_to_friends"
-            android:textAllCaps="false"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:visibility="visible" />
+            <ImageView
+                android:id="@+id/icon_city"
+                android:layout_width="16dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:src="@drawable/ic_place_profile"
+                app:layout_constraintBottom_toBottomOf="@id/city"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/city" />
 
-        <Button
-            android:id="@+id/button_remove_from_friends"
-            style="@style/ButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/margin_small"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/remove_from_friends"
-            android:textAllCaps="false"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/city"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_very_small"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:textColor="@color/colorGray"
+                android:textSize="@dimen/text_size_standart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/icon_city"
+                app:layout_constraintTop_toBottomOf="@id/age"
+                tools:text="Москва" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/count_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:textSize="@dimen/text_size_standart"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/city"
+                tools:text="14 встреч" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_medium"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@id/count_events"
+                tools:text="Программист, никогда не против выпить пару кружек пива в баре" />
+
+            <Button
+                android:id="@+id/button_add_to_friends"
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/add_to_friends"
+                android:textAllCaps="false"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description"
+                tools:visibility="visible" />
+
+            <Button
+                android:id="@+id/button_remove_from_friends"
+                style="@style/ButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_large"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/remove_from_friends"
+                android:textAllCaps="false"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
