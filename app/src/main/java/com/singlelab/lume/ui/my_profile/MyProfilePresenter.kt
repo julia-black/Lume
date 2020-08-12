@@ -26,6 +26,13 @@ class MyProfilePresenter @Inject constructor(
 
     var selectedTab: PagerTab = PagerTab.FRIENDS
 
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        if (preferences != null && preferences.isFirstLaunch()) {
+            sendPushToken(preferences.getPushToken())
+        }
+    }
+
     fun loadProfile(isFirstAttach: Boolean = false) {
         viewState.showLoading(isShow = true, withoutBackground = !isFirstAttach)
         invokeSuspend {
@@ -59,24 +66,15 @@ class MyProfilePresenter @Inject constructor(
         }
     }
 
-    private fun loadFriends(personUid: String) {
+    fun logout() {
         invokeSuspend {
             try {
-                friends = interactor.loadFriends(personUid)
-                runOnMainThread {
-                    viewState.showFriends(friends)
-                }
+                interactor.updatePushToken("")
             } catch (e: ApiException) {
-                runOnMainThread {
-                    viewState.showError(e.message)
-                }
             }
+            preferences?.clearAuth()
+            viewState.navigateToAuth()
         }
-    }
-
-    fun logout() {
-        preferences?.clearAuth()
-        viewState.navigateToAuth()
     }
 
     fun updateImageProfile(image: Bitmap?) {
@@ -94,6 +92,32 @@ class MyProfilePresenter @Inject constructor(
                     viewState.showLoading(isShow = false, withoutBackground = true)
                     viewState.showError(e.message)
                 }
+            }
+        }
+    }
+
+    private fun loadFriends(personUid: String) {
+        invokeSuspend {
+            try {
+                friends = interactor.loadFriends(personUid)
+                runOnMainThread {
+                    viewState.showFriends(friends)
+                }
+            } catch (e: ApiException) {
+                runOnMainThread {
+                    viewState.showError(e.message)
+                }
+            }
+        }
+    }
+
+    private fun sendPushToken(token: String?) {
+        token ?: return
+        invokeSuspend {
+            try {
+                interactor.updatePushToken(token)
+                preferences?.setFirstLaunch(false)
+            } catch (e: ApiException) {
             }
         }
     }

@@ -6,5 +6,6 @@ class ProfileRequest(
     val description: String? = null,
     val age: Int? = null,
     val cityId: Int? = null,
-    val image: String? = null
+    val image: String? = null,
+    val token: String? = null
 )

@@ -22,4 +22,8 @@ class MyProfileInteractorImpl(private val repository: PersonRepository) : MyProf
         val profileResponse = repository.updateProfile(ProfileRequest(image = imageStr))
         return profileResponse?.imageContentUid
     }
+
+    override suspend fun updatePushToken(token: String?) {
+        repository.updateProfile(ProfileRequest(token = token))
+    }
 }

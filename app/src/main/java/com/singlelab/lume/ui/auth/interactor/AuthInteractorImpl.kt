@@ -8,8 +8,12 @@ import javax.inject.Inject
 
 class AuthInteractorImpl @Inject constructor(private var repository: AuthRepository) :
     BaseInteractor(repository as BaseRepository), AuthInteractor {
-    override suspend fun sendCode(phone: String): String? {
-        return repository.sendCode(phone)?.personUid
+    override suspend fun sendCode(phone: String, pushToken: String?): String? {
+        return if (pushToken != null) {
+            repository.sendPushCode(phone, pushToken)?.personUid
+        } else {
+            repository.sendSmsCode(phone)?.personUid
+        }
     }
 
     override suspend fun auth(phone: String, code: String): Auth? {

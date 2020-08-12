@@ -1,8 +1,8 @@
 package com.singlelab.net.api
 
-import com.singlelab.net.model.person.PersonUidResponse
 import com.singlelab.net.model.auth.AuthResponse
 import com.singlelab.net.model.person.PersonFilledResponse
+import com.singlelab.net.model.person.PersonUidResponse
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.GET
@@ -12,7 +12,13 @@ import retrofit2.http.Query
 interface AuthApi {
 
     @POST("authorization/get-sms-code")
-    fun sendCodeAsync(@Query("phoneNumber") phone: String): Deferred<Response<PersonUidResponse>>
+    fun sendSmsCodeAsync(@Query("phoneNumber") phone: String): Deferred<Response<PersonUidResponse>>
+
+    @POST("authorization/get-push-code")
+    fun sendPushCodeAsync(
+        @Query("phoneNumber") phone: String,
+        @Query("token") pushToken: String
+    ): Deferred<Response<PersonUidResponse>>
 
     @POST("authorization/set-code")
     fun authAsync(
@@ -27,5 +33,5 @@ interface AuthApi {
     ): Deferred<Response<AuthResponse>>
 
     @GET("person/is-person-filled-up")
-    fun getIsPersonFilledAsync() : Deferred<Response<PersonFilledResponse>>
+    fun getIsPersonFilledAsync(): Deferred<Response<PersonFilledResponse>>
 }

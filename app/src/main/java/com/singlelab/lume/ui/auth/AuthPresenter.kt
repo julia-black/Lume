@@ -39,13 +39,14 @@ class AuthPresenter @Inject constructor(
         }
     }
 
-    fun onClickSendCode(phone: String) {
+    fun onClickSendCode(phone: String, notificationEnabled: Boolean) {
         runOnMainThread {
             viewState.showLoading(true)
         }
         invokeSuspend {
             try {
-                val personUid = interactor.sendCode(phone)
+                val pushToken = if (notificationEnabled) preferences?.getPushToken() else null
+                val personUid = interactor.sendCode(phone, pushToken)
                 preferences?.setUid(personUid)
                 this.phone = phone
                 runOnMainThread {

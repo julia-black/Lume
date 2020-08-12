@@ -22,6 +22,7 @@
         android:layout_height="132dp"
         android:layout_marginHorizontal="@dimen/margin_medium"
         app:cardCornerRadius="66dp"
+        app:cardBackgroundColor="@color/colorAccent"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toTopOf="@id/divider_two"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,8 +39,7 @@
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="118dp"
-                android:layout_height="118dp"
-                tools:src="@drawable/ic_profile" />
+                android:layout_height="118dp" />
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
 

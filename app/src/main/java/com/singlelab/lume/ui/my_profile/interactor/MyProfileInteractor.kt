@@ -9,4 +9,6 @@ interface MyProfileInteractor {
     suspend fun loadFriends(personUid: String): List<Person>?
 
     suspend fun updateImageProfile(imageStr: String): String?
+
+    suspend fun updatePushToken(token: String?)
 }

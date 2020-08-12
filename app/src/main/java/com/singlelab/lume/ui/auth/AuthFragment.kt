@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.singlelab.lume.MainActivity
@@ -81,7 +82,13 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
         hideKeyboard()
         edit_text_phone.fixHintsForMeizu(edit_text_phone as TextInputEditText, edit_text_phone)
         if (edit_text_phone.isValid) {
-            presenter.onClickSendCode(edit_text_phone.unmaskText)
+            context?.let {
+                presenter.onClickSendCode(
+                    edit_text_phone.unmaskText,
+                    NotificationManagerCompat.from(it).areNotificationsEnabled()
+                )
+            }
+
         } else {
             layout_phone.error = "Некорректный номер"
         }

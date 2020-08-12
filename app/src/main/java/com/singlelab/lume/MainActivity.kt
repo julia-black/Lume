@@ -3,7 +3,6 @@ package com.singlelab.lume
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -20,7 +19,6 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.base.listeners.OnBackPressListener
 import com.singlelab.lume.base.listeners.OnPermissionListener
-import com.singlelab.lume.model.Const
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -112,7 +110,7 @@ class MainActivity : AppCompatActivity() {
                     return@OnCompleteListener
                 }
                 val token = task.result?.token ?: return@OnCompleteListener
-                Log.d(Const.LOG_TAG, token)
+                LumeApplication.preferences?.setPushToken(token)
             })
     }
 }

@@ -11,11 +11,14 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
         const val PREF_REFRESH_TOKEN = "pref_refresh_token"
         const val PREF_UID = "pref_uid"
         const val PREF_IS_ANON = "pref_anon"
-        const val PREF_CITY_ID = "city_id"
-        const val PREF_CITY_NAME = "city_name"
+        const val PREF_CITY_ID = "pref_city_id"
+        const val PREF_CITY_NAME = "pref_city_name"
+        const val PREF_FIRST_LAUNCH = "pref_first_launch"
+        const val PREF_PUSH_TOKEN = "pref_push_token"
     }
 
     init {
+        setFirstLaunch(true)
         AuthData.setAuthData(
             getAccessToken(),
             getRefreshToken(),
@@ -33,6 +36,7 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
     }
 
     fun clearAuth() {
+        setFirstLaunch(true)
         setAccessToken(null)
         setRefreshToken(null)
         setUid(null)
@@ -56,6 +60,18 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
         AuthData.cityId = cityId
         AuthData.cityName = cityName
     }
+
+    fun setFirstLaunch(isFirstLaunch: Boolean) {
+        sharedPreferences?.edit()?.putBoolean(PREF_FIRST_LAUNCH, isFirstLaunch)?.apply()
+    }
+
+    fun isFirstLaunch() = sharedPreferences?.getBoolean(PREF_FIRST_LAUNCH, true) ?: true
+
+    fun setPushToken(token: String?) {
+        sharedPreferences?.edit()?.putString(PREF_PUSH_TOKEN, token)?.apply()
+    }
+
+    fun getPushToken() = sharedPreferences?.getString(PREF_PUSH_TOKEN, "")
 
     private fun isAnon(): Boolean {
         return sharedPreferences == null || sharedPreferences.getBoolean(PREF_IS_ANON, true)

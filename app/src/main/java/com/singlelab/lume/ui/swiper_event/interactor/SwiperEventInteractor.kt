@@ -10,4 +10,6 @@ interface SwiperEventInteractor {
     suspend fun acceptEvent(participantRequest: ParticipantRequest)
 
     suspend fun rejectEvent(eventUid: String)
+
+    suspend fun updatePushToken(token: String)
 }

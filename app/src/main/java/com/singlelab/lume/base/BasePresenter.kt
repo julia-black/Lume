@@ -28,16 +28,6 @@ open class BasePresenter<ViewT : BaseView>(
         baseInteractor.setOnRefreshTokenListener(this)
     }
 
-    protected fun invokeSuspend(block: suspend () -> Unit) {
-        scope.launch { block.invoke() }
-    }
-
-    protected fun runOnMainThread(block: () -> Unit) {
-        scope.launch(CoroutineContextProvider().main) {
-            block.invoke()
-        }
-    }
-
     override fun onRefreshToken(auth: AuthResponse?) {
         if (auth != null) {
             preferences?.setAuth(Auth.fromResponse(auth)!!)
@@ -48,6 +38,16 @@ open class BasePresenter<ViewT : BaseView>(
         preferences?.clearAuth()
         runOnMainThread {
             viewState.toAuth()
+        }
+    }
+
+    protected fun invokeSuspend(block: suspend () -> Unit) {
+        scope.launch { block.invoke() }
+    }
+
+    protected fun runOnMainThread(block: () -> Unit) {
+        scope.launch(CoroutineContextProvider().main) {
+            block.invoke()
         }
     }
 }

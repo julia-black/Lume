@@ -28,6 +28,20 @@ class SwiperEventPresenter @Inject constructor(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         loadRandomEvent(true)
+        if (preferences != null && preferences.isFirstLaunch()) {
+            sendPushToken(preferences.getPushToken())
+        }
+    }
+
+    private fun sendPushToken(token: String?) {
+        token ?: return
+        invokeSuspend {
+            try {
+                interactor.updatePushToken(token)
+                preferences?.setFirstLaunch(false)
+            } catch (e: ApiException) {
+            }
+        }
     }
 
     fun applyFilter(filterEvent: FilterEvent) {
