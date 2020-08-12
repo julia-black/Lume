@@ -112,7 +112,6 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
         } else {
             text_age.visibility = View.VISIBLE
             seek_bar_age.visibility = View.VISIBLE
-            title_types.visibility = View.GONE
             choose_types.visibility = View.GONE
             emoji_grid.visibility = View.GONE
             title_types.visibility = View.GONE

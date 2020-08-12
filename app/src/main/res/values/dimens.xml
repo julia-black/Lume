@@ -27,4 +27,5 @@
     <dimen name="emoji_size">30dp</dimen>
     <dimen name="size_emoji_calendar">20dp</dimen>
     <dimen name="size_filter_button">50dp</dimen>
+    <dimen name="radius_large">15dp</dimen>
 </resources>

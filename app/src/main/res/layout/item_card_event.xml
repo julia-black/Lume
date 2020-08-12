@@ -12,7 +12,7 @@
         android:layout_marginHorizontal="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_large"
         android:layout_marginBottom="@dimen/margin_very_large"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="@dimen/radius_large"
         app:cardElevation="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
