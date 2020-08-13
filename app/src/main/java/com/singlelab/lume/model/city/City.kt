@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class City(
-    val cityId: Int,
+    val cityId: Int? = null,
     val cityName: String
 ) : Parcelable {
     companion object {

@@ -250,7 +250,7 @@
         android:id="@+id/swiper_person"
         android:name="com.singlelab.lume.ui.swiper_person.SwiperPersonFragment"
         android:label="SwiperPersonFragment"
-        tools:layout="@layout/fragment_swiper_person">
+        tools:layout="@layout/fragment_swiper">
         <argument
             android:name="eventUid"
             app:argType="string" />

@@ -20,7 +20,7 @@ import com.singlelab.lume.ui.swiper_event.adapter.CardStackEventAdapter
 import com.singlelab.lume.ui.swiper_event.adapter.OnCardEventListener
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_swiper_event.*
+import kotlinx.android.synthetic.main.fragment_swiper.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import java.util.*
@@ -46,7 +46,7 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_swiper_event, container, false)
+        return inflater.inflate(R.layout.fragment_swiper, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -80,6 +80,7 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
     override fun showEmptySwipes() {
         card_stack_view.visibility = View.GONE
         text_empty_swipes.visibility = View.VISIBLE
+        text_empty_swipes.text = getString(R.string.empty_swipes)
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {
@@ -141,8 +142,11 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         button_filter.setOnClickListener {
             val action = SwiperEventFragmentDirections.actionSwiperEventToFilterFragment()
             action.isEvent = true
-            action.filterEvent = presenter.filterEvent
-            findNavController().navigate(action)
+            presenter.filterEvent.let {
+                val filterEvent = it.copy(selectedTypes = it.selectedTypes.toMutableList())
+                action.filterEvent = filterEvent
+                findNavController().navigate(action)
+            }
         }
         parentFragmentManager.setFragmentResultListener(
             FilterFragment.REQUEST_FILTER,

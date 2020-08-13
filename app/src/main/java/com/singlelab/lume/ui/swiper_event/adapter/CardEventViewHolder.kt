@@ -58,10 +58,13 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         if (event.minAge == null && event.maxAge == null) {
             itemView.age.visibility = View.GONE
         } else if (event.maxAge == null) {
+            itemView.age.visibility = View.VISIBLE
             itemView.age.text = itemView.context.getString(R.string.age_from, event.minAge)
         } else if (event.minAge == null) {
+            itemView.age.visibility = View.VISIBLE
             itemView.age.text = itemView.context.getString(R.string.age_to, event.maxAge)
         } else {
+            itemView.age.visibility = View.VISIBLE
             itemView.age.text = itemView.context.getString(
                 R.string.age_from_to,
                 event.minAge,

@@ -10,10 +10,12 @@
         android:id="@+id/card_stack_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/margin_small"
         android:clipToPadding="false"
-        android:padding="@dimen/margin_very_small"
+        android:paddingHorizontal="@dimen/margin_very_small"
+        android:paddingTop="12dp"
+        android:paddingBottom="@dimen/margin_very_small"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -22,13 +24,13 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_medium"
         android:gravity="center"
-        android:text="@string/empty_persons"
         android:textSize="@dimen/text_size_medium"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/empty_swipes"
         tools:visibility="visible" />
 
     <androidx.cardview.widget.CardView

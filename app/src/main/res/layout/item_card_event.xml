@@ -20,8 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="@dimen/margin_medium"
-            tools:background="@color/colorBackground">
+            android:paddingBottom="@dimen/margin_medium">
 
             <ImageView
                 android:id="@+id/image"
@@ -106,42 +105,49 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image" />
+                app:layout_constraintTop_toBottomOf="@id/image"
+                tools:text="Название" />
 
-            <TextView
-                android:id="@+id/start_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_medium"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title" />
 
             <TextView
                 android:id="@+id/text_online"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_medium"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:layout_marginVertical="@dimen/margin_small"
                 android:drawableStart="@drawable/ic_circle"
                 android:drawablePadding="@dimen/margin_small"
                 android:text="@string/online"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/start_date" />
+                app:layout_constraintTop_toBottomOf="@id/title" />
 
             <TextView
                 android:id="@+id/text_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_medium"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:layout_marginVertical="@dimen/margin_small"
                 android:drawableStart="@drawable/ic_place"
                 android:drawablePadding="@dimen/margin_small"
                 android:ellipsize="end"
-                android:textSize="16sp"
+                android:maxLines="2"
+                android:textSize="14sp"
                 android:visibility="invisible"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/start_date"
+                app:layout_constraintTop_toBottomOf="@id/title"
                 tools:text="Москва" />
+
+            <TextView
+                android:id="@+id/start_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_small"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_location"
+                tools:text="10.05.2020 15:00" />
+
 
             <TextView
                 android:id="@+id/description"
@@ -150,14 +156,17 @@
                 android:layout_margin="@dimen/margin_medium"
                 android:textSize="@dimen/text_size_standart"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_location" />
+                app:layout_constraintTop_toBottomOf="@id/start_date"
+                tools:text="Описание" />
+
 
             <TextView
                 android:id="@+id/age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_medium"
-                android:textSize="16sp"
+                android:layout_marginVertical="@dimen/margin_small"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:textSize="12sp"
                 app:layout_constraintTop_toBottomOf="@id/description"
                 tools:text="18-25 лет" />
 
@@ -165,7 +174,8 @@
                 android:id="@+id/card_image_administrator"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:layout_margin="@dimen/margin_medium"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_small"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
                 app:layout_constraintStart_toStartOf="parent"

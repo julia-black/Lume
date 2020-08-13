@@ -18,7 +18,7 @@ import com.singlelab.lume.ui.filters.FilterFragment
 import com.singlelab.lume.ui.swiper_person.adapter.CardStackPersonAdapter
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_swiper_person.*
+import kotlinx.android.synthetic.main.fragment_swiper.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
@@ -43,7 +43,7 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_swiper_person, container, false)
+        return inflater.inflate(R.layout.fragment_swiper, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -113,7 +113,7 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
         button_filter.setOnClickListener {
             val action = SwiperPersonFragmentDirections.actionSwiperPersonToFilters()
             action.isEvent = false
-            action.filterPerson = presenter.filterPerson
+            action.filterPerson = presenter.filterPerson?.copy()
             findNavController().navigate(action)
         }
         parentFragmentManager.setFragmentResultListener(
@@ -154,5 +154,6 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
     override fun showEmptySwipes() {
         card_stack_view.visibility = View.GONE
         text_empty_swipes.visibility = View.VISIBLE
+        text_empty_swipes.text = getString(R.string.empty_persons)
     }
 }

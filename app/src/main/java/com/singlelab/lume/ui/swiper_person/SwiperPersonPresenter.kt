@@ -111,7 +111,9 @@ class SwiperPersonPresenter @Inject constructor(
     }
 
     fun applyFilter(filterPerson: FilterPerson) {
-        this.filterPerson = filterPerson
-        loadRandomPerson()
+        if (this.filterPerson != filterPerson) {
+            this.filterPerson = filterPerson
+            loadRandomPerson()
+        }
     }
 }

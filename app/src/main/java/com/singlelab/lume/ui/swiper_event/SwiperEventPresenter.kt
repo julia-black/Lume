@@ -45,8 +45,10 @@ class SwiperEventPresenter @Inject constructor(
     }
 
     fun applyFilter(filterEvent: FilterEvent) {
-        this.filterEvent = filterEvent
-        loadRandomEvent()
+        if (this.filterEvent != filterEvent) {
+            this.filterEvent = filterEvent
+            loadRandomEvent()
+        }
     }
 
     fun loadRandomEvent(isFirstAttach: Boolean = false) {

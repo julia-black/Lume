@@ -5,7 +5,7 @@ import com.singlelab.lume.model.Const
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class FilterPerson(
+data class FilterPerson(
     var cityId: Int? = null,
     var cityName: String? = null,
     var minAge: Int = Const.MIN_AGE,
