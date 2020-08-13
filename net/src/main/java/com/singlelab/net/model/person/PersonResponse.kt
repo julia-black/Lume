@@ -9,5 +9,6 @@ class PersonResponse(
     val cityName: String? = null,
     val imageContentUid: String?,
     val isFriend: Boolean = false,
+    val friendshipApprovalRequired: Boolean = false,
     val participantStatus: Int? = null
 )

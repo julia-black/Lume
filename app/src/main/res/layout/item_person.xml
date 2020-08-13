@@ -40,7 +40,7 @@
         android:layout_marginEnd="@dimen/margin_medium"
         android:clickable="true"
         android:focusable="true"
-        android:src="@drawable/ic_plus"
+        android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="@id/card_image"
         app:layout_constraintEnd_toStartOf="@id/button_chat"
         app:layout_constraintTop_toTopOf="@id/card_image" />
@@ -56,11 +56,11 @@
         android:src="@drawable/ic_reject"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/card_image"
-        app:layout_constraintEnd_toStartOf="@id/button_invite"
+        app:layout_constraintEnd_toStartOf="@id/button_accept"
         app:layout_constraintTop_toTopOf="@id/card_image" />
 
     <ImageView
-        android:id="@+id/button_invite"
+        android:id="@+id/button_accept"
         android:layout_width="@dimen/size_image_add_to_friends"
         android:layout_height="@dimen/size_image_add_to_friends"
         android:layout_marginEnd="@dimen/margin_medium"

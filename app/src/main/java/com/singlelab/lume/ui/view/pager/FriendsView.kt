@@ -22,7 +22,9 @@ class FriendsView @JvmOverloads constructor(
 
     private var personClickListener: OnPersonShortClickListener? = null
 
-    private var friends: List<Person>? = null
+    private var friends: MutableList<Person> = mutableListOf()
+
+    private var newFriends: MutableList<Person> = mutableListOf()
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_friends, this, true)
@@ -40,16 +42,34 @@ class FriendsView @JvmOverloads constructor(
     }
 
     fun setFriends(friends: List<Person>?) {
-        this.friends = friends
-        if (friends.isNullOrEmpty()) {
+        this.friends.clear()
+        this.newFriends.clear()
+        friends?.forEach {
+            if (it.friendshipApprovalRequired) {
+                this.newFriends.add(it)
+            } else {
+                this.friends.add(it)
+            }
+        }
+        if (this.friends.isNullOrEmpty()) {
             recycler_friends.visibility = View.GONE
         } else {
             recycler_friends.visibility = View.VISIBLE
             recycler_friends.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 visibility = View.VISIBLE
-                adapter = PersonShortAdapter(friends, personClickListener)
+                adapter = PersonShortAdapter(this@FriendsView.friends, personClickListener)
             }
+        }
+        val newFriendsSize = newFriends.size
+        if (newFriendsSize > 0) {
+            new_friends.visibility = View.VISIBLE
+            new_friends.text = context.getString(R.string.title_new_friends, newFriendsSize)
+            new_friends.setOnClickListener {
+                clickListener?.onNewFriendsClick()
+            }
+        } else {
+            new_friends.visibility = View.GONE
         }
     }
 }

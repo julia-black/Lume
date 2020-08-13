@@ -38,4 +38,20 @@ class FriendsRepositoryImpl(private val apiUnit: ApiUnit) : FriendsRepository, B
             errorMessage = "Не удалось пригласить пользователя"
         )
     }
+
+    override suspend fun removeFriend(personUid: String) {
+        safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.personApi.removeFromFriendsAsync(personUid).await() },
+            errorMessage = "Не удалось удалить пользователя из друзей"
+        )
+    }
+
+    override suspend fun confirmFriend(personUid: String) {
+        safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.personApi.confirmFriendAsync(personUid).await() },
+            errorMessage = "Не удалось удалить пользователя из друзей"
+        )
+    }
 }

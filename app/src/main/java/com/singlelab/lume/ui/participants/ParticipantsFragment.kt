@@ -89,6 +89,12 @@ class ParticipantsFragment : BaseFragment(), ParticipantsView, OnlyForAuthFragme
         presenter.rejectPerson(personUid, eventUid)
     }
 
+    override fun onRemoveFriendClick(personUid: String) {
+    }
+
+    override fun onConfirmFriendClick(personUid: String) {
+    }
+
     override fun showParticipants(list: List<Person>) {
         (recycler_participants.adapter as PersonAdapter).setData(list)
     }

@@ -169,6 +169,14 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
     override fun onRejectClick(personUid: String, eventUid: String) {
     }
 
+    override fun onRemoveFriendClick(personUid: String) {
+        presenter.removeFriend(personUid, isSearchResults)
+    }
+
+    override fun onConfirmFriendClick(personUid: String) {
+        presenter.confirmFriend(personUid, isSearchResults)
+    }
+
     private fun showSearch(isShow: Boolean) {
         edit_text_search.visibility = if (isShow) View.VISIBLE else View.GONE
         icon_search.visibility = if (isShow) View.VISIBLE else View.GONE

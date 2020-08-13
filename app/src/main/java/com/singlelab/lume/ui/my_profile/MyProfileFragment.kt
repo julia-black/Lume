@@ -158,6 +158,10 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         toFriends(true)
     }
 
+    override fun onNewFriendsClick() {
+        toFriends(true)
+    }
+
     private fun onClickImage(imageContentUid: String) {
         showListDialog(
             getString(R.string.choose_action),

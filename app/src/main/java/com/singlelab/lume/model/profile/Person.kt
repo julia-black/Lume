@@ -16,6 +16,7 @@ class Person(
     val imageContentUid: String?,
     var isFriend: Boolean = false,
     var isInvited: Boolean = false,
+    var friendshipApprovalRequired: Boolean = false,
     var participantStatus: ParticipantStatus? = null
 ) : Parcelable {
     companion object {
@@ -31,6 +32,7 @@ class Person(
                     personResponse.imageContentUid,
                     personResponse.isFriend,
                     false,
+                    personResponse.friendshipApprovalRequired,
                     ParticipantStatus.findStatus(personResponse.participantStatus)
                 )
             } else {

@@ -41,6 +41,9 @@ class FriendsPresenter @Inject constructor(
         invokeSuspend {
             try {
                 friends = interactor.getFriends(uid)?.toMutableList()
+                if (eventUid != null) {
+                    friends?.removeAll { it.friendshipApprovalRequired }
+                }
                 runOnMainThread {
                     viewState.showLoading(isShow = false, withoutBackground = true)
                     viewState.showFriends(friends)
@@ -123,6 +126,67 @@ class FriendsPresenter @Inject constructor(
                         friends?.find {
                             it.personUid == personUid
                         }?.isInvited = true
+                        friends?.removeAll { it.friendshipApprovalRequired }
+                        viewState.showFriends(friends)
+                    }
+                    viewState.showLoading(isShow = false, withoutBackground = true)
+                }
+            } catch (e: ApiException) {
+                runOnMainThread {
+                    viewState.showLoading(isShow = false, withoutBackground = true)
+                    viewState.showError(e.message)
+                }
+            }
+        }
+    }
+
+    fun removeFriend(personUid: String, isSearchResult: Boolean) {
+        viewState.showLoading(isShow = true, withoutBackground = true)
+        invokeSuspend {
+            try {
+                interactor.removeFriend(personUid)
+                runOnMainThread {
+                    if (isSearchResult) {
+                        searchResults?.removeAll {
+                            it.personUid == personUid
+                        }
+                        searchResults?.let {
+                            viewState.showSearchResult(it, pageNumber)
+                        }
+                    } else {
+                        friends?.removeAll {
+                            it.personUid == personUid
+                        }
+                        viewState.showFriends(friends)
+                    }
+                    viewState.showLoading(isShow = false, withoutBackground = true)
+                }
+            } catch (e: ApiException) {
+                runOnMainThread {
+                    viewState.showLoading(isShow = false, withoutBackground = true)
+                    viewState.showError(e.message)
+                }
+            }
+        }
+    }
+
+    fun confirmFriend(personUid: String, isSearchResult: Boolean) {
+        viewState.showLoading(isShow = true, withoutBackground = true)
+        invokeSuspend {
+            try {
+                interactor.confirmFriend(personUid)
+                runOnMainThread {
+                    if (isSearchResult) {
+                        searchResults?.find {
+                            it.personUid == personUid
+                        }?.friendshipApprovalRequired = false
+                        searchResults?.let {
+                            viewState.showSearchResult(it, pageNumber)
+                        }
+                    } else {
+                        friends?.find {
+                            it.personUid == personUid
+                        }?.friendshipApprovalRequired = false
                         viewState.showFriends(friends)
                     }
                     viewState.showLoading(isShow = false, withoutBackground = true)

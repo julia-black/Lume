@@ -45,7 +45,6 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
                 listener.onAddToFriends(person.personUid)
             }
         }
-
         if (eventUid != null) {
             itemView.button_chat.visibility = View.GONE
             itemView.button_add_to_friends.visibility = View.GONE
@@ -55,14 +54,14 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             }
 
             if (person.isInvited || person.participantStatus == ParticipantStatus.ACTIVE) {
-                itemView.button_invite.visibility = View.GONE
+                itemView.button_accept.visibility = View.GONE
                 itemView.button_reject.visibility = View.GONE
                 if (isAdministrator) {
                     itemView.button_reject.visibility = View.VISIBLE
                 }
             } else {
-                itemView.button_invite.visibility = View.VISIBLE
-                itemView.button_invite.setOnClickListener {
+                itemView.button_accept.visibility = View.VISIBLE
+                itemView.button_accept.setOnClickListener {
                     listener.onAcceptClick(person.personUid, eventUid)
                 }
 
@@ -73,8 +72,21 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
                 }
             }
         } else {
-            itemView.button_chat.visibility = View.VISIBLE
-            itemView.button_invite.visibility = View.GONE
+            if (person.friendshipApprovalRequired) {
+                itemView.button_accept.visibility = View.VISIBLE
+                itemView.button_reject.visibility = View.VISIBLE
+                itemView.button_accept.setOnClickListener {
+                    listener.onConfirmFriendClick(person.personUid)
+                }
+                itemView.button_reject.setOnClickListener {
+                    listener.onRemoveFriendClick(person.personUid)
+                }
+                itemView.button_chat.visibility = View.GONE
+            } else {
+                itemView.button_accept.visibility = View.GONE
+                itemView.button_reject.visibility = View.GONE
+                itemView.button_chat.visibility = View.VISIBLE
+            }
         }
     }
 }

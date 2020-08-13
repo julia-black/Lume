@@ -35,4 +35,12 @@ class FriendsInteractorImpl(private val repository: FriendsRepository) : Friends
             )
         return repository.invitePerson(request)
     }
+
+    override suspend fun removeFriend(personUid: String) {
+        return repository.removeFriend(personUid)
+    }
+
+    override suspend fun confirmFriend(personUid: String) {
+        return repository.confirmFriend(personUid)
+    }
 }

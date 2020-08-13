@@ -32,4 +32,7 @@ interface PersonApi {
 
     @DELETE("friends/remove-friend")
     fun removeFromFriendsAsync(@Query("friendGuid") personUid: String): Deferred<Response<MessageResponse>>
+
+    @POST("friends/confirm-friend")
+    fun confirmFriendAsync(@Query("friendGuid") personUid: String): Deferred<Response<MessageResponse>>
 }

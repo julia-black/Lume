@@ -10,4 +10,8 @@ interface OnPersonItemClickListener {
     fun onAcceptClick(personUid: String, eventUid: String)
 
     fun onRejectClick(personUid: String, eventUid: String)
+
+    fun onRemoveFriendClick(personUid: String)
+
+    fun onConfirmFriendClick(personUid: String)
 }

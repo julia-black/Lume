@@ -7,7 +7,7 @@
     <color name="colorAccent">#FFB800</color>
 
     <color name="colorAccentLight">#FFDE88</color>
-    <color name="colorLight">#9BD7D1</color>
+    <color name="colorLight">#e6edff</color>
     <color name="colorTransparentPart">#80FFFFFF</color>
     <color name="colorGray">#9A9A9A</color>
     <color name="colorGrayLight">#D3D3D3</color>
@@ -32,4 +32,5 @@
     <color name="colorBackgroundEvent">#FFE37F</color>
     <color name="colorBackgroundChat">#FFFCFB</color>
     <color name="colorNewInvite">#F24C56</color>
+    <color name="colorNotification">#F24C56</color>
 </resources>

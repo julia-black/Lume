@@ -11,4 +11,8 @@ interface FriendsInteractor {
     suspend fun addToFriends(personUid: String)
 
     suspend fun invitePerson(personUid: String, eventUid: String)
+
+    suspend fun removeFriend(personUid: String)
+
+    suspend fun confirmFriend(personUid: String)
 }

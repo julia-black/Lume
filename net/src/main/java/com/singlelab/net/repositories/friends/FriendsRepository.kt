@@ -12,4 +12,8 @@ interface FriendsRepository {
     suspend fun addToFriends(personUid: String)
 
     suspend fun invitePerson(request: ParticipantRequest)
+
+    suspend fun removeFriend(personUid: String)
+
+    suspend fun confirmFriend(personUid: String)
 }
