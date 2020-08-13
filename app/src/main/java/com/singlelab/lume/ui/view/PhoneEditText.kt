@@ -56,11 +56,11 @@ class PhoneEditText : TextInputEditText, OnFocusChangeListener, OnTouchListener 
         }
     }
 
-    constructor(context: Context?) : super(context) {
+    constructor(context: Context) : super(context) {
         init(null)
     }
 
-    constructor(context: Context?, attrs: AttributeSet?) : super(
+    constructor(context: Context, attrs: AttributeSet?) : super(
         context,
         attrs
     ) {
@@ -68,7 +68,7 @@ class PhoneEditText : TextInputEditText, OnFocusChangeListener, OnTouchListener 
     }
 
     constructor(
-        context: Context?,
+        context: Context,
         attrs: AttributeSet?,
         defStyleAttr: Int
     ) : super(context, attrs, defStyleAttr) {

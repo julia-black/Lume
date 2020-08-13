@@ -13,7 +13,7 @@ fun ChatResponse.toDbEntity(): Chat? {
         isGroup = isGroupChat ?: false,
         image = (if (isGroupChat == true) eventImageUid else personImageUid) ?: "",
         lastMessage = lastMessage?.messageContent ?: "",
-        lastMessagePersonUid = lastMessage?.personUid ?: return null
+        lastMessagePersonUid = lastMessage?.personUid ?: ""
     )
 }
 

@@ -80,4 +80,7 @@ class SearchEventFragment : BaseFragment(), SearchEventView,
     override fun onClickEvent(uid: String) {
         //todo подумать, куда именно будет переход
     }
+
+    override fun onClickChat(eventName: String, chatUid: String) {
+    }
 }

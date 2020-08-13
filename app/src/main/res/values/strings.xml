@@ -89,6 +89,8 @@
     <string name="choose_emoji">Выберите до 3-х иконок, которыми можно кратко описать ваше событие:</string>
     <string name="join">Присоединиться</string>
     <string name="add_request">Оставить заявку</string>
+    <string name="date_start_title">Начало: %1$s</string>
+    <string name="date_end_title">Завершение: %1$s</string>
 
     <!-- Types of events -->
     <string name="culture">Искусство</string>

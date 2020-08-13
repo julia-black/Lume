@@ -17,7 +17,8 @@ class EventSummary(
     val isAdministrator: Boolean = false,
     val participantStatus: ParticipantStatus,
     val anyPersonWaitingForApprove: Boolean,
-    val isOnline: Boolean
+    val isOnline: Boolean,
+    val chatUid: String? = null
 ) {
     companion object {
         fun fromResponse(eventSummaryResponse: EventSummaryResponse?): EventSummary? {

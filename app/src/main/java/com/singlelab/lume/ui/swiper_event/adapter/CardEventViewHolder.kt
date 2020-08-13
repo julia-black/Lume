@@ -28,10 +28,7 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         itemView.start_date.text =
             event.startTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
 
-        if (event.eventPrimaryImageContentUid == null) {
-            itemView.image.visibility = View.INVISIBLE
-        } else {
-            itemView.image.visibility = View.VISIBLE
+        if (event.eventPrimaryImageContentUid != null) {
             event.eventPrimaryImageContentUid.let {
                 Glide.with(itemView)
                     .load(it.generateImageLink())

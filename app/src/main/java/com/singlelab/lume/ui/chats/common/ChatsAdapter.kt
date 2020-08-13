@@ -59,6 +59,11 @@ class ChatsAdapter(
                     .load(chat.chatImage)
                     .apply(RequestOptions.circleCropTransform())
                     .into(itemView.chatsImageView)
+            } else {
+                Glide.with(itemView)
+                    .load(R.mipmap.image_event_default)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(itemView.chatsImageView)
             }
 
             itemView.setOnClickListener { onClickAction(chat) }

@@ -28,4 +28,6 @@
     <dimen name="size_emoji_calendar">20dp</dimen>
     <dimen name="size_filter_button">50dp</dimen>
     <dimen name="radius_large">15dp</dimen>
+    <dimen name="size_card_emoji">50dp</dimen>
+    <dimen name="size_emoji_event">25dp</dimen>
 </resources>

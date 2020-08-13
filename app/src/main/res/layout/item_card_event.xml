@@ -27,6 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
+                android:src="@mipmap/image_event_default"
                 app:layout_constraintDimensionRatio="10:7"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

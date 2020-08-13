@@ -22,7 +22,9 @@ import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.EventSummary
+import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
 import com.singlelab.lume.ui.creating_event.CreatingEventFragment
+import com.singlelab.lume.ui.event.EventFragmentDirections
 import com.singlelab.lume.ui.events.adapter.DaysAdapter
 import com.singlelab.lume.ui.view.calendar.CircleDecorator
 import com.singlelab.lume.ui.view.calendar.FutureDaysDecorator
@@ -40,7 +42,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
-    OnEventItemClickListener, OnDateSelectedListener{
+    OnEventItemClickListener, OnDateSelectedListener {
 
     @Inject
     lateinit var daggerPresenter: EventsPresenter
@@ -196,6 +198,18 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
     override fun onClickEvent(uid: String) {
         val action = EventsFragmentDirections.actionEventsToEvent(uid)
         findNavController().navigate(action)
+    }
+
+    override fun onClickChat(eventName: String, chatUid: String) {
+        findNavController().navigate(
+            EventFragmentDirections.actionFromEventToChat(
+                ChatOpeningInvocationType.Common(
+                    title = eventName,
+                    chatUid = chatUid,
+                    isGroup = true
+                )
+            )
+        )
     }
 
     override fun onDateSelected(

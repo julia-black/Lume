@@ -15,7 +15,6 @@ class CardDayEventViewHolder(view: View) :
     CardStackView.ViewHolder(view) {
 
     override fun onItemExpand(b: Boolean) {
-
     }
 
     fun onBind(event: EventSummary, position: Int, listener: OnEventItemClickListener) {
@@ -23,8 +22,14 @@ class CardDayEventViewHolder(view: View) :
         itemView.description.text = event.description
         itemView.date.text =
             event.startTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_ONLY_TIME)
+
         itemView.content.setOnClickListener {
             listener.onClickEvent(event.eventUid)
+        }
+        itemView.button_chat.setOnClickListener {
+            event.chatUid?.let {
+                listener.onClickChat(event.name, event.chatUid)
+            }
         }
 
         event.types.forEachIndexed { index, eventType ->
@@ -71,6 +76,9 @@ class CardDayEventViewHolder(view: View) :
                     itemView.context.getString(R.string.waiting_for_approve_user)
             }
             else -> {
+                if (event.chatUid != null) {
+                    itemView.button_chat.visibility = View.VISIBLE
+                }
                 itemView.participant_status.visibility = View.GONE
             }
         }

@@ -7,141 +7,152 @@
     android:background="@color/colorBackground"
     android:orientation="vertical">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/margin_large"
         android:background="@drawable/shape_card"
-        android:scrollbars="vertical">
+        android:paddingHorizontal="@dimen/margin_medium"
+        android:paddingTop="@dimen/margin_medium"
+        android:paddingBottom="@dimen/margin_large">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/margin_medium">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_image"
-                android:layout_width="146dp"
-                android:layout_height="146dp"
-                android:layout_marginTop="@dimen/margin_medium"
-                app:cardCornerRadius="73dp"
-                app:cardElevation="0dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/image"
-                    android:layout_width="146dp"
-                    android:layout_height="146dp"
-                    tools:src="@drawable/ic_profile" />
-
-            </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_medium"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="@dimen/text_size_large"
-                app:layout_constraintTop_toBottomOf="@id/card_image"
-                tools:text="Иван" />
-
-            <TextView
-                android:id="@+id/login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_medium"
-                android:textSize="@dimen/text_size_standart"
-                app:layout_constraintTop_toBottomOf="@id/name"
-                tools:text="\@ivan" />
-
-            <TextView
-                android:id="@+id/age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_medium"
-                android:textSize="@dimen/text_size_standart"
-                app:layout_constraintTop_toBottomOf="@id/login"
-                tools:text="22 года" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_image"
+            android:layout_width="146dp"
+            android:layout_height="146dp"
+            android:layout_marginTop="@dimen/margin_medium"
+            app:cardCornerRadius="73dp"
+            app:cardElevation="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/icon_city"
-                android:layout_width="16dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="14dp"
-                android:src="@drawable/ic_place_profile"
-                app:layout_constraintBottom_toBottomOf="@id/city"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/city" />
+                android:id="@+id/image"
+                android:layout_width="146dp"
+                android:layout_height="146dp"
+                tools:src="@drawable/ic_profile" />
 
-            <TextView
-                android:id="@+id/city"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_very_small"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:layout_marginEnd="@dimen/margin_medium"
-                android:textColor="@color/colorGray"
-                android:textSize="@dimen/text_size_standart"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/icon_city"
-                app:layout_constraintTop_toBottomOf="@id/age"
-                tools:text="Москва" />
+        </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/count_events"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_medium"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:textSize="@dimen/text_size_standart"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/city"
-                tools:text="14 встреч" />
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/text_size_large"
+            app:layout_constraintTop_toBottomOf="@id/card_image"
+            tools:text="Иван" />
 
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_medium"
-                android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@id/count_events"
-                tools:text="Программист, никогда не против выпить пару кружек пива в баре" />
+        <TextView
+            android:id="@+id/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:textSize="@dimen/text_size_standart"
+            app:layout_constraintTop_toBottomOf="@id/name"
+            tools:text="\@ivan" />
 
-            <Button
-                android:id="@+id/button_add_to_friends"
-                style="@style/ButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_large"
-                android:clickable="true"
-                android:focusable="true"
-                android:text="@string/add_to_friends"
-                android:textAllCaps="false"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/description"
-                tools:visibility="visible" />
+        <TextView
+            android:id="@+id/age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:textSize="@dimen/text_size_standart"
+            app:layout_constraintTop_toBottomOf="@id/login"
+            tools:text="22 года" />
 
-            <Button
-                android:id="@+id/button_remove_from_friends"
-                style="@style/ButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_large"
-                android:clickable="true"
-                android:focusable="true"
-                android:text="@string/remove_from_friends"
-                android:textAllCaps="false"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/description" />
+        <ImageView
+            android:id="@+id/icon_city"
+            android:layout_width="16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:src="@drawable/ic_place_profile"
+            app:layout_constraintBottom_toBottomOf="@id/city"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/city" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_very_small"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:textColor="@color/colorGray"
+            android:textSize="@dimen/text_size_standart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/icon_city"
+            app:layout_constraintTop_toBottomOf="@id/age"
+            tools:text="Москва" />
 
-    </androidx.core.widget.NestedScrollView>
+        <TextView
+            android:id="@+id/count_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:textSize="@dimen/text_size_standart"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/city"
+            tools:text="14 встреч" />
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/count_events"
+            tools:text="Программист, никогда не против выпить пару кружек пива в баре" />
+
+        <Button
+            android:id="@+id/button_add_to_friends"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_large"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/add_to_friends"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible" />
+
+        <Button
+            android:id="@+id/button_remove_from_friends"
+            style="@style/ButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_large"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="@string/remove_from_friends"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/button_chat"
+            android:layout_width="@dimen/size_image_chat"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:background="@drawable/ic_chat_button"
+            android:backgroundTint="@color/selector_button"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingHorizontal="@dimen/margin_medium"
+            android:paddingVertical="@dimen/margin_small"
+            android:src="@drawable/ic_chat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

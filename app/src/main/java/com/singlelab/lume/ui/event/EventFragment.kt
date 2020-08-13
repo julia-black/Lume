@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.custom.sliderimage.logic.SliderImage
+import com.google.android.material.shape.CornerFamily
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
@@ -24,6 +25,7 @@ import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
 import com.singlelab.lume.util.removePostalCode
+import com.singlelab.lume.util.setMargin
 import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.event.ParticipantStatus
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,11 +69,11 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
 
     override fun showEvent(event: Event) {
         title.text = event.name
-        start_date.text =
-            event.startTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
-        end_date.text = event.endTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
+        val startDate = event.startTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
+        val endDate = event.endTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
+        start_date.text = getString(R.string.date_start_title, startDate)
+        end_date.text = getString(R.string.date_end_title, endDate)
         description.text = event.description
-
         if (event.isOnline) {
             text_location.visibility = View.INVISIBLE
             text_online.visibility = View.VISIBLE
@@ -97,33 +99,47 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             }
         }
 
-        if (event.cityName == null) {
+        if (event.cityName == null || event.isOnline) {
             city.visibility = View.GONE
         } else {
-            city.text = event.cityName
+            city.text = "${getString(R.string.city)}: ${event.cityName}"
             city.visibility = View.VISIBLE
         }
 
+        val radius = resources.getDimension(R.dimen.radius_large)
+        image.shapeAppearanceModel = image.shapeAppearanceModel
+            .toBuilder()
+            .setTopRightCorner(CornerFamily.ROUNDED, radius)
+            .setTopLeftCorner(CornerFamily.ROUNDED, radius)
+            .setBottomRightCorner(CornerFamily.CUT, 0f)
+            .setBottomLeftCorner(CornerFamily.CUT, 0f)
+            .build()
+
         if (event.eventPrimaryImageContentUid == null) {
-            image.setImageResource(R.drawable.ic_event_image)
+            image.setImageResource(R.mipmap.image_event_default)
         } else {
             Glide.with(this)
                 .load(event.eventPrimaryImageContentUid.generateImageLink())
                 .into(image)
         }
 
+        if (event.types.size == 2) {
+            emoji_card_two.setMargin(right = resources.getDimension(R.dimen.margin_medium))
+        } else if (event.types.size == 1) {
+            emoji_card_one.setMargin(right = resources.getDimension(R.dimen.margin_medium))
+        }
         event.types.forEachIndexed { index, eventType ->
             when (index) {
                 0 -> {
-                    emoji_one.visibility = View.VISIBLE
+                    emoji_card_one.visibility = View.VISIBLE
                     emoji_one.setImageResource(eventType.resId)
                 }
                 1 -> {
-                    emoji_two.visibility = View.VISIBLE
+                    emoji_card_two.visibility = View.VISIBLE
                     emoji_two.setImageResource(eventType.resId)
                 }
                 2 -> {
-                    emoji_three.visibility = View.VISIBLE
+                    emoji_card_three.visibility = View.VISIBLE
                     emoji_three.setImageResource(eventType.resId)
                 }
             }
@@ -194,6 +210,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         }
 
         if (presenter.isAdministrator()) {
+            button_invite.visibility = View.VISIBLE
             button_search_participants.visibility = View.VISIBLE
             button_search_participants.setOnClickListener {
                 if (event.cityId != null && event.cityName != null && !event.isOnline) {

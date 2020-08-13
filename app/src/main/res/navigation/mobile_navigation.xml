@@ -9,7 +9,7 @@
         android:id="@+id/swiper_event"
         android:name="com.singlelab.lume.ui.swiper_event.SwiperEventFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_swiper_event">
+        tools:layout="@layout/fragment_swiper">
         <action
             android:id="@+id/action_swiper_event_to_event"
             app:destination="@id/event" />
@@ -211,6 +211,9 @@
         <argument
             android:name="personUid"
             app:argType="string" />
+        <action
+            android:id="@+id/action_person_to_chat"
+            app:destination="@id/chat" />
     </fragment>
 
     <fragment
@@ -243,8 +246,8 @@
             app:destination="@id/person" />
         <argument
             android:name="isAdministrator"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/swiper_person"
