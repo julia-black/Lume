@@ -39,3 +39,7 @@ fun String.parseDeepLink(): Target? {
     val targetId = parts[4]
     return Target(targetType, targetId)
 }
+
+fun String.generateEventLink(): String {
+    return "https://lumeapp.page.link/event/$this"
+}

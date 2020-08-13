@@ -91,6 +91,7 @@
     <string name="add_request">Оставить заявку</string>
     <string name="date_start_title">Начало: %1$s</string>
     <string name="date_end_title">Завершение: %1$s</string>
+    <string name="share">Поделиться</string>
 
     <!-- Types of events -->
     <string name="culture">Искусство</string>

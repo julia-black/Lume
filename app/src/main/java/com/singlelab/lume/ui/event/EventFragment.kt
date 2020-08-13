@@ -22,10 +22,7 @@ import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
 import com.singlelab.lume.ui.view.image_person.ImagePersonAdapter
 import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
-import com.singlelab.lume.util.generateImageLink
-import com.singlelab.lume.util.parse
-import com.singlelab.lume.util.removePostalCode
-import com.singlelab.lume.util.setMargin
+import com.singlelab.lume.util.*
 import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.event.ParticipantStatus
 import dagger.hilt.android.AndroidEntryPoint
@@ -360,6 +357,17 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         }
         button_join.setOnClickListener {
             presenter.joinEvent()
+        }
+        button_share.setOnClickListener {
+            presenter.event?.let {
+                shareEvent(it.eventUid, it.name)
+            }
+        }
+    }
+
+    private fun shareEvent(eventUid: String?, name: String) {
+        eventUid?.let {
+            shareText(eventUid.generateEventLink())
         }
     }
 

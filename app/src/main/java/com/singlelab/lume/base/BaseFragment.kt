@@ -2,6 +2,7 @@ package com.singlelab.lume.base
 
 import android.app.Activity
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -115,5 +116,13 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
                 .setCropShape(CropImageView.CropShape.RECTANGLE)
                 .start(activity)
         }
+    }
+
+    fun shareText(text: String) {
+        val sendIntent = Intent()
+        sendIntent.action = Intent.ACTION_SEND
+        sendIntent.putExtra(Intent.EXTRA_TEXT, text)
+        sendIntent.type = "text/plain"
+        startActivity(Intent.createChooser(sendIntent, getString(R.string.share)))
     }
 }
