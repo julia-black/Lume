@@ -5,7 +5,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'androidx.navigation.safeargs'
-
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 29
@@ -96,6 +96,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.2.4'
     implementation 'com.google.firebase:firebase-dynamic-links-ktx:19.1.0'
     implementation 'com.google.firebase:firebase-analytics-ktx:17.4.4'
+    implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
 
     //Date
     implementation "com.jakewharton.threetenabp:threetenabp:1.1.1"

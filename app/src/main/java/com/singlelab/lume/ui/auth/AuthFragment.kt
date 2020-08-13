@@ -94,10 +94,14 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
         }
     }
 
-    override fun onCodeSend(phone: String) {
+    override fun onCodeSend(phone: String, isPushCode: Boolean) {
         (activity as MainActivity).setBackPressListener(this)
         text_info.visibility = View.VISIBLE
-        text_info.text = "СМС-код отправлен на номер ${phone.maskPhone()}"
+        if (isPushCode) {
+            text_info.text = getString(R.string.push_code_send)
+        } else {
+            text_info.text = getString(R.string.sms_code_send, phone.maskPhone())
+        }
         layout_code.visibility = View.VISIBLE
         edit_text_code.setText("")
         button_auth.visibility = View.VISIBLE

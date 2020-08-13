@@ -9,7 +9,7 @@ import moxy.viewstate.strategy.StateStrategyType
 
 interface AuthView : LoadingView, ErrorView {
     @StateStrategyType(OneExecutionStateStrategy::class)
-    fun onCodeSend(phone: String)
+    fun onCodeSend(phone: String, isPushCode: Boolean)
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun toProfile()

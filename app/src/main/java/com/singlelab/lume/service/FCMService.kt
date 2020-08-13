@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Build
+import android.view.View
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -19,7 +20,7 @@ class FCMService : FirebaseMessagingService() {
 
     companion object {
         const val APP_NAME = "Lume"
-        const val CHANNEL_ID = "channelId"
+        const val CHANNEL_ID = "1567"
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -41,6 +42,20 @@ class FCMService : FirebaseMessagingService() {
     private fun sendNotification(title: String, message: String) {
         val pendingIntent: PendingIntent? = null
 
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                CHANNEL_ID,
+                "Lume channel",
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            channel.enableVibration(false)
+            channel.importance = NotificationManager.IMPORTANCE_HIGH
+            notificationManager.createNotificationChannel(channel)
+        }
+
         val notificationBuilder =
             NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -48,22 +63,11 @@ class FCMService : FirebaseMessagingService() {
                 .setContentTitle(title)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setContentText(message)
-                .setStyle(NotificationCompat.BigTextStyle().bigText(message))
-                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent)
+                .setChannelId(CHANNEL_ID)
 
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager.createNotificationChannel(
-                NotificationChannel(
-                    CHANNEL_ID,
-                    APP_NAME,
-                    NotificationManager.IMPORTANCE_DEFAULT
-                )
-            )
-        }
         notificationManager.notify(
             Random().nextInt(Int.MAX_VALUE - 1),
             notificationBuilder.build()

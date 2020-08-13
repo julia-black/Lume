@@ -68,14 +68,15 @@
 
     <TextView
         android:id="@+id/text_info"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginVertical="@dimen/margin_medium"
+        android:gravity="center"
         android:visibility="invisible"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/layout_code"
+        app:layout_constraintStart_toStartOf="@id/layout_code"
         app:layout_constraintTop_toBottomOf="@id/button_send_code"
-        tools:text="СМС-код отправлен на номер +79999999999"
+        tools:text="@string/push_code_send"
         tools:visibility="visible" />
 
     <Button

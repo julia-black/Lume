@@ -51,7 +51,7 @@ class AuthPresenter @Inject constructor(
                 this.phone = phone
                 runOnMainThread {
                     viewState.showLoading(false)
-                    viewState.onCodeSend(phone)
+                    viewState.onCodeSend(phone, !pushToken.isNullOrEmpty())
                 }
             } catch (e: ApiException) {
                 runOnMainThread {

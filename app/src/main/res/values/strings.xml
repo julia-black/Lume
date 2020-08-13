@@ -27,6 +27,8 @@
     <string name="description">Расскажи подробнее о событии</string>
     <string name="to_registration">Зарегистрироваться</string>
     <string name="error_pick_image">Не удалось выбрать изображение</string>
+    <string name="sms_code_send">СМС-код отправлен на номер %1$s</string>
+    <string name="push_code_send">На ваше устройство отправлено Push-уведомление с кодом</string>
 
     <!-- My Profile -->
     <string name="tab_frineds">Друзья</string>
@@ -37,6 +39,7 @@
     <string name="update_profile">Обновить профиль</string>
     <string name="show_image">Открыть изображение</string>
     <string name="change_image">Выбрать изображение</string>
+    <string name="title_new_friends">Новые друзья (%1$d)</string>
 
     <plurals name="age_plurals">
         <item quantity="one">%1$d год</item>
