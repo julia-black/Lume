@@ -1,7 +1,6 @@
 package com.singlelab.net.repositories.reg
 
 import com.singlelab.net.ApiUnit
-import com.singlelab.net.model.person.ContentRequest
 import com.singlelab.net.model.person.ProfileRequest
 import com.singlelab.net.repositories.BaseRepository
 

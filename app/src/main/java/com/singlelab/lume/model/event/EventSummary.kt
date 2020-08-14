@@ -37,7 +37,8 @@ class EventSummary(
                     eventSummaryResponse.isAdministrator,
                     ParticipantStatus.findStatus(eventSummaryResponse.participantStatus)!!,
                     eventSummaryResponse.anyPersonWaitingForApprove,
-                    eventSummaryResponse.isOnline
+                    eventSummaryResponse.isOnline,
+                    eventSummaryResponse.chatUid
                 )
             } else {
                 null

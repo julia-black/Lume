@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_events_to_event"
             app:destination="@id/event" />
+        <action
+            android:id="@+id/action_events_to_chat"
+            app:destination="@id/chat" />
     </fragment>
 
     <fragment

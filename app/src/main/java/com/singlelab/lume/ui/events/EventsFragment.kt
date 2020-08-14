@@ -25,7 +25,6 @@ import com.singlelab.lume.model.event.EventSummary
 import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
 import com.singlelab.lume.ui.creating_event.CreatingEventFragment
 import com.singlelab.lume.ui.event.EventFragment
-import com.singlelab.lume.ui.event.EventFragmentDirections
 import com.singlelab.lume.ui.events.adapter.DaysAdapter
 import com.singlelab.lume.ui.view.calendar.CircleDecorator
 import com.singlelab.lume.ui.view.calendar.FutureDaysDecorator
@@ -217,7 +216,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
 
     override fun onClickChat(eventName: String, chatUid: String) {
         findNavController().navigate(
-            EventFragmentDirections.actionFromEventToChat(
+            EventsFragmentDirections.actionEventsToChat(
                 ChatOpeningInvocationType.Common(
                     title = eventName,
                     chatUid = chatUid,
