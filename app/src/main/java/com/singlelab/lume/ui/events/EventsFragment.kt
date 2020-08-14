@@ -196,7 +196,6 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
                 daysWithEvent = inviteDaysWithEvent
             )
             val decorators = listOf(pastDecorator, futureDecorator, inviteDecorator)
-            calendar_week_view.removeDecorators()
             calendar_week_view.addDecorators(decorators)
             calendar_full_view.showView(this, decorators)
             presenter.onShowCurrentDay(futureDaysWithEvent, pastDaysWithEvent, currentDay)
