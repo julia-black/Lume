@@ -25,30 +25,49 @@ constructor(
     preferences,
     interactor as BaseInteractor
 ) {
+    var page: Int = 1
+
+    private var isLoading: Boolean = false
+    private var hasOldMessages: Boolean = true
+
     private val chatSettings = ChatSettings()
 
-    fun showChat(type: ChatOpeningInvocationType) {
+    fun showChat(type: ChatOpeningInvocationType, page: Int = 1) {
         // TODO: Сделать прогресс бар для загрузки сообщений с сервера, изначально показывать сообщения из бд?
-        viewState.showLoading(true)
+        if (page == 1) {
+            viewState.showLoading(true)
+        }
         invokeSuspend {
             try {
+                isLoading = true
                 val chatResponse = when (type) {
-                    is ChatOpeningInvocationType.Person -> interactor.loadPersonChat(type.personUid)
-                    is ChatOpeningInvocationType.Common -> interactor.loadChatByUid(type.chatUid)
+                    is ChatOpeningInvocationType.Person -> interactor.loadPersonChat(
+                        type.personUid,
+                        page
+                    )
+                    is ChatOpeningInvocationType.Common -> interactor.loadChatByUid(
+                        type.chatUid,
+                        page
+                    )
                     else -> null
                 }
-
                 if (chatResponse != null) {
                     chatSettings.chatType = type
                     chatSettings.chatUid = chatResponse.chatUid
                     chatSettings.setLastMessageUid(chatResponse.messages)
-                    saveChatMessages(chatResponse.messages)
-                    showLocalMessages()
-                    syncMessages()
+                    isLoading = false
+                    if (chatResponse.messages.isNullOrEmpty()) {
+                        hasOldMessages = false
+                    } else {
+                        saveChatMessages(chatResponse.messages)
+                        showLocalMessages()
+                        syncMessages()
+                    }
                 } else {
                     runOnMainThread { viewState.showError("Ошибка при загрузке чата") }
                 }
             } catch (e: Exception) {
+                isLoading = false
                 showLocalMessages()
             }
         }
@@ -88,6 +107,8 @@ constructor(
         }
     }
 
+    fun isNeedLoading() = !isLoading && hasOldMessages
+
     private suspend fun showLocalMessages() {
         val chatUid = chatSettings.chatUid
         val chatType = chatSettings.chatType
@@ -102,7 +123,7 @@ constructor(
             if (messages.isEmpty()) {
                 viewState.showEmptyChat()
             } else {
-                viewState.showChat(messages)
+                viewState.showChat(messages, page)
             }
         }
     }

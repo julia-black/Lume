@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.nguyenhoanglam.imagepicker.model.Config.CREATOR.ROOT_DIR_DCIM
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
 import com.singlelab.lume.R
@@ -52,10 +53,12 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         presenter.showChat(chatType)
     }
 
-    override fun showChat(messages: List<ChatMessageItem>) {
+    override fun showChat(messages: List<ChatMessageItem>, page: Int) {
         emptyChatView.visibility = View.GONE
         chatMessagesAdapter.setMessages(messages)
-        chatView.scrollToPosition(chatMessagesAdapter.itemCount - 1)
+        if (page == 1) {
+            chatView.scrollToPosition(chatMessagesAdapter.itemCount - 1)
+        }
     }
 
     override fun showEmptyChat() {
@@ -92,6 +95,19 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         chatView.addItemDecoration(SpaceDivider(4))
         sendMessageView.setOnClickListener { sendMessage() }
         attachmentMessageView.setOnClickListener { addAttachment() }
+        chatView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            (layoutManager as LinearLayoutManager).stackFromEnd = true
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    (layoutManager as LinearLayoutManager?)?.let { layoutManager ->
+                        if (dy < 0 && presenter.isNeedLoading() && layoutManager.findFirstVisibleItemPosition() == 0) {
+                            presenter.showChat(chatType, ++presenter.page)
+                        }
+                    }
+                }
+            })
+        }
     }
 
     private fun sendMessage(images: List<Bitmap> = emptyList()) {

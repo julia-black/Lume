@@ -8,7 +8,7 @@ import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface ChatView : LoadingView, ErrorView {
-    fun showChat(messages: List<ChatMessageItem>)
+    fun showChat(messages: List<ChatMessageItem>, page: Int)
     fun showEmptyChat()
     fun showNewMessage(message: ChatMessageItem)
     fun enableMessageSending(isEnabled: Boolean)

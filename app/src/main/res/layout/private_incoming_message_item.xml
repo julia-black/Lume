@@ -5,6 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="30dp"
+    android:layout_marginVertical="@dimen/margin_small"
     android:background="@drawable/private_incoming_message_input_background"
     android:backgroundTint="#D5DADA">
 
@@ -33,11 +34,26 @@
         android:paddingBottom="8dp"
         android:textSize="16sp"
         app:layout_constrainedWidth="true"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/incomingMessageImageView"
         tools:text="Medium-Long Message"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/incomingMessageDateView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="2dp"
+        android:fontFamily="sans-serif"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/incomingMessageView"
+        tools:text="13:48"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

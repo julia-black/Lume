@@ -9,8 +9,8 @@ import com.singlelab.net.repositories.BaseRepository
 interface ChatRepository {
     suspend fun loadNewMessages(chatUid: String, lastMessageUid: String?): List<ChatMessageResponse>?
     suspend fun sendMessage(message: ChatMessageRequest): ChatMessageResponse?
-    suspend fun loadPersonChat(personUid: String): ChatMessagesResponse?
-    suspend fun loadChatByUid(chatUid: String): ChatMessagesResponse?
+    suspend fun loadPersonChat(personUid: String, page: Int): ChatMessagesResponse?
+    suspend fun loadChatByUid(chatUid: String, page: Int): ChatMessagesResponse?
 }
 
 class DefaultChatRepository(
@@ -31,15 +31,15 @@ class DefaultChatRepository(
             errorMessage = "Не удалось отправить сообщение"
         )
 
-    override suspend fun loadPersonChat(personUid: String) =
+    override suspend fun loadPersonChat(personUid: String, page: Int) =
         safeApiCall(
-            call = { chatsApi.chatWithPersonAsync(personUid).await() },
+            call = { chatsApi.chatWithPersonAsync(personUid, pageNumber = page).await() },
             errorMessage = "Не удалось загрузить чат"
         )
 
-    override suspend fun loadChatByUid(chatUid: String) =
+    override suspend fun loadChatByUid(chatUid: String, page: Int) =
         safeApiCall(
-            call = { chatsApi.chatAsync(chatUid).await() },
+            call = { chatsApi.chatAsync(chatUid, pageNumber = page).await() },
             errorMessage = "Не удалось загрузить чат"
         )
 }

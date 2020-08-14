@@ -22,7 +22,7 @@ class GroupChatMessagesAdapter : ChatMessagesAdapter(Type.GROUP) {
 
             itemView.incomingMessageView.setMessageText(messageItem.text)
             itemView.incomingMessageImageView.setImages(messageItem.images)
-
+            itemView.incomingMessageDateView.setDate(messageItem.date)
             itemView.incomingMessageAuthorView.text = messageItem.personName
 
             if (messageItem.personPhoto.isNotEmpty()) {

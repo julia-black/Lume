@@ -12,8 +12,8 @@ import com.singlelab.net.repositories.chat.ChatRepository as RemoteChatRepositor
 interface ChatInteractor {
     suspend fun loadNewMessages(chatUid: String, lastMessageUid: String?): List<ChatMessageResponse>?
     suspend fun sendMessage(message: ChatMessageRequest): ChatMessageResponse?
-    suspend fun loadPersonChat(personUid: String): ChatMessagesResponse?
-    suspend fun loadChatByUid(chatUid: String): ChatMessagesResponse?
+    suspend fun loadPersonChat(personUid: String, page: Int): ChatMessagesResponse?
+    suspend fun loadChatByUid(chatUid: String, page: Int): ChatMessagesResponse?
 
     suspend fun saveChatMessages(messages: List<ChatMessage>)
     suspend fun saveChatMessage(message: ChatMessage)
@@ -33,11 +33,11 @@ class DefaultChatInteractor(
     override suspend fun sendMessage(message: ChatMessageRequest) =
         remoteRepository.sendMessage(message)
 
-    override suspend fun loadPersonChat(personUid: String) =
-        remoteRepository.loadPersonChat(personUid)
+    override suspend fun loadPersonChat(personUid: String, page: Int) =
+        remoteRepository.loadPersonChat(personUid, page)
 
-    override suspend fun loadChatByUid(chatUid: String) =
-        remoteRepository.loadChatByUid(chatUid)
+    override suspend fun loadChatByUid(chatUid: String, page: Int) =
+        remoteRepository.loadChatByUid(chatUid, page)
 
     override suspend fun saveChatMessages(messages: List<ChatMessage>) =
         localRepository.insert(messages)

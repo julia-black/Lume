@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
+    android:layout_marginVertical="@dimen/margin_small"
     android:layout_height="wrap_content">
 
     <ImageView
@@ -55,7 +56,7 @@
             app:layout_constraintTop_toBottomOf="@id/incomingMessageAuthorView"
             app:layout_goneMarginBottom="10dp"
             tools:src="@drawable/ic_event_image"
-            tools:visibility="visible" />
+            tools:visibility="gone" />
 
         <TextView
             android:id="@+id/incomingMessageView"
@@ -66,11 +67,28 @@
             android:paddingEnd="16dp"
             android:paddingBottom="4dp"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/incomingMessageImageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="Medium-Long Text" />
+            tools:text="Пfddf" />
+
+        <TextView
+            android:id="@+id/incomingMessageDateView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="2dp"
+            android:fontFamily="sans-serif"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/incomingMessageView"
+            tools:text="13:48"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
