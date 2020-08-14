@@ -15,4 +15,14 @@
         app:layout_constraintVertical_weight="1"
         tools:listitem="@layout/chats_item" />
 
+    <TextView
+        android:id="@+id/emptyChatsView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/empty_chats"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Build
-import android.view.View
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -66,7 +65,6 @@ class FCMService : FirebaseMessagingService() {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent)
                 .setChannelId(CHANNEL_ID)
-
 
         notificationManager.notify(
             Random().nextInt(Int.MAX_VALUE - 1),

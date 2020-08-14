@@ -53,13 +53,13 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
     }
 
     override fun showChat(messages: List<ChatMessageItem>) {
+        emptyChatView.visibility = View.GONE
         chatMessagesAdapter.setMessages(messages)
         chatView.scrollToPosition(chatMessagesAdapter.itemCount - 1)
     }
 
     override fun showEmptyChat() {
-        // TODO: Сделать нормальный плейсхолер с сообщением, что чат пуст
-        showError("Чат пуст")
+        emptyChatView.visibility = View.VISIBLE
     }
 
     override fun showNewMessage(message: ChatMessageItem) {

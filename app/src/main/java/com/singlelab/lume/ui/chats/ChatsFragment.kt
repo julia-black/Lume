@@ -46,13 +46,13 @@ class ChatsFragment : BaseFragment(), ChatsView, OnlyForAuthFragments {
     }
 
     override fun showChats(chats: List<ChatItem>) {
+        emptyChatsView.visibility = View.GONE
         chatsAdapter.setChats(chats)
         chatsAdapter.notifyDataSetChanged()
     }
 
     override fun showEmptyChats() {
-        // TODO: Сделать нормальный плейсхолер с сообщением, что нет чатов
-        showError("У вас нет активных чатов")
+        emptyChatsView.visibility = View.VISIBLE
     }
 
     private fun navigateToChat(chat: ChatItem) =

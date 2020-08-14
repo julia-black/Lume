@@ -17,4 +17,6 @@ interface PersonRepository {
     suspend fun removeFromFriends(personUid: String)
 
     suspend fun updateProfile(profileRequest: ProfileRequest): ProfileResponse?
+
+    suspend fun removePushToken()
 }

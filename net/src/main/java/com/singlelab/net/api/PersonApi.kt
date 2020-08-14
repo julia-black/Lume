@@ -1,8 +1,10 @@
 package com.singlelab.net.api
 
-import com.singlelab.net.model.ImageUidResponse
 import com.singlelab.net.model.MessageResponse
-import com.singlelab.net.model.person.*
+import com.singlelab.net.model.person.PersonResponse
+import com.singlelab.net.model.person.ProfileRequest
+import com.singlelab.net.model.person.ProfileResponse
+import com.singlelab.net.model.person.SearchPersonRequest
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.*
@@ -21,8 +23,8 @@ interface PersonApi {
     @POST("person/update-person")
     fun updateProfileAsync(@Body profile: ProfileRequest): Deferred<Response<ProfileResponse>>
 
-    @POST("image/add-person-image")
-    fun updateImageProfileAsync(@Body content: ContentRequest): Deferred<Response<ImageUidResponse>>
+    @POST("person/remove-person-token")
+    fun removePushTokenAsync(): Deferred<Response<ProfileResponse>>
 
     @GET("friends/get-friends")
     fun getFriendsAsync(@Query("personUid") personUid: String): Deferred<Response<List<PersonResponse>>>

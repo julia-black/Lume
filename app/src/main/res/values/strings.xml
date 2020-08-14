@@ -29,6 +29,7 @@
     <string name="error_pick_image">Не удалось выбрать изображение</string>
     <string name="sms_code_send">СМС-код отправлен на номер %1$s</string>
     <string name="push_code_send">На ваше устройство отправлено Push-уведомление с кодом</string>
+    <string name="login_hint">Логин может содержать только латинские буквы, цифры, символы подчеркивания и точки</string>
 
     <!-- My Profile -->
     <string name="tab_frineds">Друзья</string>
@@ -125,11 +126,13 @@
     <!-- Chats -->
     <string name="chats_title">Чаты</string>
     <string name="chats_last_message_author">Вы: %1$s</string>
+    <string name="empty_chats">У вас пока нет активных чатов</string>
 
     <!-- Chat -->
     <string name="chat_title">Чат</string>
     <string name="chat_message_hint">Сообщение</string>
     <string name="chat_select_images_limit">Выберите не больше %1$d фотографий</string>
+    <string name="empty_chat">Чат пока пуст. Напишите первое собщение!</string>
 
     <!-- City -->
     <string name="city">Город</string>

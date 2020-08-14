@@ -11,4 +11,8 @@ interface MyProfileInteractor {
     suspend fun updateImageProfile(imageStr: String): String?
 
     suspend fun updatePushToken(token: String?)
+
+    suspend fun clearDatabase()
+
+    suspend fun removePushToken()
 }

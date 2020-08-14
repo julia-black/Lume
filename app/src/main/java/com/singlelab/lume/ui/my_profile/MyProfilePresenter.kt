@@ -69,7 +69,8 @@ class MyProfilePresenter @Inject constructor(
     fun logout() {
         invokeSuspend {
             try {
-                interactor.updatePushToken("")
+                interactor.removePushToken()
+                interactor.clearDatabase()
             } catch (e: ApiException) {
             }
             preferences?.clearAuth()

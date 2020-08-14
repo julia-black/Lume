@@ -58,4 +58,12 @@ class PersonRepositoryImpl(private val apiUnit: ApiUnit) : PersonRepository,
             errorMessage = "Не удалось обновить профиль"
         )
     }
+
+    override suspend fun removePushToken() {
+       safeApiCall(
+            apiUnit = apiUnit,
+            call = { apiUnit.personApi.removePushTokenAsync().await() },
+            errorMessage = "Не удалось удалить токен"
+        )
+    }
 }
