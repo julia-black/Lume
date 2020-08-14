@@ -33,4 +33,6 @@
     <color name="colorBackgroundChat">#FFFCFB</color>
     <color name="colorNewInvite">#F24C56</color>
     <color name="colorNotification">#F24C56</color>
+    <color name="colorChat">#23B832</color>
+    <color name="colorChatPressed">#65C55B</color>
 </resources>
