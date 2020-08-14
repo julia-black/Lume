@@ -10,10 +10,9 @@ interface ChatsRepository {
     suspend fun loadChats(): List<ChatResponse>?
 }
 
-class DefaultChatsRepository(private val apiUnit: ApiUnit) : BaseRepository(), ChatsRepository {
+class DefaultChatsRepository(private val apiUnit: ApiUnit) : BaseRepository(apiUnit), ChatsRepository {
     override suspend fun loadChats(): List<ChatResponse>? {
         return safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.chatsApi.chatsAsync().await() },
             errorMessage = "Не удалось загрузить чаты"
         )

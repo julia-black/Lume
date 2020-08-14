@@ -21,7 +21,8 @@ data class ChatResponse(
     val name: String? = null,
     val lastMessage: ChatMessageResponse? = null,
     val personImageUid: String? = null,
-    val eventImageUid: String? = null
+    val eventImageUid: String? = null,
+    val unreadMessagesCount: Int = 0
 )
 
 // Messages

@@ -1,19 +1,17 @@
 package com.singlelab.net.repositories.person
 
 import com.singlelab.net.ApiUnit
-import com.singlelab.net.model.ImageUidResponse
-import com.singlelab.net.model.person.ContentRequest
 import com.singlelab.net.model.person.PersonResponse
 import com.singlelab.net.model.person.ProfileRequest
 import com.singlelab.net.model.person.ProfileResponse
 import com.singlelab.net.repositories.BaseRepository
 
-class PersonRepositoryImpl(private val apiUnit: ApiUnit) : PersonRepository,
-    BaseRepository() {
+class PersonRepositoryImpl(
+    private val apiUnit: ApiUnit
+) : PersonRepository, BaseRepository(apiUnit) {
 
     override suspend fun getProfile(): ProfileResponse? {
         return safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.personApi.getProfileAsync().await() },
             errorMessage = "Не удалось получить профиль"
         )
@@ -21,7 +19,6 @@ class PersonRepositoryImpl(private val apiUnit: ApiUnit) : PersonRepository,
 
     override suspend fun getProfile(personUid: String): ProfileResponse? {
         return safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.personApi.getProfileAsync(personUid).await() },
             errorMessage = "Не удалось получить профиль"
         )
@@ -29,7 +26,6 @@ class PersonRepositoryImpl(private val apiUnit: ApiUnit) : PersonRepository,
 
     override suspend fun getFriends(personUid: String): List<PersonResponse>? {
         return safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.personApi.getFriendsAsync(personUid).await() },
             errorMessage = "Не удалось получить друзей"
         )
@@ -37,7 +33,6 @@ class PersonRepositoryImpl(private val apiUnit: ApiUnit) : PersonRepository,
 
     override suspend fun addToFriends(personUid: String) {
         safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.personApi.addToFriendsAsync(personUid).await() },
             errorMessage = "Не удалось добавить в друзья"
         )
@@ -45,23 +40,20 @@ class PersonRepositoryImpl(private val apiUnit: ApiUnit) : PersonRepository,
 
     override suspend fun removeFromFriends(personUid: String) {
         safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.personApi.removeFromFriendsAsync(personUid).await() },
             errorMessage = "Не удалось удалить из друзей"
         )
     }
 
-    override suspend fun updateProfile(profileRequest: ProfileRequest) : ProfileResponse? {
+    override suspend fun updateProfile(profileRequest: ProfileRequest): ProfileResponse? {
         return safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.personApi.updateProfileAsync(profileRequest).await() },
             errorMessage = "Не удалось обновить профиль"
         )
     }
 
     override suspend fun removePushToken() {
-       safeApiCall(
-            apiUnit = apiUnit,
+        safeApiCall(
             call = { apiUnit.personApi.removePushTokenAsync().await() },
             errorMessage = "Не удалось удалить токен"
         )

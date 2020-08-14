@@ -16,6 +16,7 @@ import com.singlelab.lume.base.listeners.OnPermissionListener
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
 import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.profile.PersonNotifications
 import com.singlelab.net.model.auth.AuthData
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -68,6 +69,10 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         showLoading(false)
         findNavController().popBackStack()
         findNavController().navigate(R.id.auth)
+    }
+
+    override fun showNotifications(notifications: PersonNotifications) {
+        (activity as MainActivity).showNotifications(notifications)
     }
 
     protected fun invokeSuspend(block: suspend () -> Unit) {

@@ -16,7 +16,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:orientation="vertical"
             android:paddingBottom="@dimen/margin_large">
 
@@ -111,11 +110,83 @@
                 android:text="@string/choose_location"
                 android:textSize="16sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
+            <TextView
+                android:id="@+id/start_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:drawableEnd="@drawable/ic_date"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_medium"
+                android:paddingEnd="0dp"
+                android:paddingBottom="@dimen/margin_medium"
+                android:text="@string/date_start"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/end_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:drawableEnd="@drawable/ic_date"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_medium"
+                android:paddingEnd="0dp"
+                android:paddingBottom="@dimen/margin_medium"
+                android:text="@string/date_end"
+                android:textSize="16sp" />
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/start_date"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="@dimen/margin_medium"-->
+            <!--                android:layout_marginTop="@dimen/margin_medium"-->
+            <!--                android:layout_marginEnd="@dimen/margin_medium"-->
+            <!--                android:drawableStart="@drawable/ic_date"-->
+            <!--                android:drawablePadding="@dimen/margin_small"-->
+            <!--                android:text="@string/date_start" />-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/end_date"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="@dimen/margin_medium"-->
+            <!--                android:layout_marginTop="@dimen/margin_medium"-->
+            <!--                android:layout_marginEnd="@dimen/margin_medium"-->
+            <!--                android:drawableStart="@drawable/ic_date"-->
+            <!--                android:drawablePadding="@dimen/margin_small"-->
+            <!--                android:text="@string/date_end" />-->
+
+            <Switch
+                android:id="@+id/switch_open_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:checked="true"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingEnd="0dp"
+                android:text="@string/event_is_open" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:paddingStart="@dimen/margin_medium"
+                android:paddingEnd="0dp"
+                android:text="@string/attention_age" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
                 android:layout_marginEnd="@dimen/margin_medium"
                 android:hint="@string/min_age"
                 app:boxBackgroundColor="@android:color/white">
@@ -144,38 +215,6 @@
                     android:inputType="number"
                     android:lines="1" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <TextView
-                android:id="@+id/start_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_medium"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:layout_marginEnd="@dimen/margin_medium"
-                android:drawableStart="@drawable/ic_date"
-                android:drawablePadding="@dimen/margin_small"
-                android:text="@string/date_start" />
-
-            <TextView
-                android:id="@+id/end_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_medium"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:layout_marginEnd="@dimen/margin_medium"
-                android:drawableStart="@drawable/ic_date"
-                android:drawablePadding="@dimen/margin_small"
-                android:text="@string/date_end" />
-
-            <Switch
-                android:id="@+id/switch_open_event"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_medium"
-                android:checked="true"
-                android:paddingStart="@dimen/margin_medium"
-                android:paddingEnd="0dp"
-                android:text="@string/event_is_open" />
 
             <Button
                 android:id="@+id/button_create_event"

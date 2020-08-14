@@ -5,16 +5,17 @@ import com.singlelab.net.ApiUnit
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.exceptions.RefreshTokenException
 import com.singlelab.net.exceptions.TimeoutException
-import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.ErrorResponse
 import com.singlelab.net.model.ResultCoroutines
+import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.auth.AuthResponse
+import com.singlelab.net.model.person.PersonNotificationsResponse
 import retrofit2.Response
 import java.net.HttpURLConnection
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-open class BaseRepository {
+open class BaseRepository(private val apiUnit: ApiUnit) {
 
     private var onRefreshTokenListener: OnRefreshTokenListener? = null
 
@@ -22,12 +23,18 @@ open class BaseRepository {
         this.onRefreshTokenListener = listener
     }
 
+    suspend fun getNotifications(): PersonNotificationsResponse? {
+        return safeApiCall(
+            call = { apiUnit.personApi.getNotificationsAsync().await() },
+            errorMessage = "Не удалось получить уведомления"
+        )
+    }
+
     suspend fun <T : Any> safeApiCall(
-        apiUnit: ApiUnit,
         call: suspend () -> Response<T>,
         errorMessage: String
     ): T? {
-        val result: ResultCoroutines<T> = safeApiResult(apiUnit, call, errorMessage)
+        val result: ResultCoroutines<T> = safeApiResult(call, errorMessage)
         var data: T? = null
 
         when (result) {
@@ -41,7 +48,6 @@ open class BaseRepository {
     }
 
     private suspend fun <T : Any> safeApiResult(
-        apiUnit: ApiUnit,
         call: suspend () -> Response<T>,
         errorMessage: String
     ): ResultCoroutines<T> {
@@ -69,7 +75,7 @@ open class BaseRepository {
                 is ResultCoroutines.Success<AuthResponse> -> {
                     onRefreshTokenListener?.onRefreshToken(responseAuth.data)
                     AuthData.accessToken = responseAuth.data.accessToken
-                    safeApiResult(apiUnit, call, errorMessage) //повторно выполняем запрос
+                    safeApiResult(call, errorMessage) //повторно выполняем запрос
                 }
                 else -> {
                     onRefreshTokenListener?.onRefreshTokenFailed()
@@ -91,7 +97,6 @@ open class BaseRepository {
 
         return if (!uid.isNullOrEmpty() && !refreshToken.isNullOrEmpty()) {
             safeApiResult(
-                apiUnit = apiUnit,
                 call = {
                     apiUnit.authApi.refreshTokenAsync(
                         refreshToken,

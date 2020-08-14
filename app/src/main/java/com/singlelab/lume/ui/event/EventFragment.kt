@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -36,6 +37,11 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonImageClickListener {
+
+    companion object {
+        const val REQUEST_EVENT = "REQUEST_EVENT"
+        const val RESULT_EVENT = "RESULT_EVENT"
+    }
 
     @Inject
     lateinit var daggerPresenter: EventPresenter
@@ -256,6 +262,9 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                 button_accept.visibility = View.VISIBLE
                 button_reject.visibility = View.VISIBLE
                 button_accept.setOnClickListener {
+                    parentFragmentManager.setFragmentResult(
+                        REQUEST_EVENT, bundleOf(RESULT_EVENT to event.eventUid)
+                    )
                     presenter.acceptEvent(currentUid, event.eventUid)
                 }
                 button_reject.setOnClickListener {
@@ -330,7 +339,10 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
     }
 
     override fun onRejectedEvent() {
-        findNavController().navigate(EventFragmentDirections.actionEventToEvents())
+        parentFragmentManager.setFragmentResult(
+            REQUEST_EVENT, bundleOf(RESULT_EVENT to presenter.event?.eventUid)
+        )
+        parentFragmentManager.popBackStack()
     }
 
     override fun onPersonClick(personUid: String) {

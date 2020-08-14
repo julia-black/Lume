@@ -6,10 +6,9 @@ import com.singlelab.net.model.person.PersonResponse
 import com.singlelab.net.model.person.SearchPersonRequest
 import com.singlelab.net.repositories.BaseRepository
 
-class FriendsRepositoryImpl(private val apiUnit: ApiUnit) : FriendsRepository, BaseRepository() {
+class FriendsRepositoryImpl(private val apiUnit: ApiUnit) : FriendsRepository, BaseRepository(apiUnit) {
     override suspend fun getFriends(personUid: String): List<PersonResponse>? {
         return safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.personApi.getFriendsAsync(personUid).await() },
             errorMessage = "Не удалось получить друзей"
         )
@@ -17,7 +16,6 @@ class FriendsRepositoryImpl(private val apiUnit: ApiUnit) : FriendsRepository, B
 
     override suspend fun search(request: SearchPersonRequest): List<PersonResponse>? {
         return safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.personApi.searchPersonAsync(request).await() },
             errorMessage = "Не удалось выполнить поиск"
         )
@@ -25,7 +23,6 @@ class FriendsRepositoryImpl(private val apiUnit: ApiUnit) : FriendsRepository, B
 
     override suspend fun addToFriends(personUid: String) {
         safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.personApi.addToFriendsAsync(personUid).await() },
             errorMessage = "Не удалось добавить в друзья"
         )
@@ -33,7 +30,6 @@ class FriendsRepositoryImpl(private val apiUnit: ApiUnit) : FriendsRepository, B
 
     override suspend fun invitePerson(request: ParticipantRequest) {
         safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.eventsApi.addParticipantsAsync(request).await() },
             errorMessage = "Не удалось пригласить пользователя"
         )
@@ -41,7 +37,6 @@ class FriendsRepositoryImpl(private val apiUnit: ApiUnit) : FriendsRepository, B
 
     override suspend fun removeFriend(personUid: String) {
         safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.personApi.removeFromFriendsAsync(personUid).await() },
             errorMessage = "Не удалось удалить пользователя из друзей"
         )
@@ -49,7 +44,6 @@ class FriendsRepositoryImpl(private val apiUnit: ApiUnit) : FriendsRepository, B
 
     override suspend fun confirmFriend(personUid: String) {
         safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.personApi.confirmFriendAsync(personUid).await() },
             errorMessage = "Не удалось удалить пользователя из друзей"
         )

@@ -15,34 +15,30 @@ interface ChatRepository {
 
 class DefaultChatRepository(
     private val apiUnit: ApiUnit
-) : BaseRepository(), ChatRepository {
+) : BaseRepository(apiUnit), ChatRepository {
 
     private val chatsApi = apiUnit.chatsApi
 
     override suspend fun loadNewMessages(chatUid: String, lastMessageUid: String?) =
         safeApiCall(
-            apiUnit = apiUnit,
             call = { chatsApi.loadNewMessageAsync(chatUid, lastMessageUid).await() },
             errorMessage = "Не удалось получить сообщение"
         )
 
     override suspend fun sendMessage(message: ChatMessageRequest) =
         safeApiCall(
-            apiUnit = apiUnit,
             call = { chatsApi.sendMessageAsync(message).await() },
             errorMessage = "Не удалось отправить сообщение"
         )
 
     override suspend fun loadPersonChat(personUid: String) =
         safeApiCall(
-            apiUnit = apiUnit,
             call = { chatsApi.chatWithPersonAsync(personUid).await() },
             errorMessage = "Не удалось загрузить чат"
         )
 
     override suspend fun loadChatByUid(chatUid: String) =
         safeApiCall(
-            apiUnit = apiUnit,
             call = { chatsApi.chatAsync(chatUid).await() },
             errorMessage = "Не удалось загрузить чат"
         )

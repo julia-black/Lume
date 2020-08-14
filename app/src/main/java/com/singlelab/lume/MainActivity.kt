@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -22,6 +23,7 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.base.listeners.OnBackPressListener
 import com.singlelab.lume.base.listeners.OnPermissionListener
+import com.singlelab.lume.model.profile.PersonNotifications
 import com.singlelab.lume.model.target.Target
 import com.singlelab.lume.model.target.TargetType
 import com.singlelab.lume.util.parseDeepLink
@@ -48,6 +50,22 @@ class MainActivity : AppCompatActivity() {
         val target = data?.toString()?.parseDeepLink()
         target?.let {
             toTarget(navController, it)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (activityResultListener != null) {
+            activityResultListener?.onActivityResultFragment(requestCode, resultCode, data)
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    override fun onBackPressed() {
+        if (backPressListener != null) {
+            backPressListener!!.onBackPressed()
+        } else {
+            super.onBackPressed()
         }
     }
 
@@ -94,24 +112,22 @@ class MainActivity : AppCompatActivity() {
             }).check()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (activityResultListener != null) {
-            activityResultListener?.onActivityResultFragment(requestCode, resultCode, data)
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
-        }
-    }
-
     fun showBottomNavigation(isShow: Boolean) {
         nav_view.visibility = if (isShow) View.VISIBLE else View.GONE
     }
 
-    override fun onBackPressed() {
-        if (backPressListener != null) {
-            backPressListener!!.onBackPressed()
-        } else {
-            super.onBackPressed()
-        }
+    fun showNotifications(notifications: PersonNotifications) {
+        val badgeEvents = nav_view.getOrCreateBadge(R.id.events)
+        badgeEvents.backgroundColor = ContextCompat.getColor(this, R.color.colorNotification)
+        badgeEvents.isVisible = notifications.hasNewEvents
+
+        val badgeChats = nav_view.getOrCreateBadge(R.id.chats)
+        badgeChats.backgroundColor = ContextCompat.getColor(this, R.color.colorNotification)
+        badgeChats.isVisible = notifications.hasNewChatMessages
+
+        val badgeProfile = nav_view.getOrCreateBadge(R.id.my_profile)
+        badgeProfile.backgroundColor = ContextCompat.getColor(this, R.color.colorNotification)
+        badgeProfile.isVisible = notifications.hasNewFriends
     }
 
     private fun getPushToken() {

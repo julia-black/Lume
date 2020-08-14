@@ -2,7 +2,10 @@ package com.singlelab.lume.base
 
 import com.singlelab.lume.base.view.BaseView
 import com.singlelab.lume.model.auth.Auth
+import com.singlelab.lume.model.profile.PersonNotifications
 import com.singlelab.lume.pref.Preferences
+import com.singlelab.net.exceptions.ApiException
+import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.auth.AuthResponse
 import com.singlelab.net.repositories.OnRefreshTokenListener
 import kotlinx.coroutines.CoroutineScope
@@ -26,6 +29,23 @@ open class BasePresenter<ViewT : BaseView>(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         baseInteractor.setOnRefreshTokenListener(this)
+        getNotifications()
+    }
+
+    fun getNotifications() {
+        if (AuthData.isAnon) {
+            viewState.showNotifications(PersonNotifications())
+        } else {
+            invokeSuspend {
+                try {
+                    val notifications = baseInteractor.getNotifications()
+                    runOnMainThread {
+                        viewState.showNotifications(notifications)
+                    }
+                } catch (e: ApiException) {
+                }
+            }
+        }
     }
 
     override fun onRefreshToken(auth: AuthResponse?) {

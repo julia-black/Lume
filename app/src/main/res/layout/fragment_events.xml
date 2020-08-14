@@ -59,6 +59,24 @@
         app:layout_constraintEnd_toStartOf="@id/button_create_event"
         app:layout_constraintTop_toTopOf="@id/button_create_event" />
 
+    <TextView
+        android:id="@+id/notification"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:background="@drawable/shape_circle"
+        android:gravity="center"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_size_very_small"
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/button_create_event"
+        app:layout_constraintEnd_toStartOf="@id/button_create_event"
+        app:layout_constraintTop_toTopOf="@id/button_create_event"
+        app:layout_constraintVertical_bias="0.25"
+        tools:text="10" />
+
     <Button
         android:id="@+id/button_create_event"
         style="@style/ButtonStyle"

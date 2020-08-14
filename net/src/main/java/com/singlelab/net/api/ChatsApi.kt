@@ -19,14 +19,14 @@ interface ChatsApi {
     fun chatAsync(
         @Query("chatUid") chatUid: String,
         @Query("pageNumber") pageNumber: Int? = 1,
-        @Query("pageSize") pageSize: Int? = 1
+        @Query("pageSize") pageSize: Int? = 20
     ): Deferred<Response<ChatMessagesResponse>>
 
     @GET("chat/get-person-chat")
     fun chatWithPersonAsync(
         @Query("personUid") personUid: String,
         @Query("pageNumber") pageNumber: Int? = 1,
-        @Query("pageSize") pageSize: Int? = 10
+        @Query("pageSize") pageSize: Int? = 20
     ): Deferred<Response<ChatMessagesResponse>>
 
     @GET("chat/get-person-chat-list")

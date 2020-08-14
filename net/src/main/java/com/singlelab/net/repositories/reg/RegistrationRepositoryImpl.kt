@@ -6,10 +6,9 @@ import com.singlelab.net.model.person.ProfileRequest
 import com.singlelab.net.repositories.BaseRepository
 
 class RegistrationRepositoryImpl(private val apiUnit: ApiUnit) : RegistrationRepository,
-    BaseRepository() {
+    BaseRepository(apiUnit) {
     override suspend fun registration(profile: ProfileRequest) {
         safeApiCall(
-            apiUnit,
             call = { apiUnit.personApi.updateProfileAsync(profile).await() },
             errorMessage = "Не удалось зарегистрироваться"
         )

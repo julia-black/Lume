@@ -18,8 +18,8 @@ import java.util.*
 class FCMService : FirebaseMessagingService() {
 
     companion object {
-        const val APP_NAME = "Lume"
-        const val CHANNEL_ID = "1567"
+        const val CHANNEL_NAME = "Lume"
+        const val CHANNEL_ID = "1"
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -47,10 +47,11 @@ class FCMService : FirebaseMessagingService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "Lume channel",
+                CHANNEL_NAME,
                 NotificationManager.IMPORTANCE_HIGH
             )
-            channel.enableVibration(false)
+            channel.enableVibration(true)
+            channel.vibrationPattern = longArrayOf(1)
             channel.importance = NotificationManager.IMPORTANCE_HIGH
             notificationManager.createNotificationChannel(channel)
         }
@@ -61,6 +62,7 @@ class FCMService : FirebaseMessagingService() {
                 .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
                 .setContentTitle(title)
                 .setDefaults(Notification.DEFAULT_ALL)
+                .setVibrate(longArrayOf(1))
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent)

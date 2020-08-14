@@ -63,6 +63,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
     }
 
     override fun showNewMessage(message: ChatMessageItem) {
+        emptyChatView.visibility = View.GONE
         chatMessagesAdapter.addMessage(message)
         chatView.scrollToPosition(chatMessagesAdapter.itemCount - 1)
     }

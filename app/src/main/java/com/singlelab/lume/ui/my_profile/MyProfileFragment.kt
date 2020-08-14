@@ -115,8 +115,8 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
     }
 
     override fun navigateToAuth() {
-        Navigation.createNavigateOnClickListener(R.id.action_my_profile_to_auth)
-            .onClick(view)
+        findNavController().popBackStack()
+        findNavController().navigate(R.id.auth)
     }
 
     override fun loadImage(imageUid: String?) {

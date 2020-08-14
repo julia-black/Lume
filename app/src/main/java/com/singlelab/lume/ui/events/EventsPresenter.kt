@@ -31,6 +31,7 @@ class EventsPresenter @Inject constructor(
     var currentDayPosition: Int? = null
 
     override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
         loadEvents()
     }
 
@@ -41,10 +42,13 @@ class EventsPresenter @Inject constructor(
                 allEvents = interactor.getEvents()
                 parseEventsToDays(allEvents)
                 filterEvents(allEvents)
+                val countInvites = allEvents?.count {
+                    it.participantStatus == ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER
+                } ?: 0
                 runOnMainThread {
                     viewState.showLoading(false)
                     allEvents?.let {
-                        viewState.showEvents(parseToList(allDays))
+                        viewState.showEvents(parseToList(allDays), countInvites)
                         viewState.showEventsOnCalendar(
                             pastEvents,
                             newInviteEvents,
@@ -79,6 +83,7 @@ class EventsPresenter @Inject constructor(
     }
 
     private fun parseEventsToDays(allEvents: List<EventSummary>?) {
+        allDays.clear()
         allEvents?.forEach {
             val calendarDay = it.startTime.toCalendarDay(Const.DATE_FORMAT_TIME_ZONE)
             if (allDays.contains(calendarDay)) {

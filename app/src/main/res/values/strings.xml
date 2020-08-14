@@ -24,7 +24,6 @@
     <string name="age">Возраст</string>
     <string name="add_photo">Будет замечательно, если на фото будете именно вы. Все мы любим милых котиков, но не каждый захочет идти куда-то только в их компании</string>
     <string name="about_yourself">Пару слов о себе</string>
-    <string name="description">Расскажи подробнее о событии</string>
     <string name="to_registration">Зарегистрироваться</string>
     <string name="error_pick_image">Не удалось выбрать изображение</string>
     <string name="sms_code_send">СМС-код отправлен на номер %1$s</string>
@@ -53,14 +52,15 @@
     <!-- Event -->
     <string name="create_event">Создать</string>
     <string name="type_event">Тип события</string>
-    <string name="title">Название</string>
+    <string name="title">Название *</string>
+    <string name="description">Расскажи подробнее о событии *</string>
     <string name="min_age">Минимальный возраст</string>
     <string name="max_age">Максимальный возраст</string>
     <string name="publish_event">Опубликовать</string>
     <string name="invite">Пригласить</string>
     <string name="event_is_open">Событие открытое (подтверждение участия не требуется)</string>
-    <string name="date_start">Начало события</string>
-    <string name="date_end">Окончание события</string>
+    <string name="date_start">Укажите время начала</string>
+    <string name="date_end">Укажите время окончания</string>
     <string name="enter_fields">Заполните обязательные параметры</string>
     <string name="party">Вечеринка</string>
     <string name="booze">Пьянка</string>
@@ -93,6 +93,8 @@
     <string name="date_start_title">Начало: %1$s</string>
     <string name="date_end_title">Завершение: %1$s</string>
     <string name="share">Поделиться</string>
+    <string name="choose_age">Укажите ограничение по возрасту. Событие увидят только люди, которые подходят по возрасту</string>
+    <string name="attention_age">Вы можете указать ограничение по возрасту. Событие будет доступно только тем, кто подходит по возрасту:</string>
 
     <!-- Types of events -->
     <string name="culture">Искусство</string>
@@ -110,7 +112,7 @@
     <string name="location_event">Место проведения</string>
     <string name="error_address">Не удалось найти местоположению</string>
     <string name="title_location_events">Выберите место проведения</string>
-    <string name="choose_location">Укажи на карте место проведения</string>
+    <string name="choose_location">Укажите на карте место проведения</string>
     <string name="search_location">Введите название или адрес</string>
     <string name="accept_location">Подтвердить</string>
     <string name="empty_location">Укажите место проведения кликом на карте или с помощью поиска</string>

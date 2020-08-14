@@ -10,7 +10,7 @@ import com.singlelab.lume.database.entity.Chat
 import com.singlelab.lume.database.entity.ChatMessage
 
 @Database(
-    version = 1,
+    version = 2,
     entities = [
         Chat::class,
         ChatMessage::class
@@ -24,6 +24,7 @@ abstract class LumeDatabase : RoomDatabase() {
     companion object {
         fun create(context: Context): LumeDatabase =
             Room.databaseBuilder(context, LumeDatabase::class.java, DATABASE_NAME)
+                .fallbackToDestructiveMigration()
                 .build()
 
         private const val DATABASE_NAME = "lumedatabase.name"

@@ -11,5 +11,6 @@ data class Chat(
     val isGroup: Boolean,
     val image: String,
     val lastMessage: String,
-    val lastMessagePersonUid: String
+    val lastMessagePersonUid: String,
+    val unreadMessagesCount: Int = 0
 )

@@ -1,10 +1,7 @@
 package com.singlelab.net.api
 
 import com.singlelab.net.model.MessageResponse
-import com.singlelab.net.model.person.PersonResponse
-import com.singlelab.net.model.person.ProfileRequest
-import com.singlelab.net.model.person.ProfileResponse
-import com.singlelab.net.model.person.SearchPersonRequest
+import com.singlelab.net.model.person.*
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.*
@@ -25,6 +22,9 @@ interface PersonApi {
 
     @POST("person/remove-person-token")
     fun removePushTokenAsync(): Deferred<Response<ProfileResponse>>
+
+    @GET("person/get-person-notifications")
+    fun getNotificationsAsync(): Deferred<Response<PersonNotificationsResponse>>
 
     @GET("friends/get-friends")
     fun getFriendsAsync(@Query("personUid") personUid: String): Deferred<Response<List<PersonResponse>>>

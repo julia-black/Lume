@@ -53,4 +53,19 @@
         app:layout_constraintTop_toBottomOf="@id/chatsTitleView"
         tools:text="Medium-Long Last Message" />
 
+    <TextView
+        android:id="@+id/chatsUnreadCountMessagesView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        android:background="@drawable/shape_circle"
+        android:gravity="center"
+        android:textColor="@color/colorWhite"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1"
+        tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

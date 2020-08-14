@@ -53,6 +53,8 @@ class ChatsAdapter(
             } else {
                 chat.lastMessage
             }
+            itemView.chatsUnreadCountMessagesView.isVisible = chat.unreadMessagesCount > 0
+            itemView.chatsUnreadCountMessagesView.text = chat.unreadMessagesCount.toString()
 
             if (chat.chatImage != null) {
                 Glide.with(itemView)

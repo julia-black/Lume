@@ -74,7 +74,9 @@ class MyProfilePresenter @Inject constructor(
             } catch (e: ApiException) {
             }
             preferences?.clearAuth()
-            viewState.navigateToAuth()
+            runOnMainThread {
+                viewState.navigateToAuth()
+            }
         }
     }
 

@@ -6,10 +6,9 @@ import com.singlelab.net.model.person.PersonFilledResponse
 import com.singlelab.net.model.person.PersonUidResponse
 import com.singlelab.net.repositories.BaseRepository
 
-class AuthRepositoryImpl(var apiUnit: ApiUnit) : AuthRepository, BaseRepository() {
+class AuthRepositoryImpl(var apiUnit: ApiUnit) : AuthRepository, BaseRepository(apiUnit) {
     override suspend fun sendSmsCode(phone: String): PersonUidResponse? {
         return safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.authApi.sendSmsCodeAsync(phone).await() },
             errorMessage = "Не удалось отправить код"
         )
@@ -17,7 +16,6 @@ class AuthRepositoryImpl(var apiUnit: ApiUnit) : AuthRepository, BaseRepository(
 
     override suspend fun sendPushCode(phone: String, pushToken: String): PersonUidResponse? {
         return safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.authApi.sendPushCodeAsync(phone, pushToken).await() },
             errorMessage = "Не удалось отправить код"
         )
@@ -25,7 +23,6 @@ class AuthRepositoryImpl(var apiUnit: ApiUnit) : AuthRepository, BaseRepository(
 
     override suspend fun auth(phone: String, code: String): AuthResponse? {
         return safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.authApi.authAsync(phone, code).await() },
             errorMessage = "Не удалось авторизоваться"
         )
@@ -33,7 +30,6 @@ class AuthRepositoryImpl(var apiUnit: ApiUnit) : AuthRepository, BaseRepository(
 
     override suspend fun isPersonFilled(): PersonFilledResponse? {
         return safeApiCall(
-            apiUnit = apiUnit,
             call = { apiUnit.authApi.getIsPersonFilledAsync().await() },
             errorMessage = "Не удалось авторизоваться"
         )

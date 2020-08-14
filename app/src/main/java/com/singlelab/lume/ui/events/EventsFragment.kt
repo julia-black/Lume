@@ -24,6 +24,7 @@ import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.EventSummary
 import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
 import com.singlelab.lume.ui.creating_event.CreatingEventFragment
+import com.singlelab.lume.ui.event.EventFragment
 import com.singlelab.lume.ui.event.EventFragmentDirections
 import com.singlelab.lume.ui.events.adapter.DaysAdapter
 import com.singlelab.lume.ui.view.calendar.CircleDecorator
@@ -104,6 +105,11 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
                     result.getString(CreatingEventFragment.RESULT_CREATING_EVENT) ?: return
                 presenter.loadEvents(eventUid)
             }
+            EventFragment.REQUEST_EVENT -> {
+                val eventUid: String = result.getString(EventFragment.RESULT_EVENT) ?: return
+                presenter.loadEvents(eventUid)
+                presenter.getNotifications()
+            }
         }
     }
 
@@ -151,7 +157,9 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
         }
     }
 
-    override fun showEvents(days: List<Pair<CalendarDay, List<EventSummary>>>) {
+    override fun showEvents(days: List<Pair<CalendarDay, List<EventSummary>>>, countInvites: Int) {
+        notification.isVisible = countInvites > 0
+        notification.text = countInvites.toString()
         view_pager_events?.apply {
             adapter = DaysAdapter(days, this@EventsFragment)
         }
@@ -189,6 +197,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
                 daysWithEvent = inviteDaysWithEvent
             )
             val decorators = listOf(pastDecorator, futureDecorator, inviteDecorator)
+            calendar_week_view.removeDecorators()
             calendar_week_view.addDecorators(decorators)
             calendar_full_view.showView(this, decorators)
             presenter.onShowCurrentDay(futureDaysWithEvent, pastDaysWithEvent, currentDay)
@@ -196,6 +205,12 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
     }
 
     override fun onClickEvent(uid: String) {
+        parentFragmentManager.setFragmentResultListener(
+            EventFragment.REQUEST_EVENT,
+            this,
+            FragmentResultListener { requestKey, result ->
+                onFragmentResult(requestKey, result)
+            })
         val action = EventsFragmentDirections.actionEventsToEvent(uid)
         findNavController().navigate(action)
     }
@@ -219,7 +234,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
     ) {
         val days = (view_pager_events.adapter as DaysAdapter).getList()
         val position = days.indexOfFirst { it.first == date }
-        if (position > 0) {
+        if (position >= 0) {
             showFullCalendar(false)
             view_pager_events.setCurrentItem(position, true)
         }
@@ -279,7 +294,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
                 currentDayDecorator = CircleDecorator(
                     color = ContextCompat.getColor(
                         it,
-                        if (day.isAfter(CalendarDay.today())) R.color.colorAccent else R.color.colorGray
+                        if (day == today || day.isAfter(today)) R.color.colorAccent else R.color.colorGray
                     ),
                     style = Paint.Style.FILL,
                     daysWithEvent = listOf(day),

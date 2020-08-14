@@ -10,7 +10,7 @@ import moxy.viewstate.strategy.StateStrategyType
 interface EventsView : LoadingView, ErrorView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showEvents(days: List<Pair<CalendarDay, List<EventSummary>>>)
+    fun showEvents(days: List<Pair<CalendarDay, List<EventSummary>>>, countInvites: Int = 0)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showEventsOnCalendar(
