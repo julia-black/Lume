@@ -60,9 +60,9 @@ constructor(
                         hasOldMessages = false
                     } else {
                         saveChatMessages(chatResponse.messages)
-                        showLocalMessages()
-                        syncMessages()
                     }
+                    showLocalMessages()
+                    syncMessages()
                 } else {
                     runOnMainThread { viewState.showError("Ошибка при загрузке чата") }
                 }
