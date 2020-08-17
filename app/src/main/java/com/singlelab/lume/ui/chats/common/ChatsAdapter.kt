@@ -45,14 +45,20 @@ class ChatsAdapter(
         fun bind(chat: ChatItem) {
             itemView.chatsTitleView.text = chat.title
             itemView.chatsLastMessageView.isVisible = chat.lastMessage.isNotEmpty()
-            itemView.chatsLastMessageView.text = if (chat.lastMessagePersonUid == AuthData.uid) {
-                val lastMessage =  itemView.context.getString(R.string.chats_last_message_author, chat.lastMessage)
-                SpannableString(lastMessage).apply {
-                    setSpan(ForegroundColorSpan(Color.BLACK), 0, 3, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            val lastMessage = if (chat.isLastMessageImage) itemView.context.getString(R.string.chats_last_message_image) else chat.lastMessage
+            itemView.chatsLastMessageView.isVisible = lastMessage.isNotEmpty()
+            if (lastMessage.isNotEmpty()) {
+                val lastMessageFull = if (chat.lastMessagePersonUid == AuthData.uid) {
+                    itemView.context.getString(R.string.chats_last_message_author, lastMessage)
+                } else {
+                    chat.lastMessagePersonName + ": " + lastMessage
                 }
-            } else {
-                chat.lastMessage
+                val lastMessageAuthorLength = lastMessageFull.length - lastMessage.length
+                itemView.chatsLastMessageView.text = SpannableString(lastMessageFull).apply {
+                    setSpan(ForegroundColorSpan(Color.BLACK), 0, lastMessageAuthorLength, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                }
             }
+
             itemView.chatsUnreadCountMessagesView.isVisible = chat.unreadMessagesCount > 0
             itemView.chatsUnreadCountMessagesView.text = chat.unreadMessagesCount.toString()
 

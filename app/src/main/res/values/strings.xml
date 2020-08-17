@@ -135,6 +135,7 @@
     <string name="chat_message_hint">Сообщение</string>
     <string name="chat_select_images_limit">Выберите не больше %1$d фотографий</string>
     <string name="empty_chat">Чат пока пуст. Напишите первое собщение!</string>
+    <string name="chats_last_message_image">Изображение</string>
 
     <!-- City -->
     <string name="city">Город</string>

@@ -141,7 +141,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
                 uid = PENDING_MESSAGE_UID,
                 text = text,
                 type = Type.OUTGOING,
-                images = images.map { it.toBase64(20) },
+                images = images.map { it.toBase64(80) },
                 status = Status.PENDING,
                 date = "",
                 personPhoto = "",
@@ -152,7 +152,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
                 uid = PENDING_MESSAGE_UID,
                 text = text,
                 type = Type.OUTGOING,
-                images = images.map { it.toBase64(20) },
+                images = images.map { it.toBase64(80) },
                 status = Status.PENDING,
                 date = ""
             )
