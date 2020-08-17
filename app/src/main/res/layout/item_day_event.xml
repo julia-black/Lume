@@ -55,12 +55,16 @@
                     android:id="@+id/description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_small"
+                    android:layout_marginHorizontal="@dimen/margin_small"
+                    android:ellipsize="end"
+                    android:maxLines="5"
                     android:textSize="@dimen/text_size_standart"
+                    app:layout_constraintBottom_toTopOf="@id/button_chat"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/name"
+                    app:layout_constraintVertical_bias="0.0"
                     tools:text="Описание события" />
 
                 <TextView
@@ -71,8 +75,10 @@
                     android:text="@string/waiting_for_approve_event"
                     android:textColor="@color/colorPrimaryDark"
                     android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/button_chat"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/description"
+                    app:layout_constraintVertical_bias="0.0"
                     tools:visibility="visible" />
 
                 <ImageView
