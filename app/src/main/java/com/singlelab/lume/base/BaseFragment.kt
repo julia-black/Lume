@@ -130,4 +130,8 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         sendIntent.type = "text/plain"
         startActivity(Intent.createChooser(sendIntent, getString(R.string.share)))
     }
+
+    fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
 }

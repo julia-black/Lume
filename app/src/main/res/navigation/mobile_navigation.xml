@@ -106,6 +106,9 @@
         <action
             android:id="@+id/action_my_profile_to_edit_profile"
             app:destination="@id/edit_profile" />
+        <action
+            android:id="@+id/action_my_profile_to_feedback"
+            app:destination="@id/feedback" />
     </fragment>
 
     <fragment
@@ -324,4 +327,8 @@
             android:id="@+id/action_edit_profile_to_cities"
             app:destination="@id/cities" />
     </fragment>
+    <fragment
+        android:id="@+id/feedback"
+        android:name="com.singlelab.lume.ui.feedback.FeedbackFragment"
+        android:label="FeedbackFragment" />
 </navigation>

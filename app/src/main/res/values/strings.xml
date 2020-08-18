@@ -41,6 +41,14 @@
     <string name="change_image">Выбрать изображение</string>
     <string name="title_new_friends">Новые друзья (%1$d)</string>
 
+    <!-- Feedback -->
+    <string name="give_feedback">Обратная связь</string>
+    <string name="title_feedback">Если вы столкнулись с проблемой, или просто хотите оставить отзыв - напишите нам и мы постараемся быстро всё поправить!</string>
+    <string name="hint_images_feedback">Вы можете добавить скриншот, чтобы нам было проще понять и исправить вашу проблему</string>
+    <string name="hint_feedback">Проблема/отзыв</string>
+    <string name="button_give_feedback">Отправить</string>
+    <string name="feedback_send">Отзыв отправлен!</string>
+
     <plurals name="age_plurals">
         <item quantity="one">%1$d год</item>
         <item quantity="two">%1$d года</item>
@@ -61,7 +69,7 @@
     <string name="event_is_open">Событие открытое (подтверждение участия не требуется)</string>
     <string name="date_start">Укажите время начала</string>
     <string name="date_end">Укажите время окончания</string>
-    <string name="enter_fields">Заполните обязательные параметры</string>
+    <string name="enter_fields">Заполните обязательные поля</string>
     <string name="party">Вечеринка</string>
     <string name="booze">Пьянка</string>
     <string name="administrator">%1$s (Организатор)</string>

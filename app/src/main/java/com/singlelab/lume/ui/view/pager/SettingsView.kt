@@ -24,6 +24,9 @@ class SettingsView @JvmOverloads constructor(
         person_info.setOnClickListener {
             settingsClickListener?.onPersonInfoClick()
         }
+        feedback.setOnClickListener {
+            settingsClickListener?.onFeedbackClick()
+        }
         exit.setOnClickListener {
             settingsClickListener?.onLogoutClick()
         }

@@ -103,6 +103,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/description"
                     android:layout_width="match_parent"
+                    android:gravity="start"
                     android:layout_height="wrap_content"
                     android:lines="5" />
             </com.google.android.material.textfield.TextInputLayout>

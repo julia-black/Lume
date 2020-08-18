@@ -26,6 +26,9 @@ interface PersonApi {
     @GET("person/get-person-notifications")
     fun getNotificationsAsync(): Deferred<Response<PersonNotificationsResponse>>
 
+    @POST("person/add-feedback")
+    fun addFeedbackAsync(@Body request: FeedbackRequest): Deferred<Response<MessageResponse>>
+
     @GET("friends/get-friends")
     fun getFriendsAsync(@Query("personUid") personUid: String): Deferred<Response<List<PersonResponse>>>
 

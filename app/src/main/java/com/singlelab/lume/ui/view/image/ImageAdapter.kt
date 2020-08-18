@@ -1,11 +1,11 @@
-package com.singlelab.lume.ui.creating_event.adapter
+package com.singlelab.lume.ui.view.image
 
 import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class EventImagesAdapter :
+class ImageAdapter :
     RecyclerView.Adapter<ImageViewHolder>() {
 
     private var images = mutableListOf<Bitmap?>()

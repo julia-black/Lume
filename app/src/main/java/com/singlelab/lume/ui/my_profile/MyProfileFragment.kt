@@ -150,6 +150,10 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         }
     }
 
+    override fun onFeedbackClick() {
+        findNavController().navigate(MyProfileFragmentDirections.actionMyProfileToFeedback())
+    }
+
     override fun onLogoutClick() {
         presenter.logout()
     }

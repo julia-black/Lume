@@ -1,4 +1,4 @@
-package com.singlelab.lume.ui.creating_event.adapter
+package com.singlelab.lume.ui.view.image
 
 interface OnImageClickListener {
     fun onClickNewImage()

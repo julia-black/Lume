@@ -1,6 +1,7 @@
 package com.singlelab.net.repositories.person
 
 import com.singlelab.net.ApiUnit
+import com.singlelab.net.model.person.FeedbackRequest
 import com.singlelab.net.model.person.PersonResponse
 import com.singlelab.net.model.person.ProfileRequest
 import com.singlelab.net.model.person.ProfileResponse
@@ -56,6 +57,13 @@ class PersonRepositoryImpl(
         safeApiCall(
             call = { apiUnit.personApi.removePushTokenAsync().await() },
             errorMessage = "Не удалось удалить токен"
+        )
+    }
+
+    override suspend fun addFeedback(request: FeedbackRequest) {
+        safeApiCall(
+            call = { apiUnit.personApi.addFeedbackAsync(request).await() },
+            errorMessage = "Не удалось отправить отзыв"
         )
     }
 }

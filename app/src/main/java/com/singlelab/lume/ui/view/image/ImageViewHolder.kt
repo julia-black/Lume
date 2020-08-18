@@ -1,10 +1,11 @@
-package com.singlelab.lume.ui.creating_event.adapter
+package com.singlelab.lume.ui.view.image
 
 import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.singlelab.lume.R
+import com.singlelab.lume.ui.view.image.OnImageClickListener
 import kotlinx.android.synthetic.main.item_event_image.view.*
 
 

@@ -24,9 +24,9 @@ import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.location.MapLocation
 import com.singlelab.lume.ui.cities.CitiesFragment
-import com.singlelab.lume.ui.creating_event.adapter.EventImagesAdapter
-import com.singlelab.lume.ui.creating_event.adapter.OnImageClickListener
 import com.singlelab.lume.ui.map.MapFragment
+import com.singlelab.lume.ui.view.image.ImageAdapter
+import com.singlelab.lume.ui.view.image.OnImageClickListener
 import com.singlelab.lume.util.formatToUTC
 import com.singlelab.lume.util.getBitmap
 import com.singlelab.net.model.event.EventRequest
@@ -44,7 +44,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFragments,
-    OnActivityResultListener, OnImageClickListener {
+    OnActivityResultListener,
+    OnImageClickListener {
 
     companion object {
         const val REQUEST_CREATING_EVENT = "CREATING_EVENT_REQUEST"
@@ -73,8 +74,8 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         setListeners()
         recycler_images.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = EventImagesAdapter()
-            (adapter as EventImagesAdapter).setClickListener(this@CreatingEventFragment)
+            adapter = ImageAdapter()
+            (adapter as ImageAdapter).setClickListener(this@CreatingEventFragment)
         }
     }
 
@@ -97,7 +98,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
     }
 
     override fun addImage(bitmap: Bitmap) {
-        (recycler_images.adapter as EventImagesAdapter).addImage(bitmap)
+        (recycler_images.adapter as ImageAdapter).addImage(bitmap)
     }
 
     override fun showCurrentCity(cityId: Int?, cityName: String?) {
@@ -125,7 +126,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
     }
 
     override fun showImages(images: MutableList<Bitmap>) {
-        (recycler_images.adapter as EventImagesAdapter).setData(images)
+        (recycler_images.adapter as ImageAdapter).setData(images)
     }
 
     override fun showTypes(types: MutableList<Int>) {
