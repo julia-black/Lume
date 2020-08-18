@@ -21,17 +21,17 @@ class AuthPresenter @Inject constructor(
         super.onFirstViewAttach()
         if (!AuthData.isAnon) {
             runOnMainThread {
-                viewState.showLoading(true)
+                viewState.showLoading(isShow = true, withoutBackground = true)
             }
             invokeSuspend {
                 try {
                     runOnMainThread {
-                        viewState.showLoading(false)
+                        viewState.showLoading(isShow = false, withoutBackground = true)
                         viewState.toProfile()
                     }
                 } catch (e: ApiException) {
                     runOnMainThread {
-                        viewState.showLoading(false)
+                        viewState.showLoading(isShow = false, withoutBackground = true)
                         viewState.showError(e.message)
                     }
                 }
@@ -41,7 +41,7 @@ class AuthPresenter @Inject constructor(
 
     fun onClickSendCode(phone: String, notificationEnabled: Boolean) {
         runOnMainThread {
-            viewState.showLoading(true)
+            viewState.showLoading(isShow = true, withoutBackground = true)
         }
         invokeSuspend {
             try {
@@ -50,12 +50,12 @@ class AuthPresenter @Inject constructor(
                 preferences?.setUid(personUid)
                 this.phone = phone
                 runOnMainThread {
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                     viewState.onCodeSend(phone, !pushToken.isNullOrEmpty())
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
-                    viewState.showLoading(false)
+                    viewState.showLoading(isShow = false, withoutBackground = true)
                     viewState.showError(e.message)
                 }
             }
@@ -65,7 +65,7 @@ class AuthPresenter @Inject constructor(
     fun onClickAuth(code: String) {
         if (phone != null) {
             runOnMainThread {
-                viewState.showLoading(true)
+                viewState.showLoading(isShow = true, withoutBackground = true)
             }
             invokeSuspend {
                 try {
@@ -75,7 +75,7 @@ class AuthPresenter @Inject constructor(
                     }
                     val isPersonFilled = interactor.isPersonFilled()
                     runOnMainThread {
-                        viewState.showLoading(false)
+                        viewState.showLoading(isShow = false, withoutBackground = true)
                         if (!isPersonFilled) {
                             viewState.toRegistration()
                         } else {
@@ -85,7 +85,7 @@ class AuthPresenter @Inject constructor(
                     }
                 } catch (e: ApiException) {
                     runOnMainThread {
-                        viewState.showLoading(false)
+                        viewState.showLoading(isShow = false, withoutBackground = true)
                         viewState.showError(e.message)
                     }
                 }

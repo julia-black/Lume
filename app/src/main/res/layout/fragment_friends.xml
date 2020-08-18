@@ -11,7 +11,8 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/margin_medium"
         android:background="@drawable/shape_card"
-        android:paddingTop="@dimen/margin_medium">
+        android:paddingTop="@dimen/margin_medium"
+        android:paddingBottom="@dimen/margin_medium">
 
         <EditText
             android:id="@+id/edit_text_search"
@@ -46,8 +47,8 @@
             android:id="@+id/recycler_friends"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:visibility="gone"
             android:overScrollMode="never"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edit_text_search"

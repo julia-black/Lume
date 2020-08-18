@@ -29,6 +29,7 @@
     <string name="sms_code_send">СМС-код отправлен на номер %1$s</string>
     <string name="push_code_send">На ваше устройство отправлено Push-уведомление с кодом</string>
     <string name="login_hint">Логин может содержать только латинские буквы, цифры, символы подчеркивания и точки</string>
+    <string name="back">Вернуться</string>
 
     <!-- My Profile -->
     <string name="tab_frineds">Друзья</string>
