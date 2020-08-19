@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.fragment.app.FragmentResultListener
@@ -23,6 +22,7 @@ import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.location.MapLocation
+import com.singlelab.lume.model.view.ToastType
 import com.singlelab.lume.ui.cities.CitiesFragment
 import com.singlelab.lume.ui.map.MapFragment
 import com.singlelab.lume.ui.view.image.ImageAdapter
@@ -80,7 +80,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
     }
 
     override fun onCompleteCreateEvent(eventUid: String) {
-        Toast.makeText(context, "Ура! Вы создали событие!", Toast.LENGTH_LONG).show()
+        showSnackbar(getString(R.string.you_create_event), ToastType.SUCCESS)
         parentFragmentManager.setFragmentResult(
             REQUEST_CREATING_EVENT, bundleOf(
                 RESULT_CREATING_EVENT to eventUid
@@ -118,11 +118,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
     }
 
     override fun showWarningOtherCity(currentCity: String) {
-        Toast.makeText(
-            context,
-            getString(R.string.warning_other_city, currentCity),
-            Toast.LENGTH_LONG
-        ).show()
+        showSnackbar(getString(R.string.warning_other_city, currentCity))
     }
 
     override fun showImages(images: MutableList<Bitmap>) {
@@ -146,8 +142,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                 val bitmap = result.uri.getBitmap(activity?.contentResolver)
                 presenter.addImage(bitmap)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Toast.makeText(context, getString(R.string.error_pick_image), Toast.LENGTH_LONG)
-                    .show()
+                showError(getString(R.string.error_pick_image))
             }
         }
     }

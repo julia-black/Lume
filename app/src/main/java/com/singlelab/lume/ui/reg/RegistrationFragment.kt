@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -69,8 +68,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
                 val bitmap = result.uri.getBitmap(activity?.contentResolver)
                 presenter.addImage(bitmap)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Toast.makeText(context, getString(R.string.error_pick_image), Toast.LENGTH_LONG)
-                    .show()
+                showError(getString(R.string.error_pick_image))
             }
         }
     }
@@ -91,7 +89,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
                     description.text.toString()
                 )
             } else {
-                Toast.makeText(context, getString(R.string.enter_fields), Toast.LENGTH_LONG).show()
+                showError(getString(R.string.enter_fields))
             }
         }
         parentFragmentManager.setFragmentResultListener(

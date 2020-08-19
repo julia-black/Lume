@@ -3,6 +3,7 @@ package com.singlelab.net.repositories
 import com.google.gson.Gson
 import com.singlelab.net.ApiUnit
 import com.singlelab.net.exceptions.ApiException
+import com.singlelab.net.exceptions.NotConnectionException
 import com.singlelab.net.exceptions.RefreshTokenException
 import com.singlelab.net.exceptions.TimeoutException
 import com.singlelab.net.model.ErrorResponse
@@ -69,7 +70,7 @@ open class BaseRepository(private val apiUnit: ApiUnit) {
                 ResultCoroutines.Error(ApiException(errorMessage))
             }
         } catch (e: UnknownHostException) {
-            ResultCoroutines.Error(ApiException("Отсутствует соединение с сервером"))
+            ResultCoroutines.Error(NotConnectionException())
         } catch (e: RefreshTokenException) {
             when (val responseAuth = updateToken(apiUnit)) { //обновляем токен
                 is ResultCoroutines.Success<AuthResponse> -> {

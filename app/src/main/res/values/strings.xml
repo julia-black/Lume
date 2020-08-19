@@ -104,6 +104,7 @@
     <string name="share">Поделиться</string>
     <string name="choose_age">Укажите ограничение по возрасту. Событие увидят только люди, которые подходят по возрасту</string>
     <string name="attention_age">Вы можете указать ограничение по возрасту. Событие будет доступно только тем, кто подходит по возрасту:</string>
+    <string name="you_create_event">Ура! Вы создали событие!</string>
 
     <!-- Types of events -->
     <string name="culture">Искусство</string>

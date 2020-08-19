@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.fragment.app.FragmentResultListener
@@ -268,11 +267,7 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
     }
 
     private fun onErrorGeo() {
-        Toast.makeText(
-            context,
-            getString(R.string.permission_location_denied),
-            Toast.LENGTH_LONG
-        ).show()
+        showError(getString(R.string.permission_location_denied))
         presenter.changeDistance(FAR_DISTANCE)
     }
 

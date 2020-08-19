@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nguyenhoanglam.imagepicker.model.Config.CREATOR.ROOT_DIR_DCIM
@@ -82,7 +81,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
             if (resultCode == Activity.RESULT_OK && images.isNotEmpty()) {
                 sendMessage(images)
             } else {
-                Toast.makeText(context, getString(R.string.error_pick_image), Toast.LENGTH_LONG).show()
+                showError(getString(R.string.error_pick_image))
             }
         }
     }

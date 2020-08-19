@@ -10,6 +10,7 @@ import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.my_profile.interactor.MyProfileInteractor
 import com.singlelab.lume.util.toBase64
 import com.singlelab.net.exceptions.ApiException
+import com.singlelab.net.exceptions.NotConnectionException
 import com.singlelab.net.model.auth.AuthData
 import moxy.InjectViewState
 import javax.inject.Inject
@@ -60,7 +61,11 @@ class MyProfilePresenter @Inject constructor(
             } catch (e: ApiException) {
                 runOnMainThread {
                     viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
-                    viewState.showError(e.message)
+                    viewState.showError(
+                        message = e.message,
+                        withRetry = e is NotConnectionException,
+                        callRetry = { loadProfile(isFirstAttach) }
+                    )
                 }
             }
         }

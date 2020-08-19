@@ -6,9 +6,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.listeners.OnActivityResultListener
@@ -17,9 +19,11 @@ import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.profile.PersonNotifications
+import com.singlelab.lume.model.view.ToastType
 import com.singlelab.net.model.auth.AuthData
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -34,6 +38,8 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         get() = parentJob + Dispatchers.Default
 
     private val scope = CoroutineScope(coroutineContext)
+
+    private var snackbar: Snackbar? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,15 +60,25 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
 
     override fun onStop() {
         hideKeyboard()
+        hideSnackbar()
         super.onStop()
     }
 
-    override fun showError(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-    }
 
     override fun showLoading(isShow: Boolean, withoutBackground: Boolean) {
         (activity as MainActivity?)?.showLoading(isShow, withoutBackground)
+    }
+
+    override fun showError(
+        message: String,
+        withRetry: Boolean,
+        callRetry: () -> Unit
+    ) {
+        showSnackbar(
+            message,
+            if (withRetry) ToastType.ERROR_RETRY else ToastType.ERROR,
+            callRetry
+        )
     }
 
     override fun toAuth() {
@@ -131,7 +147,41 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         startActivity(Intent.createChooser(sendIntent, getString(R.string.share)))
     }
 
-    fun showToast(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    fun showSnackbar(
+        message: String,
+        type: ToastType = ToastType.WARNING,
+        callRetry: () -> Unit = {}
+    ) {
+        context?.let {
+            val snackbar = Snackbar.make(requireActivity().container, message, type.length)
+            val snackbarLayout = snackbar.view
+
+            snackbarLayout.elevation = 0f
+            snackbarLayout.backgroundTintList = ContextCompat.getColorStateList(it, type.colorResId)
+
+            val textView = snackbarLayout.findViewById<View>(R.id.snackbar_text) as TextView
+
+            if (type.drawableResId != null) {
+                textView.setCompoundDrawablesWithIntrinsicBounds(type.drawableResId, 0, 0, 0)
+                textView.compoundDrawablePadding =
+                    resources.getDimension(R.dimen.margin_small).toInt()
+            }
+            if (type == ToastType.ERROR_RETRY) {
+                this.snackbar = snackbar
+            }
+            snackbarLayout.setOnClickListener {
+                if (type == ToastType.ERROR_RETRY) {
+                    callRetry.invoke()
+                }
+                this.snackbar?.dismiss()
+                snackbar.dismiss()
+            }
+            snackbar.show()
+        }
     }
+
+    private fun hideSnackbar() {
+        snackbar?.dismiss()
+    }
+
 }

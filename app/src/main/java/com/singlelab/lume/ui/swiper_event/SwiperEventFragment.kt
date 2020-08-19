@@ -59,6 +59,7 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         if (presenter.event == null) {
             presenter.loadRandomEvent()
         } else {
+            button_filter.visibility = View.VISIBLE
             card_stack_view.visibility = View.VISIBLE
             text_empty_swipes.visibility = View.GONE
             (card_stack_view.adapter as CardStackEventAdapter).setEvents(listOf(event))
@@ -79,6 +80,7 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
 
     override fun showEmptySwipes() {
         card_stack_view.visibility = View.GONE
+        button_filter.visibility = View.GONE
         text_empty_swipes.visibility = View.VISIBLE
         text_empty_swipes.text = getString(R.string.empty_swipes)
     }

@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nguyenhoanglam.imagepicker.model.Config
@@ -16,6 +15,7 @@ import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.model.view.ToastType
 import com.singlelab.lume.ui.view.image.ImageAdapter
 import com.singlelab.lume.ui.view.image.OnImageClickListener
 import com.singlelab.lume.util.getBitmap
@@ -70,14 +70,13 @@ class FeedbackFragment : BaseFragment(), FeedbackView, OnImageClickListener,
             if (resultCode == Activity.RESULT_OK && images.isNotEmpty()) {
                 presenter.addImages(images)
             } else {
-                Toast.makeText(context, getString(R.string.error_pick_image), Toast.LENGTH_LONG)
-                    .show()
+                showError(getString(R.string.error_pick_image))
             }
         }
     }
 
     override fun showSuccessSendFeedback() {
-        showToast(getString(R.string.feedback_send))
+        showSnackbar(getString(R.string.feedback_send), ToastType.SUCCESS)
         findNavController().popBackStack()
     }
 
@@ -132,7 +131,7 @@ class FeedbackFragment : BaseFragment(), FeedbackView, OnImageClickListener,
         button_give_feedback.setOnClickListener {
             val text = feedback.text.toString()
             if (text.isEmpty()) {
-                showError(getString(R.string.enter_fields))
+                showSnackbar(getString(R.string.enter_fields), ToastType.ERROR)
             } else {
                 presenter.onGiveFeedBackClick(text)
             }

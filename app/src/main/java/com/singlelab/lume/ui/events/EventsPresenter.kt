@@ -10,6 +10,7 @@ import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.events.interactor.EventsInteractor
 import com.singlelab.lume.util.toCalendarDay
 import com.singlelab.net.exceptions.ApiException
+import com.singlelab.net.exceptions.NotConnectionException
 import com.singlelab.net.model.event.ParticipantStatus
 import moxy.InjectViewState
 import javax.inject.Inject
@@ -60,7 +61,11 @@ class EventsPresenter @Inject constructor(
             } catch (e: ApiException) {
                 runOnMainThread {
                     viewState.showLoading(false)
-                    viewState.showError(e.message)
+                    viewState.showError(
+                        message = e.message,
+                        withRetry = e is NotConnectionException,
+                        callRetry = { loadEvents(currentEventUid) }
+                    )
                 }
             }
         }
