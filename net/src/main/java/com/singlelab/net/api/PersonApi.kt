@@ -40,4 +40,7 @@ interface PersonApi {
 
     @POST("friends/confirm-friend")
     fun confirmFriendAsync(@Query("friendGuid") personUid: String): Deferred<Response<MessageResponse>>
+
+    @POST("contacts/get-person-list-by-contacts")
+    fun getPersonsFromContactsAsync(@Body phones: List<String>): Deferred<Response<List<PersonResponse>>>
 }

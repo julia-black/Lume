@@ -6,7 +6,8 @@ import com.singlelab.net.model.person.PersonResponse
 import com.singlelab.net.model.person.SearchPersonRequest
 import com.singlelab.net.repositories.BaseRepository
 
-class FriendsRepositoryImpl(private val apiUnit: ApiUnit) : FriendsRepository, BaseRepository(apiUnit) {
+class FriendsRepositoryImpl(private val apiUnit: ApiUnit) : FriendsRepository,
+    BaseRepository(apiUnit) {
     override suspend fun getFriends(personUid: String): List<PersonResponse>? {
         return safeApiCall(
             call = { apiUnit.personApi.getFriendsAsync(personUid).await() },
@@ -46,6 +47,13 @@ class FriendsRepositoryImpl(private val apiUnit: ApiUnit) : FriendsRepository, B
         safeApiCall(
             call = { apiUnit.personApi.confirmFriendAsync(personUid).await() },
             errorMessage = "Не удалось удалить пользователя из друзей"
+        )
+    }
+
+    override suspend fun getPersonsFromContacts(phones: List<String>): List<PersonResponse>? {
+        return safeApiCall(
+            call = { apiUnit.personApi.getPersonsFromContactsAsync(phones).await() },
+            errorMessage = "Не удалось загрузить пользователей"
         )
     }
 }

@@ -88,6 +88,12 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
         onErrorGeo()
     }
 
+    override fun onContactsPermissionGranted() {
+    }
+
+    override fun onContactsPermissionDenied() {
+    }
+
     private fun showFilters(isEvent: Boolean) {
         if (isEvent) {
             emoji_grid.visibility = View.VISIBLE

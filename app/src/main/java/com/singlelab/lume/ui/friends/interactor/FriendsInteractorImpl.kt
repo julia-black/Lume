@@ -43,4 +43,10 @@ class FriendsInteractorImpl(private val repository: FriendsRepository) : Friends
     override suspend fun confirmFriend(personUid: String) {
         return repository.confirmFriend(personUid)
     }
+
+    override suspend fun getPersonsFromContacts(phones: List<String>): List<Person>? {
+        return repository.getPersonsFromContacts(phones)?.mapNotNull {
+            Person.fromResponse(it)
+        }
+    }
 }

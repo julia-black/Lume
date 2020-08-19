@@ -13,6 +13,7 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnBackPressListener
 import com.singlelab.lume.util.maskPhone
+import com.singlelab.lume.util.toShortPhone
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_auth.*
 import moxy.presenter.InjectPresenter
@@ -94,7 +95,7 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
         if (edit_text_phone.isValid) {
             context?.let {
                 presenter.onClickSendCode(
-                    edit_text_phone.unmaskText,
+                    edit_text_phone.text.toString().toShortPhone(),
                     NotificationManagerCompat.from(it).areNotificationsEnabled()
                 )
             }

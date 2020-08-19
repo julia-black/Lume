@@ -15,4 +15,6 @@ interface FriendsInteractor {
     suspend fun removeFriend(personUid: String)
 
     suspend fun confirmFriend(personUid: String)
+
+    suspend fun getPersonsFromContacts(phones: List<String>) : List<Person>?
 }

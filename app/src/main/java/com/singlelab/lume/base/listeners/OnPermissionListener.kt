@@ -4,4 +4,8 @@ interface OnPermissionListener {
     fun onLocationPermissionGranted()
 
     fun onLocationPermissionDenied()
+
+    fun onContactsPermissionGranted()
+
+    fun onContactsPermissionDenied()
 }

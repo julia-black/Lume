@@ -100,6 +100,12 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
         showMap(false)
     }
 
+    override fun onContactsPermissionGranted() {
+    }
+
+    override fun onContactsPermissionDenied() {
+    }
+
     override fun searchPlace(queryStr: String) {
         locationMap?.let { map ->
             try {
