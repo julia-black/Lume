@@ -11,6 +11,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.nguyenhoanglam.imagepicker.model.Config
+import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.listeners.OnActivityResultListener
@@ -140,6 +142,27 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
                 )
                 .setCropShape(CropImageView.CropShape.RECTANGLE)
                 .start(activity)
+        }
+    }
+
+    fun onClickAddImages() {
+        activity?.let {
+            ImagePicker.with(it)
+                .setFolderMode(true)
+                .setFolderTitle(Const.APP_NAME)
+                .setRootDirectoryName(Config.ROOT_DIR_DCIM)
+                .setDirectoryName(Const.FOLDER_NAME)
+                .setMultipleMode(true)
+                .setShowNumberIndicator(true)
+                .setMaxSize(Const.MAX_COUNT_IMAGES)
+                .setLimitMessage(
+                    getString(
+                        R.string.chat_select_images_limit,
+                        Const.MAX_COUNT_IMAGES
+                    )
+                )
+                .setRequestCode(Const.SELECT_IMAGE_REQUEST_CODE)
+                .start()
         }
     }
 

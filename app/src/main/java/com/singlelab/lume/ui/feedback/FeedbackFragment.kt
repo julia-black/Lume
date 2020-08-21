@@ -10,11 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.nguyenhoanglam.imagepicker.model.Config
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.model.Const.SELECT_IMAGE_REQUEST_CODE
 import com.singlelab.lume.model.view.ToastType
 import com.singlelab.lume.ui.view.image.ImageAdapter
 import com.singlelab.lume.ui.view.image.OnImageClickListener
@@ -28,11 +28,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class FeedbackFragment : BaseFragment(), FeedbackView, OnImageClickListener,
     OnActivityResultListener {
-
-    companion object {
-        const val SELECT_IMAGE_MAX_COUNT = 10
-        const val SELECT_IMAGE_REQUEST_CODE = 102
-    }
 
     @Inject
     lateinit var daggerPresenter: FeedbackPresenter
@@ -85,24 +80,7 @@ class FeedbackFragment : BaseFragment(), FeedbackView, OnImageClickListener,
     }
 
     override fun onClickNewImage() {
-        activity?.let {
-            ImagePicker.with(it)
-                .setFolderMode(true)
-                .setFolderTitle("Lume")
-                .setRootDirectoryName(Config.ROOT_DIR_DCIM)
-                .setDirectoryName("Lume Images")
-                .setMultipleMode(true)
-                .setShowNumberIndicator(true)
-                .setMaxSize(SELECT_IMAGE_MAX_COUNT)
-                .setLimitMessage(
-                    getString(
-                        R.string.chat_select_images_limit,
-                        SELECT_IMAGE_MAX_COUNT
-                    )
-                )
-                .setRequestCode(SELECT_IMAGE_REQUEST_CODE)
-                .start()
-        }
+        onClickAddImages()
     }
 
     override fun onClickImage(position: Int) {

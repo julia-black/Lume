@@ -46,7 +46,6 @@
     <string name="empty_persons_from_contacts">Пользователей из контактов не найдено</string>
     <string name="not_permission_contacts">Вы запретили доступ к контактам</string>
 
-
     <!-- Feedback -->
     <string name="give_feedback">Обратная связь</string>
     <string name="title_feedback">Если вы столкнулись с проблемой, или просто хотите оставить отзыв - напишите нам и мы постараемся быстро всё поправить!</string>

@@ -1,6 +1,8 @@
 package com.singlelab.lume.model
 
 object Const {
+    const val APP_NAME = "Lume"
+    const val FOLDER_NAME = "Lume Images"
     const val BASE_URL = "https://lumewebapp.azurewebsites.net/api/"
 
     const val PREF = "lume_pref"
@@ -24,4 +26,7 @@ object Const {
 
     const val IMAGE_RESOLUTION_WIDTH = 1000
     const val IMAGE_RESOLUTION_HEIGHT = 1000
+
+    const val MAX_COUNT_IMAGES = 10
+    const val SELECT_IMAGE_REQUEST_CODE = 102
 }

@@ -15,6 +15,7 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.model.Const.SELECT_IMAGE_REQUEST_CODE
 import com.singlelab.lume.ui.chat.common.*
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Companion.PENDING_MESSAGE_UID
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Status
@@ -119,19 +120,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
     }
 
     private fun addAttachment() {
-        activity?.let {
-            ImagePicker.with(it)
-                .setFolderMode(true)
-                .setFolderTitle("Lume")
-                .setRootDirectoryName(ROOT_DIR_DCIM)
-                .setDirectoryName("Lume Images")
-                .setMultipleMode(true)
-                .setShowNumberIndicator(true)
-                .setMaxSize(SELECT_IMAGE_MAX_COUNT)
-                .setLimitMessage(getString(R.string.chat_select_images_limit, SELECT_IMAGE_MAX_COUNT))
-                .setRequestCode(SELECT_IMAGE_REQUEST_CODE)
-                .start()
-        }
+        onClickAddImages()
     }
 
     private fun showPendingMessage(text: String, images: List<Bitmap>) {
@@ -157,10 +146,5 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
             )
         }
         showNewMessage(pendingMessage)
-    }
-
-    companion object {
-        private const val SELECT_IMAGE_MAX_COUNT = 10
-        private const val SELECT_IMAGE_REQUEST_CODE = 101
     }
 }

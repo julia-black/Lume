@@ -15,11 +15,13 @@ import androidx.core.view.children
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.Const.SELECT_IMAGE_REQUEST_CODE
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.location.MapLocation
 import com.singlelab.lume.model.view.ToastType
@@ -30,11 +32,8 @@ import com.singlelab.lume.ui.view.image.OnImageClickListener
 import com.singlelab.lume.util.formatToUTC
 import com.singlelab.lume.util.getBitmap
 import com.singlelab.net.model.event.EventRequest
-import com.theartofdev.edmodo.cropper.CropImage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_creating_event.*
-import kotlinx.android.synthetic.main.fragment_creating_event.description
-import kotlinx.android.synthetic.main.fragment_events.button_create_event
 import kotlinx.android.synthetic.main.view_grid_emoji.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -136,19 +135,25 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
     }
 
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            val result = CropImage.getActivityResult(data)
-            if (resultCode == Activity.RESULT_OK) {
-                val bitmap = result.uri.getBitmap(activity?.contentResolver)
-                presenter.addImage(bitmap)
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+        if (ImagePicker.shouldHandleResult(
+                requestCode,
+                resultCode,
+                data,
+                SELECT_IMAGE_REQUEST_CODE
+            )
+        ) {
+            val images = ImagePicker.getImages(data)
+                .mapNotNull { it.uri.getBitmap(activity?.contentResolver) }
+            if (resultCode == Activity.RESULT_OK && images.isNotEmpty()) {
+                presenter.addImages(images)
+            } else {
                 showError(getString(R.string.error_pick_image))
             }
         }
     }
 
     override fun onClickNewImage() {
-        onClickChangeImage()
+        onClickAddImages()
     }
 
     override fun onClickImage(position: Int) {
@@ -166,6 +171,12 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
 
     private fun onClickDeleteImage(position: Int) {
         presenter.deleteImage(position)
+    }
+
+    override fun showLoading(isShow: Boolean, withoutBackground: Boolean) {
+        super.showLoading(isShow, withoutBackground)
+        button_create_event.isEnabled = !isShow
+
     }
 
     private fun setListeners() {

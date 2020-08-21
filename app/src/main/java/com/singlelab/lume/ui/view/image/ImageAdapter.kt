@@ -4,13 +4,10 @@ import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.singlelab.lume.model.Const.MAX_COUNT_IMAGES
 
 class ImageAdapter :
     RecyclerView.Adapter<ImageViewHolder>() {
-
-    companion object {
-        const val MAX_COUNT_IMAGES = 10
-    }
 
     private var images = mutableListOf<Bitmap?>()
 
