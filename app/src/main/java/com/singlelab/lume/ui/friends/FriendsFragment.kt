@@ -143,6 +143,10 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
         }
     }
 
+    override fun showContacts(persons: MutableList<Person>) {
+        showSearchResult(persons, 1)
+    }
+
     override fun showEmptyFriends() {
         recycler_search_results.visibility = View.GONE
         title_empty_search.visibility = View.GONE

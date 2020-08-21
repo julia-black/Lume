@@ -210,7 +210,7 @@ class FriendsPresenter @Inject constructor(
                     if (persons.isNullOrEmpty()) {
                         viewState.showEmptyPersonsFromContacts()
                     } else {
-                        viewState.showSearchResult(persons.toMutableList(), 1)
+                        viewState.showContacts(persons.toMutableList())
                     }
                 }
             } catch (e: ApiException) {
