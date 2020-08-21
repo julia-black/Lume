@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.singlelab.lume.R
-import com.singlelab.lume.ui.view.image.OnImageClickListener
-import kotlinx.android.synthetic.main.item_event_image.view.*
+import kotlinx.android.synthetic.main.item_adding_image.view.*
 
 
 class ImageViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-    RecyclerView.ViewHolder(inflater.inflate(R.layout.item_event_image, parent, false)) {
+    RecyclerView.ViewHolder(inflater.inflate(R.layout.item_adding_image, parent, false)) {
 
     fun bind(bitmap: Bitmap?, position: Int, listener: OnImageClickListener?) {
         if (bitmap == null) {

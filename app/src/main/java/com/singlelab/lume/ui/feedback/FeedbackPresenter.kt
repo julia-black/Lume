@@ -3,6 +3,7 @@ package com.singlelab.lume.ui.feedback
 import android.graphics.Bitmap
 import android.os.Build
 import com.singlelab.lume.BuildConfig
+import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.Const
@@ -20,6 +21,10 @@ class FeedbackPresenter @Inject constructor(
     private val interactor: FeedbackInteractor,
     preferences: Preferences?
 ) : BasePresenter<FeedbackView>(preferences, interactor as BaseInteractor) {
+
+    companion object {
+        const val MAX_COUNT_IMAGE = 10
+    }
 
     private var images: MutableList<Bitmap> = mutableListOf()
 
@@ -44,6 +49,10 @@ class FeedbackPresenter @Inject constructor(
 
     fun addImages(images: List<Bitmap>) {
         this.images.addAll(images)
+        if (this.images.size > MAX_COUNT_IMAGE) {
+            this.images = this.images.subList(0, MAX_COUNT_IMAGE)
+            viewState.showError(R.string.too_many_images)
+        }
         viewState.showImages(this.images)
     }
 

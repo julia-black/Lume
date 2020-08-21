@@ -53,12 +53,13 @@
                 android:id="@+id/recycler_images"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginHorizontal="@dimen/margin_big"
+                android:overScrollMode="never"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@id/layout_feedback"
                 tools:itemCount="1"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:listitem="@layout/item_event_image" />
+                tools:listitem="@layout/item_adding_image" />
 
             <TextView
                 android:id="@+id/text_add_photo"

@@ -81,6 +81,10 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         )
     }
 
+    override fun showError(messageId: Int, withRetry: Boolean, callRetry: () -> Unit) {
+        showError(getString(messageId), withRetry, callRetry)
+    }
+
     override fun toAuth() {
         showLoading(false)
         findNavController().popBackStack()

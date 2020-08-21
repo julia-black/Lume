@@ -7,18 +7,18 @@ class NewProfile(
     var login: String? = null,
     var name: String? = null,
     var description: String? = null,
-    var age: Int? = null,
+    var age: String? = null,
     var city: City? = null
 ) {
     constructor(profile: Profile) : this(
         profile.login,
         profile.name,
         profile.description,
-        profile.age,
+        profile.age.toString(),
         City(profile.cityId, profile.cityName)
     )
 
     fun toRequest(): ProfileRequest {
-        return ProfileRequest(login, name, description, age, city?.cityId)
+        return ProfileRequest(login, name, description, age?.toInt(), city?.cityId)
     }
 }

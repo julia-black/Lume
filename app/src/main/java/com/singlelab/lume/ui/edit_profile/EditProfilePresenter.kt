@@ -1,11 +1,13 @@
 package com.singlelab.lume.ui.edit_profile
 
 
+import androidx.core.text.isDigitsOnly
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.profile.NewProfile
 import com.singlelab.lume.model.profile.Profile
+import com.singlelab.lume.model.view.ValidationError
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.edit_profile.interactor.EditProfileInteractor
 import com.singlelab.net.exceptions.ApiException
@@ -41,11 +43,7 @@ class EditProfilePresenter @Inject constructor(
     }
 
     fun setAge(age: String) {
-        try {
-            newProfile.age = age.toInt()
-        } catch (e: Exception) {
-            viewState.showError("Можно вводить только цифры")
-        }
+        newProfile.age = age
     }
 
     fun setDescription(description: String) {
@@ -53,21 +51,35 @@ class EditProfilePresenter @Inject constructor(
     }
 
     fun updateProfile() {
-        viewState.showLoading(isShow = true, withoutBackground = true)
-        invokeSuspend {
-            try {
-                interactor.updateProfile(newProfile)
-                runOnMainThread {
-                    viewState.showLoading(isShow = false, withoutBackground = true)
-                    viewState.onCompleteUpdate()
-                }
-            } catch (e: ApiException) {
-                runOnMainThread {
-                    viewState.showLoading(isShow = false, withoutBackground = true)
-                    viewState.showError(e.message)
+        val validationError = validation()
+        if (validationError != null) {
+            viewState.showError(validationError.titleResId)
+        } else {
+            viewState.showLoading(isShow = true, withoutBackground = true)
+            invokeSuspend {
+                try {
+                    interactor.updateProfile(newProfile)
+                    runOnMainThread {
+                        viewState.showLoading(isShow = false, withoutBackground = true)
+                        viewState.onCompleteUpdate()
+                    }
+                } catch (e: ApiException) {
+                    runOnMainThread {
+                        viewState.showLoading(isShow = false, withoutBackground = true)
+                        viewState.showError(e.message)
+                    }
                 }
             }
         }
+    }
 
+    private fun validation(): ValidationError? {
+        return if (newProfile.login != null && newProfile.login!!.isEmpty() ||
+            newProfile.name != null && newProfile.name!!.isEmpty() ||
+            newProfile.age != null && (newProfile.age!!.isEmpty() || !newProfile.age!!.isDigitsOnly()) ||
+            newProfile.description != null && newProfile.description!!.isEmpty()
+        )
+            ValidationError.UNFILLED_FIELDS
+        else null
     }
 }

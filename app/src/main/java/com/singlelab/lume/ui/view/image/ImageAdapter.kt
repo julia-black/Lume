@@ -8,6 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 class ImageAdapter :
     RecyclerView.Adapter<ImageViewHolder>() {
 
+    companion object {
+        const val MAX_COUNT_IMAGES = 10
+    }
+
     private var images = mutableListOf<Bitmap?>()
 
     private var imageListener: OnImageClickListener? = null
@@ -44,7 +48,9 @@ class ImageAdapter :
     fun setData(images: MutableList<Bitmap>) {
         this.images.clear()
         this.images.addAll(images)
-        addNewImageItem()
+        if (this.images.size < MAX_COUNT_IMAGES) {
+            addNewImageItem()
+        }
         notifyDataSetChanged()
     }
 

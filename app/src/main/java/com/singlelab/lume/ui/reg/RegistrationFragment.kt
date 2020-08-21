@@ -14,6 +14,7 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.model.city.City
+import com.singlelab.lume.model.view.ValidationError
 import com.singlelab.lume.ui.cities.CitiesFragment
 import com.singlelab.lume.util.getBitmap
 import com.theartofdev.edmodo.cropper.CropImage
@@ -81,7 +82,8 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
             toCityChoose()
         }
         button_registration.setOnClickListener {
-            if (validation()) {
+            val validationError = validation()
+            if (validationError == null) {
                 presenter.registration(
                     login.text.toString(),
                     name.text.toString(),
@@ -89,7 +91,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
                     description.text.toString()
                 )
             } else {
-                showError(getString(R.string.enter_fields))
+                showError(getString(validationError.titleResId))
             }
         }
         parentFragmentManager.setFragmentResultListener(
@@ -104,7 +106,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
         findNavController().navigate(RegistrationFragmentDirections.actionRegistrationToCities())
     }
 
-    private fun validation(): Boolean {
+    private fun validation(): ValidationError? {
         return presenter.validation(
             login.text.toString(),
             name.text.toString(),

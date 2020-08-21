@@ -23,6 +23,7 @@
     <string name="name">Имя</string>
     <string name="age">Возраст</string>
     <string name="add_photo">Будет замечательно, если на фото будете именно вы. Все мы любим милых котиков, но не каждый захочет идти куда-то только в их компании</string>
+    <string name="empty_photo">Добавьте фото</string>
     <string name="about_yourself">Пару слов о себе</string>
     <string name="to_registration">Зарегистрироваться</string>
     <string name="error_pick_image">Не удалось выбрать изображение</string>
@@ -53,6 +54,7 @@
     <string name="hint_feedback">Проблема/отзыв</string>
     <string name="button_give_feedback">Отправить</string>
     <string name="feedback_send">Отзыв отправлен!</string>
+    <string name="too_many_images">Количество картинок должно быть не более 10</string>
 
     <plurals name="age_plurals">
         <item quantity="one">%1$d год</item>
