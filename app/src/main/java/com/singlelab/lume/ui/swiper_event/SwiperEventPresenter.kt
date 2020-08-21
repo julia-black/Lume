@@ -75,8 +75,11 @@ class SwiperEventPresenter @Inject constructor(
             } catch (e: ApiException) {
                 runOnMainThread {
                     viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
+                    if (e is NotConnectionException) {
+                        viewState.hideFilter()
+                    }
                     if (e.errorCode == Const.ERROR_CODE_NO_MATCHING_EVENTS) {
-                        viewState.showEmptySwipes()
+                        viewState.showEmptySwipes(filterEvent.isFullFilter())
                     } else {
                         viewState.showError(
                             e.message,

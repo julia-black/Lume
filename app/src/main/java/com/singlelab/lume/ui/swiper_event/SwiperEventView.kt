@@ -15,5 +15,8 @@ interface SwiperEventView : LoadingView, ErrorView {
     fun toAcceptedEvent(isOpenEvent: Boolean, eventUid: String)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showEmptySwipes()
+    fun showEmptySwipes(isFullFilter: Boolean)
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun hideFilter()
 }

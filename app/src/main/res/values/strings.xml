@@ -92,7 +92,8 @@
     <string name="search_events">Поиск события</string>
     <string name="search_event">Найти событие</string>
     <string name="person_invited">Пользователь %1$s приглашен</string>
-    <string name="empty_swipes">К сожалению, новых событий нет\nПопробуйте расширить фильтры или создайте своё событие!</string>
+    <string name="empty_swipes">К сожалению, новых событий нет\nВы всегда можете создать своё событие!</string>
+    <string name="empty_swipes_expand_filters">К сожалению, новых событий нет\nПопробуйте расширить фильтры или создайте своё событие!</string>
     <string name="online">Онлайн</string>
     <string name="event_is_online">Онлайн-событие</string>
     <string name="unavailable_location">Неизвестное местоположение. Обратитесь к организатору в чате</string>

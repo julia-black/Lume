@@ -21,4 +21,13 @@ data class FilterEvent(
             else -> null
         }
     }
+
+    fun isFullFilter(): Boolean {
+        return distance == Distance.FAR &&
+                (selectedTypes.isEmpty() || selectedTypes.size == EventType.values().size) &&
+                longitude == null &&
+                latitude == null &&
+                !isExceptOnline &&
+                !isOnlyOnline
+    }
 }
