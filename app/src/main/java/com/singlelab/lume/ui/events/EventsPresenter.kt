@@ -119,19 +119,31 @@ class EventsPresenter @Inject constructor(
     }
 
     fun onShowCurrentDay(
+        inviteDaysWithEvent: List<CalendarDay>,
         futureDaysWithEvent: List<CalendarDay>,
         pastDaysWithEvent: List<CalendarDay>,
         currentDay: CalendarDay?
     ) {
         if (currentDay == null) {
-            if (futureDaysWithEvent.isEmpty()) {
+            val inviteDay =
+                if (inviteDaysWithEvent.isNotEmpty()) inviteDaysWithEvent.first() else null
+            val futureDay =
+                if (futureDaysWithEvent.isNotEmpty()) futureDaysWithEvent.first() else null
+            if (inviteDay != null && futureDay != null) {
+                if (inviteDay.isBefore(futureDay)) {
+                    viewState.showCurrentDayOnPager(inviteDay)
+                } else {
+                    viewState.showCurrentDayOnPager(futureDay)
+                }
+            } else if (inviteDay != null) {
+                viewState.showCurrentDayOnPager(inviteDay)
+            } else if (futureDay != null) {
+                viewState.showCurrentDayOnPager(futureDay)
+            } else {
                 if (pastDaysWithEvent.isNotEmpty()) {
                     val lastDay = pastDaysWithEvent.last()
                     viewState.showCurrentDayOnPager(lastDay)
                 }
-            } else {
-                val nextDay = futureDaysWithEvent[0]
-                viewState.showCurrentDayOnPager(nextDay)
             }
         } else {
             viewState.showCurrentDayOnPager(currentDay)
