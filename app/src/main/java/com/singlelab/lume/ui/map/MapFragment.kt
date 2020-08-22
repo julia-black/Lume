@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -80,8 +79,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
         }
         button_accept_location.setOnClickListener {
             if (edit_text_search.text.isBlank()) {
-                Toast.makeText(context, getString(R.string.empty_location), Toast.LENGTH_LONG)
-                    .show()
+                showSnackbar(getString(R.string.empty_location))
             } else {
                 acceptLocation()
             }
@@ -100,6 +98,12 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
 
     override fun onLocationPermissionDenied() {
         showMap(false)
+    }
+
+    override fun onContactsPermissionGranted() {
+    }
+
+    override fun onContactsPermissionDenied() {
     }
 
     override fun searchPlace(queryStr: String) {
@@ -122,7 +126,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
-                Toast.makeText(context, getString(R.string.error_address), Toast.LENGTH_LONG).show()
+                showError(getString(R.string.error_address))
             }
         }
     }
@@ -137,7 +141,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
             }
         } catch (e: IOException) {
             e.printStackTrace()
-            Toast.makeText(context, getString(R.string.error_address), Toast.LENGTH_LONG).show()
+            showError(getString(R.string.error_address))
         }
     }
 

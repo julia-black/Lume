@@ -4,6 +4,7 @@
         <item name="colorPrimary">@color/colorPrimaryBright</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="snackbarStyle">@style/SnackbarStyle</item>
     </style>
 
     <style name="ToolbarStyle">
@@ -41,5 +42,13 @@
         <item name="android:textSize">16sp</item>
         <item name="android:backgroundTint">@color/selector_action_button</item>
         <item name="cornerRadius">10dp</item>
+    </style>
+
+    <style name="SnackbarStyle" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:layout_margin">@null</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginLeft">@dimen/margin_very_small</item>
+        <item name="android:layout_marginRight">@dimen/margin_very_small</item>
+        <item name="android:layout_marginBottom">66dp</item>
     </style>
 </resources>

@@ -199,4 +199,27 @@ class FriendsPresenter @Inject constructor(
             }
         }
     }
+
+    fun loadPersonsFromContacts(phones: List<String>) {
+        viewState.showLoading(isShow = true, withoutBackground = true)
+        invokeSuspend {
+            try {
+                val persons = interactor.getPersonsFromContacts(phones)
+                runOnMainThread {
+                    viewState.showLoading(isShow = false, withoutBackground = true)
+                    if (persons.isNullOrEmpty()) {
+                        viewState.showEmptyPersonsFromContacts()
+                    } else {
+                        viewState.showContacts(persons.toMutableList())
+                    }
+                }
+            } catch (e: ApiException) {
+                runOnMainThread {
+                    viewState.showLoading(isShow = false, withoutBackground = true)
+                    viewState.showError(e.message)
+                }
+            }
+        }
+
+    }
 }

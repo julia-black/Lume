@@ -1,6 +1,7 @@
 package com.singlelab.lume.ui.creating_event
 
 import android.graphics.Bitmap
+import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.Const
@@ -8,6 +9,7 @@ import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.location.MapLocation
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.creating_event.interactor.CreatingEventInteractor
+import com.singlelab.lume.ui.feedback.FeedbackPresenter
 import com.singlelab.lume.util.parseToString
 import com.singlelab.lume.util.toBase64
 import com.singlelab.net.exceptions.ApiException
@@ -101,11 +103,13 @@ class CreatingEventPresenter @Inject constructor(
         }
     }
 
-    fun addImage(bitmap: Bitmap?) {
-        bitmap?.let {
-            images.add(it)
-            viewState.addImage(bitmap)
+    fun addImages(images: List<Bitmap>) {
+        this.images.addAll(images)
+        if (this.images.size > FeedbackPresenter.MAX_COUNT_IMAGE) {
+            this.images = this.images.subList(0, FeedbackPresenter.MAX_COUNT_IMAGE)
+            viewState.showError(R.string.too_many_images)
         }
+        viewState.showImages(this.images)
     }
 
     fun deleteImage(position: Int) {

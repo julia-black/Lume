@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.city.City
+import com.singlelab.lume.model.view.ValidationError
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.reg.interactor.RegistrationInteractor
 import com.singlelab.lume.util.toBase64
@@ -63,12 +64,22 @@ class RegistrationPresenter @Inject constructor(
         viewState.showImage(bitmap)
     }
 
-    fun validation(login: String?, name: String?, age: String?, description: String?): Boolean {
-        return !(login.isNullOrEmpty() ||
-                name.isNullOrEmpty() ||
-                age.isNullOrEmpty() ||
-                description.isNullOrEmpty() ||
-                image == null
-                )
+    fun validation(
+        login: String?,
+        name: String?,
+        age: String?,
+        description: String?
+    ): ValidationError? {
+        return if (login.isNullOrEmpty() ||
+            name.isNullOrEmpty() ||
+            age.isNullOrEmpty() ||
+            description.isNullOrEmpty()
+        ) {
+            ValidationError.UNFILLED_FIELDS
+        } else if (image == null) {
+            ValidationError.EMPTY_PHOTO
+        } else {
+            null
+        }
     }
 }

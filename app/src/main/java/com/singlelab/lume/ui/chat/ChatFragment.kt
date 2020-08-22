@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nguyenhoanglam.imagepicker.model.Config.CREATOR.ROOT_DIR_DCIM
@@ -16,6 +15,7 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.model.Const.SELECT_IMAGE_REQUEST_CODE
 import com.singlelab.lume.ui.chat.common.*
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Companion.PENDING_MESSAGE_UID
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Status
@@ -82,7 +82,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
             if (resultCode == Activity.RESULT_OK && images.isNotEmpty()) {
                 sendMessage(images)
             } else {
-                Toast.makeText(context, getString(R.string.error_pick_image), Toast.LENGTH_LONG).show()
+                showError(getString(R.string.error_pick_image))
             }
         }
     }
@@ -120,19 +120,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
     }
 
     private fun addAttachment() {
-        activity?.let {
-            ImagePicker.with(it)
-                .setFolderMode(true)
-                .setFolderTitle("Lume")
-                .setRootDirectoryName(ROOT_DIR_DCIM)
-                .setDirectoryName("Lume Images")
-                .setMultipleMode(true)
-                .setShowNumberIndicator(true)
-                .setMaxSize(SELECT_IMAGE_MAX_COUNT)
-                .setLimitMessage(getString(R.string.chat_select_images_limit, SELECT_IMAGE_MAX_COUNT))
-                .setRequestCode(SELECT_IMAGE_REQUEST_CODE)
-                .start()
-        }
+        onClickAddImages()
     }
 
     private fun showPendingMessage(text: String, images: List<Bitmap>) {
@@ -158,10 +146,5 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
             )
         }
         showNewMessage(pendingMessage)
-    }
-
-    companion object {
-        private const val SELECT_IMAGE_MAX_COUNT = 10
-        private const val SELECT_IMAGE_REQUEST_CODE = 101
     }
 }

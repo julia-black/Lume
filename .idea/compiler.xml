@@ -4,7 +4,7 @@
     <bytecodeTargetLevel>
       <module name="dal" target="1.7" />
       <module name="data" target="1.7" />
-      <module name="net" target="1.7" />
+      <module name="lume-net" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

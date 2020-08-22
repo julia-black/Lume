@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.fragment.app.FragmentResultListener
@@ -89,6 +88,12 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
         onErrorGeo()
     }
 
+    override fun onContactsPermissionGranted() {
+    }
+
+    override fun onContactsPermissionDenied() {
+    }
+
     private fun showFilters(isEvent: Boolean) {
         if (isEvent) {
             emoji_grid.visibility = View.VISIBLE
@@ -109,6 +114,7 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
                 switch_not_online.isChecked = it.isExceptOnline
 
             }
+            showLocation(!switch_online.isChecked)
         } else {
             text_age.visibility = View.VISIBLE
             seek_bar_age.visibility = View.VISIBLE
@@ -172,17 +178,7 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
         }
         switch_online.setOnCheckedChangeListener { _, isChecked ->
             presenter.filterEvent?.isOnlyOnline = isChecked
-            if (isChecked) {
-                text_city.isEnabled = false
-                seek_bar_distance.isEnabled = false
-                text_distance.isEnabled = false
-                switch_not_online.isChecked = false
-                presenter.filterEvent?.isExceptOnline = false
-            } else {
-                text_city.isEnabled = true
-                seek_bar_distance.isEnabled = true
-                text_distance.isEnabled = true
-            }
+            showLocation(!isChecked)
         }
         switch_not_online.setOnCheckedChangeListener { _, isChecked ->
             presenter.filterEvent?.isExceptOnline = isChecked
@@ -268,11 +264,7 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
     }
 
     private fun onErrorGeo() {
-        Toast.makeText(
-            context,
-            getString(R.string.permission_location_denied),
-            Toast.LENGTH_LONG
-        ).show()
+        showError(getString(R.string.permission_location_denied))
         presenter.changeDistance(FAR_DISTANCE)
     }
 
@@ -295,5 +287,19 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
             bundleOf(RESULT_FILTER to filter)
         )
         parentFragmentManager.popBackStack()
+    }
+
+    private fun showLocation(isShow: Boolean) {
+        if (isShow) {
+            text_city.isEnabled = true
+            seek_bar_distance.isEnabled = true
+            text_distance.isEnabled = true
+        } else {
+            text_city.isEnabled = false
+            seek_bar_distance.isEnabled = false
+            text_distance.isEnabled = false
+            switch_not_online.isChecked = false
+            presenter.filterEvent?.isExceptOnline = false
+        }
     }
 }

@@ -8,6 +8,7 @@ import com.singlelab.lume.model.event.FilterEvent
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.swiper_event.interactor.SwiperEventInteractor
 import com.singlelab.net.exceptions.ApiException
+import com.singlelab.net.exceptions.NotConnectionException
 import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.event.ParticipantRequest
 import com.singlelab.net.model.event.ParticipantStatus
@@ -74,10 +75,17 @@ class SwiperEventPresenter @Inject constructor(
             } catch (e: ApiException) {
                 runOnMainThread {
                     viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
+                    if (e is NotConnectionException) {
+                        viewState.hideFilter()
+                    }
                     if (e.errorCode == Const.ERROR_CODE_NO_MATCHING_EVENTS) {
-                        viewState.showEmptySwipes()
+                        viewState.showEmptySwipes(filterEvent.isFullFilter())
                     } else {
-                        viewState.showError(e.message)
+                        viewState.showError(
+                            e.message,
+                            withRetry = e is NotConnectionException,
+                            callRetry = { loadRandomEvent(isFirstAttach) }
+                        )
                     }
                 }
             }

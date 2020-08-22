@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
@@ -134,8 +133,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
                 val bitmap = result.uri.getBitmap(activity?.contentResolver)
                 presenter.updateImageProfile(bitmap)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Toast.makeText(context, getString(R.string.error_pick_image), Toast.LENGTH_LONG)
-                    .show()
+                showError(getString(R.string.error_pick_image))
             }
         }
     }
@@ -148,6 +146,10 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         presenter.profile?.let {
             findNavController().navigate(MyProfileFragmentDirections.actionMyProfileToEditProfile(it))
         }
+    }
+
+    override fun onFeedbackClick() {
+        findNavController().navigate(MyProfileFragmentDirections.actionMyProfileToFeedback())
     }
 
     override fun onLogoutClick() {

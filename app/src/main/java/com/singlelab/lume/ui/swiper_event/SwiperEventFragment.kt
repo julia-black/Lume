@@ -59,6 +59,7 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         if (presenter.event == null) {
             presenter.loadRandomEvent()
         } else {
+            button_filter.visibility = View.VISIBLE
             card_stack_view.visibility = View.VISIBLE
             text_empty_swipes.visibility = View.GONE
             (card_stack_view.adapter as CardStackEventAdapter).setEvents(listOf(event))
@@ -77,10 +78,16 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         }
     }
 
-    override fun showEmptySwipes() {
+    override fun showEmptySwipes(isFullFilter: Boolean) {
         card_stack_view.visibility = View.GONE
         text_empty_swipes.visibility = View.VISIBLE
-        text_empty_swipes.text = getString(R.string.empty_swipes)
+        if (isFullFilter) {
+            button_filter.visibility = View.GONE
+            text_empty_swipes.text = getString(R.string.empty_swipes)
+        } else {
+            button_filter.visibility = View.VISIBLE
+            text_empty_swipes.text = getString(R.string.empty_swipes_expand_filters)
+        }
     }
 
     override fun onCardDisappeared(view: View?, position: Int) {
@@ -100,6 +107,10 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
             else -> {
             }
         }
+    }
+
+    override fun hideFilter() {
+        button_filter.visibility = View.GONE
     }
 
     override fun onCardCanceled() {

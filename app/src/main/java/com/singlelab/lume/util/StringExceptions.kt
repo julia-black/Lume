@@ -20,6 +20,13 @@ fun String?.maskPhone(): String {
     }
 }
 
+fun String?.toShortPhone(): String {
+    if (!this.isNullOrEmpty()) {
+        return replace("[-()\\s]".toRegex(), "")
+    }
+    return ""
+}
+
 fun String.removePostalCode(code: String?): String {
     return if (code != null) {
         this.replace(", $code", "")

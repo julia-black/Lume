@@ -1,10 +1,13 @@
 package com.singlelab.lume.model
 
 object Const {
+    const val APP_NAME = "Lume"
+    const val FOLDER_NAME = "Lume Images"
     const val BASE_URL = "https://lumewebapp.azurewebsites.net/api/"
 
     const val PREF = "lume_pref"
     const val LOG_TAG = "lume_app"
+    const val ANDROID = "android"
 
     const val DATE_FORMAT_TIME_ZONE = "yyyy-MM-dd'T'HH:mm:ss.SSS"
     const val DATE_FORMAT_OUTPUT = "dd.MM.yyyy HH:mm"
@@ -21,6 +24,9 @@ object Const {
     const val MIN_AGE = 0
     const val MAX_AGE = 100
 
-    const val IMAGE_RESOLUTION_WIDTH = 500
-    const val IMAGE_RESOLUTION_HEIGHT = 500
+    const val IMAGE_RESOLUTION_WIDTH = 1000
+    const val IMAGE_RESOLUTION_HEIGHT = 1000
+
+    const val MAX_COUNT_IMAGES = 10
+    const val SELECT_IMAGE_REQUEST_CODE = 102
 }

@@ -7,14 +7,18 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
+import com.singlelab.lume.base.listeners.OnPermissionListener
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
 import com.singlelab.lume.ui.view.person.OnPersonItemClickListener
 import com.singlelab.lume.ui.view.person.PersonAdapter
+import com.singlelab.lume.util.ContactsUtil
 import com.singlelab.lume.util.TextInputDebounce
+import com.singlelab.lume.util.toShortPhone
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_friends.*
 import moxy.presenter.InjectPresenter
@@ -24,7 +28,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
-    OnPersonItemClickListener {
+    OnPersonItemClickListener, OnPermissionListener {
 
     @Inject
     lateinit var daggerPresenter: FriendsPresenter
@@ -69,6 +73,9 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
         )
         searchDebounce!!.watch {
             presenter.search(it)
+        }
+        button_import_contacts.setOnClickListener {
+            onImportContactsClick()
         }
     }
 
@@ -136,11 +143,19 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
         }
     }
 
+    override fun showContacts(persons: MutableList<Person>) {
+        showSearchResult(persons, 1)
+    }
+
     override fun showEmptyFriends() {
         recycler_search_results.visibility = View.GONE
         title_empty_search.visibility = View.GONE
         recycler_friends.visibility = View.GONE
         title_empty_friends.visibility = View.VISIBLE
+    }
+
+    override fun showEmptyPersonsFromContacts() {
+        showSnackbar(getString(R.string.empty_persons_from_contacts))
     }
 
     override fun onPersonClick(personUid: String) {
@@ -178,7 +193,31 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
     }
 
     private fun showSearch(isShow: Boolean) {
+        button_import_contacts.visibility = if (isShow) View.VISIBLE else View.GONE
         edit_text_search.visibility = if (isShow) View.VISIBLE else View.GONE
         icon_search.visibility = if (isShow) View.VISIBLE else View.GONE
+    }
+
+    private fun onImportContactsClick() {
+        (activity as MainActivity).checkContactsPermission()
+    }
+
+    override fun onLocationPermissionGranted() {
+    }
+
+    override fun onLocationPermissionDenied() {
+    }
+
+    override fun onContactsPermissionGranted() {
+        activity?.contentResolver?.let {
+            val contacts = ContactsUtil.getContacts(it)
+            presenter.loadPersonsFromContacts(contacts.map { contact ->
+                contact.phone.toShortPhone()
+            })
+        }
+    }
+
+    override fun onContactsPermissionDenied() {
+        showSnackbar(getString(R.string.not_permission_contacts))
     }
 }

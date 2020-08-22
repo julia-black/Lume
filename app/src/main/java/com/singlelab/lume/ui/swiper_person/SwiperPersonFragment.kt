@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
-import android.widget.Toast
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -14,6 +13,7 @@ import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.profile.FilterPerson
 import com.singlelab.lume.model.profile.Person
+import com.singlelab.lume.model.view.ToastType
 import com.singlelab.lume.ui.filters.FilterFragment
 import com.singlelab.lume.ui.swiper_person.adapter.CardStackPersonAdapter
 import com.yuyakaido.android.cardstackview.*
@@ -143,11 +143,7 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
     }
 
     override fun toAcceptedPerson(person: Person, eventUid: String) {
-        Toast.makeText(
-            context,
-            getString(R.string.person_invited, person.name),
-            Toast.LENGTH_LONG
-        ).show()
+        showSnackbar(getString(R.string.person_invited, person.name), ToastType.SUCCESS)
         presenter.loadRandomPerson()
     }
 

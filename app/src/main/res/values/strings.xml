@@ -23,12 +23,14 @@
     <string name="name">Имя</string>
     <string name="age">Возраст</string>
     <string name="add_photo">Будет замечательно, если на фото будете именно вы. Все мы любим милых котиков, но не каждый захочет идти куда-то только в их компании</string>
+    <string name="empty_photo">Добавьте фото</string>
     <string name="about_yourself">Пару слов о себе</string>
     <string name="to_registration">Зарегистрироваться</string>
     <string name="error_pick_image">Не удалось выбрать изображение</string>
     <string name="sms_code_send">СМС-код отправлен на номер %1$s</string>
     <string name="push_code_send">На ваше устройство отправлено Push-уведомление с кодом</string>
     <string name="login_hint">Логин может содержать только латинские буквы, цифры, символы подчеркивания и точки</string>
+    <string name="back">Вернуться</string>
 
     <!-- My Profile -->
     <string name="tab_frineds">Друзья</string>
@@ -40,6 +42,18 @@
     <string name="show_image">Открыть изображение</string>
     <string name="change_image">Выбрать изображение</string>
     <string name="title_new_friends">Новые друзья (%1$d)</string>
+    <string name="import_contacts">Импорт контактов</string>
+    <string name="empty_persons_from_contacts">Пользователей из контактов не найдено</string>
+    <string name="not_permission_contacts">Вы запретили доступ к контактам</string>
+
+    <!-- Feedback -->
+    <string name="give_feedback">Обратная связь</string>
+    <string name="title_feedback">Если вы столкнулись с проблемой, или просто хотите оставить отзыв - напишите нам и мы постараемся быстро всё поправить!</string>
+    <string name="hint_images_feedback">Вы можете добавить скриншот, чтобы нам было проще понять и исправить вашу проблему</string>
+    <string name="hint_feedback">Проблема/отзыв</string>
+    <string name="button_give_feedback">Отправить</string>
+    <string name="feedback_send">Отзыв отправлен!</string>
+    <string name="too_many_images">Количество картинок должно быть не более 10</string>
 
     <plurals name="age_plurals">
         <item quantity="one">%1$d год</item>
@@ -61,7 +75,7 @@
     <string name="event_is_open">Событие открытое (подтверждение участия не требуется)</string>
     <string name="date_start">Укажите время начала</string>
     <string name="date_end">Укажите время окончания</string>
-    <string name="enter_fields">Заполните обязательные параметры</string>
+    <string name="enter_fields">Заполните обязательные поля</string>
     <string name="party">Вечеринка</string>
     <string name="booze">Пьянка</string>
     <string name="administrator">%1$s (Организатор)</string>
@@ -78,7 +92,8 @@
     <string name="search_events">Поиск события</string>
     <string name="search_event">Найти событие</string>
     <string name="person_invited">Пользователь %1$s приглашен</string>
-    <string name="empty_swipes">К сожалению, новых событий нет\nПопробуйте расширить фильтры или создайте своё событие!</string>
+    <string name="empty_swipes">К сожалению, новых событий нет\nВы всегда можете создать своё событие!</string>
+    <string name="empty_swipes_expand_filters">К сожалению, новых событий нет\nПопробуйте расширить фильтры или создайте своё событие!</string>
     <string name="online">Онлайн</string>
     <string name="event_is_online">Онлайн-событие</string>
     <string name="unavailable_location">Неизвестное местоположение. Обратитесь к организатору в чате</string>
@@ -95,6 +110,7 @@
     <string name="share">Поделиться</string>
     <string name="choose_age">Укажите ограничение по возрасту. Событие увидят только люди, которые подходят по возрасту</string>
     <string name="attention_age">Вы можете указать ограничение по возрасту. Событие будет доступно только тем, кто подходит по возрасту:</string>
+    <string name="you_create_event">Ура! Вы создали событие!</string>
 
     <!-- Types of events -->
     <string name="culture">Искусство</string>

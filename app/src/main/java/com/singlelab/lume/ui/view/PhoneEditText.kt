@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.singlelab.lume.R
 import com.singlelab.lume.util.maskPhone
+import com.singlelab.lume.util.toShortPhone
 import java.util.*
 
 class PhoneEditText : TextInputEditText, OnFocusChangeListener, OnTouchListener {
@@ -31,21 +32,10 @@ class PhoneEditText : TextInputEditText, OnFocusChangeListener, OnTouchListener 
     var bufferHint = ""
     private var customHint: String? = null
 
-    val unmaskText: String
-        get() {
-            if (text != null) {
-                val s = text.toString()
-                if (!TextUtils.isEmpty(s)) {
-                    return s.replace("[-()\\s]".toRegex(), "")
-                }
-            }
-            return ""
-        }
-
     val isEmpty = if (text.isNullOrEmpty()) true else text.toString() == "+7"
 
     val isValid: Boolean
-        get() = unmaskText.length == 12
+        get() = text.toString().toShortPhone().length == 12
 
     fun fixHintsForMeizu(vararg editTexts: TextInputEditText) {
         val manufacturer = Build.MANUFACTURER.toUpperCase(Locale.US)

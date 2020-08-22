@@ -13,6 +13,7 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnBackPressListener
 import com.singlelab.lume.util.maskPhone
+import com.singlelab.lume.util.toShortPhone
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_auth.*
 import moxy.presenter.InjectPresenter
@@ -47,6 +48,12 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
         edit_text_phone.requestFocus()
     }
 
+    override fun showLoading(isShow: Boolean, withoutBackground: Boolean) {
+        super.showLoading(isShow, withoutBackground)
+        button_send_code.isEnabled = !isShow
+        button_auth.isEnabled = !isShow
+    }
+
     private fun setListeners() {
         edit_text_phone.setOnEditorActionListener { _, actionId, _ ->
             when (actionId) {
@@ -63,6 +70,10 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
                 }
             }
             false
+        }
+        button_back.setOnClickListener {
+            showInputPhone()
+            (activity as MainActivity).setBackPressListener(null)
         }
         button_send_code.setOnClickListener {
             onClickSendCode()
@@ -84,7 +95,7 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
         if (edit_text_phone.isValid) {
             context?.let {
                 presenter.onClickSendCode(
-                    edit_text_phone.unmaskText,
+                    edit_text_phone.text.toString().toShortPhone(),
                     NotificationManagerCompat.from(it).areNotificationsEnabled()
                 )
             }
@@ -102,6 +113,7 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
         } else {
             text_info.text = getString(R.string.sms_code_send, phone.maskPhone())
         }
+        button_back.visibility = View.VISIBLE
         layout_code.visibility = View.VISIBLE
         edit_text_code.setText("")
         button_auth.visibility = View.VISIBLE
@@ -127,6 +139,7 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
     }
 
     private fun showInputPhone() {
+        button_back.visibility = View.GONE
         text_info.visibility = View.GONE
         layout_code.visibility = View.INVISIBLE
         button_auth.visibility = View.INVISIBLE

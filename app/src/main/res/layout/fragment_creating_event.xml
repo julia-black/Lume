@@ -58,7 +58,7 @@
                 android:layout_marginStart="@dimen/margin_medium"
                 android:orientation="horizontal"
                 tools:itemCount="1"
-                tools:listitem="@layout/item_event_image" />
+                tools:listitem="@layout/item_adding_image" />
 
             <TextView
                 android:layout_width="match_parent"

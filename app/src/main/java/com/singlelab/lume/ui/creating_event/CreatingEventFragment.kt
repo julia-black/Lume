@@ -10,31 +10,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.children
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.Const.SELECT_IMAGE_REQUEST_CODE
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.location.MapLocation
+import com.singlelab.lume.model.view.ToastType
 import com.singlelab.lume.ui.cities.CitiesFragment
-import com.singlelab.lume.ui.creating_event.adapter.EventImagesAdapter
-import com.singlelab.lume.ui.creating_event.adapter.OnImageClickListener
 import com.singlelab.lume.ui.map.MapFragment
+import com.singlelab.lume.ui.view.image.ImageAdapter
+import com.singlelab.lume.ui.view.image.OnImageClickListener
 import com.singlelab.lume.util.formatToUTC
 import com.singlelab.lume.util.getBitmap
 import com.singlelab.net.model.event.EventRequest
-import com.theartofdev.edmodo.cropper.CropImage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_creating_event.*
-import kotlinx.android.synthetic.main.fragment_creating_event.description
-import kotlinx.android.synthetic.main.fragment_events.button_create_event
 import kotlinx.android.synthetic.main.view_grid_emoji.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -44,7 +43,8 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFragments,
-    OnActivityResultListener, OnImageClickListener {
+    OnActivityResultListener,
+    OnImageClickListener {
 
     companion object {
         const val REQUEST_CREATING_EVENT = "CREATING_EVENT_REQUEST"
@@ -73,13 +73,13 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         setListeners()
         recycler_images.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = EventImagesAdapter()
-            (adapter as EventImagesAdapter).setClickListener(this@CreatingEventFragment)
+            adapter = ImageAdapter()
+            (adapter as ImageAdapter).setClickListener(this@CreatingEventFragment)
         }
     }
 
     override fun onCompleteCreateEvent(eventUid: String) {
-        Toast.makeText(context, "Ура! Вы создали событие!", Toast.LENGTH_LONG).show()
+        showSnackbar(getString(R.string.you_create_event), ToastType.SUCCESS)
         parentFragmentManager.setFragmentResult(
             REQUEST_CREATING_EVENT, bundleOf(
                 RESULT_CREATING_EVENT to eventUid
@@ -97,7 +97,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
     }
 
     override fun addImage(bitmap: Bitmap) {
-        (recycler_images.adapter as EventImagesAdapter).addImage(bitmap)
+        (recycler_images.adapter as ImageAdapter).addImage(bitmap)
     }
 
     override fun showCurrentCity(cityId: Int?, cityName: String?) {
@@ -117,15 +117,11 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
     }
 
     override fun showWarningOtherCity(currentCity: String) {
-        Toast.makeText(
-            context,
-            getString(R.string.warning_other_city, currentCity),
-            Toast.LENGTH_LONG
-        ).show()
+        showSnackbar(getString(R.string.warning_other_city, currentCity))
     }
 
     override fun showImages(images: MutableList<Bitmap>) {
-        (recycler_images.adapter as EventImagesAdapter).setData(images)
+        (recycler_images.adapter as ImageAdapter).setData(images)
     }
 
     override fun showTypes(types: MutableList<Int>) {
@@ -139,20 +135,25 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
     }
 
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            val result = CropImage.getActivityResult(data)
-            if (resultCode == Activity.RESULT_OK) {
-                val bitmap = result.uri.getBitmap(activity?.contentResolver)
-                presenter.addImage(bitmap)
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Toast.makeText(context, getString(R.string.error_pick_image), Toast.LENGTH_LONG)
-                    .show()
+        if (ImagePicker.shouldHandleResult(
+                requestCode,
+                resultCode,
+                data,
+                SELECT_IMAGE_REQUEST_CODE
+            )
+        ) {
+            val images = ImagePicker.getImages(data)
+                .mapNotNull { it.uri.getBitmap(activity?.contentResolver) }
+            if (resultCode == Activity.RESULT_OK && images.isNotEmpty()) {
+                presenter.addImages(images)
+            } else {
+                showError(getString(R.string.error_pick_image))
             }
         }
     }
 
     override fun onClickNewImage() {
-        onClickChangeImage()
+        onClickAddImages()
     }
 
     override fun onClickImage(position: Int) {
@@ -170,6 +171,12 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
 
     private fun onClickDeleteImage(position: Int) {
         presenter.deleteImage(position)
+    }
+
+    override fun showLoading(isShow: Boolean, withoutBackground: Boolean) {
+        super.showLoading(isShow, withoutBackground)
+        button_create_event.isEnabled = !isShow
+
     }
 
     private fun setListeners() {

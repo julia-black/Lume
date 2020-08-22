@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -15,6 +14,7 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.model.city.City
+import com.singlelab.lume.model.view.ValidationError
 import com.singlelab.lume.ui.cities.CitiesFragment
 import com.singlelab.lume.util.getBitmap
 import com.theartofdev.edmodo.cropper.CropImage
@@ -69,8 +69,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
                 val bitmap = result.uri.getBitmap(activity?.contentResolver)
                 presenter.addImage(bitmap)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Toast.makeText(context, getString(R.string.error_pick_image), Toast.LENGTH_LONG)
-                    .show()
+                showError(getString(R.string.error_pick_image))
             }
         }
     }
@@ -83,7 +82,8 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
             toCityChoose()
         }
         button_registration.setOnClickListener {
-            if (validation()) {
+            val validationError = validation()
+            if (validationError == null) {
                 presenter.registration(
                     login.text.toString(),
                     name.text.toString(),
@@ -91,7 +91,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
                     description.text.toString()
                 )
             } else {
-                Toast.makeText(context, getString(R.string.enter_fields), Toast.LENGTH_LONG).show()
+                showError(getString(validationError.titleResId))
             }
         }
         parentFragmentManager.setFragmentResultListener(
@@ -106,7 +106,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
         findNavController().navigate(RegistrationFragmentDirections.actionRegistrationToCities())
     }
 
-    private fun validation(): Boolean {
+    private fun validation(): ValidationError? {
         return presenter.validation(
             login.text.toString(),
             name.text.toString(),

@@ -112,6 +112,27 @@ class MainActivity : AppCompatActivity() {
             }).check()
     }
 
+    fun checkContactsPermission() {
+        Dexter.withContext(this)
+            .withPermission(Manifest.permission.READ_CONTACTS)
+            .withListener(object : PermissionListener {
+                override fun onPermissionGranted(response: PermissionGrantedResponse) {
+                    permissionListener?.onContactsPermissionGranted()
+                }
+
+                override fun onPermissionDenied(response: PermissionDeniedResponse) {
+                    permissionListener?.onContactsPermissionDenied()
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permission: PermissionRequest?,
+                    token: PermissionToken?
+                ) {
+                    permissionListener?.onContactsPermissionDenied()
+                }
+            }).check()
+    }
+
     fun showBottomNavigation(isShow: Boolean) {
         nav_view.visibility = if (isShow) View.VISIBLE else View.GONE
     }
