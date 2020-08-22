@@ -92,22 +92,18 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         chatMessagesAdapter = if (chatType.isGroup) GroupChatMessagesAdapter() else PrivateChatMessagesAdapter()
         chatView.adapter = chatMessagesAdapter
         chatView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false).apply { stackFromEnd = true; }
+        chatView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                (chatView.layoutManager as LinearLayoutManager?)?.let { layoutManager ->
+                    if (dy < 0 && presenter.isNeedLoading() && layoutManager.findFirstVisibleItemPosition() == 0) {
+                        presenter.showChat(chatType, ++presenter.page)
+                    }
+                }
+            }
+        })
         chatView.addItemDecoration(SpaceDivider(4))
         sendMessageView.setOnClickListener { sendMessage() }
         attachmentMessageView.setOnClickListener { addAttachment() }
-        chatView.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            (layoutManager as LinearLayoutManager).stackFromEnd = true
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    (layoutManager as LinearLayoutManager?)?.let { layoutManager ->
-                        if (dy < 0 && presenter.isNeedLoading() && layoutManager.findFirstVisibleItemPosition() == 0) {
-                            presenter.showChat(chatType, ++presenter.page)
-                        }
-                    }
-                }
-            })
-        }
     }
 
     private fun sendMessage(images: List<Bitmap> = emptyList()) {

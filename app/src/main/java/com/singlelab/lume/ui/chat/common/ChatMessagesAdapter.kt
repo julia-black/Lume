@@ -15,6 +15,7 @@ import com.singlelab.lume.model.Const
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Status
 import com.singlelab.lume.ui.chat.common.GroupChatMessagesAdapter.GroupIncomingMessageViewHolder
 import com.singlelab.lume.ui.chat.common.PrivateChatMessagesAdapter.PrivateIncomingMessageViewHolder
+import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
 import kotlinx.android.synthetic.main.outgoing_message_item.view.*
 
@@ -94,7 +95,7 @@ abstract class ChatMessagesAdapter(
                 val imagesCount = images.size
                 Glide.with(this)
                     .setDefaultRequestOptions(RequestOptions().timeout(30_000))
-                    .load(images.first().url)
+                    .load(images.first().generateImageLink())
                     .into(this)
             }
         }
@@ -106,8 +107,6 @@ abstract class ChatMessagesAdapter(
                 this.text = date.parse(Const.DATE_FORMAT_TIME_ZONE, CHAT_MESSAGE_DATE_FORMAT_OUTPUT)
             }
         }
-
-        private val String.url: String get() = "${Const.BASE_URL}image/get-image?imageUid=$this"
     }
 
     class OutgoingMessageViewHolder(view: View) : ChatMessageViewHolder(view) {

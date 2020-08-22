@@ -62,9 +62,9 @@ class ChatsAdapter(
             itemView.chatsUnreadCountMessagesView.isVisible = chat.unreadMessagesCount > 0
             itemView.chatsUnreadCountMessagesView.text = chat.unreadMessagesCount.toString()
 
-            if (chat.chatImage != null) {
+            if (chat.image.isNotEmpty()) {
                 Glide.with(itemView)
-                    .load(chat.chatImage)
+                    .load(chat.image.generateImageLink())
                     .apply(RequestOptions.circleCropTransform())
                     .into(itemView.chatsImageView)
             } else {
@@ -76,17 +76,5 @@ class ChatsAdapter(
 
             itemView.setOnClickListener { onClickAction(chat) }
         }
-
-        private val ChatItem.chatImage: String?
-            get() {
-                if (image.isNotEmpty()) {
-                    return if (isGroup) {
-                        image.generateImageLink()
-                    } else {
-                        image.generateImageLink()
-                    }
-                }
-                return null
-            }
     }
 }
