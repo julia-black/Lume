@@ -20,6 +20,7 @@ object Const {
 
     const val ERROR_CODE_NO_MATCHING_EVENTS = 25
     const val ERROR_CODE_NO_MATCHING_PERSONS = 27
+    const val ERROR_CODE_NEW_PUSH_TOKEN = 41
 
     const val MIN_AGE = 0
     const val MAX_AGE = 100

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -13,6 +14,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.FirebaseApp
+import com.google.firebase.FirebaseOptions
 import com.google.firebase.iid.FirebaseInstanceId
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
@@ -29,6 +32,7 @@ import com.singlelab.lume.model.target.TargetType
 import com.singlelab.lume.util.parseDeepLink
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -51,6 +55,7 @@ class MainActivity : AppCompatActivity() {
         target?.let {
             toTarget(navController, it)
         }
+        logOnCreate()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -155,9 +160,16 @@ class MainActivity : AppCompatActivity() {
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
+                    Toast.makeText(this, "not success ${task.exception?.message}", Toast.LENGTH_LONG).show()
                     return@OnCompleteListener
                 }
-                val token = task.result?.token ?: return@OnCompleteListener
+                val token = task.result?.token
+                if (token == null) {
+                    Toast.makeText(this, "token = null", Toast.LENGTH_LONG).show()
+                    return@OnCompleteListener
+                }
+                Toast.makeText(this, "token = $token", Toast.LENGTH_LONG).show()
+                //?: return@OnCompleteListener
                 LumeApplication.preferences?.setPushToken(token)
             })
     }
@@ -168,5 +180,19 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.event, bundleOf("eventUid" to target.targetId))
             }
         }
+    }
+
+    private fun logOnCreate() {
+//        val bundle = Bundle()
+//        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "1")
+//        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "test")
+//        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "text")
+//        FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+//        val options = FirebaseOptions.Builder()
+//            .setApplicationId("1:852373751034:android:e4379c99c5c88e3c36b543") // Required for Analytics.
+//            .setProjectId("lume-285006") // Required for Firebase Installations.
+//            .setApiKey("AIzaSyCGvIvjW2n-H_x8QPOnjTxQLEwgDlLT5Gw") // Required for Auth.
+//            .build()
+//        FirebaseApp.initializeApp(this, options, "Lume")
     }
 }
