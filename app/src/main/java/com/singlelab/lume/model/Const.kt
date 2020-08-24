@@ -1,6 +1,7 @@
 package com.singlelab.lume.model
 
 object Const {
+    const val URL_KEY = "Url"
     const val APP_NAME = "Lume"
     const val FOLDER_NAME = "Lume Images"
     const val BASE_URL = "https://lumewebapp.azurewebsites.net/api/"

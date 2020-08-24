@@ -6,6 +6,7 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.singlelab.lume.ui.view.calendar.span.CircleSpan
+import com.singlelab.lume.util.dpToPx
 
 class CircleDecorator(
     private val color: Int,
@@ -22,6 +23,6 @@ class CircleDecorator(
         textColor?.let {
             view.addSpan(ForegroundColorSpan(textColor))
         }
-        view.addSpan(CircleSpan(radius = 50f, style = style, color = color))
+        view.addSpan(CircleSpan(radius = 20.dpToPx(), style = style, color = color))
     }
 }

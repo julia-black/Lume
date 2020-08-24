@@ -5,13 +5,16 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.singlelab.lume.LumeApplication
 import com.singlelab.lume.R
+import com.singlelab.lume.model.Const
 import java.util.*
 
 
@@ -27,9 +30,12 @@ class FCMService : FirebaseMessagingService() {
         if (remoteMessage.notification != null) {
             val title = remoteMessage.notification!!.title
             val message = remoteMessage.notification!!.body
-
+            var url: String? = null
+            if (!remoteMessage.data.isNullOrEmpty() && remoteMessage.data.containsKey(Const.URL_KEY)) {
+                url = remoteMessage.data[Const.URL_KEY]
+            }
             if (!title.isNullOrEmpty() && !message.isNullOrEmpty()) {
-                sendNotification(title, message)
+                sendNotification(title, message, url)
             }
         }
     }
@@ -38,8 +44,14 @@ class FCMService : FirebaseMessagingService() {
         LumeApplication.preferences?.setPushToken(token)
     }
 
-    private fun sendNotification(title: String, message: String) {
-        val pendingIntent: PendingIntent? = null
+    private fun sendNotification(title: String, message: String, url: String?) {
+        val pendingIntent: PendingIntent? = if (url != null) {
+            val notificationIntent = Intent(Intent.ACTION_VIEW)
+            notificationIntent.data = Uri.parse(url)
+            PendingIntent.getActivity(this, 0, notificationIntent, 0)
+        } else {
+            null
+        }
 
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

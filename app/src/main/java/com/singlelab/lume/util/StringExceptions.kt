@@ -48,5 +48,5 @@ fun String.parseDeepLink(): Target? {
 }
 
 fun String.generateEventLink(): String {
-    return "https://lumeapp.page.link/event/$this"
+    return "https://lumemobile.page.link/?link=https://lumemobile.page.link/event/${this}&apn=com.singlelab.lume"
 }

@@ -14,9 +14,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.FirebaseApp
-import com.google.firebase.FirebaseOptions
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.ktx.Firebase
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -55,7 +55,28 @@ class MainActivity : AppCompatActivity() {
         target?.let {
             toTarget(navController, it)
         }
-        logOnCreate()
+        getDynamicLink(navController)
+    }
+
+    private fun getDynamicLink(navController: NavController) {
+        Firebase.dynamicLinks
+            .getDynamicLink(intent)
+            .addOnSuccessListener(this) { pendingDynamicLinkData ->
+                var deepLink: Uri?
+                if (pendingDynamicLinkData != null) {
+                    deepLink = pendingDynamicLinkData.link
+                    deepLink.toString().parseDeepLink()?.let {
+                        toTarget(navController, it)
+                    }
+                }
+            }
+            .addOnFailureListener(this) { e ->
+                Toast.makeText(
+                    this,
+                    "getDynamicLink:onFailure ${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -173,19 +194,5 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.event, bundleOf("eventUid" to target.targetId))
             }
         }
-    }
-
-    private fun logOnCreate() {
-//        val bundle = Bundle()
-//        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "1")
-//        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "test")
-//        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "text")
-//        FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
-//        val options = FirebaseOptions.Builder()
-//            .setApplicationId("1:852373751034:android:e4379c99c5c88e3c36b543") // Required for Analytics.
-//            .setProjectId("lume-285006") // Required for Firebase Installations.
-//            .setApiKey("AIzaSyCGvIvjW2n-H_x8QPOnjTxQLEwgDlLT5Gw") // Required for Auth.
-//            .build()
-//        FirebaseApp.initializeApp(this, options, "Lume")
     }
 }
