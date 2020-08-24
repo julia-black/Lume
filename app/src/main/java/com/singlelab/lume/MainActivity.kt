@@ -160,16 +160,9 @@ class MainActivity : AppCompatActivity() {
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
-                    Toast.makeText(this, "not success ${task.exception?.message}", Toast.LENGTH_LONG).show()
                     return@OnCompleteListener
                 }
-                val token = task.result?.token
-                if (token == null) {
-                    Toast.makeText(this, "token = null", Toast.LENGTH_LONG).show()
-                    return@OnCompleteListener
-                }
-                Toast.makeText(this, "token = $token", Toast.LENGTH_LONG).show()
-                //?: return@OnCompleteListener
+                val token = task.result?.token ?: return@OnCompleteListener
                 LumeApplication.preferences?.setPushToken(token)
             })
     }
