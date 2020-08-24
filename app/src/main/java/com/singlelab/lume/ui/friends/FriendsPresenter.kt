@@ -204,13 +204,13 @@ class FriendsPresenter @Inject constructor(
         viewState.showLoading(isShow = true, withoutBackground = true)
         invokeSuspend {
             try {
-                val persons = interactor.getPersonsFromContacts(phones)
+                searchResults = interactor.getPersonsFromContacts(phones)?.toMutableList()
                 runOnMainThread {
                     viewState.showLoading(isShow = false, withoutBackground = true)
-                    if (persons.isNullOrEmpty()) {
+                    if (searchResults.isNullOrEmpty()) {
                         viewState.showEmptyPersonsFromContacts()
                     } else {
-                        viewState.showContacts(persons.toMutableList())
+                        viewState.showContacts(searchResults!!)
                     }
                 }
             } catch (e: ApiException) {
