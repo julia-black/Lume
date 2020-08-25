@@ -62,6 +62,12 @@ class FilterPresenter @Inject constructor(preferences: Preferences?) : MvpPresen
         }
     }
 
+    fun setDate(firstDate: Long?, secondDate: Long?) {
+        filterEvent?.minimalStartTime = firstDate
+        filterEvent?.maximalEndTime = secondDate
+        viewState.showDate(firstDate, secondDate)
+    }
+
     fun onClickType(type: Int) {
         filterEvent ?: return
         if (filterEvent!!.selectedTypes.find { it.id == type } != null) {

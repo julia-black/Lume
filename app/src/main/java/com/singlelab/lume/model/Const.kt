@@ -15,6 +15,7 @@ object Const {
     const val DATE_FORMAT_ISO = "yyyy-MM-dd"
     const val DATE_FORMAT_SIMPLE = "dd MMMM yyyy"
     const val DATE_FORMAT_ONLY_TIME = "HH:mm"
+    const val DATE_FORMAT_SHORT_DATE = "dd.MM"
     const val UTC = "UTC"
 
     const val PAGE_SIZE = 20

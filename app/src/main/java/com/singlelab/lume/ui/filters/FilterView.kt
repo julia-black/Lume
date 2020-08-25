@@ -16,4 +16,7 @@ interface FilterView : MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showTypes(selectedTypes: List<EventType>)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showDate(firstDate: Long?, secondDate: Long?)
 }

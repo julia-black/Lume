@@ -173,6 +173,9 @@
     <string name="empty_persons">К сожалению, люди по выбранным фильтрам не найдены. Попробуйте расширить фильтры</string>
     <string name="selected_types">Выбрано:</string>
     <string name="selected_all">Любое событие</string>
+    <string name="choose_date">В любой день</string>
+    <string name="mtrl_picker_range_header_only_start_selected">%1$s - Выберите конечную дату</string>
+    <string name="range">%1$s - %2$s</string>
 
     <!-- Arrays -->
     <string-array name="custom_weekdays">

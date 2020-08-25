@@ -51,4 +51,8 @@
         <item name="android:layout_marginRight">@dimen/margin_very_small</item>
         <item name="android:layout_marginBottom">66dp</item>
     </style>
+
+    <style name="Widget.MaterialComponents.MaterialCalendar.HeaderToggleButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:visibility">gone</item>
+    </style>
 </resources>
