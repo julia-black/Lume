@@ -99,6 +99,7 @@ class FriendsPresenter @Inject constructor(
                     searchResults?.let {
                         viewState.showSearchResult(it, pageNumber)
                     }
+                    updateNotifications()
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
@@ -189,6 +190,7 @@ class FriendsPresenter @Inject constructor(
                         }?.friendshipApprovalRequired = false
                         viewState.showFriends(friends)
                     }
+                    updateNotifications()
                     viewState.showLoading(isShow = false, withoutBackground = true)
                 }
             } catch (e: ApiException) {

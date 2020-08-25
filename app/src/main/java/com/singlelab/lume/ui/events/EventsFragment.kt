@@ -107,7 +107,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
             EventFragment.REQUEST_EVENT -> {
                 val eventUid: String = result.getString(EventFragment.RESULT_EVENT) ?: return
                 presenter.loadEvents(eventUid)
-                presenter.getNotifications()
+                presenter.updateNotifications()
             }
         }
     }

@@ -55,6 +55,11 @@ constructor(
                     chatSettings.chatType = type
                     chatSettings.chatUid = chatResponse.chatUid
                     chatSettings.setLastMessageUid(chatResponse.messages)
+                    runOnMainThread {
+                        if (chatResponse.unreadMessagesCount > 0) {
+                            updateNotifications()
+                        }
+                    }
                     isLoading = false
                     if (chatResponse.messages.isNullOrEmpty()) {
                         hasOldMessages = false
