@@ -43,6 +43,8 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
 
     private var isSearchResults = false
 
+    private var isContacts = false
+
     private var searchAdapter: PersonAdapter? = null
 
     override fun onCreateView(
@@ -61,6 +63,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
                 edit_text_search.requestFocus()
             }
             presenter.eventUid = FriendsFragmentArgs.fromBundle(it).eventUid
+            showSearch(presenter.eventUid.isNullOrEmpty())
         }
         recycler_friends.apply {
             layoutManager =
@@ -72,7 +75,12 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
             isHandleEmptyString = true
         )
         searchDebounce!!.watch {
-            presenter.search(it)
+            if (isContacts && it.isEmpty()) {
+                return@watch
+            } else {
+                isContacts = false
+                presenter.search(it)
+            }
         }
         button_import_contacts.setOnClickListener {
             onImportContactsClick()
@@ -80,7 +88,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
     }
 
     override fun showFriends(friends: MutableList<Person>?) {
-        showSearch(presenter.eventUid.isNullOrEmpty()) //если перешли из события, чтобы пригласить друзей - поиск отсутствует
+        // showSearch(presenter.eventUid.isNullOrEmpty()) //если перешли из события, чтобы пригласить друзей - поиск отсутствует
         isSearchResults = false
         title_empty_search.visibility = View.GONE
         recycler_search_results.visibility = View.GONE
@@ -145,6 +153,8 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
 
     override fun showContacts(persons: MutableList<Person>) {
         showSearchResult(persons, 1)
+        isContacts = true
+        edit_text_search.setText("")
     }
 
     override fun showEmptyFriends() {
