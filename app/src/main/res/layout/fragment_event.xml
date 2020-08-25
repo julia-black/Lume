@@ -119,6 +119,20 @@
             app:layout_constraintTop_toBottomOf="@id/image"
             tools:text="Название" />
 
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:textColor="@color/colorGray"
+            android:textSize="@dimen/text_size_standart"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/button_share"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            tools:text="@string/title_ended"
+            tools:visibility="visible" />
+
         <ImageView
             android:id="@+id/button_share"
             android:layout_width="30dp"
@@ -139,7 +153,7 @@
             android:text="@string/online"
             android:textSize="16sp"
             android:visibility="invisible"
-            app:layout_constraintTop_toBottomOf="@id/title" />
+            app:layout_constraintTop_toBottomOf="@id/status" />
 
         <TextView
             android:id="@+id/text_location"
@@ -150,7 +164,7 @@
             android:drawablePadding="@dimen/margin_small"
             android:textSize="16sp"
             android:visibility="invisible"
-            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/status"
             tools:text="ул. Пушкина, д. 10, Москва"
             tools:visibility="visible" />
 
@@ -339,6 +353,24 @@
             android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@id/recycler_participants"
             tools:text="18-25 лет" />
+
+        <TextView
+            android:id="@+id/button_cancel_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/margin_medium"
+            android:clickable="true"
+            android:drawableStart="@drawable/ic_reject"
+            android:drawablePadding="@dimen/margin_small"
+            android:focusable="true"
+            android:text="@string/cancel_event"
+            android:textAllCaps="false"
+            android:textColor="@color/colorBackground"
+            android:textSize="@dimen/text_size_standart"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/card_image_administrator"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

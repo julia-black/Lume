@@ -30,4 +30,6 @@ interface EventsRepository {
     suspend fun acceptRandomPerson(participantRequest: ParticipantRequest)
 
     suspend fun rejectRandomPerson(eventUid: String, personUid: String)
+
+    suspend fun updateEvent(request: UpdateEventRequest): EventResponse?
 }

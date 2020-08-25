@@ -77,6 +77,12 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         start_date.text = getString(R.string.date_start_title, startDate)
         end_date.text = getString(R.string.date_end_title, endDate)
         description.text = event.description
+        if (event.status.titleRes == null) {
+            status.visibility = View.GONE
+        } else {
+            status.visibility = View.VISIBLE
+            status.setText(event.status.titleRes)
+        }
         if (event.isOnline) {
             text_location.visibility = View.INVISIBLE
             text_online.visibility = View.VISIBLE
@@ -212,7 +218,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             count_invited.text = getString(R.string.count_invited, event.invitedParticipants.size)
         }
 
-        if (presenter.isAdministrator()) {
+        if (presenter.isAdministrator() && event.isActive()) {
             button_invite.visibility = View.VISIBLE
             button_search_participants.visibility = View.VISIBLE
             button_search_participants.setOnClickListener {
@@ -222,9 +228,15 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                     toSwiperPeople(event.eventUid)
                 }
             }
+            button_cancel_event.visibility = View.VISIBLE
+            button_cancel_event.setOnClickListener {
+                presenter.cancelEvent()
+            }
         } else {
             button_search_participants.visibility = View.GONE
-            button_invite.visibility = if (event.isOpenForInvitations) View.VISIBLE else View.GONE
+            button_invite.visibility =
+                if (event.isOpenForInvitations && event.isActive()) View.VISIBLE else View.GONE
+            button_cancel_event.visibility = View.GONE
         }
 
         if (event.eventPrimaryImageContentUid != null) {

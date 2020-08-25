@@ -111,6 +111,9 @@
     <string name="choose_age">Укажите ограничение по возрасту. Событие увидят только люди, которые подходят по возрасту</string>
     <string name="attention_age">Вы можете указать ограничение по возрасту. Событие будет доступно только тем, кто подходит по возрасту:</string>
     <string name="you_create_event">Ура! Вы создали событие!</string>
+    <string name="cancel_event">Отменить событие</string>
+    <string name="title_cancel">Событие отменено</string>
+    <string name="title_ended">Событие завершено</string>
 
     <!-- Types of events -->
     <string name="culture">Искусство</string>
