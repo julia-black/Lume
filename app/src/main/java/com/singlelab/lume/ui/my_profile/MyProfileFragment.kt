@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -122,6 +123,10 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
 
     override fun onLoadedBadges(badges: List<Badge>) {
         badgesView.setBadges(badges)
+    }
+
+    override fun showNewBadge(hasNewBadges: Boolean) {
+        notification_badges.isVisible = hasNewBadges
     }
 
     override fun navigateToAuth() {

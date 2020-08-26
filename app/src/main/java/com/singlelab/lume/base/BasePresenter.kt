@@ -32,6 +32,10 @@ open class BasePresenter<ViewT : BaseView>(
         updateNotifications()
     }
 
+   open fun onLoadedNotification(notifications: PersonNotifications) {
+       viewState.showNotifications(notifications)
+   }
+
     fun updateNotifications() {
         if (AuthData.isAnon) {
             viewState.showNotifications(PersonNotifications())
@@ -40,7 +44,7 @@ open class BasePresenter<ViewT : BaseView>(
                 try {
                     val notifications = baseInteractor.getNotifications()
                     runOnMainThread {
-                        viewState.showNotifications(notifications)
+                        onLoadedNotification(notifications)
                     }
                 } catch (e: ApiException) {
                 }

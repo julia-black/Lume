@@ -174,7 +174,7 @@ class MainActivity : AppCompatActivity() {
 
         val badgeProfile = nav_view.getOrCreateBadge(R.id.my_profile)
         badgeProfile.backgroundColor = ContextCompat.getColor(this, R.color.colorNotification)
-        badgeProfile.isVisible = notifications.hasNewProfile
+        badgeProfile.isVisible = notifications.hasNewFriends || notifications.hasNewBadges
     }
 
     private fun getPushToken() {

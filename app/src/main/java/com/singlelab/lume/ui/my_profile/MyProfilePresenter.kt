@@ -5,6 +5,7 @@ import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.profile.Badge
 import com.singlelab.lume.model.profile.Person
+import com.singlelab.lume.model.profile.PersonNotifications
 import com.singlelab.lume.model.profile.Profile
 import com.singlelab.lume.model.view.PagerTab
 import com.singlelab.lume.pref.Preferences
@@ -35,6 +36,11 @@ class MyProfilePresenter @Inject constructor(
         if (preferences != null && preferences.isFirstLaunch()) {
             sendPushToken(preferences.getPushToken())
         }
+    }
+
+    override fun onLoadedNotification(notifications: PersonNotifications) {
+        super.onLoadedNotification(notifications)
+        viewState.showNewBadge(notifications.hasNewBadges)
     }
 
     fun loadProfile(isFirstAttach: Boolean = false) {
