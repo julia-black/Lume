@@ -1,10 +1,7 @@
 package com.singlelab.net.repositories.person
 
 import com.singlelab.net.ApiUnit
-import com.singlelab.net.model.person.FeedbackRequest
-import com.singlelab.net.model.person.PersonResponse
-import com.singlelab.net.model.person.ProfileRequest
-import com.singlelab.net.model.person.ProfileResponse
+import com.singlelab.net.model.person.*
 import com.singlelab.net.repositories.BaseRepository
 
 class PersonRepositoryImpl(
@@ -64,6 +61,13 @@ class PersonRepositoryImpl(
         safeApiCall(
             call = { apiUnit.personApi.addFeedbackAsync(request).await() },
             errorMessage = "Не удалось отправить отзыв"
+        )
+    }
+
+    override suspend fun getBadges(personUid: String): List<BadgeResponse>? {
+        return safeApiCall(
+            call = { apiUnit.personApi.getBadgesAsync(personUid).await() },
+            errorMessage = "Не удалось получить бейджи"
         )
     }
 }

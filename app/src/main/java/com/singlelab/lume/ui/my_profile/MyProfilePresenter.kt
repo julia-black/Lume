@@ -3,6 +3,7 @@ package com.singlelab.lume.ui.my_profile
 import android.graphics.Bitmap
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.profile.Badge
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.model.profile.Profile
 import com.singlelab.lume.model.view.PagerTab
@@ -24,6 +25,8 @@ class MyProfilePresenter @Inject constructor(
     var profile: Profile? = null
 
     var friends: List<Person>? = null
+
+    var badges: List<Badge>? = null
 
     var selectedTab: PagerTab = PagerTab.FRIENDS
 
@@ -108,11 +111,31 @@ class MyProfilePresenter @Inject constructor(
             try {
                 friends = interactor.loadFriends(personUid)
                 runOnMainThread {
-                    viewState.showFriends(friends)
+                    viewState.onLoadedFriends(friends)
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
                     viewState.showError(e.message)
+                }
+            }
+        }
+    }
+
+    fun loadBadges() {
+        profile?.personUid?.let {
+            invokeSuspend {
+                try {
+                    badges = interactor.loadBadges(it)
+                    runOnMainThread {
+                        badges?.let {
+                            viewState.onLoadedBadges(it)
+                            updateNotifications()
+                        }
+                    }
+                } catch (e: ApiException) {
+                    runOnMainThread {
+                        viewState.showError(e.message)
+                    }
                 }
             }
         }

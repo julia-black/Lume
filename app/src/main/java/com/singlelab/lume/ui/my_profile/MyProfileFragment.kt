@@ -17,9 +17,11 @@ import com.custom.sliderimage.logic.SliderImage
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.model.profile.Badge
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.model.profile.Profile
 import com.singlelab.lume.model.view.PagerTab
+import com.singlelab.lume.ui.view.pager.BadgesView
 import com.singlelab.lume.ui.view.pager.FriendsView
 import com.singlelab.lume.ui.view.pager.SettingsView
 import com.singlelab.lume.ui.view.pager.listener.OnFriendsClickListener
@@ -53,6 +55,8 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
 
     private lateinit var friendsView: FriendsView
 
+    private lateinit var badgesView: BadgesView
+
     private val callbackBackPressed: OnBackPressedCallback =
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -74,10 +78,13 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
             .setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_my_profile_to_auth))
 
         context?.let {
-            settingsView = SettingsView(it)
-            settingsView.setSettingsListener(this)
             friendsView = FriendsView(it)
             friendsView.setFriendsListener(this, this)
+
+            badgesView = BadgesView(it)
+
+            settingsView = SettingsView(it)
+            settingsView.setSettingsListener(this)
         }
 
         if (AuthData.isAnon) {
@@ -109,8 +116,12 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         setTabListeners()
     }
 
-    override fun showFriends(friends: List<Person>?) {
+    override fun onLoadedFriends(friends: List<Person>?) {
         friendsView.setFriends(friends)
+    }
+
+    override fun onLoadedBadges(badges: List<Badge>) {
+        badgesView.setBadges(badges)
     }
 
     override fun navigateToAuth() {
@@ -259,8 +270,17 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
                 ContextCompat.getColorStateList(it, R.color.colorPrimary)
             text_tab_three.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
         }
-
         card_content.removeAllViews()
+        card_content.addView(
+            badgesView,
+            0,
+            ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        )
+        badgesView.showLoading(true)
+        presenter.loadBadges()
     }
 
     private fun showSettings() {

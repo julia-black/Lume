@@ -2,6 +2,7 @@ package com.singlelab.lume.ui.my_profile.interactor
 
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.database.LumeDatabase
+import com.singlelab.lume.model.profile.Badge
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.model.profile.Profile
 import com.singlelab.net.model.person.ProfileRequest
@@ -37,5 +38,11 @@ class MyProfileInteractorImpl(
 
     override suspend fun removePushToken() {
         repository.removePushToken()
+    }
+
+    override suspend fun loadBadges(personUid: String): List<Badge>? {
+        return repository.getBadges(personUid)?.mapNotNull {
+            Badge.fromResponse(it)
+        }?.sortedBy { !it.isReceived }
     }
 }

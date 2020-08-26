@@ -2,6 +2,7 @@ package com.singlelab.lume.ui.my_profile
 
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
+import com.singlelab.lume.model.profile.Badge
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.model.profile.Profile
 import moxy.viewstate.strategy.AddToEndSingleStrategy
@@ -19,5 +20,8 @@ interface MyProfileView : LoadingView, ErrorView {
     fun loadImage(imageUid: String?)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showFriends(friends: List<Person>?)
+    fun onLoadedFriends(friends: List<Person>?)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun onLoadedBadges(badges: List<Badge>)
 }

@@ -43,4 +43,7 @@ interface PersonApi {
 
     @POST("contacts/get-person-list-by-contacts")
     fun getPersonsFromContactsAsync(@Body phones: List<String>): Deferred<Response<List<PersonResponse>>>
+
+    @GET("person/get-badges")
+    fun getBadgesAsync(@Query("personUid") personUid: String): Deferred<Response<List<BadgeResponse>>>
 }
