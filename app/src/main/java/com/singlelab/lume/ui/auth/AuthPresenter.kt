@@ -2,6 +2,7 @@ package com.singlelab.lume.ui.auth
 
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.auth.interactor.AuthInteractor
 import com.singlelab.net.exceptions.ApiException
@@ -39,13 +40,13 @@ class AuthPresenter @Inject constructor(
         }
     }
 
-    fun onClickSendCode(phone: String, notificationEnabled: Boolean) {
+    fun onClickSendCode(phone: String, isPushSend: Boolean) {
         runOnMainThread {
             viewState.showLoading(isShow = true, withoutBackground = true)
         }
         invokeSuspend {
             try {
-                val pushToken = if (notificationEnabled) preferences?.getPushToken() else null
+                val pushToken = if (isPushSend) preferences?.getPushToken() else null
                 val personUid = interactor.sendCode(phone, pushToken)
                 preferences?.setUid(personUid)
                 this.phone = phone
@@ -54,9 +55,13 @@ class AuthPresenter @Inject constructor(
                     viewState.onCodeSend(phone, !pushToken.isNullOrEmpty())
                 }
             } catch (e: ApiException) {
-                runOnMainThread {
-                    viewState.showLoading(isShow = false, withoutBackground = true)
-                    viewState.showError(e.message)
+                if (e.errorCode == Const.ERROR_CODE_NEW_PUSH_TOKEN) {
+                    onClickSendCode(phone, false)
+                } else {
+                    runOnMainThread {
+                        viewState.showLoading(isShow = false, withoutBackground = true)
+                        viewState.showError(e.message)
+                    }
                 }
             }
         }

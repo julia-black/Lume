@@ -10,7 +10,8 @@ data class ChatMessagesResponse(
     val personUid: String? = null,
     val eventUid: String? = null,
     val personImageUid: String? = null,
-    val eventImageUid: String? = null
+    val eventImageUid: String? = null,
+    val unreadMessagesCount: Int = 0
 )
 
 // Chats

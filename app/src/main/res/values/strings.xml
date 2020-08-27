@@ -111,6 +111,9 @@
     <string name="choose_age">Укажите ограничение по возрасту. Событие увидят только люди, которые подходят по возрасту</string>
     <string name="attention_age">Вы можете указать ограничение по возрасту. Событие будет доступно только тем, кто подходит по возрасту:</string>
     <string name="you_create_event">Ура! Вы создали событие!</string>
+    <string name="cancel_event">Отменить событие</string>
+    <string name="title_cancel">Событие отменено</string>
+    <string name="title_ended">Событие завершено</string>
 
     <!-- Types of events -->
     <string name="culture">Искусство</string>
@@ -171,6 +174,9 @@
     <string name="empty_persons">К сожалению, люди по выбранным фильтрам не найдены. Попробуйте расширить фильтры</string>
     <string name="selected_types">Выбрано:</string>
     <string name="selected_all">Любое событие</string>
+    <string name="choose_date">В любой день</string>
+    <string name="mtrl_picker_range_header_only_start_selected">%1$s - Выберите конечную дату</string>
+    <string name="range">%1$s - %2$s</string>
 
     <!-- Arrays -->
     <string-array name="custom_weekdays">

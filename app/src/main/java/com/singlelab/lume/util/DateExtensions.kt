@@ -64,3 +64,8 @@ fun CalendarDay.toCalendar(): Calendar {
     calendar.set(this.year, this.month - 1, this.day)
     return calendar
 }
+
+fun Long.toDateFormat(format: String): String {
+    val date = Date(this)
+    return date.parseToString(format)
+}

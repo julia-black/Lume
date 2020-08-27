@@ -107,7 +107,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
             EventFragment.REQUEST_EVENT -> {
                 val eventUid: String = result.getString(EventFragment.RESULT_EVENT) ?: return
                 presenter.loadEvents(eventUid)
-                presenter.getNotifications()
+                presenter.updateNotifications()
             }
         }
     }
@@ -191,8 +191,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
                 newInviteEvents.map { it.startTime }.toCalendarDays(Const.DATE_FORMAT_TIME_ZONE)
             val inviteDecorator = CircleDecorator(
                 color = ContextCompat.getColor(context, R.color.colorNewInvite),
-                style = Paint.Style.FILL,
-                textColor = Color.WHITE,
+                style = Paint.Style.STROKE,
                 daysWithEvent = inviteDaysWithEvent
             )
             val decorators = listOf(pastDecorator, futureDecorator, inviteDecorator)
@@ -286,25 +285,33 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
     private fun onDaySelected(position: Int) {
         (view_pager_events.adapter as DaysAdapter).collapseCards()
         val dayWithEvent = (view_pager_events.adapter as DaysAdapter).getList()[position]
+
         val isInvite =
             dayWithEvent.second.find { it.participantStatus == ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER } != null
+
+        val isNotActive = dayWithEvent.second.count { !it.isActive() } == dayWithEvent.second.count()
+
         val day = dayWithEvent.first
         val today = CalendarDay.today()
+        val color = when {
+            isInvite -> R.color.colorNewInvite
+            isNotActive -> R.color.colorGray
+            (day == today || day.isAfter(today)) -> R.color.colorAccent
+            else -> R.color.colorGray
+        }
         context?.let {
             showCalendar(day.toCalendar())
             calendar_week_view.removeDecorator(currentDayDecorator)
-            if (!isInvite || day.isBefore(today)) {
-                currentDayDecorator = CircleDecorator(
-                    color = ContextCompat.getColor(
-                        it,
-                        if (day == today || day.isAfter(today)) R.color.colorAccent else R.color.colorGray
-                    ),
-                    style = Paint.Style.FILL,
-                    daysWithEvent = listOf(day),
-                    textColor = Color.WHITE
-                )
-                calendar_week_view.addDecorator(currentDayDecorator)
-            }
+            currentDayDecorator = CircleDecorator(
+                color = ContextCompat.getColor(
+                    it,
+                    color
+                ),
+                style = Paint.Style.FILL,
+                daysWithEvent = listOf(day),
+                textColor = Color.WHITE
+            )
+            calendar_week_view.addDecorator(currentDayDecorator)
         }
     }
 

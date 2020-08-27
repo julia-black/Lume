@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
@@ -23,6 +24,8 @@ import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.event.Distance
 import com.singlelab.lume.model.event.EventType
 import com.singlelab.lume.ui.cities.CitiesFragment
+import com.singlelab.lume.ui.view.range_picker.DateRangePicker
+import com.singlelab.lume.util.toDateFormat
 import dagger.hilt.android.AndroidEntryPoint
 import io.apptik.widget.MultiSlider
 import io.apptik.widget.MultiSlider.Thumb
@@ -100,6 +103,7 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
             title_types.visibility = View.VISIBLE
             choose_types.visibility = View.VISIBLE
             seek_bar_distance.visibility = View.VISIBLE
+            text_choose_date.visibility = View.VISIBLE
             text_age.visibility = View.GONE
             seek_bar_age.visibility = View.GONE
             presenter.filterEvent?.let {
@@ -112,12 +116,13 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
                 }
                 switch_online.isChecked = it.isOnlyOnline
                 switch_not_online.isChecked = it.isExceptOnline
-
+                showDate(it.minimalStartTime, it.maximalEndTime)
             }
             showLocation(!switch_online.isChecked)
         } else {
             text_age.visibility = View.VISIBLE
             seek_bar_age.visibility = View.VISIBLE
+            text_choose_date.visibility = View.GONE
             choose_types.visibility = View.GONE
             emoji_grid.visibility = View.GONE
             title_types.visibility = View.GONE
@@ -231,7 +236,12 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
                 text_age.setText(R.string.any_age)
             }
         }
-
+        button_choose_date.setOnClickListener {
+            showDateRangePicker()
+        }
+        button_clear_date.setOnClickListener {
+            presenter.setDate(null, null)
+        }
         button_apply.setOnClickListener {
             presenter.filterEvent?.let {
                 applyFilter(it)
@@ -246,6 +256,33 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
             FragmentResultListener { requestKey, result ->
                 onFragmentResult(requestKey, result)
             })
+    }
+
+    override fun showDate(firstDate: Long?, secondDate: Long?) {
+        if (firstDate != null && secondDate != null) {
+            text_choose_date.text = getString(
+                R.string.range,
+                firstDate.toDateFormat(Const.DATE_FORMAT_SHORT_DATE),
+                secondDate.toDateFormat(Const.DATE_FORMAT_SHORT_DATE)
+            )
+            button_clear_date.visibility = View.VISIBLE
+        } else {
+            text_choose_date.text = getString(R.string.choose_date)
+            button_clear_date.visibility = View.GONE
+        }
+    }
+
+    private fun showDateRangePicker() {
+        activity?.supportFragmentManager?.let { manager ->
+            val rangePicker = DateRangePicker(manager, View.OnClickListener {
+                hideKeyboard()
+            },
+                MaterialPickerOnPositiveButtonClickListener {
+                    hideKeyboard()
+                    presenter.setDate(it.first, it.second)
+                })
+            rangePicker.show()
+        }
     }
 
     @SuppressLint("MissingPermission")

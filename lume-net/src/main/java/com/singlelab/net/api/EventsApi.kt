@@ -19,6 +19,9 @@ interface EventsApi {
     @POST("event/add-event")
     fun addEventAsync(@Body event: EventRequest): Deferred<Response<EventUidResponse>>
 
+    @POST("event/update-event")
+    fun updateEventAsync(@Body request: UpdateEventRequest): Deferred<Response<EventResponse>>
+
     @POST("event/add-event-participant")
     fun addParticipantsAsync(@Body participantRequest: ParticipantRequest): Deferred<Response<EventResponse>>
 

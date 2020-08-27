@@ -1,5 +1,6 @@
 package com.singlelab.lume.util
 
+import android.content.res.Resources
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 
@@ -26,4 +27,12 @@ fun View.setMargin(
         }
         layoutParams = newLayoutParams
     }
+}
+
+fun Int.dpToPx(): Float {
+    return this * Resources.getSystem().displayMetrics.density
+}
+
+fun Int.pxToDp(): Float {
+    return this / Resources.getSystem().displayMetrics.density
 }

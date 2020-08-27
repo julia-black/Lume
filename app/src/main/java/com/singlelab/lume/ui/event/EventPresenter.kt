@@ -3,6 +3,7 @@ package com.singlelab.lume.ui.event
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.event.Event
+import com.singlelab.lume.model.event.EventStatus
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.event.interactor.EventInteractor
@@ -10,6 +11,7 @@ import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.event.ParticipantRequest
 import com.singlelab.net.model.event.ParticipantStatus
+import com.singlelab.net.model.event.UpdateEventRequest
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -139,6 +141,29 @@ class EventPresenter @Inject constructor(
                 runOnMainThread {
                     viewState.showLoading(false)
                     viewState.showError(e.message)
+                }
+            }
+        }
+    }
+
+    fun cancelEvent() {
+        event?.eventUid?.let { uid ->
+            viewState.showLoading(isShow = true, withoutBackground = true)
+            invokeSuspend {
+                try {
+                    val event =
+                        interactor.updateEvent(UpdateEventRequest(uid, EventStatus.CANCELLED.id))
+                    runOnMainThread {
+                        viewState.showLoading(isShow = false, withoutBackground = true)
+                        event?.let {
+                            viewState.showEvent(event)
+                        }
+                    }
+                } catch (e: ApiException) {
+                    runOnMainThread {
+                        viewState.showLoading(isShow = false, withoutBackground = true)
+                        viewState.showError(e.message)
+                    }
                 }
             }
         }

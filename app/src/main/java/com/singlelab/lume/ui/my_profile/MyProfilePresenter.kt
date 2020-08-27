@@ -3,7 +3,9 @@ package com.singlelab.lume.ui.my_profile
 import android.graphics.Bitmap
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.profile.Badge
 import com.singlelab.lume.model.profile.Person
+import com.singlelab.lume.model.profile.PersonNotifications
 import com.singlelab.lume.model.profile.Profile
 import com.singlelab.lume.model.view.PagerTab
 import com.singlelab.lume.pref.Preferences
@@ -25,6 +27,8 @@ class MyProfilePresenter @Inject constructor(
 
     var friends: List<Person>? = null
 
+    var badges: List<Badge>? = null
+
     var selectedTab: PagerTab = PagerTab.FRIENDS
 
     override fun onFirstViewAttach() {
@@ -32,6 +36,11 @@ class MyProfilePresenter @Inject constructor(
         if (preferences != null && preferences.isFirstLaunch()) {
             sendPushToken(preferences.getPushToken())
         }
+    }
+
+    override fun onLoadedNotification(notifications: PersonNotifications) {
+        super.onLoadedNotification(notifications)
+        viewState.showNewBadge(notifications.hasNewBadges)
     }
 
     fun loadProfile(isFirstAttach: Boolean = false) {
@@ -74,7 +83,6 @@ class MyProfilePresenter @Inject constructor(
     fun logout() {
         invokeSuspend {
             try {
-                interactor.removePushToken()
                 interactor.clearDatabase()
             } catch (e: ApiException) {
             }
@@ -109,11 +117,31 @@ class MyProfilePresenter @Inject constructor(
             try {
                 friends = interactor.loadFriends(personUid)
                 runOnMainThread {
-                    viewState.showFriends(friends)
+                    viewState.onLoadedFriends(friends)
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
                     viewState.showError(e.message)
+                }
+            }
+        }
+    }
+
+    fun loadBadges() {
+        profile?.personUid?.let {
+            invokeSuspend {
+                try {
+                    badges = interactor.loadBadges(it)
+                    runOnMainThread {
+                        badges?.let {
+                            viewState.onLoadedBadges(it)
+                            updateNotifications()
+                        }
+                    }
+                } catch (e: ApiException) {
+                    runOnMainThread {
+                        viewState.showError(e.message)
+                    }
                 }
             }
         }

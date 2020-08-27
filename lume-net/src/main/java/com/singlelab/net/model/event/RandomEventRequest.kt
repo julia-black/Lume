@@ -6,5 +6,7 @@ class RandomEventRequest(
     val distance: Double? = null,
     val cityId: Int? = null,
     val eventTypes: List<Int>? = null,
-    val isOnline: Boolean? = null
+    val isOnline: Boolean? = null,
+    val minimalStartTime: String? = null,
+    val maximalEndTime: String? = null
 )

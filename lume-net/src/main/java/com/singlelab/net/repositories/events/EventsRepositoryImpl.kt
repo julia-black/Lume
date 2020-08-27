@@ -6,7 +6,8 @@ import com.singlelab.net.model.person.PersonResponse
 import com.singlelab.net.model.person.RandomPersonRequest
 import com.singlelab.net.repositories.BaseRepository
 
-class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository, BaseRepository(apiUnit) {
+class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository,
+    BaseRepository(apiUnit) {
     override suspend fun createEvent(event: EventRequest): EventUidResponse? {
         return safeApiCall(
             call = { apiUnit.eventsApi.addEventAsync(event).await() },
@@ -35,7 +36,7 @@ class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository, Bas
         )
     }
 
-    override suspend fun addParticipants(participantRequest: ParticipantRequest) : EventResponse? {
+    override suspend fun addParticipants(participantRequest: ParticipantRequest): EventResponse? {
         return safeApiCall(
             call = { apiUnit.eventsApi.addParticipantsAsync(participantRequest).await() },
             errorMessage = "Не удалось пригласить пользователя"
@@ -96,6 +97,13 @@ class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository, Bas
     override suspend fun rejectRandomPerson(eventUid: String, personUid: String) {
         safeApiCall(
             call = { apiUnit.eventsApi.rejectRandomPersonAsync(eventUid, personUid).await() },
+            errorMessage = "Не удалось выполнить действие"
+        )
+    }
+
+    override suspend fun updateEvent(request: UpdateEventRequest): EventResponse? {
+        return safeApiCall(
+            call = { apiUnit.eventsApi.updateEventAsync(request).await() },
             errorMessage = "Не удалось выполнить действие"
         )
     }

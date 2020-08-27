@@ -1,6 +1,7 @@
 package com.singlelab.lume.model
 
 object Const {
+    const val URL_KEY = "Url"
     const val APP_NAME = "Lume"
     const val FOLDER_NAME = "Lume Images"
     const val BASE_URL = "https://lumewebapp.azurewebsites.net/api/"
@@ -14,12 +15,14 @@ object Const {
     const val DATE_FORMAT_ISO = "yyyy-MM-dd"
     const val DATE_FORMAT_SIMPLE = "dd MMMM yyyy"
     const val DATE_FORMAT_ONLY_TIME = "HH:mm"
+    const val DATE_FORMAT_SHORT_DATE = "dd.MM"
     const val UTC = "UTC"
 
     const val PAGE_SIZE = 20
 
     const val ERROR_CODE_NO_MATCHING_EVENTS = 25
     const val ERROR_CODE_NO_MATCHING_PERSONS = 27
+    const val ERROR_CODE_NEW_PUSH_TOKEN = 41
 
     const val MIN_AGE = 0
     const val MAX_AGE = 100

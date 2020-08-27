@@ -1,10 +1,12 @@
 package com.singlelab.lume.model.event
 
-enum class EventStatus(private val id: Int) {
-    CANCELLED(3),
-    ENDED(2),
+import com.singlelab.lume.R
+
+enum class EventStatus(val id: Int, val titleRes: Int? = null) {
+    PREPARING(0),
     IN_PROGRESS(1),
-    PREPARING(0);
+    ENDED(2, R.string.title_ended),
+    CANCELLED(3, R.string.title_cancel);
 
     companion object {
         fun findById(id: Int): EventStatus {

@@ -46,7 +46,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="lumeapp.page.link"
+                    android:host="lumemobile.page.link"
                     android:pathPrefix="/event"
                     android:scheme="https" />
             </intent-filter>

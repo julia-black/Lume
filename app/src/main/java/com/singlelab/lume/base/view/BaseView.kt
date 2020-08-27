@@ -10,6 +10,6 @@ interface BaseView : MvpView {
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun toAuth()
 
-    @StateStrategyType(AddToEndSingleStrategy::class)
+    @StateStrategyType(OneExecutionStateStrategy::class)
     fun showNotifications(notifications: PersonNotifications)
 }

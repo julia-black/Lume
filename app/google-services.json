@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "852373751034-pe3fnsrdggcqkkg5r2a9asb1aehlot4l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.singlelab.lume",
+            "certificate_hash": "ab41921008f74b1c9f55dbcdb5e4d4b26bb7a737"
+          }
+        },
+        {
           "client_id": "852373751034-1f6ifou9t8qq32m26elv43b946hoe0tt.apps.googleusercontent.com",
           "client_type": 3
         }

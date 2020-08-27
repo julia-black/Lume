@@ -99,6 +99,7 @@ class FriendsPresenter @Inject constructor(
                     searchResults?.let {
                         viewState.showSearchResult(it, pageNumber)
                     }
+                    updateNotifications()
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
@@ -189,6 +190,7 @@ class FriendsPresenter @Inject constructor(
                         }?.friendshipApprovalRequired = false
                         viewState.showFriends(friends)
                     }
+                    updateNotifications()
                     viewState.showLoading(isShow = false, withoutBackground = true)
                 }
             } catch (e: ApiException) {
@@ -204,13 +206,13 @@ class FriendsPresenter @Inject constructor(
         viewState.showLoading(isShow = true, withoutBackground = true)
         invokeSuspend {
             try {
-                val persons = interactor.getPersonsFromContacts(phones)
+                searchResults = interactor.getPersonsFromContacts(phones)?.toMutableList()
                 runOnMainThread {
                     viewState.showLoading(isShow = false, withoutBackground = true)
-                    if (persons.isNullOrEmpty()) {
+                    if (searchResults.isNullOrEmpty()) {
                         viewState.showEmptyPersonsFromContacts()
                     } else {
-                        viewState.showContacts(persons.toMutableList())
+                        viewState.showContacts(searchResults!!)
                     }
                 }
             } catch (e: ApiException) {

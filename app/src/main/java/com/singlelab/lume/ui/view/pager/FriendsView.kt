@@ -53,7 +53,9 @@ class FriendsView @JvmOverloads constructor(
         }
         if (this.friends.isNullOrEmpty()) {
             recycler_friends.visibility = View.GONE
+            title_empty_friends.visibility = View.VISIBLE
         } else {
+            title_empty_friends.visibility = View.GONE
             recycler_friends.visibility = View.VISIBLE
             recycler_friends.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

@@ -31,4 +31,5 @@
     <dimen name="size_card_emoji">50dp</dimen>
     <dimen name="size_emoji_event">25dp</dimen>
     <dimen name="text_size_very_small">8sp</dimen>
+    <dimen name="size_image_badge">48dp</dimen>
 </resources>

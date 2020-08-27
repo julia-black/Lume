@@ -12,7 +12,9 @@ data class FilterEvent(
     var longitude: Double? = null,
     var latitude: Double? = null,
     var isExceptOnline: Boolean = false,
-    var isOnlyOnline: Boolean = false
+    var isOnlyOnline: Boolean = false,
+    var minimalStartTime: Long? = null,
+    var maximalEndTime: Long? = null
 ) : Parcelable {
     fun isOnlineForRequest(): Boolean? {
         return when {
@@ -28,6 +30,8 @@ data class FilterEvent(
                 longitude == null &&
                 latitude == null &&
                 !isExceptOnline &&
-                !isOnlyOnline
+                !isOnlyOnline &&
+                minimalStartTime == null &&
+                maximalEndTime == null
     }
 }

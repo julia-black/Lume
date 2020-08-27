@@ -1,9 +1,6 @@
 package com.singlelab.net.repositories.person
 
-import com.singlelab.net.model.person.FeedbackRequest
-import com.singlelab.net.model.person.PersonResponse
-import com.singlelab.net.model.person.ProfileRequest
-import com.singlelab.net.model.person.ProfileResponse
+import com.singlelab.net.model.person.*
 
 interface PersonRepository {
 
@@ -22,4 +19,6 @@ interface PersonRepository {
     suspend fun removePushToken()
 
     suspend fun addFeedback(request: FeedbackRequest)
+
+    suspend fun getBadges(personUid: String): List<BadgeResponse>?
 }

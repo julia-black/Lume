@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -13,7 +14,9 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.ktx.Firebase
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -29,6 +32,7 @@ import com.singlelab.lume.model.target.TargetType
 import com.singlelab.lume.util.parseDeepLink
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -51,6 +55,28 @@ class MainActivity : AppCompatActivity() {
         target?.let {
             toTarget(navController, it)
         }
+        getDynamicLink(navController)
+    }
+
+    private fun getDynamicLink(navController: NavController) {
+        Firebase.dynamicLinks
+            .getDynamicLink(intent)
+            .addOnSuccessListener(this) { pendingDynamicLinkData ->
+                var deepLink: Uri?
+                if (pendingDynamicLinkData != null) {
+                    deepLink = pendingDynamicLinkData.link
+                    deepLink.toString().parseDeepLink()?.let {
+                        toTarget(navController, it)
+                    }
+                }
+            }
+            .addOnFailureListener(this) { e ->
+                Toast.makeText(
+                    this,
+                    "getDynamicLink:onFailure ${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -148,7 +174,7 @@ class MainActivity : AppCompatActivity() {
 
         val badgeProfile = nav_view.getOrCreateBadge(R.id.my_profile)
         badgeProfile.backgroundColor = ContextCompat.getColor(this, R.color.colorNotification)
-        badgeProfile.isVisible = notifications.hasNewFriends
+        badgeProfile.isVisible = notifications.hasNewFriends || notifications.hasNewBadges
     }
 
     private fun getPushToken() {

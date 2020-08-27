@@ -84,4 +84,8 @@ class Event(
         }
         return person?.participantStatus
     }
+
+    fun isActive(): Boolean {
+        return status != EventStatus.ENDED && status != EventStatus.CANCELLED
+    }
 }

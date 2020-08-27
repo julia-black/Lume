@@ -45,4 +45,8 @@ class EventSummary(
             }
         }
     }
+
+    fun isActive(): Boolean {
+        return status != EventStatus.CANCELLED && status != EventStatus.ENDED
+    }
 }
