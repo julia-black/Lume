@@ -31,14 +31,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:startIconTint="@color/colorGray"
-            tools:hint="Подсказка">
+            app:startIconTint="@color/colorGray">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/suisse_regular" />
+                android:fontFamily="@font/suisse_regular"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
@@ -50,9 +50,9 @@
         android:fontFamily="@font/suisse_regular"
         android:paddingHorizontal="@dimen/margin_very_small"
         android:textColor="@color/colorError"
+        android:textSize="@dimen/text_size_small"
         android:visibility="gone"
-        tools:text="Ошибка"
-        tools:visibility="visible" />
+        tools:text="Ошибка" />
 
     <TextView
         android:id="@+id/text_warning"
@@ -62,7 +62,7 @@
         android:fontFamily="@font/suisse_regular"
         android:paddingHorizontal="@dimen/margin_very_small"
         android:textColor="@color/colorGray"
+        android:textSize="@dimen/text_size_small"
         android:visibility="gone"
-        tools:text="Предупреждение"
-        tools:visibility="visible" />
+        tools:text="Предупреждение" />
 </LinearLayout>

@@ -87,7 +87,6 @@
         android:clickable="true"
         android:focusable="true"
         android:text="@string/create_event"
-        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

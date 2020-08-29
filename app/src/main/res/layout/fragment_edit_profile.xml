@@ -117,7 +117,6 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:text="@string/update_profile"
-                android:textAllCaps="false"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout_description" />

@@ -209,7 +209,6 @@
             android:clickable="true"
             android:focusable="true"
             android:text="@string/search_participants"
-            android:textAllCaps="false"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/button_invite"
@@ -225,7 +224,6 @@
             android:enabled="true"
             android:focusable="true"
             android:text="@string/join"
-            android:textAllCaps="false"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/button_reject" />
 
@@ -238,7 +236,6 @@
             android:clickable="true"
             android:focusable="true"
             android:text="@string/invite_friends"
-            android:textAllCaps="false"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/button_join"
@@ -365,7 +362,6 @@
             android:drawablePadding="@dimen/margin_small"
             android:focusable="true"
             android:text="@string/cancel_event"
-            android:textAllCaps="false"
             android:textColor="@color/colorBackground"
             android:textSize="@dimen/text_size_standart"
             android:visibility="gone"

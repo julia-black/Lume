@@ -82,7 +82,6 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:text="@string/button_give_feedback"
-                android:textAllCaps="false"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_add_photo" />

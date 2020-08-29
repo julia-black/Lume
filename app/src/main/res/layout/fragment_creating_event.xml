@@ -225,8 +225,7 @@
                 android:layout_margin="@dimen/margin_small"
                 android:clickable="true"
                 android:focusable="true"
-                android:text="@string/publish_event"
-                android:textAllCaps="false" />
+                android:text="@string/publish_event" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

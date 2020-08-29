@@ -40,6 +40,7 @@
     <color name="colorSnackbar">#5C5C5C</color>
     <color name="colorSuccess">#63CD64</color>
     <color name="colorText">#1E1E1E</color>
+    <color name="colorTextGray">#52575C</color>
     <color name="colorError">#EF3E2E</color>
     <color name="colorWarning">#B298A0A8</color>
 

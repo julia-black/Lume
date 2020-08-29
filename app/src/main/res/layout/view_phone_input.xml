@@ -55,6 +55,7 @@
         android:fontFamily="@font/suisse_regular"
         android:paddingHorizontal="@dimen/margin_very_small"
         android:textColor="@color/colorError"
+        android:textSize="@dimen/text_size_small"
         android:visibility="gone"
         tools:text="Ошибка"
         tools:visibility="visible" />
@@ -66,6 +67,7 @@
         android:layout_marginTop="@dimen/margin_small"
         android:fontFamily="@font/suisse_regular"
         android:paddingHorizontal="@dimen/margin_very_small"
+        android:textSize="@dimen/text_size_small"
         android:textColor="@color/colorGray"
         android:visibility="gone"
         tools:text="Предупреждение"

@@ -4,21 +4,21 @@
     <item
         android:id="@+id/swiper_event"
         android:icon="@drawable/ic_nav_swipe"
-        android:title="@string/title_home" />
+        android:title="" />
 
     <item
         android:id="@+id/events"
         android:icon="@drawable/ic_nav_events"
-        android:title="@string/title_events" />
+        android:title="" />
 
     <item
         android:id="@+id/chats"
         android:icon="@drawable/ic_nav_chat"
-        android:title="@string/chats_title" />
+        android:title="" />
 
     <item
         android:id="@+id/my_profile"
         android:icon="@drawable/ic_nav_profile"
-        android:title="@string/title_my_profile" />
+        android:title="" />
 
 </menu>

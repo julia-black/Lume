@@ -46,6 +46,7 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         showLoading(false)
+        showBottomNavigation(isShow = !AuthData.isAnon)
         if (AuthData.isAnon && this is OnlyForAuthFragments) {
             //todo подумать, как можно получше сделать общий обработчик того, что если
             // пользователь не залогинен, то с некоторых экранов должен осуществляться переход на авторизацию

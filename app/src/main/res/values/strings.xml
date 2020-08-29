@@ -20,10 +20,13 @@
     <string name="enter_code">Введите код</string>
     <string name="auth">Авторизоваться</string>
     <string name="registration">Регистрация</string>
-    <string name="welcome">Добро пожаловать в Lume! \nПожалуйста, заполните небольшую анкету:</string>
+    <string name="welcome">Добро пожаловать в Lume!</string>
+    <string name="fill_form">Пожалуйста, заполните небольшую анкету:</string>
     <string name="login">Логин</string>
     <string name="name">Имя</string>
     <string name="age">Возраст</string>
+    <string name="login_digits">abcdefghijklmnopqrstuvwxyz0123456789_.</string>
+    <string name="name_hint">Максимум 25 символов</string>
     <string name="add_photo">Будет замечательно, если на фото будете именно вы. Все мы любим милых котиков, но не каждый захочет идти куда-то только в их компании</string>
     <string name="empty_photo">Добавьте фото</string>
     <string name="about_yourself">Пару слов о себе</string>
@@ -31,7 +34,7 @@
     <string name="error_pick_image">Не удалось выбрать изображение</string>
     <string name="sms_code_send">СМС-код отправлен на номер %1$s</string>
     <string name="push_code_send">На ваше устройство отправлено Push-уведомление с кодом</string>
-    <string name="login_hint">Логин может содержать только латинские буквы, цифры, символы подчеркивания и точки</string>
+    <string name="login_hint">Логин может содержать только латинские буквы, цифры, символы подчеркивания и точки. Максимум 25 символов</string>
     <string name="back">Вернуться</string>
 
     <!-- My Profile -->

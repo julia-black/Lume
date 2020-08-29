@@ -59,16 +59,6 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
         layout_code.setInputType(InputType.TYPE_CLASS_NUMBER)
     }
 
-    override fun onStart() {
-        super.onStart()
-        showBottomNavigation(false)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        showBottomNavigation(true)
-    }
-
     override fun showLoading(isShow: Boolean, withoutBackground: Boolean) {
         super.showLoading(isShow, withoutBackground)
         button_send_code.isEnabled = !isShow

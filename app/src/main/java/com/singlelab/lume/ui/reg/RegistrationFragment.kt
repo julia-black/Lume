@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -46,17 +47,8 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initInputViews()
         setListeners()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        showBottomNavigation(false)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        showBottomNavigation(true)
     }
 
     override fun onRegistration() {
@@ -84,6 +76,33 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
         }
     }
 
+    private fun initInputViews() {
+        layout_login.apply {
+            setHint(getString(R.string.login))
+            setWarning(getString(R.string.login_hint))
+            setImeAction(EditorInfo.IME_ACTION_NEXT)
+            setOnEditorListener {
+                if (it == EditorInfo.IME_ACTION_NEXT) {
+                    runOnMainThread {
+                        this@RegistrationFragment.view?.clearFocus()
+                        layout_name.requestEditTextFocus()
+                    }
+                }
+                return@setOnEditorListener false
+            }
+            setSingleLine()
+            setMaxLength(25)
+            setDigits(getString(R.string.login_digits))
+        }
+        layout_name.apply {
+            setHint(getString(R.string.name))
+            setImeAction(EditorInfo.IME_ACTION_NEXT)
+            setSingleLine()
+            setMaxLength(25)
+            setWarning(getString(R.string.name_hint))
+        }
+    }
+
     private fun setListeners() {
         image.setOnClickListener {
             onClickChangeImage()
@@ -95,8 +114,8 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
             val validationError = validation()
             if (validationError == null) {
                 presenter.registration(
-                    login.text.toString(),
-                    name.text.toString(),
+                    layout_login.getText(),
+                    layout_name.getText(),
                     age.text.toString().toInt(),
                     description.text.toString()
                 )
@@ -118,8 +137,8 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
 
     private fun validation(): ValidationError? {
         return presenter.validation(
-            login.text.toString(),
-            name.text.toString(),
+            layout_login.getText(),
+            layout_name.getText(),
             description.text.toString(),
             age.text.toString()
         )
