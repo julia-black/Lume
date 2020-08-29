@@ -21,8 +21,8 @@ class GroupChatMessagesAdapter : ChatMessagesAdapter(Type.GROUP) {
             if (messageItem !is GroupChatMessageItem) return
 
             itemView.incomingMessageView.setMessageText(messageItem.text)
-            itemView.incomingMessageImageView.setImages(messageItem.images)
-            itemView.incomingMessageDateView.setDate(messageItem.date)
+            itemView.incomingMessageImageView.setImage(messageItem)
+            itemView.incomingMessageDateView.setDate(messageItem)
             itemView.incomingMessageAuthorView.text = messageItem.personName
 
             if (messageItem.personPhoto.isNotEmpty()) {

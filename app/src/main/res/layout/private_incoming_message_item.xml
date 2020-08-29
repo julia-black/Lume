@@ -5,22 +5,20 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="30dp"
-    android:layout_marginVertical="@dimen/margin_small"
     android:background="@drawable/private_incoming_message_input_background"
     android:backgroundTint="#D5DADA">
 
-    <ImageView
+    <com.singlelab.lume.ui.chat.common.ChatMessageImageView
         android:id="@+id/incomingMessageImageView"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:padding="10dp"
-        android:scaleType="centerCrop"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_goneMarginBottom="10dp"
-        tools:src="@drawable/ic_event_image"
         tools:visibility="visible" />
 
     <TextView
@@ -49,9 +47,9 @@
         android:layout_marginBottom="2dp"
         android:fontFamily="sans-serif"
         android:textSize="12sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/incomingMessageView"
         tools:text="13:48"
         tools:visibility="visible" />

@@ -3,13 +3,14 @@ package com.singlelab.lume.ui.chat.common
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.singlelab.lume.R
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Status
@@ -17,6 +18,7 @@ import com.singlelab.lume.ui.chat.common.GroupChatMessagesAdapter.GroupIncomingM
 import com.singlelab.lume.ui.chat.common.PrivateChatMessagesAdapter.PrivateIncomingMessageViewHolder
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
+import kotlinx.android.synthetic.main.chat_message_image_view.view.*
 import kotlinx.android.synthetic.main.outgoing_message_item.view.*
 
 abstract class ChatMessagesAdapter(
@@ -87,24 +89,36 @@ abstract class ChatMessagesAdapter(
             }
         }
 
-        protected fun ImageView.setImages(images: List<String>) {
-            val hasImages = images.any { it.isNotEmpty() }
+        protected fun ChatMessageImageView.setImage(message: ChatMessageItem) {
+            val imagesCount = message.images.count { it.isNotEmpty() }
+            val hasImages = imagesCount > 0
             isVisible = hasImages
-            if (hasImages) {
-                // TODO: Сделать отображение нескольких фото (view c +)
-                val imagesCount = images.size
+            if (imagesCount == 1 && message.text.isEmpty()) {
+                setMultipleImage(imagesCount)
+                setDateChip(true, message.date)
                 Glide.with(this)
-                    .setDefaultRequestOptions(RequestOptions().timeout(30_000))
-                    .load(images.first().generateImageLink())
-                    .into(this)
+                    .load(message.images.first().generateImageLink())
+                    .transform(CenterCrop(), RoundedCorners(60))
+                    .into(chatMessageImageView)
+            } else if (hasImages) {
+                setDateChip(false)
+                setMultipleImage(imagesCount)
+                Glide.with(this)
+                    .load(message.images.first().generateImageLink())
+                    .transform(CenterCrop(), GranularRoundedCorners(60f, 60f, 0f, 0f))
+                    .into(chatMessageImageView)
             }
         }
 
-        protected fun TextView.setDate(date: String) {
-            val isDateNotEmpty = date.isNotEmpty()
-            isVisible = isDateNotEmpty
-            if (isDateNotEmpty) {
-                this.text = date.parse(Const.DATE_FORMAT_TIME_ZONE, CHAT_MESSAGE_DATE_FORMAT_OUTPUT)
+        protected fun TextView.setDate(message: ChatMessageItem) {
+            if (message.text.isNotEmpty()) {
+                val isDateNotEmpty = message.date.isNotEmpty()
+                if (isDateNotEmpty) {
+                    isVisible = isDateNotEmpty
+                    text = message.date.parse(Const.DATE_FORMAT_TIME_ZONE, "HH:mm")
+                }
+            } else {
+                isVisible = false
             }
         }
     }
@@ -112,8 +126,8 @@ abstract class ChatMessagesAdapter(
     class OutgoingMessageViewHolder(view: View) : ChatMessageViewHolder(view) {
         override fun bind(messageItem: ChatMessageItem) {
             itemView.outgoingMessageView.setMessageText(messageItem.text)
-            itemView.outgoingMessageImageView.setImages(messageItem.images)
-            itemView.outgoingMessageDateView.setDate(messageItem.date)
+            itemView.outgoingMessageImageView.setImage(messageItem)
+            itemView.outgoingMessageDateView.setDate(messageItem)
 
             val isPending = messageItem.status == Status.PENDING
             val background = if (isPending) R.drawable.group_message_input_background else R.drawable.private_outgoing_message_input_background
@@ -145,9 +159,5 @@ abstract class ChatMessagesAdapter(
                     oldMessage.date == newMessage.date &&
                     oldMessage.status == newMessage.status
         }
-    }
-
-    companion object {
-        private const val CHAT_MESSAGE_DATE_FORMAT_OUTPUT = "HH:mm"
     }
 }
