@@ -1,13 +1,13 @@
 package com.singlelab.lume.ui.auth
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.textfield.TextInputEditText
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
@@ -43,9 +43,30 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
-        layout_phone.hint = ""
-        edit_text_phone.setCustomHint("")
-        edit_text_phone.requestFocus()
+        initViewCode()
+        initViewPhone()
+    }
+
+    private fun initViewPhone() {
+        layout_phone.setHint("")
+        layout_phone.setStartDrawable(resources.getDrawable(R.drawable.ic_phone, context?.theme))
+    }
+
+    private fun initViewCode() {
+        layout_code.setHint(getString(R.string.enter_code))
+        layout_code.setMaxLines(1)
+        layout_code.setMaxLength(6)
+        layout_code.setInputType(InputType.TYPE_CLASS_NUMBER)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        showBottomNavigation(false)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        showBottomNavigation(true)
     }
 
     override fun showLoading(isShow: Boolean, withoutBackground: Boolean) {
@@ -55,7 +76,7 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
     }
 
     private fun setListeners() {
-        edit_text_phone.setOnEditorActionListener { _, actionId, _ ->
+        layout_phone.setOnEditorListener { actionId ->
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
                     onClickSendCode()
@@ -63,7 +84,7 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
             }
             false
         }
-        edit_text_code.setOnEditorActionListener { _, actionId, _ ->
+        layout_code.setOnEditorListener { actionId ->
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
                     onClickAuth()
@@ -86,22 +107,20 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
     private fun onClickAuth() {
         hideKeyboard()
         (activity as MainActivity).setBackPressListener(null)
-        presenter.onClickAuth(edit_text_code.text.toString())
+        presenter.onClickAuth(layout_code.getText())
     }
 
     private fun onClickSendCode() {
         hideKeyboard()
-        edit_text_phone.fixHintsForMeizu(edit_text_phone as TextInputEditText, edit_text_phone)
-        if (edit_text_phone.isValid) {
+        if (layout_phone.isValid()) {
             context?.let {
                 presenter.onClickSendCode(
-                    edit_text_phone.text.toString().toShortPhone(),
+                    layout_phone.getText().toShortPhone(),
                     NotificationManagerCompat.from(it).areNotificationsEnabled()
                 )
             }
-
         } else {
-            layout_phone.error = "Некорректный номер"
+            layout_phone.setError(getString(R.string.wrong_phone))
         }
     }
 
@@ -115,7 +134,7 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
         }
         button_back.visibility = View.VISIBLE
         layout_code.visibility = View.VISIBLE
-        edit_text_code.setText("")
+        layout_code.setText("")
         button_auth.visibility = View.VISIBLE
 
         layout_phone.visibility = View.INVISIBLE

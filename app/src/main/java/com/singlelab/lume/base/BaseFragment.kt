@@ -131,6 +131,10 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         }
     }
 
+    fun showBottomNavigation(isShow: Boolean) {
+        (activity as MainActivity).showBottomNavigation(isShow)
+    }
+
     fun onClickChangeImage() {
         activity?.let { activity ->
             CropImage.activity()
@@ -210,5 +214,4 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
     private fun hideSnackbar() {
         snackbar?.dismiss()
     }
-
 }

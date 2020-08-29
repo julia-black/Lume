@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/padding_bottom_nav"
     android:background="@color/colorBackgroundChat">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
+        android:overScrollMode="never"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_weight="1"
         tools:listitem="@layout/chats_item" />

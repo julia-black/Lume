@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#858585</color>
+    <color name="colorPrimary">#2B2B2B</color>
     <color name="colorPrimaryBright">#2B2B2B</color>
     <color name="colorPrimaryDark">#0B0604</color>
+    <color name="colorPrimaryAccent">#216FF4</color>
     <color name="colorDark">#325D79</color>
-    <color name="colorAccent">#fecb00</color>
+    <color name="colorAccent">#FFCE51</color>
 
     <color name="colorAccentLight">#FFDE88</color>
     <color name="colorLight">#e6edff</color>
     <color name="colorTransparentPart">#80FFFFFF</color>
-    <color name="colorGray">#9A9A9A</color>
+    <color name="colorGray">#BEC4CA</color>
     <color name="colorGrayLight">#D3D3D3</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorParty">#F24C56</color>
@@ -22,12 +23,12 @@
     <color name="colorReject">#88F24C56</color>
     <color name="colorOverlay">#80000000</color>
     <color name="colorTransparent">#00FFFFFF</color>
-    <color name="colorBackground">#121212</color>
+    <color name="colorBackground">#F4F5F9</color>
     <color name="colorTabNotSelected">#4C4C4C</color>
     <color name="colorBackgroundLoading">#80FFFFFF</color>
 
-    <color name="colorNavSelected">#4C4C4C</color>
-    <color name="colorNavNotSelected">#C6C6C6</color>
+    <color name="colorNavSelected">#216FF4</color>
+    <color name="colorNavNotSelected">#D4D4DD</color>
 
     <color name="colorBackgroundEvent">#FFE37F</color>
     <color name="colorBackgroundChat">#FFFCFB</color>
@@ -38,5 +39,8 @@
 
     <color name="colorSnackbar">#5C5C5C</color>
     <color name="colorSuccess">#63CD64</color>
+    <color name="colorText">#1E1E1E</color>
+    <color name="colorError">#EF3E2E</color>
+    <color name="colorWarning">#B298A0A8</color>
 
 </resources>

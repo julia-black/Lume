@@ -1,4 +1,4 @@
-package com.singlelab.lume.ui.view
+package com.singlelab.lume.ui.view.input
 
 import android.text.Editable
 import android.text.TextWatcher

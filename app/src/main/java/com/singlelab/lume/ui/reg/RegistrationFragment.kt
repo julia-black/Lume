@@ -49,6 +49,16 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
         setListeners()
     }
 
+    override fun onStart() {
+        super.onStart()
+        showBottomNavigation(false)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        showBottomNavigation(true)
+    }
+
     override fun onRegistration() {
         Navigation.createNavigateOnClickListener(R.id.action_registration_to_my_profile)
             .onClick(view)

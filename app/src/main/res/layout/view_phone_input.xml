@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_input"
+        android:minHeight="@dimen/height_input"
+        android:padding="@dimen/margin_small">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:fontFamily="@font/suisse_regular"
+            android:hint=""
+            android:paddingHorizontal="10dp"
+            app:boxBackgroundColor="@color/colorTransparent"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/colorTransparent"
+            app:boxStrokeErrorColor="@color/colorTransparent"
+            app:boxStrokeWidth="0dp"
+            app:hintAnimationEnabled="false"
+            app:hintEnabled="false"
+            app:hintTextColor="@color/colorPrimaryAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:startIconTint="@color/colorGray"
+            tools:startIconDrawable="@drawable/ic_phone">
+
+            <com.singlelab.lume.ui.view.input.PhoneEditText
+                android:id="@+id/edit_text_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/suisse_regular"
+                android:maxLines="1" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:fontFamily="@font/suisse_regular"
+        android:paddingHorizontal="@dimen/margin_very_small"
+        android:textColor="@color/colorError"
+        android:visibility="gone"
+        tools:text="Ошибка"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/text_warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
+        android:fontFamily="@font/suisse_regular"
+        android:paddingHorizontal="@dimen/margin_very_small"
+        android:textColor="@color/colorGray"
+        android:visibility="gone"
+        tools:text="Предупреждение"
+        tools:visibility="visible" />
+</LinearLayout>

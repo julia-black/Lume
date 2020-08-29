@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:overScrollMode="never"
     android:background="@color/colorBackground"
     android:fillViewport="true">
 
@@ -12,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/margin_large"
         android:background="@drawable/shape_card"
-        android:paddingBottom="@dimen/margin_large">
+        android:paddingBottom="@dimen/padding_bottom_nav">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image"

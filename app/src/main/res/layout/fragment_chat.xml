@@ -4,16 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/colorBackgroundChat"
+    android:paddingBottom="@dimen/padding_bottom_nav"
     android:layout_height="match_parent">
 
-    <!-- Margin bottom = 20dp у messageInputView нужен для того чтобы вьюха не отоб ражалась под панелью навигации-->
     <EditText
         android:id="@+id/messageInputView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginEnd="6dp"
-        android:layout_marginBottom="25dp"
         android:background="@drawable/group_message_input_background"
         android:focusable="true"
         android:focusableInTouchMode="true"
@@ -61,6 +60,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scrollbars="vertical"
+        android:overScrollMode="never"
         app:layout_constraintBottom_toTopOf="@+id/messageInputView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

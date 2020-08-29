@@ -219,6 +219,7 @@
         android:background="@drawable/shape_card"
         android:minHeight="250dp"
         android:orientation="vertical"
+        android:paddingBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

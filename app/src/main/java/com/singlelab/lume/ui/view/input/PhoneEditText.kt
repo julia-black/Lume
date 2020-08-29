@@ -1,4 +1,4 @@
-package com.singlelab.lume.ui.view
+package com.singlelab.lume.ui.view.input
 
 import android.content.Context
 import android.os.Build
@@ -28,7 +28,8 @@ class PhoneEditText : TextInputEditText, OnFocusChangeListener, OnTouchListener 
         private val SPAN_HINT = SpannableString(MASK_HINT)
     }
 
-    var phoneInputWatcher: PhoneInputWatcher = PhoneInputWatcher()
+    var phoneInputWatcher: PhoneInputWatcher =
+        PhoneInputWatcher()
     var bufferHint = ""
     private var customHint: String? = null
 

@@ -37,11 +37,14 @@
     </style>
 
     <style name="ButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
-        <item name="android:padding">16dp</item>
-        <item name="android:textColor">@color/colorBackground</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:textColor">@color/colorText</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/suisse_bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:backgroundTint">@color/selector_action_button</item>
-        <item name="cornerRadius">10dp</item>
+        <item name="cornerRadius">12dp</item>
     </style>
 
     <style name="SnackbarStyle" parent="Widget.MaterialComponents.Snackbar">
