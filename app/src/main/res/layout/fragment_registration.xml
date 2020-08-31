@@ -12,13 +12,14 @@
         android:paddingStart="@dimen/margin_medium"
         android:paddingTop="68dp"
         android:paddingEnd="@dimen/margin_medium"
-        android:paddingBottom="@dimen/padding_bottom_nav">
+        android:paddingBottom="@dimen/margin_big">
 
         <TextView
             android:id="@+id/text_welcome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/suisse_regular"
+            android:paddingHorizontal="@dimen/margin_very_small"
             android:text="@string/welcome"
             android:textColor="@color/colorText"
             android:textSize="@dimen/text_size_medium"
@@ -32,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"
             android:fontFamily="@font/suisse_regular"
+            android:paddingHorizontal="@dimen/margin_very_small"
             android:text="@string/fill_form"
             android:textColor="@color/colorTextGray"
             android:textSize="@dimen/text_size_standart"
@@ -52,100 +54,92 @@
             android:layout_marginTop="@dimen/margin_big"
             app:layout_constraintTop_toBottomOf="@id/layout_login" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.singlelab.lume.ui.view.input.InputView
             android:id="@+id/layout_age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:hint="@string/age"
-            app:boxBackgroundColor="@android:color/white"
-            app:layout_constraintTop_toBottomOf="@id/layout_name">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/age"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
-                android:inputType="number"
-                android:nextFocusDown="@id/name"
-                android:singleLine="true" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
-            app:cardCornerRadius="2dp"
-            app:cardElevation="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_age">
-
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/shape_border" />
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/text_add_photo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:fontFamily="@font/suisse_regular"
-            android:text="@string/add_photo"
-            android:textColor="@color/colorTextGray"
-            android:textSize="@dimen/text_size_standart"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_image" />
+            android:layout_marginTop="@dimen/margin_big"
+            app:layout_constraintTop_toBottomOf="@id/layout_name" />
 
         <TextView
             android:id="@+id/text_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_big"
             android:background="@drawable/shape_input"
             android:drawableEnd="@drawable/ic_arrow"
-            android:paddingStart="@dimen/margin_medium"
-            android:paddingTop="@dimen/margin_medium"
+            android:fontFamily="@font/suisse_regular"
+            android:paddingVertical="@dimen/margin_big"
+            android:paddingStart="@dimen/margin_big"
             android:paddingEnd="16dp"
-            android:paddingBottom="@dimen/margin_medium"
             android:text="@string/city"
+            android:textColor="@color/colorTextGray"
             android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/text_add_photo" />
+            app:layout_constraintTop_toBottomOf="@id/layout_age" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <TextView
+            android:id="@+id/text_add_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_big"
+            android:fontFamily="@font/suisse_regular"
+            android:paddingHorizontal="@dimen/margin_very_small"
+            android:text="@string/add_photo"
+            android:textColor="@color/colorTextGray"
+            android:textSize="@dimen/text_size_standart"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_description" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="@dimen/margin_big"
+            android:background="@color/transparent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintEnd_toStartOf="@id/button_upload_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_add_photo">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_image_profile" />
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/button_upload_image"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_upload"
+            app:layout_constraintBottom_toBottomOf="@id/card_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/card_image"
+            app:layout_constraintTop_toTopOf="@id/card_image" />
+
+        <com.singlelab.lume.ui.view.input.InputView
             android:id="@+id/layout_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:hint="@string/about_yourself"
-            app:boxBackgroundColor="@android:color/white"
-            app:layout_constraintTop_toBottomOf="@id/text_city">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:lines="5" />
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="@dimen/margin_big"
+            app:layout_constraintTop_toBottomOf="@id/text_city" />
 
         <Button
             android:id="@+id/button_registration"
             style="@style/ButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_big"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/to_registration"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_description" />
+            app:layout_constraintTop_toBottomOf="@id/card_image" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

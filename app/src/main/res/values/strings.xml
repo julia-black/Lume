@@ -25,8 +25,8 @@
     <string name="login">Логин</string>
     <string name="name">Имя</string>
     <string name="age">Возраст</string>
-    <string name="login_digits">abcdefghijklmnopqrstuvwxyz0123456789_.</string>
-    <string name="name_hint">Максимум 25 символов</string>
+    <string name="login_digits">a–z0–9_\.</string>
+    <string name="max_length">Максимум %1$d символов</string>
     <string name="add_photo">Будет замечательно, если на фото будете именно вы. Все мы любим милых котиков, но не каждый захочет идти куда-то только в их компании</string>
     <string name="empty_photo">Добавьте фото</string>
     <string name="about_yourself">Пару слов о себе</string>

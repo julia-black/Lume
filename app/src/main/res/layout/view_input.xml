@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,11 +7,16 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_input"
         android:minHeight="@dimen/height_input"
-        android:padding="@dimen/margin_very_small">
+        android:paddingHorizontal="@dimen/margin_very_small"
+        android:paddingVertical="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_layout"
@@ -22,6 +27,7 @@
             android:focusableInTouchMode="true"
             android:fontFamily="@font/suisse_regular"
             android:paddingHorizontal="10dp"
+            android:textColorHint="@color/colorTextGray"
             app:boxBackgroundColor="@color/colorTransparent"
             app:boxBackgroundMode="filled"
             app:boxStrokeColor="@color/colorTransparent"
@@ -38,31 +44,46 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/suisse_regular"
+                android:gravity="start"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/icon_multiline"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/ic_multiline"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/text_error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginVertical="@dimen/margin_small"
         android:fontFamily="@font/suisse_regular"
         android:paddingHorizontal="@dimen/margin_very_small"
         android:textColor="@color/colorError"
         android:textSize="@dimen/text_size_small"
         android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/layout"
         tools:text="Ошибка" />
 
     <TextView
         android:id="@+id/text_warning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginVertical="@dimen/margin_small"
         android:fontFamily="@font/suisse_regular"
         android:paddingHorizontal="@dimen/margin_very_small"
         android:textColor="@color/colorGray"
         android:textSize="@dimen/text_size_small"
         android:visibility="gone"
-        tools:text="Предупреждение" />
-</LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/layout"
+        tools:text="Предупреждение"
+        tools:visibility="visible" />
+</androidx.constraintlayout.widget.ConstraintLayout>

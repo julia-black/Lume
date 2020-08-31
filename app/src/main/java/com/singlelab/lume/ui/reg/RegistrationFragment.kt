@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -97,14 +98,37 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
         layout_name.apply {
             setHint(getString(R.string.name))
             setImeAction(EditorInfo.IME_ACTION_NEXT)
+            setOnEditorListener {
+                if (it == EditorInfo.IME_ACTION_NEXT) {
+                    runOnMainThread {
+                        this@RegistrationFragment.view?.clearFocus()
+                        layout_age.requestEditTextFocus()
+                    }
+                }
+                return@setOnEditorListener false
+            }
             setSingleLine()
             setMaxLength(25)
-            setWarning(getString(R.string.name_hint))
+            setWarning(getString(R.string.max_length, 25))
+        }
+        layout_age.apply {
+            setHint(getString(R.string.age))
+            setMaxLength(2)
+            setInputType(InputType.TYPE_CLASS_NUMBER)
+            setImeAction(EditorInfo.IME_ACTION_DONE)
+        }
+        layout_description.apply {
+            setHint(getString(R.string.about_yourself))
+            setLines(5)
+            disableLineBreaks()
+            setMaxLines(5)
+            setMaxLength(128)
+            setWarning(getString(R.string.max_length, 128))
         }
     }
 
     private fun setListeners() {
-        image.setOnClickListener {
+        button_upload_image.setOnClickListener {
             onClickChangeImage()
         }
         text_city.setOnClickListener {
@@ -116,8 +140,8 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
                 presenter.registration(
                     layout_login.getText(),
                     layout_name.getText(),
-                    age.text.toString().toInt(),
-                    description.text.toString()
+                    layout_age.getText().toInt(),
+                    layout_description.getText()
                 )
             } else {
                 showError(getString(validationError.titleResId))
@@ -139,8 +163,8 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
         return presenter.validation(
             layout_login.getText(),
             layout_name.getText(),
-            description.text.toString(),
-            age.text.toString()
+            layout_age.getText(),
+            layout_description.getText()
         )
     }
 

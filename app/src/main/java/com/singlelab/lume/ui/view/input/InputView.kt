@@ -2,12 +2,14 @@ package com.singlelab.lume.ui.view.input
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import android.text.InputFilter
+import android.text.Editable
 import android.text.InputFilter.LengthFilter
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import com.singlelab.lume.R
 import kotlinx.android.synthetic.main.view_input.view.*
 
@@ -42,6 +44,19 @@ class InputView @JvmOverloads constructor(
         text_input_edit_text.maxLines = maxLines
     }
 
+    fun setLines(lines: Int) {
+        text_input_edit_text.setLines(lines)
+        if (lines > 1) {
+            layout.background = resources.getDrawable(R.drawable.shape_big_input, context.theme)
+            icon_multiline.isVisible = true
+        }
+    }
+
+    fun disableLineBreaks() {
+        text_input_edit_text.isSingleLine = true
+        text_input_edit_text.setHorizontallyScrolling(false)
+    }
+
     fun setOnEditorListener(function: (Int) -> Boolean) {
         text_input_edit_text.setOnEditorActionListener { _, actionId, _ ->
             function.invoke(actionId)
@@ -71,18 +86,39 @@ class InputView @JvmOverloads constructor(
     }
 
     fun setDigits(digits: String) {
-        val newFilters = text_input_edit_text.filters.toMutableList()
-        newFilters.add(InputFilter { src, _, _, _, _, _ ->
-            if (src == "") {
-                return@InputFilter null
+        val regex = Regex("[^$digits]")
+        var newStr = ""
+
+        text_input_edit_text.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+                // Do nothing
             }
-            if (src.toString().matches(Regex("[$digits]+"))) {
-                return@InputFilter null
-            } else {
-                return@InputFilter ""
+
+            override fun onTextChanged(
+                s: CharSequence,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                val str = s.toString()
+                if (str.isEmpty()) {
+                    text_input_edit_text.append(newStr)
+                    newStr = ""
+                } else if (str != newStr) {
+                    newStr = str.replace(regex, "")
+                    text_input_edit_text.setText("")
+                }
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                // Do nothing
             }
         })
-        text_input_edit_text.filters = newFilters.toTypedArray()
     }
 
     fun setSingleLine() {
