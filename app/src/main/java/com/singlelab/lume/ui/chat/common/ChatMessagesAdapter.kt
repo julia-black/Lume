@@ -16,10 +16,11 @@ import com.singlelab.lume.model.Const
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Status
 import com.singlelab.lume.ui.chat.common.GroupChatMessagesAdapter.GroupIncomingMessageViewHolder
 import com.singlelab.lume.ui.chat.common.PrivateChatMessagesAdapter.PrivateIncomingMessageViewHolder
+import com.singlelab.lume.ui.chat.common.view.ChatMessageImageView
+import com.singlelab.lume.ui.chat.common.view.ChatOutgoingMessageView
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
 import kotlinx.android.synthetic.main.chat_message_image_view.view.*
-import kotlinx.android.synthetic.main.outgoing_message_item.view.*
 
 abstract class ChatMessagesAdapter(
     private val chatType: Type
@@ -39,7 +40,7 @@ abstract class ChatMessagesAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatMessageViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when (viewType) {
-            ChatMessageItem.Type.OUTGOING.code -> OutgoingMessageViewHolder(inflater.inflate(R.layout.outgoing_message_item, parent, false))
+            ChatMessageItem.Type.OUTGOING.code -> OutgoingMessageViewHolder(ChatOutgoingMessageView(parent.context))
             else -> if (chatType == Type.GROUP) {
                 GroupIncomingMessageViewHolder(inflater.inflate(R.layout.group_incoming_message_item, parent, false))
             } else {
@@ -125,14 +126,8 @@ abstract class ChatMessagesAdapter(
 
     class OutgoingMessageViewHolder(view: View) : ChatMessageViewHolder(view) {
         override fun bind(messageItem: ChatMessageItem) {
-            itemView.outgoingMessageView.setMessageText(messageItem.text)
-            itemView.outgoingMessageImageView.setImage(messageItem)
-            itemView.outgoingMessageDateView.setDate(messageItem)
-
-            val isPending = messageItem.status == Status.PENDING
-            val background = if (isPending) R.drawable.group_message_input_background else R.drawable.private_outgoing_message_input_background
-            itemView.outgoingMessageImageProgressView.isVisible = isPending
-            itemView.outgoingMessageContainerView.background = itemView.context.getDrawable(background)
+            if (itemView !is ChatOutgoingMessageView) return
+            itemView.setContent(messageItem)
         }
     }
 

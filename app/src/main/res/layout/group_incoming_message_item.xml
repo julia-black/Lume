@@ -40,7 +40,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Author" />
 
-        <com.singlelab.lume.ui.chat.common.ChatMessageImageView
+        <com.singlelab.lume.ui.chat.common.view.ChatMessageImageView
             android:id="@+id/incomingMessageImageView"
             android:layout_width="200dp"
             android:layout_height="200dp"

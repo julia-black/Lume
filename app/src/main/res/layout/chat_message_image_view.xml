@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:layout_gravity="center"
-    tools:layout_height="200dp"
-    tools:layout_width="200dp">
+    tools:layout_gravity="center">
 
+    <!--Если менять размер вьюхи, то также нужно менять размер MESSAGE_TEXT_MAX_WIDTH-->
     <ImageView
         android:id="@+id/chatMessageImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,8 +19,8 @@
 
     <View
         android:id="@+id/chatMessageImageForegroundView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:background="@color/colorChatImageForeground"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/chatMessageImageView"
@@ -47,14 +46,14 @@
         android:id="@+id/chatMessageImageDateChip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/chat_date_chip"
         android:fontFamily="sans-serif-medium"
         android:letterSpacing="0.01"
         android:paddingStart="8dp"
         android:paddingTop="4dp"
         android:paddingEnd="10dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginEnd="4dp"
         android:paddingBottom="4dp"
         android:textColor="@color/white"
         android:textSize="12sp"
