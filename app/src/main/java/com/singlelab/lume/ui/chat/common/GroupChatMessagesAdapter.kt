@@ -2,12 +2,10 @@ package com.singlelab.lume.ui.chat.common
 
 import android.view.View
 import androidx.recyclerview.widget.DiffUtil
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.singlelab.lume.util.generateImageLink
-import kotlinx.android.synthetic.main.group_incoming_message_item.view.*
+import com.singlelab.lume.ui.chat.common.view.GroupChatIncomingMessageView
 
 class GroupChatMessagesAdapter : ChatMessagesAdapter(Type.GROUP) {
+
     override fun setMessages(newMessages: List<ChatMessageItem>) {
         val syncedMessages = newMessages.syncLast()
         val diffResult = DiffUtil.calculateDiff(GroupChatMessagesDiffCallback(messages, syncedMessages), false)
@@ -19,18 +17,8 @@ class GroupChatMessagesAdapter : ChatMessagesAdapter(Type.GROUP) {
     class GroupIncomingMessageViewHolder(view: View) : ChatMessageViewHolder(view) {
         override fun bind(messageItem: ChatMessageItem) {
             if (messageItem !is GroupChatMessageItem) return
-
-            itemView.incomingMessageView.setMessageText(messageItem.text)
-            itemView.incomingMessageImageView.setImage(messageItem)
-            itemView.incomingMessageDateView.setDate(messageItem)
-            itemView.incomingMessageAuthorView.text = messageItem.personName
-
-            if (messageItem.personPhoto.isNotEmpty()) {
-                Glide.with(itemView)
-                    .load(messageItem.personPhoto.generateImageLink())
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(itemView.incomingMessagePhotoView)
-            }
+            if (itemView !is GroupChatIncomingMessageView) return
+            itemView.setContent(messageItem)
         }
     }
 

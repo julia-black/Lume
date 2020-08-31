@@ -1,26 +1,15 @@
 package com.singlelab.lume.ui.chat.common
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.singlelab.lume.R
-import com.singlelab.lume.model.Const
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Status
 import com.singlelab.lume.ui.chat.common.GroupChatMessagesAdapter.GroupIncomingMessageViewHolder
 import com.singlelab.lume.ui.chat.common.PrivateChatMessagesAdapter.PrivateIncomingMessageViewHolder
-import com.singlelab.lume.ui.chat.common.view.ChatMessageImageView
 import com.singlelab.lume.ui.chat.common.view.ChatOutgoingMessageView
-import com.singlelab.lume.util.generateImageLink
-import com.singlelab.lume.util.parse
-import kotlinx.android.synthetic.main.chat_message_image_view.view.*
+import com.singlelab.lume.ui.chat.common.view.GroupChatIncomingMessageView
+import com.singlelab.lume.ui.chat.common.view.PrivateChatIncomingMessageView
 
 abstract class ChatMessagesAdapter(
     private val chatType: Type
@@ -37,15 +26,12 @@ abstract class ChatMessagesAdapter(
 
     override fun getItemCount() = messages.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatMessageViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        return when (viewType) {
-            ChatMessageItem.Type.OUTGOING.code -> OutgoingMessageViewHolder(ChatOutgoingMessageView(parent.context))
-            else -> if (chatType == Type.GROUP) {
-                GroupIncomingMessageViewHolder(inflater.inflate(R.layout.group_incoming_message_item, parent, false))
-            } else {
-                PrivateIncomingMessageViewHolder(inflater.inflate(R.layout.private_incoming_message_item, parent, false))
-            }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
+        ChatMessageItem.Type.OUTGOING.code -> OutgoingMessageViewHolder(ChatOutgoingMessageView(parent.context))
+        else -> if (chatType == Type.GROUP) {
+            GroupIncomingMessageViewHolder(GroupChatIncomingMessageView(parent.context))
+        } else {
+            PrivateIncomingMessageViewHolder(PrivateChatIncomingMessageView(parent.context))
         }
     }
 
@@ -81,47 +67,6 @@ abstract class ChatMessagesAdapter(
 
     abstract class ChatMessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         abstract fun bind(messageItem: ChatMessageItem)
-
-        protected fun TextView.setMessageText(message: String) {
-            val isTextNotEmpty = message.isNotEmpty()
-            isVisible = isTextNotEmpty
-            if (isTextNotEmpty) {
-                this.text = message
-            }
-        }
-
-        protected fun ChatMessageImageView.setImage(message: ChatMessageItem) {
-            val imagesCount = message.images.count { it.isNotEmpty() }
-            val hasImages = imagesCount > 0
-            isVisible = hasImages
-            if (imagesCount == 1 && message.text.isEmpty()) {
-                setMultipleImage(imagesCount)
-                setDateChip(true, message.date)
-                Glide.with(this)
-                    .load(message.images.first().generateImageLink())
-                    .transform(CenterCrop(), RoundedCorners(60))
-                    .into(chatMessageImageView)
-            } else if (hasImages) {
-                setDateChip(false)
-                setMultipleImage(imagesCount)
-                Glide.with(this)
-                    .load(message.images.first().generateImageLink())
-                    .transform(CenterCrop(), GranularRoundedCorners(60f, 60f, 0f, 0f))
-                    .into(chatMessageImageView)
-            }
-        }
-
-        protected fun TextView.setDate(message: ChatMessageItem) {
-            if (message.text.isNotEmpty()) {
-                val isDateNotEmpty = message.date.isNotEmpty()
-                if (isDateNotEmpty) {
-                    isVisible = isDateNotEmpty
-                    text = message.date.parse(Const.DATE_FORMAT_TIME_ZONE, "HH:mm")
-                }
-            } else {
-                isVisible = false
-            }
-        }
     }
 
     class OutgoingMessageViewHolder(view: View) : ChatMessageViewHolder(view) {

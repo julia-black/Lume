@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginEnd="30dp"
     android:background="@drawable/private_incoming_message_input_background"
-    android:backgroundTint="#D5DADA">
+    android:backgroundTint="#D5DADA"
+    android:padding="1dp"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <com.singlelab.lume.ui.chat.common.view.ChatMessageImageView
         android:id="@+id/incomingMessageImageView"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_goneMarginBottom="10dp"
@@ -23,17 +24,15 @@
 
     <TextView
         android:id="@+id/incomingMessageView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:paddingStart="10dp"
-        android:paddingTop="6dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:textSize="16sp"
-        app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/incomingMessageImageView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/incomingMessageImageView"
         app:layout_constraintTop_toBottomOf="@id/incomingMessageImageView"
         tools:text="Medium-Long Message"
         tools:visibility="visible" />
@@ -54,4 +53,4 @@
         tools:text="13:48"
         tools:visibility="visible" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</merge>
