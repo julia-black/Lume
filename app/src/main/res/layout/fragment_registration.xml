@@ -16,16 +16,26 @@
 
         <TextView
             android:id="@+id/text_welcome"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/suisse_regular"
+            android:fontFamily="@font/suisse_bold"
             android:paddingHorizontal="@dimen/margin_very_small"
             android:text="@string/welcome"
             android:textColor="@color/colorText"
             android:textSize="@dimen/text_size_medium"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="@dimen/margin_small"
+            android:src="@drawable/ic_hello"
+            app:layout_constraintBottom_toBottomOf="@id/text_welcome"
+            app:layout_constraintStart_toEndOf="@id/text_welcome"
+            app:layout_constraintTop_toTopOf="@id/text_welcome" />
 
         <TextView
             android:id="@+id/text_fill_form"

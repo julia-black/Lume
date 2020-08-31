@@ -13,6 +13,11 @@
     <string name="meizu_model">MEIZU</string>
 
     <!-- Auth -->
+    <string name="tutorial_text_1">Lume - море новых событий каждый день!</string>
+    <string name="tutorial_text_2">Заводи новых друзей!</string>
+    <string name="tutorial_text_3">Свайпай тусовки...</string>
+    <string name="tutorial_text_4">...или создай свою!</string>
+    <string name="tutorial_text_5">Собирай вещички и отправляйся к новым приключениям!</string>
     <string name="enter_phone">Введите номер телефона</string>
     <string name="send_code">Отправить код</string>
     <string name="continue_text">Продолжить</string>

@@ -43,7 +43,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/suisse_regular"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:textColor="@color/colorGray" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
@@ -51,20 +52,19 @@
         android:id="@+id/text_error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/margin_small"
+        android:layout_marginVertical="@dimen/margin_very_small"
         android:fontFamily="@font/suisse_regular"
         android:paddingHorizontal="@dimen/margin_very_small"
         android:textColor="@color/colorError"
         android:textSize="@dimen/text_size_small"
-        android:visibility="invisible"
-        tools:text="Ошибка"
-        tools:visibility="visible" />
+        android:visibility="gone"
+        tools:text="Ошибка" />
 
     <TextView
         android:id="@+id/text_warning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/margin_small"
+        android:layout_marginVertical="@dimen/margin_very_small"
         android:fontFamily="@font/suisse_regular"
         android:paddingHorizontal="@dimen/margin_very_small"
         android:textColor="@color/colorGray"

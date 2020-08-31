@@ -9,7 +9,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import androidx.core.view.isVisible
 import com.singlelab.lume.R
 import kotlinx.android.synthetic.main.view_input.view.*
 
@@ -48,7 +47,6 @@ class InputView @JvmOverloads constructor(
         text_input_edit_text.setLines(lines)
         if (lines > 1) {
             layout.background = resources.getDrawable(R.drawable.shape_big_input, context.theme)
-            icon_multiline.isVisible = true
         }
     }
 

@@ -8,10 +8,15 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayoutMediator
 import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnBackPressListener
+import com.singlelab.lume.model.tutorial.TutorialPage
+import com.singlelab.lume.ui.view.tutorial.TutorialAdapter
 import com.singlelab.lume.util.maskPhone
 import com.singlelab.lume.util.toShortPhone
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,6 +50,7 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
         setListeners()
         initViewCode()
         initViewPhone()
+        initTutorial()
     }
 
     private fun initViewPhone() {
@@ -57,6 +63,16 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
         layout_code.setMaxLines(1)
         layout_code.setMaxLength(6)
         layout_code.setInputType(InputType.TYPE_CLASS_NUMBER)
+    }
+
+    private fun initTutorial() {
+        val tutorialList = TutorialPage.values().toList()
+        view_pager_tutorial.apply {
+            adapter = TutorialAdapter(tutorialList)
+            orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+        }
+        TabLayoutMediator(tab_layout, view_pager_tutorial) { tab, position -> }.attach()
     }
 
     override fun showLoading(isShow: Boolean, withoutBackground: Boolean) {
@@ -109,8 +125,6 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
                     NotificationManagerCompat.from(it).areNotificationsEnabled()
                 )
             }
-        } else {
-            layout_phone.setError(getString(R.string.wrong_phone))
         }
     }
 

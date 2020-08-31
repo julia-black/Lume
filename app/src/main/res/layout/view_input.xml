@@ -49,17 +49,6 @@
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/icon_multiline"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:layout_margin="10dp"
-        android:src="@drawable/ic_multiline"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:visibility="visible" />
-
     <TextView
         android:id="@+id/text_error"
         android:layout_width="match_parent"
