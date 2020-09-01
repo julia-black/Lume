@@ -122,8 +122,6 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         city.text = profile.cityName
         if (!profile.imageContentUid.isNullOrEmpty()) {
             loadImage(profile.imageContentUid)
-        } else {
-            image.setImageDrawable(context?.getDrawable(R.drawable.ic_profile))
         }
         image.setOnClickListener {
             if (profile.imageContentUid == null) {

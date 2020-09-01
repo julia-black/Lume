@@ -72,9 +72,7 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             itemView.administrator.text =
                 itemView.context.getString(R.string.administrator, it.name)
 
-            if (it.imageContentUid == null) {
-                itemView.image_administrator.setImageResource(R.drawable.ic_profile)
-            } else {
+            if (it.imageContentUid != null) {
                 Glide.with(itemView.context)
                     .load(it.imageContentUid.generateImageLink())
                     .into(itemView.image_administrator)

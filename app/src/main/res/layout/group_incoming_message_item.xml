@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_marginVertical="@dimen/margin_small"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/margin_small">
 
     <ImageView
         android:id="@+id/incomingMessagePhotoView"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/colorGray" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/incomingMessageBackgroundView"
@@ -67,10 +67,10 @@
             android:paddingEnd="16dp"
             android:paddingBottom="4dp"
             android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@id/incomingMessageImageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/incomingMessageImageView"
             tools:text="Пfddf" />
 
         <TextView

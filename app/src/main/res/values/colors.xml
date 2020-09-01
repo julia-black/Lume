@@ -47,4 +47,7 @@
     <color name="colorError">#EF3E2E</color>
     <color name="colorWarning">#B298A0A8</color>
 
+    <color name="colorAcceptPerson">#1CAE81</color>
+    <color name="colorRejectPerson">#FF3F33</color>
+
 </resources>

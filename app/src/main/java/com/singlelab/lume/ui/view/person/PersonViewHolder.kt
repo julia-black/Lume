@@ -24,9 +24,14 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     ) {
         itemView.name.text = person.name
 
-        if (person.imageContentUid == null) {
-            itemView.image_person.setImageResource(R.drawable.ic_profile)
-        } else {
+        val age = itemView.context.resources.getQuantityString(
+            R.plurals.age_plurals,
+            person.age,
+            person.age
+        )
+        itemView.age_and_city.text = "$age, ${person.cityName}"
+
+        if (person.imageContentUid != null) {
             Glide.with(itemView)
                 .load(person.imageContentUid.generateImageLink())
                 .into(itemView.image_person)

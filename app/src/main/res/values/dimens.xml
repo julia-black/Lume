@@ -15,7 +15,7 @@
     <dimen name="size_image_person">72dp</dimen>
     <dimen name="size_image_chat">52dp</dimen>
     <dimen name="size_image_person_small">40dp</dimen>
-    <dimen name="size_image_add_to_friends">40dp</dimen>
+    <dimen name="size_image_add_to_friends">30dp</dimen>
     <dimen name="size_image_event">124dp</dimen>
     <dimen name="size_icon_button">52dp</dimen>
     <dimen name="width_tab">108dp</dimen>

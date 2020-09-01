@@ -56,8 +56,6 @@ class PersonFragment : BaseFragment(), PersonView {
             image.setOnClickListener {
                 showFullScreenImage(profile.imageContentUid)
             }
-        } else {
-            image.setImageDrawable(context?.getDrawable(R.drawable.ic_profile))
         }
         if (profile.isFriend) {
             button_add_to_friends.visibility = View.GONE

@@ -17,9 +17,7 @@ class PersonShortViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     fun bind(person: Person, listener: OnPersonShortClickListener?) {
         itemView.name.text = person.name
 
-        if (person.imageContentUid == null) {
-            itemView.image_person.setImageResource(R.drawable.ic_profile)
-        } else {
+        if (person.imageContentUid != null) {
             Glide.with(itemView)
                 .load(person.imageContentUid.generateImageLink())
                 .into(itemView.image_person)
