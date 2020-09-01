@@ -60,9 +60,9 @@
     <string name="not_permission_contacts">Вы запретили доступ к контактам</string>
 
     <!-- Feedback -->
-    <string name="give_feedback">Обратная связь</string>
-    <string name="title_feedback">Если вы столкнулись с проблемой, или просто хотите оставить отзыв - напишите нам и мы постараемся быстро всё поправить!</string>
-    <string name="hint_images_feedback">Вы можете добавить скриншот, чтобы нам было проще понять и исправить вашу проблему</string>
+    <string name="title_feedback">Обратная связь</string>
+    <string name="text_feedback">Если вы столкнулись с проблемой, или просто хотите оставить отзыв - напишите нам и мы постараемся быстро всё поправить!</string>
+    <string name="hint_images_feedback">Вы можете добавить скриншоты, чтобы нам было проще понять и исправить вашу проблему</string>
     <string name="hint_feedback">Проблема/отзыв</string>
     <string name="button_give_feedback">Отправить</string>
     <string name="feedback_send">Отзыв отправлен!</string>

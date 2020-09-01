@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
     android:layout_marginHorizontal="@dimen/margin_small"
     android:layout_marginTop="@dimen/margin_medium"
-    app:cardCornerRadius="2dp"
+    app:cardCornerRadius="15dp"
     app:cardElevation="0dp">
 
     <ImageView
         android:id="@+id/image_event"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/shape_border" />
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_image" />
 </androidx.cardview.widget.CardView>

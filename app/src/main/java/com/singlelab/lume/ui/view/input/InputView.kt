@@ -125,6 +125,10 @@ class InputView @JvmOverloads constructor(
         text_input_edit_text.isSingleLine = true
     }
 
+    fun setMultiLine() {
+        text_input_edit_text.isSingleLine = false
+    }
+
     fun requestEditTextFocus() {
         text_input_edit_text.isFocusableInTouchMode = true
         text_input_edit_text.requestFocus()

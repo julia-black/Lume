@@ -12,7 +12,7 @@
         android:drawablePadding="@dimen/margin_medium"
         android:paddingHorizontal="@dimen/margin_large"
         android:paddingVertical="@dimen/margin_medium"
-        android:text="@string/give_feedback"
+        android:text="@string/title_feedback"
         android:textColor="@color/colorText"
         android:textSize="@dimen/text_size_standart" />
 

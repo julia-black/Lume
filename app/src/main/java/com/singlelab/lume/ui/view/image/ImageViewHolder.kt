@@ -13,7 +13,7 @@ class ImageViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 
     fun bind(bitmap: Bitmap?, position: Int, listener: OnImageClickListener?) {
         if (bitmap == null) {
-            itemView.image_event.setImageResource(R.drawable.shape_border)
+            itemView.image_event.setImageResource(R.drawable.ic_image)
             itemView.setOnClickListener {
                 listener?.onClickNewImage()
             }

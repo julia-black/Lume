@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
@@ -103,11 +104,21 @@ class FeedbackFragment : BaseFragment(), FeedbackView, OnImageClickListener,
             adapter = ImageAdapter()
             (adapter as ImageAdapter).setClickListener(this@FeedbackFragment)
         }
+        layout_feedback.apply {
+            setHint(getString(R.string.hint_feedback))
+            setLines(5)
+            setImeAction(EditorInfo.IME_FLAG_NO_ENTER_ACTION)
+            setMultiLine()
+            setMaxLines(5)
+        }
     }
 
     private fun setListener() {
+        button_back.setOnClickListener {
+            findNavController().popBackStack()
+        }
         button_give_feedback.setOnClickListener {
-            val text = feedback.text.toString()
+            val text = layout_feedback.getText()
             if (text.isEmpty()) {
                 showSnackbar(getString(R.string.enter_fields), ToastType.ERROR)
             } else {
