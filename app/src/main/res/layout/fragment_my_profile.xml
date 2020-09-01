@@ -35,6 +35,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/button_edit_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintBottom_toBottomOf="@id/title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/title" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/card_image"
             android:layout_width="100dp"
@@ -197,95 +207,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tab_layout"
             app:layout_constraintVertical_weight="20" />
-        <!--    <TextView-->
-        <!--        android:id="@+id/text_tab_one"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:layout_gravity="center_horizontal"-->
-        <!--        android:layout_marginHorizontal="@dimen/margin_medium"-->
-        <!--        android:background="@drawable/shape_card"-->
-        <!--        android:gravity="center_horizontal"-->
-        <!--        android:minWidth="@dimen/width_tab"-->
-        <!--        android:padding="14dp"-->
-        <!--        android:text="@string/tab_frineds"-->
-        <!--        android:textColor="@color/colorPrimaryDark"-->
-        <!--        android:textSize="14sp"-->
-        <!--        app:layout_constraintBottom_toTopOf="@id/card_content"-->
-        <!--        app:layout_constraintStart_toStartOf="parent"-->
-        <!--        app:layout_constraintTop_toBottomOf="@id/divider_three"-->
-        <!--        app:layout_constraintVertical_bias="1.0" />-->
 
-        <!--    <TextView-->
-        <!--        android:id="@+id/text_tab_two"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:layout_gravity="center_horizontal"-->
-        <!--        android:layout_marginBottom="6dp"-->
-        <!--        android:background="@drawable/shape_card"-->
-        <!--        android:backgroundTint="@color/colorPrimary"-->
-        <!--        android:gravity="center_horizontal"-->
-        <!--        android:minWidth="@dimen/width_tab"-->
-        <!--        android:padding="14dp"-->
-        <!--        android:paddingBottom="25dp"-->
-        <!--        android:text="@string/tab_badges"-->
-        <!--        android:textColor="@color/colorWhite"-->
-        <!--        android:textSize="14sp"-->
-        <!--        app:layout_constraintEnd_toStartOf="@id/text_tab_three"-->
-        <!--        app:layout_constraintStart_toEndOf="@id/text_tab_one"-->
-        <!--        app:layout_constraintTop_toTopOf="@id/text_tab_one" />-->
-
-        <!--    <ImageView-->
-        <!--        android:id="@+id/notification_badges"-->
-        <!--        android:layout_width="8dp"-->
-        <!--        android:layout_height="8dp"-->
-        <!--        android:layout_marginStart="50dp"-->
-        <!--        android:layout_marginTop="@dimen/margin_small"-->
-        <!--        android:layout_marginEnd="@dimen/margin_small"-->
-        <!--        android:src="@drawable/shape_circle"-->
-        <!--        android:visibility="gone"-->
-        <!--        app:layout_constraintEnd_toEndOf="@id/text_tab_two"-->
-        <!--        app:layout_constraintTop_toTopOf="@id/text_tab_two"-->
-        <!--        tools:visibility="visible" />-->
-
-        <!--    <TextView-->
-        <!--        android:id="@+id/text_tab_three"-->
-        <!--        android:layout_width="wrap_content"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:layout_gravity="center_horizontal"-->
-        <!--        android:layout_marginHorizontal="@dimen/margin_medium"-->
-        <!--        android:layout_marginBottom="6dp"-->
-        <!--        android:background="@drawable/shape_card"-->
-        <!--        android:backgroundTint="@color/colorPrimary"-->
-        <!--        android:gravity="center_horizontal"-->
-        <!--        android:lines="1"-->
-        <!--        android:minWidth="@dimen/width_tab"-->
-        <!--        android:padding="14dp"-->
-        <!--        android:text="@string/tab_settings"-->
-        <!--        android:textColor="@color/colorWhite"-->
-        <!--        android:textSize="14sp"-->
-        <!--        app:layout_constraintEnd_toEndOf="parent"-->
-        <!--        app:layout_constraintTop_toTopOf="@id/text_tab_one" />-->
-
-        <!--    <LinearLayout-->
-        <!--        android:id="@+id/card_content"-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="0dp"-->
-        <!--        android:background="@drawable/shape_card"-->
-        <!--        android:minHeight="250dp"-->
-        <!--        android:orientation="vertical"-->
-        <!--        android:paddingBottom="40dp"-->
-        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--        app:layout_constraintEnd_toEndOf="parent"-->
-        <!--        app:layout_constraintStart_toStartOf="parent"-->
-        <!--        app:layout_constraintTop_toBottomOf="@id/tab_layout"-->
-        <!--        app:layout_constraintVertical_weight="1" />-->
-
-        <!--    <FrameLayout-->
-        <!--        android:id="@+id/frame_container"-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="match_parent"-->
-        <!--        android:layout_marginTop="@dimen/margin_large"-->
-        <!--        android:background="@drawable/shape_card"-->
-        <!--        android:visibility="gone" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

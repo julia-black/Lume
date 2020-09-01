@@ -63,7 +63,7 @@ class InputView @JvmOverloads constructor(
 
     fun getText() = text_input_edit_text.text.toString()
 
-    fun setText(text: String) {
+    fun setText(text: String?) {
         text_input_edit_text.setText(text)
     }
 
@@ -83,6 +83,10 @@ class InputView @JvmOverloads constructor(
         text_input_edit_text.imeOptions = imeAction
     }
 
+    fun addTextChangedListener(watcher: TextWatcher) {
+        text_input_edit_text.addTextChangedListener(watcher)
+    }
+
     fun setDigits(digits: String) {
         val regex = Regex("[^$digits]")
         var newStr = ""
@@ -94,7 +98,6 @@ class InputView @JvmOverloads constructor(
                 count: Int,
                 after: Int
             ) {
-                // Do nothing
             }
 
             override fun onTextChanged(
@@ -114,7 +117,6 @@ class InputView @JvmOverloads constructor(
             }
 
             override fun afterTextChanged(s: Editable) {
-                // Do nothing
             }
         })
     }

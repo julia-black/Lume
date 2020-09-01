@@ -2,10 +2,12 @@ package com.singlelab.lume.ui.edit_profile
 
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.singlelab.lume.R
@@ -48,12 +50,63 @@ class EditProfileFragment : BaseFragment(), EditProfileView {
         setListeners()
     }
 
+    private fun initInputViews() {
+        login.apply {
+            setHint(getString(R.string.login))
+            setWarning(getString(R.string.login_hint))
+            setImeAction(EditorInfo.IME_ACTION_NEXT)
+            setOnEditorListener {
+                if (it == EditorInfo.IME_ACTION_NEXT) {
+                    runOnMainThread {
+                        this@EditProfileFragment.view?.clearFocus()
+                        name.requestEditTextFocus()
+                    }
+                }
+                return@setOnEditorListener false
+            }
+            setSingleLine()
+            setMaxLength(25)
+            setDigits(getString(R.string.login_digits))
+        }
+        name.apply {
+            setHint(getString(R.string.name))
+            setImeAction(EditorInfo.IME_ACTION_NEXT)
+            setOnEditorListener {
+                if (it == EditorInfo.IME_ACTION_NEXT) {
+                    runOnMainThread {
+                        this@EditProfileFragment.view?.clearFocus()
+                        age.requestEditTextFocus()
+                    }
+                }
+                return@setOnEditorListener false
+            }
+            setSingleLine()
+            setMaxLength(25)
+            setWarning(getString(R.string.max_length, 25))
+        }
+        age.apply {
+            setHint(getString(R.string.age))
+            setMaxLength(2)
+            setInputType(InputType.TYPE_CLASS_NUMBER)
+            setImeAction(EditorInfo.IME_ACTION_DONE)
+        }
+        description.apply {
+            setHint(getString(R.string.about_yourself))
+            setLines(5)
+            disableLineBreaks()
+            setMaxLines(5)
+            setMaxLength(128)
+            setWarning(getString(R.string.max_length, 128))
+        }
+    }
+
     override fun showProfile(profile: NewProfile) {
         login.setText(profile.login)
         name.setText(profile.name)
         age.setText(profile.age.toString())
         text_city.text = profile.city?.cityName
         description.setText(profile.description)
+        initInputViews()
     }
 
     override fun onCompleteUpdate() {
@@ -115,6 +168,9 @@ class EditProfileFragment : BaseFragment(), EditProfileView {
 
         text_city.setOnClickListener {
             toChooseCity()
+        }
+        button_back.setOnClickListener {
+            findNavController().popBackStack()
         }
         button_update.setOnClickListener {
             presenter.updateProfile()

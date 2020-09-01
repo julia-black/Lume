@@ -130,6 +130,13 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
                 onClickImage(profile.imageContentUid)
             }
         }
+        button_edit_profile.setOnClickListener {
+            presenter.profile?.let {
+                findNavController().navigate(
+                    MyProfileFragmentDirections.actionMyProfileToEditProfile(it)
+                )
+            }
+        }
     }
 
     override fun onLoadedFriends(friends: List<Person>?) {
@@ -179,12 +186,6 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
 
     override fun onPersonClick(personUid: String) {
         findNavController().navigate(MyProfileFragmentDirections.actionMyProfileToPerson(personUid))
-    }
-
-    override fun onPersonInfoClick() {
-        presenter.profile?.let {
-            findNavController().navigate(MyProfileFragmentDirections.actionMyProfileToEditProfile(it))
-        }
     }
 
     override fun onFeedbackClick() {
