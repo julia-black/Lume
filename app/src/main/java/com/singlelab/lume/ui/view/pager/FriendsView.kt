@@ -1,10 +1,14 @@
 package com.singlelab.lume.ui.view.pager
 
 import android.content.Context
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.singlelab.lume.R
 import com.singlelab.lume.model.profile.Person
@@ -16,7 +20,7 @@ import kotlinx.android.synthetic.main.view_friends.view.*
 
 class FriendsView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
+) : LinearLayout(context, attrs, defStyleAttr), PagerTabView {
 
     private var clickListener: OnFriendsClickListener? = null
 
@@ -30,6 +34,10 @@ class FriendsView @JvmOverloads constructor(
         LayoutInflater.from(context).inflate(R.layout.view_friends, this, true)
     }
 
+    override fun getTitle() = context.getString(R.string.tab_friends)
+
+    override fun getView() = this
+
     fun setFriendsListener(
         listener: OnFriendsClickListener,
         personClickListener: OnPersonShortClickListener
@@ -39,21 +47,33 @@ class FriendsView @JvmOverloads constructor(
         search_friends.setOnClickListener {
             clickListener?.onSearchFriendsClick()
         }
+        show_all.setOnClickListener {
+            clickListener?.onSearchFriendsClick()
+        }
     }
 
     fun setFriends(friends: List<Person>?) {
+        search_friends.visibility = View.VISIBLE
         this.friends.clear()
         this.newFriends.clear()
         friends?.forEach {
             if (it.friendshipApprovalRequired) {
                 this.newFriends.add(it)
             } else {
-                this.friends.add(it)
+                if (this.friends.size < 4) {
+                    this.friends.add(it)
+                }
             }
         }
         if (this.friends.isNullOrEmpty()) {
             recycler_friends.visibility = View.GONE
             title_empty_friends.visibility = View.VISIBLE
+            if (newFriends.isNullOrEmpty()) {
+                show_all.visibility = View.GONE
+            } else {
+                show_all.visibility = View.VISIBLE
+                show_all.text = context.getString(R.string.new_friends, newFriends.size)
+            }
         } else {
             title_empty_friends.visibility = View.GONE
             recycler_friends.visibility = View.VISIBLE
@@ -62,16 +82,20 @@ class FriendsView @JvmOverloads constructor(
                 visibility = View.VISIBLE
                 adapter = PersonShortAdapter(this@FriendsView.friends, personClickListener)
             }
-        }
-        val newFriendsSize = newFriends.size
-        if (newFriendsSize > 0) {
-            new_friends.visibility = View.VISIBLE
-            new_friends.text = context.getString(R.string.title_new_friends, newFriendsSize)
-            new_friends.setOnClickListener {
-                clickListener?.onNewFriendsClick()
+            val showAllText = context.getString(R.string.show_all, friends?.size)
+            if (newFriends.isNullOrEmpty()) {
+                show_all.text = showAllText
+            } else {
+                val text = "$showAllText +${newFriends.size}"
+                val spannable = SpannableString(text)
+                spannable.setSpan(
+                    ForegroundColorSpan(ContextCompat.getColor(context, R.color.colorNotification)),
+                    showAllText.length + 1, text.length,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                show_all.text = spannable
             }
-        } else {
-            new_friends.visibility = View.GONE
+            show_all.visibility = View.VISIBLE
         }
     }
 }

@@ -10,21 +10,20 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.custom.sliderimage.logic.SliderImage
+import com.google.android.material.tabs.TabLayoutMediator
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.model.profile.Badge
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.model.profile.Profile
-import com.singlelab.lume.model.view.PagerTab
-import com.singlelab.lume.ui.view.pager.BadgesView
-import com.singlelab.lume.ui.view.pager.FriendsView
-import com.singlelab.lume.ui.view.pager.SettingsView
+import com.singlelab.lume.ui.view.pager.*
 import com.singlelab.lume.ui.view.pager.listener.OnFriendsClickListener
 import com.singlelab.lume.ui.view.pager.listener.OnSettingsClickListener
 import com.singlelab.lume.ui.view.person_short.OnPersonShortClickListener
@@ -77,7 +76,15 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<ImageView>(R.id.image)
             .setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_my_profile_to_auth))
+        if (AuthData.isAnon) {
+            navigateToAuth()
+        } else {
+            initViewPager()
+            presenter.loadProfile(presenter.profile == null)
+        }
+    }
 
+    private fun initViewPager() {
         context?.let {
             friendsView = FriendsView(it)
             friendsView.setFriendsListener(this, this)
@@ -87,18 +94,30 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
             settingsView = SettingsView(it)
             settingsView.setSettingsListener(this)
         }
-
-        if (AuthData.isAnon) {
-            navigateToAuth()
-        } else {
-            presenter.loadProfile(presenter.profile == null)
+        val views = mutableListOf<PagerTabView>(friendsView, badgesView, settingsView)
+        view_pager.apply {
+            adapter = PagerAdapter(views)
+            orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         }
+        TabLayoutMediator(tab_layout, view_pager) { tab, position ->
+            tab.text = views[position].getTitle()
+            view_pager.setCurrentItem(tab.position, true)
+        }.attach()
+        view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                if (position == 1) {
+                    badgesView.showLoading(true)
+                    presenter.loadBadges()
+                }
+            }
+        })
     }
 
     override fun showProfile(profile: Profile) {
-        name.text = profile.name
+        val age = resources.getQuantityString(R.plurals.age_plurals, profile.age, profile.age)
+        name.text = "${profile.name}, $age"
         login.text = "@${profile.login}"
-        age.text = resources.getQuantityString(R.plurals.age_plurals, profile.age, profile.age)
         description.text = profile.description
         city.text = profile.cityName
         if (!profile.imageContentUid.isNullOrEmpty()) {
@@ -113,20 +132,26 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
                 onClickImage(profile.imageContentUid)
             }
         }
-        selectTab(presenter.selectedTab)
-        setTabListeners()
     }
 
     override fun onLoadedFriends(friends: List<Person>?) {
         friendsView.setFriends(friends)
+        (view_pager.adapter as PagerAdapter).updateFriendsView(friendsView)
     }
 
     override fun onLoadedBadges(badges: List<Badge>) {
         badgesView.setBadges(badges)
+        (view_pager.adapter as PagerAdapter).updateBadgesView(badgesView)
     }
 
     override fun showNewBadge(hasNewBadges: Boolean) {
-        notification_badges.isVisible = hasNewBadges
+        if (hasNewBadges) {
+            val badge = tab_layout.getTabAt(1)?.orCreateBadge
+            badge?.backgroundColor =
+                ContextCompat.getColor(requireContext(), R.color.colorNotification)
+        } else {
+            tab_layout.getTabAt(1)?.removeBadge()
+        }
     }
 
     override fun navigateToAuth() {
@@ -208,114 +233,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         findNavController().navigate(action)
     }
 
-    private fun selectTab(tab: PagerTab) {
-        presenter.selectedTab = tab
-        when (tab) {
-            PagerTab.FRIENDS -> {
-                showFriends()
-            }
-            PagerTab.BADGES -> {
-                showBadges()
-            }
-            PagerTab.SETTINGS -> {
-                showSettings()
-            }
-        }
-    }
-
-    private fun setTabListeners() {
-        text_tab_one.setOnClickListener {
-            selectTab(PagerTab.FRIENDS)
-        }
-        text_tab_two.setOnClickListener {
-            selectTab(PagerTab.BADGES)
-        }
-        text_tab_three.setOnClickListener {
-            selectTab(PagerTab.SETTINGS)
-        }
-    }
-
-    private fun showFriends() {
-        context?.let {
-            text_tab_one.backgroundTintList =
-                ContextCompat.getColorStateList(it, R.color.colorWhite)
-            text_tab_one.setTextColor(ContextCompat.getColor(it, R.color.colorPrimaryDark))
-
-            text_tab_two.backgroundTintList =
-                ContextCompat.getColorStateList(it, R.color.colorPrimary)
-            text_tab_two.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
-
-            text_tab_three.backgroundTintList =
-                ContextCompat.getColorStateList(it, R.color.colorPrimary)
-            text_tab_three.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
-        }
-
-        card_content.removeAllViews()
-        card_content.addView(
-            friendsView,
-            0,
-            ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        )
-    }
-
-    private fun showBadges() {
-        context?.let {
-            text_tab_one.backgroundTintList =
-                ContextCompat.getColorStateList(it, R.color.colorPrimary)
-            text_tab_one.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
-
-            text_tab_two.backgroundTintList =
-                ContextCompat.getColorStateList(it, R.color.colorWhite)
-            text_tab_two.setTextColor(ContextCompat.getColor(it, R.color.colorPrimaryDark))
-
-            text_tab_three.backgroundTintList =
-                ContextCompat.getColorStateList(it, R.color.colorPrimary)
-            text_tab_three.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
-        }
-        card_content.removeAllViews()
-        card_content.addView(
-            badgesView,
-            0,
-            ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        )
-        badgesView.showLoading(true)
-        presenter.loadBadges()
-    }
-
-    private fun showSettings() {
-        context?.let {
-            text_tab_one.backgroundTintList =
-                ContextCompat.getColorStateList(it, R.color.colorPrimary)
-            text_tab_one.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
-
-            text_tab_two.backgroundTintList =
-                ContextCompat.getColorStateList(it, R.color.colorPrimary)
-            text_tab_two.setTextColor(ContextCompat.getColor(it, R.color.colorWhite))
-
-            text_tab_three.backgroundTintList =
-                ContextCompat.getColorStateList(it, R.color.colorWhite)
-            text_tab_three.setTextColor(ContextCompat.getColor(it, R.color.colorPrimaryDark))
-        }
-
-        card_content.removeAllViews()
-        card_content.addView(
-            settingsView,
-            0,
-            ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        )
-    }
-
     fun onBackPressed() {
-        frame_container.visibility = View.GONE
         callbackBackPressed.remove()
     }
 }

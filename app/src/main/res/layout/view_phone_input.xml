@@ -20,7 +20,6 @@
             android:layout_height="wrap_content"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:fontFamily="@font/suisse_regular"
             android:hint=""
             android:paddingHorizontal="10dp"
             app:boxBackgroundColor="@color/colorTransparent"
@@ -42,7 +41,6 @@
                 android:id="@+id/edit_text_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/suisse_regular"
                 android:maxLines="1"
                 android:textColor="@color/colorGray" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -53,7 +51,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/margin_very_small"
-        android:fontFamily="@font/suisse_regular"
         android:paddingHorizontal="@dimen/margin_very_small"
         android:textColor="@color/colorError"
         android:textSize="@dimen/text_size_small"
@@ -65,7 +62,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/margin_very_small"
-        android:fontFamily="@font/suisse_regular"
         android:paddingHorizontal="@dimen/margin_very_small"
         android:textColor="@color/colorGray"
         android:textSize="@dimen/text_size_small"

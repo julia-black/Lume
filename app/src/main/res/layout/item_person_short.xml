@@ -4,33 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="@dimen/margin_medium"
-    android:paddingVertical="@dimen/margin_very_small">
+    android:paddingHorizontal="@dimen/margin_medium">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_image"
         android:layout_width="@dimen/size_image_person_short"
         android:layout_height="@dimen/size_image_person_short"
-        app:cardCornerRadius="28dp"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginVertical="@dimen/margin_small"
+        app:cardCornerRadius="10dp"
         app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:cardBackgroundColor="@color/colorGray">
 
         <ImageView
             android:id="@+id/image_person"
             android:layout_width="@dimen/size_image_person_short"
-            android:layout_height="@dimen/size_image_person_short"
-            android:src="@drawable/ic_profile" />
+            android:layout_height="@dimen/size_image_person_short" />
     </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
-        app:layout_constraintBottom_toBottomOf="@id/card_image"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/text_size_standart"
+        app:layout_constraintBottom_toTopOf="@id/age_and_city"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/card_image"
         app:layout_constraintTop_toTopOf="@id/card_image"
-        tools:text="Иван Иванов" />
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="Иван" />
+
+    <TextView
+        android:id="@+id/age_and_city"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:textColor="@color/colorGrayMedium"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="@id/card_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/card_image"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="27 лет, Москва" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

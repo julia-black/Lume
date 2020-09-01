@@ -7,7 +7,9 @@ import com.bumptech.glide.Glide
 import com.singlelab.lume.R
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.util.generateImageLink
-import kotlinx.android.synthetic.main.item_person.view.*
+import kotlinx.android.synthetic.main.item_person.view.image_person
+import kotlinx.android.synthetic.main.item_person.view.name
+import kotlinx.android.synthetic.main.item_person_short.view.*
 
 class PersonShortViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.item_person_short, parent, false)) {
@@ -25,5 +27,11 @@ class PersonShortViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         itemView.setOnClickListener {
             listener?.onPersonClick(person.personUid)
         }
+        val age = itemView.context.resources.getQuantityString(
+            R.plurals.age_plurals,
+            person.age,
+            person.age
+        )
+        itemView.age_and_city.text = "$age, ${person.cityName}"
     }
 }

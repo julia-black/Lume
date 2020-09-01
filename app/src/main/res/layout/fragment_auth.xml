@@ -81,7 +81,6 @@
             android:layout_marginTop="@dimen/margin_medium"
             android:drawableStart="@drawable/ic_back"
             android:drawablePadding="@dimen/margin_small"
-            android:fontFamily="@font/suisse_regular"
             android:gravity="center"
             android:text="@string/back"
             android:textSize="@dimen/text_size_standart"

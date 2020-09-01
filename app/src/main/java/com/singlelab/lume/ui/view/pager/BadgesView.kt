@@ -15,13 +15,17 @@ import kotlinx.android.synthetic.main.view_badges.view.*
 
 class BadgesView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
+) : LinearLayout(context, attrs, defStyleAttr), PagerTabView {
 
     private val badges: MutableList<Badge> = mutableListOf()
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_badges, this, true)
     }
+
+    override fun getTitle() = context.getString(R.string.tab_badges)
+
+    override fun getView() = this
 
     fun setBadges(badges: List<Badge>) {
         this.badges.clear()

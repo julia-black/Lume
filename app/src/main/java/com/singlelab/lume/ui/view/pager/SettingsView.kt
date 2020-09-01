@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.view_settings.view.*
 
 class SettingsView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
+) : LinearLayout(context, attrs, defStyleAttr), PagerTabView {
 
     private var settingsClickListener: OnSettingsClickListener? = null
 
@@ -19,11 +19,15 @@ class SettingsView @JvmOverloads constructor(
         LayoutInflater.from(context).inflate(R.layout.view_settings, this, true)
     }
 
+    override fun getTitle() = context.getString(R.string.tab_settings)
+
+    override fun getView() = this
+
     fun setSettingsListener(listener: OnSettingsClickListener) {
         this.settingsClickListener = listener
-        person_info.setOnClickListener {
-            settingsClickListener?.onPersonInfoClick()
-        }
+//        person_info.setOnClickListener {
+//            settingsClickListener?.onPersonInfoClick()
+//        }
         feedback.setOnClickListener {
             settingsClickListener?.onFeedbackClick()
         }

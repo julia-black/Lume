@@ -20,7 +20,7 @@
     <dimen name="size_icon_button">52dp</dimen>
     <dimen name="width_tab">108dp</dimen>
     <dimen name="height_tab">56dp</dimen>
-    <dimen name="size_image_person_short">56dp</dimen>
+    <dimen name="size_image_person_short">48dp</dimen>
     <dimen name="margin_very_large">72dp</dimen>
     <dimen name="page_margin">20dp</dimen>
     <dimen name="page_offset">40dp</dimen>
@@ -31,7 +31,8 @@
     <dimen name="size_card_emoji">50dp</dimen>
     <dimen name="size_emoji_event">25dp</dimen>
     <dimen name="text_size_very_small">8sp</dimen>
-    <dimen name="size_image_badge">48dp</dimen>
+    <dimen name="size_image_badge">40dp</dimen>
     <dimen name="padding_bottom_nav">60dp</dimen>
     <dimen name="height_input">58dp</dimen>
+    <dimen name="margin_top_title">26dp</dimen>
 </resources>

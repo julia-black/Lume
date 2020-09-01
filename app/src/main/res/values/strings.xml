@@ -43,15 +43,16 @@
     <string name="back">Вернуться</string>
 
     <!-- My Profile -->
-    <string name="tab_frineds">Друзья</string>
-    <string name="tab_bages">Бейджи</string>
+    <string name="tab_friends">Друзья</string>
+    <string name="tab_badges">Бейджи</string>
     <string name="tab_settings">Настройки</string>
     <string name="person_info">Редактировать профиль</string>
     <string name="exit">Выход</string>
     <string name="update_profile">Обновить профиль</string>
     <string name="show_image">Открыть изображение</string>
     <string name="change_image">Выбрать изображение</string>
-    <string name="title_new_friends">Новые друзья (%1$d)</string>
+    <string name="show_all">Показать всех (%1$d)</string>
+    <string name="new_friends">Заявки в друзья (%1$d)</string>
     <string name="import_contacts">Импорт контактов</string>
     <string name="empty_persons_from_contacts">Пользователей из контактов не найдено</string>
     <string name="not_permission_contacts">Вы запретили доступ к контактам</string>

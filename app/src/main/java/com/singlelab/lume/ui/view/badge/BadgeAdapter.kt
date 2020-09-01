@@ -18,7 +18,7 @@ class BadgeAdapter(private val list: List<Badge>) : RecyclerView.Adapter<BadgeVi
 
     override fun onBindViewHolder(holder: BadgeViewHolder, position: Int) {
         val badge = list[position]
-        holder.bind(badge)
+        holder.bind(badge, position == 0, position == list.size - 1)
     }
 
     override fun getItemCount(): Int = list.size
