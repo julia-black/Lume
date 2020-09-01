@@ -147,13 +147,15 @@
     <!-- Chats -->
     <string name="chats_title">Чаты</string>
     <string name="chats_last_message_author">Вы: %1$s</string>
-    <string name="empty_chats">У вас пока нет активных чатов</string>
+    <string name="chats_empty_rooms">У вас пока нет активных чатов</string>
+    <string name="chats_last_message_image">Изображение</string>
 
     <!-- Chat -->
     <string name="chat_title">Чат</string>
     <string name="chat_message_hint">Сообщение</string>
     <string name="chat_select_images_limit">Выберите не больше %1$d фотографий</string>
-    <string name="empty_chat">Чат пока пуст. Напишите первое собщение!</string>
+    <string name="chat_empty_messages">Чат пока пуст. Напишите первое собщение!</string>
+    <string name="chat_message_images_count">+ %1$d</string>
 
     <!-- City -->
     <string name="city">Город</string>
