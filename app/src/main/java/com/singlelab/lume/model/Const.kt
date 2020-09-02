@@ -12,6 +12,7 @@ object Const {
 
     const val DATE_FORMAT_TIME_ZONE = "yyyy-MM-dd'T'HH:mm:ss.SSS"
     const val DATE_FORMAT_OUTPUT = "dd.MM.yyyy HH:mm"
+    const val DATE_FORMAT_ON_CARD = "dd MMMM, HH:mm"
     const val DATE_FORMAT_ISO = "yyyy-MM-dd"
     const val DATE_FORMAT_SIMPLE = "dd MMMM yyyy"
     const val DATE_FORMAT_ONLY_TIME = "HH:mm"

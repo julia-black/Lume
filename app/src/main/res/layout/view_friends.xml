@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="360dp"
+    android:minHeight="@dimen/pager_min_height"
     android:paddingTop="@dimen/margin_small">
 
     <TextView
@@ -45,6 +45,7 @@
         android:layout_marginTop="@dimen/margin_small"
         android:orientation="vertical"
         android:overScrollMode="never"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/search_friends"
         tools:itemCount="4"
         tools:listitem="@layout/item_person_short" />
@@ -61,16 +62,15 @@
         android:textSize="@dimen/text_size_standart"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recycler_friends"
         tools:visibility="visible" />
 
     <FrameLayout
         android:id="@+id/loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ProgressBar
             android:layout_width="wrap_content"

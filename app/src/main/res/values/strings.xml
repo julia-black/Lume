@@ -91,7 +91,7 @@
     <string name="enter_fields">Заполните обязательные поля</string>
     <string name="party">Вечеринка</string>
     <string name="booze">Пьянка</string>
-    <string name="administrator">%1$s (Организатор)</string>
+    <string name="administrator">Организатор</string>
     <string name="age_from_to">Возраст: %1$d-%2$d</string>
     <string name="age_from">Возраст: %1$d+</string>
     <string name="age_to">Возраст: до %1$d</string>

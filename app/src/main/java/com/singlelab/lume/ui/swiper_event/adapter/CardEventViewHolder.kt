@@ -26,7 +26,7 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         itemView.title.text = event.name
         itemView.description.text = event.description
         itemView.start_date.text =
-            event.startTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
+            event.startTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_ON_CARD)
 
         if (event.eventPrimaryImageContentUid != null) {
             event.eventPrimaryImageContentUid.let {
@@ -52,39 +52,19 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
                 }
             }
         }
-        if (event.minAge == null && event.maxAge == null) {
-            itemView.age.visibility = View.GONE
-        } else if (event.maxAge == null) {
-            itemView.age.visibility = View.VISIBLE
-            itemView.age.text = itemView.context.getString(R.string.age_from, event.minAge)
-        } else if (event.minAge == null) {
-            itemView.age.visibility = View.VISIBLE
-            itemView.age.text = itemView.context.getString(R.string.age_to, event.maxAge)
-        } else {
-            itemView.age.visibility = View.VISIBLE
-            itemView.age.text = itemView.context.getString(
-                R.string.age_from_to,
-                event.minAge,
-                event.maxAge
-            )
-        }
         event.administrator?.let {
-            itemView.administrator.text =
-                itemView.context.getString(R.string.administrator, it.name)
-
             if (it.imageContentUid != null) {
                 Glide.with(itemView.context)
                     .load(it.imageContentUid.generateImageLink())
                     .into(itemView.image_administrator)
             }
+            itemView.administrator_name.text = it.name
         }
 
         if (event.isOnline) {
-            itemView.text_location.visibility = View.INVISIBLE
-            itemView.text_online.visibility = View.VISIBLE
+            itemView.text_location.text = itemView.context.getString(R.string.online)
+            itemView.icon_location.setImageResource(R.drawable.ic_online)
         } else {
-            itemView.text_online.visibility = View.INVISIBLE
-            itemView.text_location.visibility = View.VISIBLE
             itemView.text_location.text = getLocationName(event.xCoordinate, event.yCoordinate)
                 ?: itemView.context.getString(R.string.unavailable_location_short)
             if (event.xCoordinate != null && event.yCoordinate != null) {

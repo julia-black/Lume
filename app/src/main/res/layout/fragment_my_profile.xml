@@ -65,7 +65,7 @@
                 android:id="@+id/card_image_inside"
                 android:layout_width="92dp"
                 android:layout_height="92dp"
-                android:layout_margin="@dimen/margin_very_small"
+                android:layout_margin="4dp"
                 app:cardCornerRadius="24dp"
                 app:cardElevation="0dp"
                 tools:cardBackgroundColor="@color/colorGray">

@@ -4,20 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackgroundEvent"
-    android:paddingHorizontal="@dimen/margin_very_small"
-    android:paddingTop="12dp"
-    android:paddingBottom="@dimen/margin_very_small">
+    android:background="@color/colorBackground"
+    android:paddingHorizontal="@dimen/margin_small"
+    android:paddingBottom="25dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="@dimen/margin_large"
         android:layout_marginTop="@dimen/margin_large"
-        android:layout_marginBottom="@dimen/margin_very_large"
+        android:layout_marginBottom="@dimen/margin_bottom_card_filter"
         app:cardBackgroundColor="@android:color/white"
         app:cardCornerRadius="@dimen/radius_large"
-        app:cardElevation="0dp"
+        app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -168,16 +167,19 @@
         android:id="@+id/button_apply"
         android:layout_width="@dimen/size_filter_button"
         android:layout_height="@dimen/size_filter_button"
-        android:layout_marginBottom="43dp"
-        app:cardBackgroundColor="@color/colorAccent"
+        android:layout_marginEnd="@dimen/margin_end_filter_in_filter"
+        android:layout_marginBottom="@dimen/margin_bottom_filter"
+        app:cardBackgroundColor="@color/colorPrimaryAccent"
         app:cardCornerRadius="25dp"
+        app:cardElevation="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/size_filter_icon"
+            android:layout_height="@dimen/size_filter_icon"
             android:layout_gravity="center"
             android:src="@drawable/ic_accept"
             android:tint="@color/white" />
