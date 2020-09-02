@@ -12,5 +12,7 @@ data class Chat(
     val image: String,
     val lastMessage: String,
     val lastMessagePersonUid: String,
+    val lastMessagePersonName: String,
+    val isLastMessageImage: Boolean,
     val unreadMessagesCount: Int = 0
 )

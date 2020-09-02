@@ -39,6 +39,8 @@
     <color name="colorNotification">#F24C56</color>
     <color name="colorChat">#23B832</color>
     <color name="colorChatPressed">#65C55B</color>
+    <color name="colorChatImageForeground">#8C000000</color>
+    <color name="colorChatDateChipBackground">#80000000</color>
 
     <color name="colorSnackbar">#5C5C5C</color>
     <color name="colorSuccess">#63CD64</color>
