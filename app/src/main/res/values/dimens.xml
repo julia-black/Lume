@@ -36,4 +36,5 @@
     <dimen name="margin_bottom_card_filter">76dp</dimen>
     <dimen name="margin_card">16dp</dimen>
     <dimen name="size_checkbox">24dp</dimen>
+    <dimen name="size_notification">24dp</dimen>
 </resources>

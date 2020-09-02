@@ -55,11 +55,12 @@
 
     <TextView
         android:id="@+id/chatsUnreadCountMessagesView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/size_notification"
+        android:layout_height="@dimen/size_notification"
         android:layout_margin="@dimen/margin_medium"
         android:background="@drawable/shape_circle"
         android:gravity="center"
+        android:textSize="@dimen/text_size_small"
         android:textColor="@color/colorWhite"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
