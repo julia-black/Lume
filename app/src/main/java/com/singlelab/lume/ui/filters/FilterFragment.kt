@@ -7,6 +7,7 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import android.widget.SeekBar
 import androidx.core.os.bundleOf
 import androidx.core.view.children
@@ -104,6 +105,9 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
             choose_types.visibility = View.VISIBLE
             seek_bar_distance.visibility = View.VISIBLE
             text_choose_date.visibility = View.VISIBLE
+            button_choose_date.visibility = View.VISIBLE
+            checkbox_online.setText(getString(R.string.event_is_online))
+            checkbox_not_online.setText(getString(R.string.events_not_online))
             text_age.visibility = View.GONE
             seek_bar_age.visibility = View.GONE
             presenter.filterEvent?.let {
@@ -114,11 +118,11 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
                 } else {
                     text_city.setText(R.string.any_city)
                 }
-                switch_online.isChecked = it.isOnlyOnline
-                switch_not_online.isChecked = it.isExceptOnline
+                checkbox_online.setChecked(it.isOnlyOnline)
+                checkbox_not_online.setChecked(it.isExceptOnline)
                 showDate(it.minimalStartTime, it.maximalEndTime)
             }
-            showLocation(!switch_online.isChecked)
+            showLocation(!checkbox_online.getChecked())
         } else {
             text_age.visibility = View.VISIBLE
             seek_bar_age.visibility = View.VISIBLE
@@ -128,8 +132,9 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
             title_types.visibility = View.GONE
             seek_bar_distance.visibility = View.GONE
             text_distance.visibility = View.GONE
-            switch_online.visibility = View.GONE
-            switch_not_online.visibility = View.GONE
+            checkbox_online.visibility = View.GONE
+            checkbox_not_online.visibility = View.GONE
+            button_choose_date.visibility = View.GONE
             presenter.filterPerson?.let {
                 seek_bar_age.min = Const.MIN_AGE
                 seek_bar_age.max = Const.MAX_AGE
@@ -181,17 +186,18 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
                 presenter.onClickType(index)
             }
         }
-        switch_online.setOnCheckedChangeListener { _, isChecked ->
+        checkbox_online.setListener(CompoundButton.OnCheckedChangeListener { _, isChecked ->
             presenter.filterEvent?.isOnlyOnline = isChecked
             showLocation(!isChecked)
-        }
-        switch_not_online.setOnCheckedChangeListener { _, isChecked ->
-            presenter.filterEvent?.isExceptOnline = isChecked
-            if (isChecked) {
-                switch_online.isChecked = false
-                presenter.filterEvent?.isOnlyOnline = false
-            }
-        }
+        })
+        checkbox_not_online.setListener(
+            CompoundButton.OnCheckedChangeListener { _, isChecked ->
+                presenter.filterEvent?.isExceptOnline = isChecked
+                if (isChecked) {
+                    checkbox_online.setChecked(false)
+                    presenter.filterEvent?.isOnlyOnline = false
+                }
+            })
         seek_bar_distance.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 presenter.changeDistance(progress)
@@ -335,7 +341,7 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
             text_city.isEnabled = false
             seek_bar_distance.isEnabled = false
             text_distance.isEnabled = false
-            switch_not_online.isChecked = false
+            checkbox_not_online.setChecked(false)
             presenter.filterEvent?.isExceptOnline = false
         }
     }

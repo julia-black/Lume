@@ -23,7 +23,6 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_medium"
             android:overScrollMode="never"
             android:scrollY="2dp"
             android:scrollbarAlwaysDrawVerticalTrack="true"
@@ -33,6 +32,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_medium"
                 android:orientation="vertical"
                 android:padding="@dimen/margin_small">
 
@@ -43,6 +43,7 @@
                     android:layout_marginHorizontal="@dimen/margin_medium"
                     android:layout_marginBottom="@dimen/margin_small"
                     android:text="@string/choose_types"
+                    android:textColor="@color/colorGrayMedium"
                     android:textSize="@dimen/text_size_standart" />
 
                 <include layout="@layout/view_grid_emoji" />
@@ -52,33 +53,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_medium"
-                    android:lines="3"
                     android:textColor="@color/colorGray"
                     android:textSize="@dimen/text_size_small"
                     tools:text="@string/selected_all" />
 
-                <Switch
-                    android:id="@+id/switch_online"
+                <com.singlelab.lume.ui.view.checkbox.CheckBoxView
+                    android:id="@+id/checkbox_online"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_medium"
-                    android:checked="false"
-                    android:text="@string/events_is_online" />
+                    android:layout_margin="@dimen/margin_medium" />
 
-                <Switch
-                    android:id="@+id/switch_not_online"
+                <com.singlelab.lume.ui.view.checkbox.CheckBoxView
+                    android:id="@+id/checkbox_not_online"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="@dimen/margin_medium"
-                    android:layout_marginStart="@dimen/margin_medium"
-                    android:checked="false"
-                    android:text="@string/events_not_online" />
+                    android:layout_margin="@dimen/margin_medium" />
 
                 <LinearLayout
                     android:id="@+id/button_choose_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/text_choose_date"

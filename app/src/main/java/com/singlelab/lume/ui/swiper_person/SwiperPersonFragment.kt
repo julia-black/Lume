@@ -136,6 +136,7 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
         if (presenter.person == null) {
             presenter.loadRandomPerson()
         } else {
+            button_filter.visibility = View.VISIBLE
             card_stack_view.visibility = View.VISIBLE
             text_empty_swipes.visibility = View.GONE
             (card_stack_view.adapter as CardStackPersonAdapter).setData(listOf(person))

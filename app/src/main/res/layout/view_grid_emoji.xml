@@ -1,92 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
 <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/emoji_grid"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_small"
+    android:layout_marginHorizontal="@dimen/margin_small"
     android:columnCount="5"
     android:rowCount="2">
 
-    <ImageView
-        android:layout_width="@dimen/emoji_size"
-        android:layout_height="@dimen/emoji_size"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_row="0"
         android:layout_column="0"
-        android:layout_columnWeight="1"
-        android:layout_marginBottom="@dimen/margin_medium"
-        android:src="@drawable/ic_emoji_party" />
+        android:layout_columnWeight="1">
 
-    <ImageView
-        android:layout_width="@dimen/emoji_size"
-        android:layout_height="@dimen/emoji_size"
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/size_card_emoji"
+            android:layout_height="@dimen/size_card_emoji"
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/size_emoji_event"
+                android:layout_height="@dimen/size_emoji_event"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_emoji_party" />
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_row="0"
         android:layout_column="1"
-        android:layout_columnWeight="1"
-        android:src="@drawable/ic_emoji_picture" />
+        android:layout_columnWeight="1">
 
-    <ImageView
-        android:layout_width="@dimen/emoji_size"
-        android:layout_height="@dimen/emoji_size"
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/size_card_emoji"
+            android:layout_height="@dimen/size_card_emoji"
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/size_emoji_event"
+                android:layout_height="@dimen/size_emoji_event"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_emoji_picture" />
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_row="0"
         android:layout_column="2"
-        android:layout_columnWeight="1"
-        android:src="@drawable/ic_emoji_sport" />
+        android:layout_columnWeight="1">
 
-    <ImageView
-        android:layout_width="@dimen/emoji_size"
-        android:layout_height="@dimen/emoji_size"
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/size_card_emoji"
+            android:layout_height="@dimen/size_card_emoji"
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/size_emoji_event"
+                android:layout_height="@dimen/size_emoji_event"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_emoji_sport" />
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_row="0"
         android:layout_column="3"
-        android:layout_columnWeight="1"
-        android:src="@drawable/ic_emoji_nature" />
+        android:layout_columnWeight="1">
 
-    <ImageView
-        android:layout_width="@dimen/emoji_size"
-        android:layout_height="@dimen/emoji_size"
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/size_card_emoji"
+            android:layout_height="@dimen/size_card_emoji"
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/size_emoji_event"
+                android:layout_height="@dimen/size_emoji_event"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_emoji_nature" />
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_row="0"
         android:layout_column="4"
-        android:layout_columnWeight="1"
-        android:layout_marginBottom="@dimen/margin_medium"
-        android:src="@drawable/ic_emoji_talk" />
+        android:layout_columnWeight="1">
 
-    <ImageView
-        android:layout_width="@dimen/emoji_size"
-        android:layout_height="@dimen/emoji_size"
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/size_card_emoji"
+            android:layout_height="@dimen/size_card_emoji"
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/size_emoji_event"
+                android:layout_height="@dimen/size_emoji_event"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_emoji_talk" />
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_row="1"
         android:layout_column="0"
         android:layout_columnWeight="1"
-        android:src="@drawable/ic_emoji_game" />
+        android:layout_marginTop="@dimen/margin_medium">
 
-    <ImageView
-        android:layout_width="@dimen/emoji_size"
-        android:layout_height="@dimen/emoji_size"
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/size_card_emoji"
+            android:layout_height="@dimen/size_card_emoji"
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/size_emoji_event"
+                android:layout_height="@dimen/size_emoji_event"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_emoji_game" />
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_row="1"
         android:layout_column="1"
         android:layout_columnWeight="1"
-        android:src="@drawable/ic_emoji_book" />
+        android:layout_marginTop="@dimen/margin_medium">
 
-    <ImageView
-        android:layout_width="@dimen/emoji_size"
-        android:layout_height="@dimen/emoji_size"
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/size_card_emoji"
+            android:layout_height="@dimen/size_card_emoji"
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/size_emoji_event"
+                android:layout_height="@dimen/size_emoji_event"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_emoji_book" />
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_row="1"
         android:layout_column="2"
         android:layout_columnWeight="1"
-        android:src="@drawable/ic_emoji_food" />
+        android:layout_marginTop="@dimen/margin_medium">
 
-    <ImageView
-        android:layout_width="@dimen/emoji_size"
-        android:layout_height="@dimen/emoji_size"
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/size_card_emoji"
+            android:layout_height="@dimen/size_card_emoji"
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/size_emoji_event"
+                android:layout_height="@dimen/size_emoji_event"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_emoji_food" />
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_row="1"
         android:layout_column="3"
         android:layout_columnWeight="1"
-        android:src="@drawable/ic_emoji_speech" />
+        android:layout_marginTop="@dimen/margin_medium">
 
-    <ImageView
-        android:layout_width="@dimen/emoji_size"
-        android:layout_height="@dimen/emoji_size"
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/size_card_emoji"
+            android:layout_height="@dimen/size_card_emoji"
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/size_emoji_event"
+                android:layout_height="@dimen/size_emoji_event"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_emoji_speech" />
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_row="1"
         android:layout_column="4"
         android:layout_columnWeight="1"
-        android:src="@drawable/ic_emoji_travel" />
+        android:layout_marginTop="@dimen/margin_medium">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/size_card_emoji"
+            android:layout_height="@dimen/size_card_emoji"
+            app:cardBackgroundColor="@color/colorAccent"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="@dimen/size_emoji_event"
+                android:layout_height="@dimen/size_emoji_event"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_emoji_travel" />
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </GridLayout>
