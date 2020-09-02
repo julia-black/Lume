@@ -23,6 +23,7 @@ import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.model.profile.Badge
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.model.profile.Profile
+import com.singlelab.lume.model.view.PagerTab
 import com.singlelab.lume.ui.view.pager.*
 import com.singlelab.lume.ui.view.pager.listener.OnFriendsClickListener
 import com.singlelab.lume.ui.view.pager.listener.OnSettingsClickListener
@@ -79,7 +80,6 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         if (AuthData.isAnon) {
             navigateToAuth()
         } else {
-            initViewPager()
             presenter.loadProfile(presenter.profile == null)
         }
     }
@@ -106,9 +106,15 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         }.attach()
         view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                if (position == 1) {
-                    badgesView.showLoading(true)
-                    presenter.loadBadges()
+                when (position) {
+                    PagerTab.FRIENDS.position -> {
+                        friendsView.showLoading(true)
+                        presenter.loadFriends()
+                    }
+                    PagerTab.BADGES.position -> {
+                        badgesView.showLoading(true)
+                        presenter.loadBadges()
+                    }
                 }
             }
         })
@@ -137,6 +143,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
                 )
             }
         }
+        initViewPager()
     }
 
     override fun onLoadedFriends(friends: List<Person>?) {

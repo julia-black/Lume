@@ -3,6 +3,7 @@ package com.singlelab.lume.ui.view.pager
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.singlelab.lume.model.view.PagerTab
 
 class PagerAdapter(private val list: MutableList<PagerTabView>) :
     RecyclerView.Adapter<PagerViewHolder>() {
@@ -19,10 +20,10 @@ class PagerAdapter(private val list: MutableList<PagerTabView>) :
     override fun getItemCount(): Int = list.size
 
     fun updateBadgesView(badgesView: BadgesView) {
-        list[1] = badgesView
+        list[PagerTab.BADGES.position] = badgesView
     }
 
     fun updateFriendsView(friendsView: FriendsView) {
-        list[0] = friendsView
+        list[PagerTab.FRIENDS.position] = friendsView
     }
 }

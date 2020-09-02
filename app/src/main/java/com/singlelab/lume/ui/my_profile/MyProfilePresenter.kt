@@ -29,8 +29,6 @@ class MyProfilePresenter @Inject constructor(
 
     var badges: List<Badge>? = null
 
-    var selectedTab: PagerTab = PagerTab.FRIENDS
-
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         if (preferences != null && preferences.isFirstLaunch()) {
@@ -56,7 +54,7 @@ class MyProfilePresenter @Inject constructor(
                         viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
                         if (profile != null) {
                             viewState.showProfile(profile!!)
-                            loadFriends(profile!!.personUid)
+                           // loadFriends(profile!!.personUid)
                         } else {
                             viewState.showError("Не удалось получить профиль")
                         }
@@ -112,16 +110,18 @@ class MyProfilePresenter @Inject constructor(
         }
     }
 
-    private fun loadFriends(personUid: String) {
-        invokeSuspend {
-            try {
-                friends = interactor.loadFriends(personUid)
-                runOnMainThread {
-                    viewState.onLoadedFriends(friends)
-                }
-            } catch (e: ApiException) {
-                runOnMainThread {
-                    viewState.showError(e.message)
+    fun loadFriends() {
+        profile?.personUid?.let {
+            invokeSuspend {
+                try {
+                    friends = interactor.loadFriends(it)
+                    runOnMainThread {
+                        viewState.onLoadedFriends(friends)
+                    }
+                } catch (e: ApiException) {
+                    runOnMainThread {
+                        viewState.showError(e.message)
+                    }
                 }
             }
         }
