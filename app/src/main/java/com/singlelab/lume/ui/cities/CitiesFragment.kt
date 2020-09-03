@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.singlelab.lume.R
@@ -63,8 +64,13 @@ class CitiesFragment : BaseFragment(), CitiesView, OnCityClickListener {
             parentFragmentManager.popBackStack()
         }
 
+        edit_text_search.apply {
+            setSingleLine()
+            setHint(getString(R.string.search_city))
+            setStartDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_search))
+        }
         searchDebounce = TextInputDebounce(
-            editText = edit_text_search,
+            editText = edit_text_search.getEditText(),
             isHandleEmptyString = true
         )
         searchDebounce!!.watch {

@@ -69,6 +69,5 @@
         android:textSize="@dimen/text_size_small"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/layout"
-        tools:text="Предупреждение"
-        tools:visibility="visible" />
+        tools:text="Предупреждение" />
 </androidx.constraintlayout.widget.ConstraintLayout>

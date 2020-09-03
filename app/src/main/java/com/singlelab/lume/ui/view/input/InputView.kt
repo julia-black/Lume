@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
 import android.widget.LinearLayout
 import com.singlelab.lume.R
 import kotlinx.android.synthetic.main.view_input.view.*
@@ -35,7 +36,7 @@ class InputView @JvmOverloads constructor(
         text_input_edit_text.inputType = inputType
     }
 
-    fun setStartDrawable(drawable: Drawable) {
+    fun setStartDrawable(drawable: Drawable?) {
         text_input_layout.startIconDrawable = drawable
     }
 
@@ -133,4 +134,6 @@ class InputView @JvmOverloads constructor(
         text_input_edit_text.isFocusableInTouchMode = true
         text_input_edit_text.requestFocus()
     }
+
+    fun getEditText(): EditText = text_input_edit_text
 }

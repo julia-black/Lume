@@ -33,6 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin_big"
+                android:layout_marginBottom="@dimen/margin_bottom_filter"
                 android:orientation="vertical"
                 android:paddingVertical="@dimen/margin_small">
 
