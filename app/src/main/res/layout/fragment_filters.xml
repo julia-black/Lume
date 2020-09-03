@@ -32,9 +32,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_big"
                 android:orientation="vertical"
-                android:padding="@dimen/margin_small">
+                android:paddingVertical="@dimen/margin_small">
 
                 <TextView
                     android:id="@+id/choose_types"
@@ -57,6 +57,12 @@
                     android:textSize="@dimen/text_size_small"
                     tools:text="@string/selected_all" />
 
+                <View
+                    android:id="@+id/divider_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorGrayVeryLight" />
+
                 <com.singlelab.lume.ui.view.checkbox.CheckBoxView
                     android:id="@+id/checkbox_online"
                     android:layout_width="match_parent"
@@ -69,19 +75,26 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_medium" />
 
+                <View
+                    android:id="@+id/divider_one"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorGrayVeryLight" />
+
                 <LinearLayout
                     android:id="@+id/button_choose_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:paddingHorizontal="@dimen/margin_medium"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
                     <TextView
                         android:id="@+id/text_choose_date"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:paddingStart="@dimen/margin_medium"
                         android:paddingTop="@dimen/margin_medium"
                         android:paddingEnd="0dp"
                         android:paddingBottom="@dimen/margin_medium"
@@ -107,12 +120,19 @@
                         android:src="@drawable/ic_arrow" />
                 </LinearLayout>
 
+                <View
+                    android:id="@+id/divider_three"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorGrayVeryLight" />
+
                 <TextView
                     android:id="@+id/text_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_medium"
                     android:drawableEnd="@drawable/ic_arrow"
-                    android:paddingStart="@dimen/margin_medium"
+                    android:paddingHorizontal="@dimen/margin_medium"
                     android:paddingTop="@dimen/margin_medium"
                     android:paddingEnd="0dp"
                     android:paddingBottom="@dimen/margin_medium"
@@ -136,7 +156,7 @@
                     android:layout_marginTop="@dimen/margin_medium"
                     android:max="2"
                     android:theme="@style/Widget.AppCompat.SeekBar.Discrete"
-                    android:thumbTint="@color/colorPrimary" />
+                    android:thumbTint="@color/colorPrimaryAccent" />
 
                 <TextView
                     android:id="@+id/text_age"
@@ -151,6 +171,7 @@
                     android:id="@+id/seek_bar_age"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_medium"
                     app:rangeColor="@color/colorAccent"
                     app:thumbColor="@color/colorAccent"

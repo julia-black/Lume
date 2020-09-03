@@ -60,8 +60,8 @@ class SwiperEventPresenter @Inject constructor(
                 val randomEventRequest = RandomEventRequest(
                     cityId = if (filterEvent.isOnlyOnline) null else filterEvent.cityId,
                     eventTypes = filterEvent.selectedTypes.map { it.id },
-                    personXCoordinate = if (filterEvent.isOnlyOnline) null else filterEvent.latitude,
-                    personYCoordinate = if (filterEvent.isOnlyOnline) null else filterEvent.longitude,
+                    personXCoordinate = if (filterEvent.isOnlyOnline || filterEvent.distance == null) null else filterEvent.latitude,
+                    personYCoordinate = if (filterEvent.isOnlyOnline || filterEvent.distance == null) null else filterEvent.longitude,
                     distance = if (filterEvent.isOnlyOnline) null else filterEvent.distance.value,
                     isOnline = filterEvent.isOnlineForRequest(),
                     minimalStartTime = filterEvent.minimalStartTime?.toDateFormat(Const.DATE_FORMAT_TIME_ZONE),
