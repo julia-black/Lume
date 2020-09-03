@@ -50,6 +50,35 @@ class EditProfileFragment : BaseFragment(), EditProfileView {
         setListeners()
     }
 
+    override fun showLogin(login: String?) {
+        this.login.setText(login)
+    }
+
+    override fun showName(name: String?) {
+        this.name.setText(name)
+    }
+
+    override fun showAge(age: Int) {
+        this.age.setText(age.toString())
+    }
+
+    override fun showDescription(description: String?) {
+        this.description.setText(description)
+    }
+
+    override fun showProfile(profile: NewProfile) {
+        login.setText(profile.login)
+        name.setText(profile.name)
+        age.setText(profile.age.toString())
+        text_city.text = profile.city?.cityName
+        description.setText(profile.description)
+        initInputViews()
+    }
+
+    override fun onCompleteUpdate() {
+        findNavController().popBackStack()
+    }
+
     private fun initInputViews() {
         login.apply {
             setHint(getString(R.string.login))
@@ -100,19 +129,6 @@ class EditProfileFragment : BaseFragment(), EditProfileView {
         }
     }
 
-    override fun showProfile(profile: NewProfile) {
-        login.setText(profile.login)
-        name.setText(profile.name)
-        age.setText(profile.age.toString())
-        text_city.text = profile.city?.cityName
-        description.setText(profile.description)
-        initInputViews()
-    }
-
-    override fun onCompleteUpdate() {
-        findNavController().popBackStack()
-    }
-
     private fun setListeners() {
         login.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -142,7 +158,11 @@ class EditProfileFragment : BaseFragment(), EditProfileView {
 
         age.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                presenter.setAge(s.toString())
+                try {
+                    val intAge = s.toString().toInt()
+                    presenter.setAge(intAge)
+                } catch (e: Exception) {
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -191,6 +211,7 @@ class EditProfileFragment : BaseFragment(), EditProfileView {
     }
 
     private fun toChooseCity() {
+        presenter.saveInputs()
         findNavController().navigate(EditProfileFragmentDirections.actionEditProfileToCities())
     }
 }

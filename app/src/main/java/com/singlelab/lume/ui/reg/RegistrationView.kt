@@ -12,6 +12,18 @@ interface RegistrationView : LoadingView, ErrorView {
     fun onRegistration()
 
     @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showLogin(login: String?)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showName(name: String?)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showAge(age: Int)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showDescription(description: String?)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
     fun showCity(cityName: String)
 
     @StateStrategyType(AddToEndSingleStrategy::class)

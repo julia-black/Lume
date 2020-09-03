@@ -21,6 +21,8 @@ class RegistrationPresenter @Inject constructor(
     preferences: Preferences?
 ) : BasePresenter<RegistrationView>(preferences, interactor as BaseInteractor) {
 
+    private val profileRequest = ProfileRequest()
+
     private var city: City? = null
 
     private var image: Bitmap? = null
@@ -81,5 +83,30 @@ class RegistrationPresenter @Inject constructor(
         } else {
             null
         }
+    }
+
+    fun setLogin(login: String) {
+        profileRequest.login = login
+    }
+
+    fun setName(name: String) {
+        profileRequest.name = name
+    }
+
+    fun setAge(age: Int) {
+        profileRequest.age = age
+    }
+
+    fun setDescription(description: String) {
+        profileRequest.description = description
+    }
+
+    fun saveInputs() {
+        viewState.showLogin(profileRequest.login)
+        viewState.showName(profileRequest.name)
+        if (profileRequest.age != null) {
+            viewState.showAge(profileRequest.age!!)
+        }
+        viewState.showDescription(profileRequest.description)
     }
 }

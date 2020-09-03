@@ -4,7 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputType
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,6 +59,22 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
             .onClick(view)
     }
 
+    override fun showLogin(login: String?) {
+        layout_login.setText(login)
+    }
+
+    override fun showName(name: String?) {
+        layout_name.setText(name)
+    }
+
+    override fun showAge(age: Int) {
+        layout_age.setText(age.toString())
+    }
+
+    override fun showDescription(description: String?) {
+        layout_description.setText(description)
+    }
+
     override fun showCity(cityName: String) {
         text_city.text = cityName
     }
@@ -94,6 +112,22 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
             setSingleLine()
             setMaxLength(25)
             setDigits(getString(R.string.login_digits))
+            addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    presenter.setLogin(s.toString())
+                }
+            })
         }
         layout_name.apply {
             setHint(getString(R.string.name))
@@ -110,12 +144,48 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
             setSingleLine()
             setMaxLength(25)
             setWarning(getString(R.string.max_length, 25))
+            addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    presenter.setName(s.toString())
+                }
+            })
         }
         layout_age.apply {
             setHint(getString(R.string.age))
             setMaxLength(2)
             setInputType(InputType.TYPE_CLASS_NUMBER)
             setImeAction(EditorInfo.IME_ACTION_DONE)
+            addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    try {
+                        val intAge = s.toString().toInt()
+                        presenter.setAge(intAge)
+                    } catch (e: Exception) {
+                    }
+                }
+            })
         }
         layout_description.apply {
             setHint(getString(R.string.about_yourself))
@@ -124,11 +194,28 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
             setMaxLines(5)
             setMaxLength(128)
             setWarning(getString(R.string.max_length, 128))
+            addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    presenter.setDescription(s.toString())
+                }
+            })
         }
     }
 
     private fun setListeners() {
         button_upload_image.setOnClickListener {
+            presenter.saveInputs()
             onClickChangeImage()
         }
         text_city.setOnClickListener {
@@ -156,6 +243,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
     }
 
     private fun toCityChoose() {
+        presenter.saveInputs()
         findNavController().navigate(RegistrationFragmentDirections.actionRegistrationToCities())
     }
 

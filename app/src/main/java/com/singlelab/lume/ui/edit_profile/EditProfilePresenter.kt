@@ -1,7 +1,6 @@
 package com.singlelab.lume.ui.edit_profile
 
 
-import androidx.core.text.isDigitsOnly
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.city.City
@@ -42,12 +41,21 @@ class EditProfilePresenter @Inject constructor(
         newProfile.name = name
     }
 
-    fun setAge(age: String) {
+    fun setAge(age: Int) {
         newProfile.age = age
     }
 
     fun setDescription(description: String) {
         newProfile.description = description
+    }
+
+    fun saveInputs() {
+        viewState.showLogin(newProfile.login)
+        viewState.showName(newProfile.name)
+        if (newProfile.age != null) {
+            viewState.showAge(newProfile.age!!)
+        }
+        viewState.showDescription(newProfile.description)
     }
 
     fun updateProfile() {
@@ -76,7 +84,7 @@ class EditProfilePresenter @Inject constructor(
     private fun validation(): ValidationError? {
         return if (newProfile.login != null && newProfile.login!!.isEmpty() ||
             newProfile.name != null && newProfile.name!!.isEmpty() ||
-            newProfile.age != null && (newProfile.age!!.isEmpty() || !newProfile.age!!.isDigitsOnly()) ||
+            newProfile.age != null && (newProfile.age == null) ||
             newProfile.description != null && newProfile.description!!.isEmpty()
         )
             ValidationError.UNFILLED_FIELDS

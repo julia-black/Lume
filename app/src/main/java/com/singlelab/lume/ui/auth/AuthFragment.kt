@@ -141,8 +141,8 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
         layout_code.setText("")
         button_auth.visibility = View.VISIBLE
 
-        layout_phone.visibility = View.INVISIBLE
-        button_send_code.visibility = View.INVISIBLE
+        layout_phone.visibility = View.GONE
+        button_send_code.visibility = View.GONE
     }
 
     override fun toProfile() {
@@ -151,7 +151,6 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
     }
 
     override fun toRegistration() {
-        showInputPhone()
         (activity as MainActivity).setBackPressListener(null)
         findNavController().navigate(AuthFragmentDirections.actionAuthToRegistration())
     }
@@ -162,10 +161,10 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
     }
 
     private fun showInputPhone() {
-        button_back.visibility = View.GONE
-        text_info.visibility = View.GONE
-        layout_code.visibility = View.INVISIBLE
-        button_auth.visibility = View.INVISIBLE
+        button_back.visibility = View.INVISIBLE
+        text_info.visibility = View.INVISIBLE
+        layout_code.visibility = View.GONE
+        button_auth.visibility = View.GONE
 
         layout_phone.visibility = View.VISIBLE
         button_send_code.visibility = View.VISIBLE

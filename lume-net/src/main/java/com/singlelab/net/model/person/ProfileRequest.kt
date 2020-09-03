@@ -1,11 +1,11 @@
 package com.singlelab.net.model.person
 
 class ProfileRequest(
-    val login: String? = null,
-    val name: String? = null,
-    val description: String? = null,
-    val age: Int? = null,
-    val cityId: Int? = null,
-    val image: String? = null,
-    val token: String? = null
+    var login: String? = null,
+    var name: String? = null,
+    var description: String? = null,
+    var age: Int? = null,
+    var cityId: Int? = null,
+    var image: String? = null,
+    var token: String? = null
 )

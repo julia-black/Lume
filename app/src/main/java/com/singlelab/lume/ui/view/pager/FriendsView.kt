@@ -54,6 +54,7 @@ class FriendsView @JvmOverloads constructor(
     }
 
     fun setFriends(friends: List<Person>?) {
+        showLoading(false)
         search_friends.visibility = View.VISIBLE
         this.friends.clear()
         this.newFriends.clear()
@@ -83,6 +84,7 @@ class FriendsView @JvmOverloads constructor(
                 visibility = View.VISIBLE
                 adapter = PersonShortAdapter(this@FriendsView.friends, personClickListener)
             }
+            show_all.visibility = View.VISIBLE
             val showAllText = context.getString(R.string.show_all, friends?.size)
             if (newFriends.isNullOrEmpty()) {
                 show_all.text = showAllText
@@ -96,9 +98,7 @@ class FriendsView @JvmOverloads constructor(
                 )
                 show_all.text = spannable
             }
-            show_all.visibility = View.VISIBLE
         }
-        showLoading(false)
     }
 
     fun showLoading(isShow: Boolean) {

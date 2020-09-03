@@ -14,4 +14,16 @@ interface EditProfileView : LoadingView, ErrorView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun onCompleteUpdate()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showLogin(login: String?)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showName(name: String?)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showAge(age: Int)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showDescription(description: String?)
 }

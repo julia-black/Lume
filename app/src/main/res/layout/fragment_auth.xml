@@ -13,52 +13,84 @@
         android:background="@color/colorBackground"
         android:paddingBottom="@dimen/margin_medium">
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager_tutorial"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:orientation="horizontal"
-            android:overScrollMode="never"
-            app:layout_constraintBottom_toTopOf="@id/tab_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/margin_small"
-            android:background="@color/transparent"
-            app:layout_constraintBottom_toTopOf="@id/layout_phone"
-            app:layout_constraintTop_toBottomOf="@id/view_pager_tutorial"
-            app:tabBackground="@drawable/tab_selector"
-            app:tabGravity="center"
-            app:tabIndicatorHeight="0dp"
-            app:tabPaddingEnd="8dp"
-            app:tabPaddingStart="8dp" />
-
-        <com.singlelab.lume.ui.view.input.PhoneInputView
-            android:id="@+id/layout_phone"
+        <LinearLayout
+            android:id="@+id/view_pager_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_big"
-            app:layout_constraintBottom_toTopOf="@id/button_send_code"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/input_layout"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <com.singlelab.lume.ui.view.input.InputView
-            android:id="@+id/layout_code"
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/view_pager_tutorial"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:orientation="horizontal"
+                android:overScrollMode="never" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_big"
+                android:background="@color/transparent"
+                app:tabBackground="@drawable/tab_selector"
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp"
+                app:tabPaddingEnd="8dp"
+                app:tabPaddingStart="8dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_medium"
-            android:visibility="invisible"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/text_info"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/layout_phone" />
+            app:layout_constraintTop_toBottomOf="@id/view_pager_layout">
+
+            <com.singlelab.lume.ui.view.input.PhoneInputView
+                android:id="@+id/layout_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_big" />
+
+            <com.singlelab.lume.ui.view.input.InputView
+                android:id="@+id/layout_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/button_send_code"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/continue_text" />
+
+            <Button
+                android:id="@+id/button_auth"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:layout_marginVertical="@dimen/margin_medium"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/auth"
+                android:visibility="gone" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/text_info"
@@ -69,9 +101,9 @@
             android:textSize="@dimen/text_size_standart"
             android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@id/button_back"
-            app:layout_constraintEnd_toEndOf="@id/layout_code"
-            app:layout_constraintStart_toStartOf="@id/layout_code"
-            app:layout_constraintTop_toBottomOf="@id/button_send_code"
+            app:layout_constraintEnd_toEndOf="@id/input_layout"
+            app:layout_constraintStart_toStartOf="@id/input_layout"
+            app:layout_constraintTop_toBottomOf="@id/input_layout"
             tools:text="@string/push_code_send"
             tools:visibility="visible" />
 
@@ -87,40 +119,12 @@
             android:textSize="@dimen/text_size_standart"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/layout_code"
-            app:layout_constraintStart_toStartOf="@id/layout_code"
+            app:layout_constraintEnd_toEndOf="@id/input_layout"
+            app:layout_constraintStart_toStartOf="@id/input_layout"
             app:layout_constraintTop_toBottomOf="@id/text_info"
             tools:visibility="visible" />
 
-        <Button
-            android:id="@+id/button_send_code"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/continue_text"
-            app:layout_constraintBottom_toTopOf="@id/text_info"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_phone" />
 
-        <Button
-            android:id="@+id/button_auth"
-            style="@style/ButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_medium"
-            android:layout_marginVertical="@dimen/margin_medium"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/auth"
-            android:visibility="gone"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_phone" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>
