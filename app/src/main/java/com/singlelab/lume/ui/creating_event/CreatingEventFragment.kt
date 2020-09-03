@@ -199,6 +199,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         setGridLayoutListeners()
         button_create_event.setOnClickListener {
             if (validation()) {
+                showLoading(true)
                 val minAge =
                     if (min_age.text.isNullOrEmpty()) null else min_age.text.toString().toInt()
                 val maxAge =

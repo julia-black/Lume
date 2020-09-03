@@ -53,7 +53,6 @@ class CreatingEventPresenter @Inject constructor(
             try {
                 val eventUid = interactor.createEvent(event)?.eventUid
                 runOnMainThread {
-                    viewState.showLoading(false)
                     eventUid?.let {
                         viewState.onCompleteCreateEvent(it)
                     }
@@ -119,7 +118,7 @@ class CreatingEventPresenter @Inject constructor(
 
     fun getPrimaryImage(): String? {
         return if (images.isNotEmpty()) {
-            images[0].toBase64()
+            images[0].toBase64(50)
         } else {
             null
         }
@@ -127,7 +126,7 @@ class CreatingEventPresenter @Inject constructor(
 
     fun getImagesStr(): List<String>? {
         val newImages = mutableListOf<String>()
-        newImages.addAll(images.map { it.toBase64() })
+        newImages.addAll(images.map { it.toBase64(50) })
         if (newImages.isNotEmpty()) {
             newImages.removeAt(0)
         }

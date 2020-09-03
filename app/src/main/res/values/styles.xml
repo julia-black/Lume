@@ -1,7 +1,7 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimaryBright</item>
+        <item name="colorPrimary">@color/colorPrimaryAccent</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="snackbarStyle">@style/SnackbarStyle</item>
@@ -58,6 +58,13 @@
         <item name="android:layout_marginRight">@dimen/margin_very_small</item>
         <item name="android:layout_marginBottom">66dp</item>
     </style>
+
+<!--    <style name="Widget.MaterialComponents.MaterialCalendar.HeaderLayout">-->
+<!--        <item name="background">@color/colorPrimaryAccent</item>-->
+<!--        <item name="backgroundColor">@color/colorPrimaryAccent</item>-->
+<!--        <item name="backgroundTint">@color/colorPrimaryAccent</item>-->
+
+<!--    </style>-->
 
     <style name="Widget.MaterialComponents.MaterialCalendar.HeaderToggleButton" parent="Widget.AppCompat.ImageButton">
         <item name="android:visibility">gone</item>

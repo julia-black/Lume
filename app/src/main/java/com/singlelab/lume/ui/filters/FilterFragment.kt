@@ -106,7 +106,7 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
             seek_bar_distance.visibility = View.VISIBLE
             text_choose_date.visibility = View.VISIBLE
             button_choose_date.visibility = View.VISIBLE
-            checkbox_online.setText(getString(R.string.event_is_online))
+            checkbox_online.setText(getString(R.string.events_is_online))
             checkbox_not_online.setText(getString(R.string.events_not_online))
             text_age.visibility = View.GONE
             seek_bar_age.visibility = View.GONE
