@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -70,8 +71,13 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
                 LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             visibility = View.VISIBLE
         }
+        edit_text_search.apply {
+            setSingleLine()
+            setHint(getString(R.string.search_friends))
+            setStartDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_search))
+        }
         searchDebounce = TextInputDebounce(
-            editText = edit_text_search,
+            editText = edit_text_search.getEditText(),
             isHandleEmptyString = true
         )
         searchDebounce!!.watch {
@@ -128,7 +134,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
                                 (layoutManager.childCount + layoutManager.findFirstVisibleItemPosition()) >= layoutManager.itemCount
                             ) {
                                 presenter.search(
-                                    edit_text_search.text.toString(),
+                                    edit_text_search.getText(),
                                     ++presenter.pageNumber
                                 )
                             }
@@ -205,7 +211,6 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
     private fun showSearch(isShow: Boolean) {
         button_import_contacts.visibility = if (isShow) View.VISIBLE else View.GONE
         edit_text_search.visibility = if (isShow) View.VISIBLE else View.GONE
-        icon_search.visibility = if (isShow) View.VISIBLE else View.GONE
     }
 
     private fun onImportContactsClick() {

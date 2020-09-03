@@ -20,34 +20,12 @@
             android:layout_height="match_parent"
             android:paddingTop="@dimen/margin_medium">
 
-            <EditText
+            <com.singlelab.lume.ui.view.input.InputView
                 android:id="@+id/edit_text_search"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_medium"
-                android:backgroundTint="@color/colorGray"
-                android:hint="@string/search_friends"
-                android:inputType="text"
-                android:textCursorDrawable="@drawable/shape_cursor"
-                android:visibility="gone"
-                app:layout_constraintEnd_toStartOf="@id/icon_search"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:visibility="visible" />
-
-            <ImageView
-                android:id="@+id/icon_search"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="@dimen/margin_small"
-                android:layout_marginEnd="@dimen/margin_medium"
-                android:src="@drawable/ic_search"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/edit_text_search"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/edit_text_search"
-                app:layout_constraintTop_toTopOf="@id/edit_text_search"
-                tools:visibility="visible" />
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/button_import_contacts"
@@ -56,8 +34,9 @@
                 android:layout_margin="@dimen/margin_medium"
                 android:drawableStart="@drawable/ic_phone"
                 android:drawablePadding="@dimen/margin_small"
+                android:paddingHorizontal="@dimen/margin_small"
                 android:text="@string/import_contacts"
-                android:textColor="@color/colorGrayMedium"
+                android:textColor="@color/colorTextGray"
                 android:textSize="@dimen/text_size_standart"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
