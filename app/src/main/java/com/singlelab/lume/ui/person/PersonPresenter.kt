@@ -1,10 +1,11 @@
 package com.singlelab.lume.ui.person
 
-import com.singlelab.net.exceptions.ApiException
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.profile.Profile
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.person.interactor.PersonInteractor
+import com.singlelab.net.exceptions.ApiException
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -14,6 +15,8 @@ class PersonPresenter @Inject constructor(
     preferences: Preferences?
 ) : BasePresenter<PersonView>(preferences, interactor as BaseInteractor) {
 
+    private var profile: Profile? = null
+
     fun loadProfile(personUid: String) {
         viewState.showLoading(true)
         invokeSuspend {
@@ -22,6 +25,7 @@ class PersonPresenter @Inject constructor(
                 runOnMainThread {
                     viewState.showLoading(false)
                     if (profile != null) {
+                        this.profile = profile
                         viewState.showProfile(profile)
                     }
                 }
@@ -41,7 +45,10 @@ class PersonPresenter @Inject constructor(
                 interactor.addToFriends(personUid)
                 runOnMainThread {
                     viewState.showLoading(false)
-                    viewState.onAddedToFriends()
+                    profile?.let {
+                        it.isFriend = true
+                        viewState.showProfile(it)
+                    }
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
@@ -59,7 +66,10 @@ class PersonPresenter @Inject constructor(
                 interactor.removeFromFriends(personUid)
                 runOnMainThread {
                     viewState.showLoading(false)
-                    viewState.onRemovedFromFriends()
+                    profile?.let {
+                        it.isFriend = false
+                        viewState.showProfile(it)
+                    }
                 }
             } catch (e: ApiException) {
                 runOnMainThread {

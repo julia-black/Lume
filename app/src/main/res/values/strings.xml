@@ -59,6 +59,11 @@
     <string name="empty_persons_from_contacts">Пользователей из контактов не найдено</string>
     <string name="not_permission_contacts">Вы запретили доступ к контактам</string>
 
+    <!-- Profile -->
+    <string name="go_to_chat">Перейти в чат</string>
+    <string name="add_to_friends">Добавить в друзья</string>
+    <string name="remove_from_friends">Удалить из друзей</string>
+
     <!-- Feedback -->
     <string name="title_feedback">Обратная связь</string>
     <string name="text_feedback">Если вы столкнулись с проблемой, или просто хотите оставить отзыв - напишите нам и мы постараемся быстро всё поправить!</string>
@@ -153,9 +158,7 @@
     <string name="search_friends">Найти друзей</string>
     <string name="empty_friends">У вас пока нет друзей\nНайдите их!</string>
     <string name="empty_search">Ничего не найдено\nПопробуйте изменить запрос</string>
-    <string name="add_to_friends">Добавить в друзья</string>
     <string name="in_friends">В друзьях</string>
-    <string name="remove_from_friends">Удалить из друзей</string>
 
     <!-- Chats -->
     <string name="chats_title">Чаты</string>
