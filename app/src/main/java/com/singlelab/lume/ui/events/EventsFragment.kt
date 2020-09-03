@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.CalendarMode
@@ -26,8 +27,8 @@ import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
 import com.singlelab.lume.ui.creating_event.CreatingEventFragment
 import com.singlelab.lume.ui.event.EventFragment
 import com.singlelab.lume.ui.events.adapter.DaysAdapter
-import com.singlelab.lume.ui.view.calendar.CircleDecorator
 import com.singlelab.lume.ui.view.calendar.FutureDaysDecorator
+import com.singlelab.lume.ui.view.calendar.HighlightDecorator
 import com.singlelab.lume.ui.view.calendar.PastDaysDecorator
 import com.singlelab.lume.ui.view.calendar.SelectorDecorator
 import com.singlelab.lume.ui.view.event.OnEventItemClickListener
@@ -53,7 +54,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
 
-    private var currentDayDecorator: CircleDecorator? = null
+    private var currentDayDecorator: HighlightDecorator? = null
 
     private var firstDayInWeek: Int? = null
 
@@ -132,6 +133,8 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
         val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.page_margin)
         val offsetPx = resources.getDimensionPixelOffset(R.dimen.page_offset)
         view_pager_events?.apply {
+            orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
             clipToPadding = false
             clipChildren = false
             offscreenPageLimit = 3
@@ -173,7 +176,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
         context?.let { context ->
             val pastDaysWithEvent =
                 pastEvents.map { it.startTime }.toCalendarDays(Const.DATE_FORMAT_TIME_ZONE)
-            val pastDecorator = CircleDecorator(
+            val pastDecorator = HighlightDecorator(
                 color = ContextCompat.getColor(context, R.color.colorGray),
                 style = Paint.Style.STROKE,
                 daysWithEvent = pastDaysWithEvent
@@ -181,7 +184,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
 
             val futureDaysWithEvent =
                 futureEvents.map { it.startTime }.toCalendarDays(Const.DATE_FORMAT_TIME_ZONE)
-            val futureDecorator = CircleDecorator(
+            val futureDecorator = HighlightDecorator(
                 color = ContextCompat.getColor(context, R.color.colorAccent),
                 style = Paint.Style.STROKE,
                 daysWithEvent = futureDaysWithEvent
@@ -189,7 +192,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
 
             val inviteDaysWithEvent =
                 newInviteEvents.map { it.startTime }.toCalendarDays(Const.DATE_FORMAT_TIME_ZONE)
-            val inviteDecorator = CircleDecorator(
+            val inviteDecorator = HighlightDecorator(
                 color = ContextCompat.getColor(context, R.color.colorNewInvite),
                 style = Paint.Style.STROKE,
                 daysWithEvent = inviteDaysWithEvent
@@ -289,7 +292,8 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
         val isInvite =
             dayWithEvent.second.find { it.participantStatus == ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER } != null
 
-        val isNotActive = dayWithEvent.second.count { !it.isActive() } == dayWithEvent.second.count()
+        val isNotActive =
+            dayWithEvent.second.count { !it.isActive() } == dayWithEvent.second.count()
 
         val day = dayWithEvent.first
         val today = CalendarDay.today()
@@ -302,7 +306,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
         context?.let {
             showCalendar(day.toCalendar())
             calendar_week_view.removeDecorator(currentDayDecorator)
-            currentDayDecorator = CircleDecorator(
+            currentDayDecorator = HighlightDecorator(
                 color = ContextCompat.getColor(
                     it,
                     color

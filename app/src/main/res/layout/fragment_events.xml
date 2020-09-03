@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <View
-        android:id="@+id/background_card"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@drawable/shape_card_bottom"
-        app:layout_constraintBottom_toBottomOf="@id/calendar_week_view"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/day_of_week"
         android:layout_width="wrap_content"
@@ -21,7 +13,7 @@
         android:layout_marginHorizontal="@dimen/margin_big"
         android:layout_marginTop="@dimen/margin_large"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/text_size_large"
+        android:textSize="@dimen/text_size_medium"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -31,8 +23,9 @@
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
         android:layout_marginBottom="@dimen/margin_medium"
+        android:textColor="@color/colorTextGray"
+        android:textSize="@dimen/text_size_standart"
         app:layout_constraintStart_toStartOf="@id/day_of_week"
         app:layout_constraintTop_toBottomOf="@id/day_of_week"
         tools:text="19 августа 2020" />
@@ -41,13 +34,14 @@
         android:id="@+id/calendar_week_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_medium"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:paddingBottom="@dimen/margin_medium"
+        android:layout_marginHorizontal="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_big"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/date"
-        app:mcv_weekDayLabels="@array/custom_weekdays" />
+        app:layout_constraintTop_toBottomOf="@id/button_create_event"
+        app:mcv_dateTextAppearance="@style/CalendarTextStyle"
+        app:mcv_weekDayLabels="@array/custom_weekdays"
+        app:mcv_weekDayTextAppearance="@style/CalendarHeaderTextStyle" />
 
     <ImageView
         android:id="@+id/button_calendar"
@@ -66,23 +60,24 @@
         android:layout_marginEnd="@dimen/margin_small"
         android:background="@drawable/shape_circle"
         android:gravity="center"
+        android:paddingTop="2dp"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/text_size_very_small"
         android:textStyle="bold"
         android:visibility="gone"
-        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/button_create_event"
         app:layout_constraintEnd_toStartOf="@id/button_create_event"
         app:layout_constraintTop_toTopOf="@id/button_create_event"
         app:layout_constraintVertical_bias="0.25"
-        tools:text="10" />
+        tools:text="10"
+        tools:visibility="visible" />
 
     <Button
         android:id="@+id/button_create_event"
         style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center"
         android:layout_margin="@dimen/margin_big"
         android:clickable="true"
         android:focusable="true"
@@ -98,14 +93,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/background_card" />
+        app:layout_constraintTop_toBottomOf="@id/calendar_week_view"
+        app:layout_constraintVertical_bias="0.0" />
 
     <com.singlelab.lume.ui.view.calendar.FullCalendarView
         android:id="@+id/calendar_full_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_small"
         android:background="@color/colorWhite"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/date" />
+        app:layout_constraintTop_toBottomOf="@id/button_create_event" />
 </androidx.constraintlayout.widget.ConstraintLayout>
