@@ -29,7 +29,7 @@ class ChatsAdapter(
         )
 
     override fun onBindViewHolder(holder: ChatsItemViewHolder, position: Int) =
-        holder.bind(chats[position])
+        holder.bind(chats[position], position)
 
     override fun getItemCount() = chats.size
 
@@ -42,7 +42,13 @@ class ChatsAdapter(
         view: View,
         private val onClickAction: (ChatItem) -> Unit
     ) : RecyclerView.ViewHolder(view) {
-        fun bind(chat: ChatItem) {
+        fun bind(chat: ChatItem, position: Int) {
+            if (position % 2 == 0) {
+                itemView.chatsContentContainer.background = itemView.context.getDrawable(R.drawable.chat_room_background)
+            } else {
+                itemView.chatsContentContainer.background = null
+            }
+
             itemView.chatsTitleView.text = chat.title
             itemView.chatsLastMessageView.isVisible = chat.lastMessage.isNotEmpty()
             val lastMessage = if (chat.isLastMessageImage) itemView.context.getString(R.string.chats_last_message_image) else chat.lastMessage
