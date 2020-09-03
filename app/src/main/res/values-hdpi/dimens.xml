@@ -19,10 +19,10 @@
     <dimen name="page_offset">32dp</dimen>
     <dimen name="emoji_size">24dp</dimen>
     <dimen name="size_emoji_calendar">16dp</dimen>
-    <dimen name="size_filter_button">40dp</dimen>
+    <dimen name="size_filter_button">50dp</dimen>
     <dimen name="radius_large">12dp</dimen>
-    <dimen name="size_card_emoji">30dp</dimen>
-    <dimen name="size_emoji_event">15dp</dimen>
+    <dimen name="size_card_emoji">40dp</dimen>
+    <dimen name="size_emoji_event">20dp</dimen>
     <dimen name="text_size_very_small">6sp</dimen>
     <dimen name="size_image_badge">32dp</dimen>
     <dimen name="padding_bottom_nav">60dp</dimen>
@@ -32,7 +32,7 @@
     <dimen name="margin_end_filter">22dp</dimen>
     <dimen name="margin_end_filter_in_filter">16dp</dimen>
     <dimen name="margin_bottom_filter">48dp</dimen>
-    <dimen name="size_filter_icon">20dp</dimen>
+    <dimen name="size_filter_icon">25dp</dimen>
     <dimen name="margin_bottom_card_filter">60dp</dimen>
     <dimen name="margin_card">8dp</dimen>
 </resources>

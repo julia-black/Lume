@@ -3,6 +3,7 @@ package com.singlelab.lume.ui.swiper_event
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.event.Distance
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.model.event.FilterEvent
 import com.singlelab.lume.pref.Preferences
@@ -60,8 +61,8 @@ class SwiperEventPresenter @Inject constructor(
                 val randomEventRequest = RandomEventRequest(
                     cityId = if (filterEvent.isOnlyOnline) null else filterEvent.cityId,
                     eventTypes = filterEvent.selectedTypes.map { it.id },
-                    personXCoordinate = if (filterEvent.isOnlyOnline || filterEvent.distance == null) null else filterEvent.latitude,
-                    personYCoordinate = if (filterEvent.isOnlyOnline || filterEvent.distance == null) null else filterEvent.longitude,
+                    personXCoordinate = if (filterEvent.isOnlyOnline || filterEvent.distance == Distance.FAR) null else filterEvent.latitude,
+                    personYCoordinate = if (filterEvent.isOnlyOnline || filterEvent.distance == Distance.FAR) null else filterEvent.longitude,
                     distance = if (filterEvent.isOnlyOnline) null else filterEvent.distance.value,
                     isOnline = filterEvent.isOnlineForRequest(),
                     minimalStartTime = filterEvent.minimalStartTime?.toDateFormat(Const.DATE_FORMAT_TIME_ZONE),

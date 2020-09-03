@@ -1,7 +1,9 @@
 package com.singlelab.lume.ui.filters
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -56,6 +58,8 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
     fun providePresenter() = daggerPresenter
 
     private lateinit var locationClient: FusedLocationProviderClient
+
+    private var geoIsAvailable: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -200,7 +204,7 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
             })
         seek_bar_distance.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                presenter.changeDistance(progress)
+                presenter.changeDistance(if (geoIsAvailable) progress else Distance.FAR.id)
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -298,15 +302,43 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
             locationClient.lastLocation
                 .addOnSuccessListener { location: Location? ->
                     if (location == null) {
-                        onErrorGeo()
+                        val lastLocation = getLastKnownLocation()
+                        if (lastLocation == null) {
+                            showAttentionGeoOn()
+                        } else {
+                            geoIsAvailable = true
+                            presenter.setUserLocation(lastLocation.longitude, lastLocation.latitude)
+                        }
                     } else {
+                        geoIsAvailable = true
                         presenter.setUserLocation(location.longitude, location.latitude)
                     }
                 }
         }
     }
 
+    @SuppressLint("MissingPermission")
+    private fun getLastKnownLocation(): Location? {
+        val manager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val providers: List<String> = manager.getProviders(true)
+        var bestLocation: Location? = null
+        for (provider in providers) {
+            val l: Location = manager.getLastKnownLocation(provider) ?: continue
+            if (bestLocation == null || l.accuracy < bestLocation.accuracy) {
+                bestLocation = l
+            }
+        }
+        return bestLocation
+    }
+
+    private fun showAttentionGeoOn() {
+        geoIsAvailable = false
+        showError(getString(R.string.on_geolocation))
+        presenter.changeDistance(FAR_DISTANCE)
+    }
+
     private fun onErrorGeo() {
+        geoIsAvailable = false
         showError(getString(R.string.permission_location_denied))
         presenter.changeDistance(FAR_DISTANCE)
     }
