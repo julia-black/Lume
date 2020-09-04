@@ -40,7 +40,7 @@ constructor(
     }
 
     fun setContent(messageItem: ChatMessageItem) {
-        setMessageTextMaxWidth(messageItem.hasImage)
+        setMessageTextDimensions(messageItem.hasImage)
 
         outgoingMessageView.setMessageText(messageItem.text)
         outgoingMessageImageView.setImage(messageItem)
@@ -49,15 +49,18 @@ constructor(
         val isPending = messageItem.status == ChatMessageItem.Status.PENDING
         val background = if (isPending) R.drawable.group_message_input_background else R.drawable.private_outgoing_message_input_background
         outgoingMessageImageProgressView.isVisible = isPending
-        outgoingMessageContainerView.background = context.getDrawable(background)
+        outgoingMessageContentView.background = context.getDrawable(background)
     }
 
     private val ChatMessageItem.hasImage: Boolean
         get() = images.count { it.isNotEmpty() } > 0
 
-    private fun setMessageTextMaxWidth(withImage: Boolean) {
+    private fun setMessageTextDimensions(withImage: Boolean) {
         if (withImage) {
             outgoingMessageView.maxWidth = MESSAGE_TEXT_MAX_WIDTH.px
+            outgoingMessageView.setPadding(outgoingMessageView.paddingLeft, outgoingMessageView.paddingTop, 6.px, outgoingMessageView.paddingBottom)
+        } else {
+            outgoingMessageView.setPadding(outgoingMessageView.paddingLeft, outgoingMessageView.paddingTop, 32.px, outgoingMessageView.paddingBottom)
         }
     }
 
@@ -78,20 +81,23 @@ constructor(
         val imagesCount = message.images.count { it.isNotEmpty() }
         val hasImages = imagesCount > 0
         isVisible = hasImages
-        if (message.text.isEmpty()) {
-            setMultipleImage(imagesCount)
-            setDateChip(true, message.date)
-            Glide.with(this)
-                .load(message.images.first().generateImageLink())
-                .transform(CenterCrop(), GranularRoundedCorners(14f, 0f, 0f, 14f))
-                .into(chatMessageImageView)
-        } else if (hasImages) {
-            setDateChip(false)
-            setMultipleImage(imagesCount)
-            Glide.with(this)
-                .load(message.images.first().generateImageLink())
-                .transform(CenterCrop(), GranularRoundedCorners(14f, 0f, 0f, 0f))
-                .into(chatMessageImageView)
+        chatMessageImageView.isVisible = hasImages
+        if (hasImages) {
+            if (message.text.isEmpty()) {
+                setMultipleImage(imagesCount)
+                setDateChip(true, message.date)
+                Glide.with(this)
+                    .load(message.images.first().generateImageLink())
+                    .transform(CenterCrop(), RoundedCorners(14))
+                    .into(chatMessageImageView)
+            } else {
+                setDateChip(false)
+                setMultipleImage(imagesCount)
+                Glide.with(this)
+                    .load(message.images.first().generateImageLink())
+                    .transform(CenterCrop(), GranularRoundedCorners(14f, 14f, 0f, 0f))
+                    .into(chatMessageImageView)
+            }
         }
     }
 
