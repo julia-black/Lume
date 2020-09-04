@@ -162,8 +162,13 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
     override fun showEvents(days: List<Pair<CalendarDay, List<EventSummary>>>, countInvites: Int) {
         notification.isVisible = countInvites > 0
         notification.text = countInvites.toString()
-        view_pager_events?.apply {
-            adapter = DaysAdapter(days, this@EventsFragment)
+        if (days.isEmpty()) {
+            card_empty_events.isVisible = true
+        } else {
+            card_empty_events.isVisible = false
+            view_pager_events?.apply {
+                adapter = DaysAdapter(days, this@EventsFragment)
+            }
         }
     }
 

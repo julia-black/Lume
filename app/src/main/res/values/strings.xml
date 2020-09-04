@@ -135,6 +135,7 @@
     <string name="new_event">Новое</string>
     <string name="open_chat">Открыть чат</string>
     <string name="new_participants">Новые заявки</string>
+    <string name="empty_events">У тебя пока нет событий.\nНайди новое в свайпах\nили создай своё!</string>
 
     <!-- Types of events -->
     <string name="culture">Искусство</string>
