@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:stackHeaderHeight="80dp"
+    app:stackHeaderHeight="@dimen/stack_header_height"
     tools:background="@color/white">
 
     <androidx.cardview.widget.CardView
@@ -239,5 +239,7 @@
         android:layout_marginTop="@dimen/margin_large"
         android:background="@color/colorBackground"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="@id/card" />
+        app:layout_constraintTop_toTopOf="@id/card"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -118,6 +118,18 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
+    fun showDialog(title: String, text: String, listener: DialogInterface.OnClickListener) {
+        context?.let {
+            val builder = AlertDialog.Builder(it)
+            builder
+                .setTitle(title)
+                .setMessage(text)
+                .setPositiveButton(getString(R.string.yes), listener)
+                .setNegativeButton(getString(R.string.no), listener)
+                .show()
+        }
+    }
+
     fun showListDialog(
         title: String,
         list: Array<String>,
