@@ -46,9 +46,9 @@ class PersonFragment : BaseFragment(), PersonView {
     }
 
     override fun showProfile(profile: Profile) {
-        name.text = profile.name
+        val age = resources.getQuantityString(R.plurals.age_plurals, profile.age, profile.age)
+        name.text = "${profile.name}, $age"
         login.text = "@${profile.login}"
-        age.text = resources.getQuantityString(R.plurals.age_plurals, profile.age, profile.age)
         description.text = profile.description
         city.text = profile.cityName
         if (!profile.imageContentUid.isNullOrEmpty()) {
@@ -58,32 +58,24 @@ class PersonFragment : BaseFragment(), PersonView {
             }
         }
         if (profile.isFriend) {
-            button_add_to_friends.visibility = View.GONE
-            button_remove_from_friends.visibility = View.VISIBLE
+            button_action_friend.text = getString(R.string.remove_from_friends)
         } else {
-            button_add_to_friends.visibility = View.VISIBLE
-            button_remove_from_friends.visibility = View.GONE
+            button_action_friend.text = getString(R.string.add_to_friends)
         }
 
-        button_add_to_friends.setOnClickListener {
-            presenter.addToFriends(profile.personUid)
-        }
-        button_remove_from_friends.setOnClickListener {
-            presenter.removeFromFriends(profile.personUid)
+        button_action_friend.setOnClickListener {
+            if (profile.isFriend) {
+                presenter.removeFromFriends(profile.personUid)
+            } else {
+                presenter.addToFriends(profile.personUid)
+            }
         }
         button_chat.setOnClickListener {
             toChat(profile.name, profile.personUid)
         }
-    }
-
-    override fun onAddedToFriends() {
-        button_add_to_friends.visibility = View.GONE
-        button_remove_from_friends.visibility = View.VISIBLE
-    }
-
-    override fun onRemovedFromFriends() {
-        button_add_to_friends.visibility = View.VISIBLE
-        button_remove_from_friends.visibility = View.GONE
+        button_back.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun toChat(title: String, personUid: String) {

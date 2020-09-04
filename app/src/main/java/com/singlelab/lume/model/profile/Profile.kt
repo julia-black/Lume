@@ -14,7 +14,7 @@ class Profile(
     val cityName: String,
     val age: Int,
     val imageContentUid: String? = null,
-    val isFriend: Boolean = false,
+    var isFriend: Boolean = false,
     val friends: List<Person> = arrayListOf()
 ) : Parcelable {
     companion object {

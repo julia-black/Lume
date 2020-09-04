@@ -49,7 +49,6 @@
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/margin_medium"
                 android:overScrollMode="never"
-                android:paddingStart="@dimen/margin_small"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

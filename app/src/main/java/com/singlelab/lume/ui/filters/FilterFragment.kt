@@ -2,10 +2,12 @@ package com.singlelab.lume.ui.filters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Parcelable
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -304,7 +306,11 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
                     if (location == null) {
                         val lastLocation = getLastKnownLocation()
                         if (lastLocation == null) {
-                            showAttentionGeoOn()
+                            if (isEnabledGeoLocation()) {
+                                showAttentionUnavailableGeo()
+                            } else {
+                                toLocationSettings()
+                            }
                         } else {
                             geoIsAvailable = true
                             presenter.setUserLocation(lastLocation.longitude, lastLocation.latitude)
@@ -331,10 +337,26 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
         return bestLocation
     }
 
-    private fun showAttentionGeoOn() {
+    private fun showAttentionUnavailableGeo() {
         geoIsAvailable = false
         showError(getString(R.string.on_geolocation))
         presenter.changeDistance(FAR_DISTANCE)
+    }
+
+    private fun isEnabledGeoLocation(): Boolean {
+        var gpsState: Int? = null
+        try {
+            gpsState =
+                Settings.Secure.getInt(activity?.contentResolver, Settings.Secure.LOCATION_MODE)
+        } catch (e: Settings.SettingNotFoundException) {
+            e.printStackTrace()
+        }
+        return gpsState != null
+    }
+
+    private fun toLocationSettings() {
+        val onGPS = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+        startActivity(onGPS)
     }
 
     private fun onErrorGeo() {

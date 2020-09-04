@@ -9,10 +9,4 @@ import moxy.viewstate.strategy.StateStrategyType
 interface PersonView : LoadingView, ErrorView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showProfile(profile: Profile)
-
-    @StateStrategyType(AddToEndSingleStrategy::class)
-    fun onAddedToFriends()
-
-    @StateStrategyType(AddToEndSingleStrategy::class)
-    fun onRemovedFromFriends()
 }

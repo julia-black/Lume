@@ -5,10 +5,10 @@ import android.text.style.ForegroundColorSpan
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
-import com.singlelab.lume.ui.view.calendar.span.CircleSpan
+import com.singlelab.lume.ui.view.calendar.span.RoundedSpan
 import com.singlelab.lume.util.dpToPx
 
-class CircleDecorator(
+class HighlightDecorator(
     private val color: Int,
     private val style: Paint.Style = Paint.Style.FILL,
     private val textColor: Int? = null,
@@ -23,6 +23,6 @@ class CircleDecorator(
         textColor?.let {
             view.addSpan(ForegroundColorSpan(textColor))
         }
-        view.addSpan(CircleSpan(radius = 20.dpToPx(), style = style, color = color))
+        view.addSpan(RoundedSpan(radius = 12.dpToPx(), style = style, color = color))
     }
 }
