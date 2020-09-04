@@ -101,7 +101,7 @@
     <string name="age_from">Возраст: %1$d+</string>
     <string name="age_to">Возраст: до %1$d</string>
     <string name="count_participants">Идут %1$d человек</string>
-    <string name="waiting_for_approve_event">Ожидается подтверждение</string>
+    <string name="waiting_for_approve_event">Заявка подана</string>
     <string name="waiting_for_approve_users">Ожидают подтверждения %1$d человек</string>
     <string name="count_invited">Приглашены %1$d человек</string>
     <string name="invite_friends">Пригласить друзей</string>
@@ -132,6 +132,10 @@
     <string name="cancel_event">Отменить событие</string>
     <string name="title_cancel">Событие отменено</string>
     <string name="title_ended">Событие завершено</string>
+    <string name="new_event">Новое</string>
+    <string name="open_chat">Открыть чат</string>
+    <string name="new_participants">Новые заявки</string>
+    <string name="empty_events">У тебя пока нет событий.\nНайди новое в свайпах\nили создай своё!</string>
 
     <!-- Types of events -->
     <string name="culture">Искусство</string>

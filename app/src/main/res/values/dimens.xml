@@ -38,4 +38,6 @@
     <dimen name="size_checkbox">24dp</dimen>
     <dimen name="size_notification">24dp</dimen>
     <dimen name="margin_top_profile">62dp</dimen>
+    <dimen name="margin_card_pager">60dp</dimen>
+    <dimen name="margin_cards">16dp</dimen>
 </resources>
