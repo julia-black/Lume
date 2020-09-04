@@ -4,9 +4,9 @@
     <dimen name="margin_large">25dp</dimen>
     <dimen name="margin_small">6dp</dimen>
     <dimen name="margin_very_small">3dp</dimen>
-    <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_medium">14sp</dimen>
     <dimen name="text_size_large">18sp</dimen>
-    <dimen name="text_size_standart">14sp</dimen>
+    <dimen name="text_size_standart">13sp</dimen>
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="action_swipe_size">144dp</dimen>
     <dimen name="size_image_chat">41dp</dimen>
@@ -35,4 +35,6 @@
     <dimen name="size_filter_icon">25dp</dimen>
     <dimen name="margin_bottom_card_filter">60dp</dimen>
     <dimen name="margin_card">8dp</dimen>
+    <dimen name="margin_card_pager">40dp</dimen>
+    <dimen name="margin_cards">0dp</dimen>
 </resources>

@@ -35,4 +35,6 @@
     <dimen name="size_filter_icon">25dp</dimen>
     <dimen name="margin_bottom_card_filter">76dp</dimen>
     <dimen name="margin_card">16dp</dimen>
+    <dimen name="margin_card_pager">60dp</dimen>
+    <dimen name="margin_cards">16dp</dimen>
 </resources>

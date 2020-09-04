@@ -2,191 +2,242 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:stackHeaderHeight="80dp">
+    android:layout_height="match_parent"
+    app:stackHeaderHeight="80dp"
+    tools:background="@color/white">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_medium"
         app:cardCornerRadius="@dimen/radius_large"
-        app:cardElevation="0dp"
+        app:cardElevation="8dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="8:10"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <View
-                android:id="@+id/strip"
+                android:id="@+id/shape"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:background="@color/colorAccent"
+                android:layout_height="0dp"
+                android:background="@drawable/shape_top_card"
+                app:layout_constraintBottom_toBottomOf="@id/title"
+                app:layout_constraintBottom_toTopOf="@id/content"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/margin_card"
+                android:paddingTop="@dimen/margin_card"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_standart"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="12:00" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="top"
+                android:maxLines="2"
+                android:paddingHorizontal="@dimen/margin_card"
+                android:paddingBottom="@dimen/margin_small"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_medium"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/shape"
+                app:layout_constraintTop_toBottomOf="@id/time"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Название" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/content"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                android:padding="@dimen/margin_small"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/margin_card"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/strip">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/shape">
 
-
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_small"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:maxLines="2"
-                    android:minLines="2"
-                    android:textSize="@dimen/text_size_medium"
-                    app:layout_constraintEnd_toEndOf="@id/icon_notifications"
-                    app:layout_constraintHorizontal_bias="0.0"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/emoji_card_one"
+                    android:layout_width="@dimen/size_card_emoji"
+                    android:layout_height="@dimen/size_card_emoji"
+                    android:layout_margin="@dimen/margin_card"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/colorAccent"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Название" />
+                    tools:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/emoji_one"
+                        android:layout_width="@dimen/size_emoji_event"
+                        android:layout_height="@dimen/size_emoji_event"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/margin_small"
+                        tools:src="@drawable/ic_emoji_talk" />
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/emoji_card_two"
+                    android:layout_width="@dimen/size_card_emoji"
+                    android:layout_height="@dimen/size_card_emoji"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/colorAccent"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintStart_toEndOf="@id/emoji_card_one"
+                    app:layout_constraintTop_toTopOf="@id/emoji_card_one"
+                    tools:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/emoji_two"
+                        android:layout_width="@dimen/size_emoji_event"
+                        android:layout_height="@dimen/size_emoji_event"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/margin_small"
+                        tools:src="@drawable/ic_emoji_nature" />
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/emoji_card_three"
+                    android:layout_width="@dimen/size_card_emoji"
+                    android:layout_height="@dimen/size_card_emoji"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:visibility="gone"
+                    app:cardBackgroundColor="@color/colorAccent"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintStart_toEndOf="@id/emoji_card_two"
+                    app:layout_constraintTop_toTopOf="@id/emoji_card_one"
+                    tools:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/emoji_three"
+                        android:layout_width="@dimen/size_emoji_event"
+                        android:layout_height="@dimen/size_emoji_event"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/margin_small"
+                        tools:src="@drawable/ic_emoji_travel" />
+                </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:id="@+id/icon_location"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="@dimen/margin_card"
+                    android:src="@drawable/ic_location"
+                    android:tint="@color/colorGrayMedium"
+                    app:layout_constraintBottom_toTopOf="@id/divider_one"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/emoji_card_one" />
+
+                <TextView
+                    android:id="@+id/text_location"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_card"
+                    android:layout_marginStart="16dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="@color/colorGrayMedium"
+                    android:textSize="@dimen/text_size_small"
+                    android:visibility="visible"
+                    app:layout_constraintBottom_toBottomOf="@id/icon_location"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/icon_location"
+                    app:layout_constraintTop_toTopOf="@id/icon_location"
+                    tools:text="Москва" />
+
+                <View
+                    android:id="@+id/divider_one"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/margin_card"
+                    android:background="@color/colorGrayVeryLight"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/icon_location" />
 
                 <TextView
                     android:id="@+id/description"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_small"
+                    android:layout_margin="@dimen/margin_card"
                     android:ellipsize="end"
-                    android:maxLines="5"
+                    android:maxLines="3"
+                    android:scrollY="2dp"
+                    android:textColor="@color/colorText"
                     android:textSize="@dimen/text_size_standart"
-                    app:layout_constraintBottom_toTopOf="@id/button_chat"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/name"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:text="Описание события" />
+                    app:layout_constraintTop_toBottomOf="@id/divider_one"
+                    tools:text="Описание" />
 
-                <TextView
-                    android:id="@+id/participant_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_small"
-                    android:text="@string/waiting_for_approve_event"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toTopOf="@id/button_chat"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/description"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:visibility="visible" />
-
-                <ImageView
-                    android:id="@+id/icon_notifications"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_small"
-                    android:backgroundTint="@color/white"
-                    android:src="@drawable/ic_notifications"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/name"
-                    tools:visibility="visible" />
-
-                <ImageView
+                <Button
                     android:id="@+id/button_chat"
-                    android:layout_width="@dimen/size_image_chat"
+                    style="@style/ButtonStyle"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_small"
-                    android:background="@drawable/ic_chat_button"
-                    android:backgroundTint="@color/selector_button"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:paddingHorizontal="@dimen/margin_medium"
-                    android:paddingVertical="@dimen/margin_small"
-                    android:src="@drawable/ic_chat"
+                    android:layout_marginHorizontal="@dimen/margin_card"
+                    android:text="@string/open_chat"
                     android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/description"
                     tools:visibility="visible" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_medium"
-                android:textColor="@color/colorWhite"
-                app:layout_constraintBottom_toBottomOf="@id/strip"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/strip"
-                tools:text="18:00" />
-
-            <ImageView
-                android:id="@+id/emoji_one"
-                android:layout_width="@dimen/size_emoji_calendar"
-                android:layout_height="@dimen/size_emoji_calendar"
-                android:layout_margin="@dimen/margin_small"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/strip"
-                app:layout_constraintEnd_toStartOf="@id/emoji_two"
-                app:layout_constraintTop_toTopOf="@id/strip"
-                tools:src="@drawable/ic_emoji_talk"
-                tools:visibility="visible" />
-
-            <ImageView
-                android:id="@+id/emoji_two"
-                android:layout_width="@dimen/size_emoji_calendar"
-                android:layout_height="@dimen/size_emoji_calendar"
-                android:layout_margin="@dimen/margin_small"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/strip"
-                app:layout_constraintEnd_toStartOf="@id/emoji_three"
-                app:layout_constraintTop_toTopOf="@id/strip"
-                tools:src="@drawable/ic_emoji_nature"
-                tools:visibility="visible" />
-
-            <ImageView
-                android:id="@+id/emoji_three"
-                android:layout_width="@dimen/size_emoji_calendar"
-                android:layout_height="@dimen/size_emoji_calendar"
-                android:layout_margin="@dimen/margin_small"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/strip"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/strip"
-                tools:src="@drawable/ic_emoji_travel"
-                tools:visibility="visible" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout><!--<?xml version="1.0" encoding="utf-8"?>-->
-    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--    xmlns:tools="http://schemas.android.com/tools"-->
-    <!--    android:id="@+id/linear_list_card_item"-->
-    <!--    android:layout_width="match_parent"-->
-    <!--    android:layout_height="wrap_content"-->
-    <!--    android:layout_margin="@dimen/margin_medium"-->
-    <!--    android:orientation="vertical"-->
-    <!--    app:stackHeaderHeight="80dp">-->
 
-    <!--    <FrameLayout-->
-    <!--        android:id="@+id/frame_list_card_item"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="300dp"-->
-    <!--        android:background="@drawable/shape_full_card">-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/status_card"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/colorNewInvite"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="9dp"
+        app:layout_constraintBottom_toBottomOf="@id/card"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible">
 
-    <!--        <TextView-->
-    <!--            android:id="@+id/text_list_card_title"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_margin="20dp"-->
-    <!--            android:textSize="40sp"-->
-    <!--            android:textStyle="bold"-->
-    <!--            tools:text="12" />-->
-    <!--    </FrameLayout>-->
+        <TextView
+            android:id="@+id/participant_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:letterSpacing="0.04"
+            android:paddingHorizontal="@dimen/margin_medium"
+            android:paddingVertical="@dimen/margin_small"
+            android:text="@string/new_event"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_small"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
 
-
-    <!--</LinearLayout>-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_large"
+        android:background="@color/colorBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/card" />
+</androidx.constraintlayout.widget.ConstraintLayout>

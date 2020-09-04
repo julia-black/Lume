@@ -1,8 +1,6 @@
 package com.singlelab.lume.ui.event
 
 import android.content.Intent
-import android.location.Address
-import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -30,7 +28,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_event.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
-import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 
@@ -48,8 +45,6 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
 
     @InjectPresenter
     lateinit var presenter: EventPresenter
-
-    private val geoCoder: Geocoder by lazy { Geocoder(context, Locale.getDefault()) }
 
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
@@ -89,9 +84,10 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         } else {
             text_online.visibility = View.INVISIBLE
             text_location.visibility = View.VISIBLE
-            text_location.text = getLocationName(event.xCoordinate, event.yCoordinate) ?: getString(
-                R.string.unavailable_location
-            )
+            text_location.text =
+                context?.getLocationName(event.xCoordinate, event.yCoordinate) ?: getString(
+                    R.string.unavailable_location
+                )
             text_location.setOnClickListener {
                 val uri = String.format(
                     Locale.ENGLISH,
@@ -175,7 +171,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             toParticipants(false, presenter.isAdministrator())
         }
         event.administrator?.let {
-            administrator.text = getString(R.string.administrator, it.name)
+            administrator.text = it.name
 
             if (it.imageContentUid != null) {
                 Glide.with(this)
@@ -301,23 +297,6 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                 image.generateImageLink()
             }
             SliderImage.openfullScreen(it, links, 0)
-        }
-    }
-
-    private fun getLocationName(xCoordinate: Double?, yCoordinate: Double?): String? {
-        if (xCoordinate == null || yCoordinate == null) {
-            return null
-        }
-        return try {
-            val addresses: List<Address> =
-                geoCoder.getFromLocation(xCoordinate, yCoordinate, 1)
-            if (addresses.isNotEmpty()) {
-                addresses[0].getAddressLine(0).removePostalCode(addresses[0].postalCode)
-            } else {
-                null
-            }
-        } catch (e: IOException) {
-            null
         }
     }
 
