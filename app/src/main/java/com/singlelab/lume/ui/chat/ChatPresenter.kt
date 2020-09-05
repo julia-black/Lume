@@ -6,6 +6,7 @@ import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.chat.common.*
 import com.singlelab.lume.ui.chat.interactor.ChatInteractor
+import com.singlelab.lume.util.resize
 import com.singlelab.lume.util.toBase64
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.exceptions.TimeoutException
@@ -84,7 +85,7 @@ constructor(
                 runOnMainThread { viewState.enableMessageSending(false) }
                 val chatUid = chatSettings.chatUid
                 if (chatUid != null) {
-                    val compressedImages = images.map { it.toBase64(80) }
+                    val compressedImages = images.map { it.resize(500).toBase64(80) }
                     val newMessage = interactor.sendMessage(ChatMessageRequest(chatUid, messageText, compressedImages))
                     if (newMessage != null) {
                         chatSettings.setLastMessageUid(newMessage)
