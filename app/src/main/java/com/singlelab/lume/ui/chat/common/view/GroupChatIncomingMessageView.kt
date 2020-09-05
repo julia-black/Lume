@@ -33,6 +33,8 @@ constructor(
     defStyleAttr
 ) {
 
+    private var maxMessageViewWidth: Int = 0
+
     init {
         layoutParams = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         inflate(getContext(), R.layout.group_incoming_message_item, this)
@@ -63,10 +65,14 @@ constructor(
         get() = images.count { it.isNotEmpty() } > 0
 
     private fun setMessageTextMaxWidth(withImage: Boolean) {
+        if (incomingMessageView.maxWidth != MESSAGE_TEXT_MAX_WIDTH.px) {
+            maxMessageViewWidth = incomingMessageView.maxWidth
+        }
         if (withImage) {
-            incomingMessageView.maxWidth = 200.px
+            incomingMessageView.maxWidth = MESSAGE_TEXT_MAX_WIDTH.px
             incomingMessageView.setPadding(incomingMessageView.paddingLeft, incomingMessageView.paddingTop, 6.px, incomingMessageView.paddingBottom)
         } else {
+            incomingMessageView.maxWidth = maxMessageViewWidth
             incomingMessageView.setPadding(incomingMessageView.paddingLeft, incomingMessageView.paddingTop, 32.px, incomingMessageView.paddingBottom)
         }
     }
@@ -118,4 +124,9 @@ constructor(
 
     private val Int.px: Int
         get() = (this * Resources.getSystem().displayMetrics.density).toInt()
+
+    companion object {
+        // Нужно ставить под размер изображения
+        private const val MESSAGE_TEXT_MAX_WIDTH = 200
+    }
 }

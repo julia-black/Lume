@@ -17,12 +17,7 @@ import com.singlelab.lume.ui.chat.common.PrivateChatMessageItem
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
 import kotlinx.android.synthetic.main.chat_message_image_view.view.*
-import kotlinx.android.synthetic.main.group_incoming_message_item.view.*
 import kotlinx.android.synthetic.main.private_incoming_message_item.view.*
-import kotlinx.android.synthetic.main.private_incoming_message_item.view.incomingMessageDateView
-import kotlinx.android.synthetic.main.private_incoming_message_item.view.incomingMessageImageView
-import kotlinx.android.synthetic.main.private_incoming_message_item.view.incomingMessageTriangleView
-import kotlinx.android.synthetic.main.private_incoming_message_item.view.incomingMessageView
 
 class PrivateChatIncomingMessageView
 @JvmOverloads
@@ -35,6 +30,8 @@ constructor(
     attrs,
     defStyleAttr
 ) {
+
+    private var maxMessageViewWidth: Int = 0
 
     init {
         layoutParams = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -54,8 +51,13 @@ constructor(
         get() = images.count { it.isNotEmpty() } > 0
 
     private fun setMessageTextMaxWidth(withImage: Boolean) {
+        if (incomingMessageView.maxWidth != MESSAGE_TEXT_MAX_WIDTH.px) {
+            maxMessageViewWidth = incomingMessageView.maxWidth
+        }
         if (withImage) {
             incomingMessageView.maxWidth = MESSAGE_TEXT_MAX_WIDTH.px
+        } else {
+            incomingMessageView.maxWidth = maxMessageViewWidth
         }
     }
 
