@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.custom.sliderimage.logic.SliderImage
 import com.singlelab.lume.R
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.ui.chat.common.ChatMessageItem
@@ -105,6 +106,23 @@ constructor(
                     .transform(CenterCrop(), GranularRoundedCorners(14f, 14f, 0f, 0f))
                     .into(chatMessageImageView)
             }
+        }
+
+        chatMessageImageView.setOnClickListener {
+            showFullScreenImages(message.images.first(), (message.images - message.images.first()).filter { it.isNotEmpty() })
+        }
+    }
+
+    private fun showFullScreenImages(primaryImageContentUid: String, images: List<String>?) {
+        context?.let {
+            val allImages = mutableListOf(primaryImageContentUid)
+            if (!images.isNullOrEmpty()) {
+                allImages.addAll(images)
+            }
+            val links = allImages.map { image ->
+                image.generateImageLink()
+            }
+            SliderImage.openfullScreen(it, links, 0)
         }
     }
 
