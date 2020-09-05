@@ -33,6 +33,8 @@ constructor(
     defStyleAttr
 ) {
 
+    private var maxMessageViewWidth: Int = 0
+
     init {
         layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         gravity = Gravity.END
@@ -41,9 +43,9 @@ constructor(
 
     fun setContent(messageItem: ChatMessageItem) {
         outgoingMessageTriangleView.isVisible = !(messageItem.hasImage && messageItem.text.isEmpty())
-        setMessageTextDimensions(messageItem.hasImage)
 
         outgoingMessageView.setMessageText(messageItem.text)
+        setMessageTextDimensions(messageItem.hasImage)
         outgoingMessageImageView.setImage(messageItem)
         outgoingMessageDateView.setDate(messageItem)
 
@@ -57,10 +59,14 @@ constructor(
         get() = images.count { it.isNotEmpty() } > 0
 
     private fun setMessageTextDimensions(withImage: Boolean) {
+        if (outgoingMessageView.maxWidth != MESSAGE_TEXT_MAX_WIDTH.px) {
+            maxMessageViewWidth = outgoingMessageView.maxWidth
+        }
         if (withImage) {
             outgoingMessageView.maxWidth = MESSAGE_TEXT_MAX_WIDTH.px
             outgoingMessageView.setPadding(outgoingMessageView.paddingLeft, outgoingMessageView.paddingTop, 6.px, outgoingMessageView.paddingBottom)
         } else {
+            outgoingMessageView.maxWidth = maxMessageViewWidth
             outgoingMessageView.setPadding(outgoingMessageView.paddingLeft, outgoingMessageView.paddingTop, 32.px, outgoingMessageView.paddingBottom)
         }
     }
