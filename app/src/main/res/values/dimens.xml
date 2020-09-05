@@ -40,4 +40,5 @@
     <dimen name="margin_top_profile">62dp</dimen>
     <dimen name="margin_card_pager">60dp</dimen>
     <dimen name="margin_cards">16dp</dimen>
+    <dimen name="stack_header_height">80dp</dimen>
 </resources>

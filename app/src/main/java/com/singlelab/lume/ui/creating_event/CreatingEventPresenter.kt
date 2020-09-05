@@ -118,7 +118,7 @@ class CreatingEventPresenter @Inject constructor(
 
     fun getPrimaryImage(): String? {
         return if (images.isNotEmpty()) {
-            images[0].toBase64(50)
+            images[0].toBase64(30)
         } else {
             null
         }
@@ -126,10 +126,10 @@ class CreatingEventPresenter @Inject constructor(
 
     fun getImagesStr(): List<String>? {
         val newImages = mutableListOf<String>()
-        newImages.addAll(images.map { it.toBase64(50) })
-        if (newImages.isNotEmpty()) {
-            newImages.removeAt(0)
+        if (images.size >= 1) {
+            images.removeAt(0)
         }
+        newImages.addAll(images.map { it.toBase64(30) })
         return newImages
     }
 

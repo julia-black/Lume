@@ -1,17 +1,23 @@
 package com.singlelab.lume.ui.event
 
+import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.custom.sliderimage.logic.SliderImage
-import com.google.android.material.shape.CornerFamily
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
@@ -38,6 +44,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
     companion object {
         const val REQUEST_EVENT = "REQUEST_EVENT"
         const val RESULT_EVENT = "RESULT_EVENT"
+        const val MAX_VIEW_PARTICIPANTS = 3
     }
 
     @Inject
@@ -67,10 +74,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
 
     override fun showEvent(event: Event) {
         title.text = event.name
-        val startDate = event.startTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
-        val endDate = event.endTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
-        start_date.text = getString(R.string.date_start_title, startDate)
-        end_date.text = getString(R.string.date_end_title, endDate)
+        showTime(event.startTime, event.endTime)
         description.text = event.description
         if (event.status.titleRes == null) {
             status.visibility = View.GONE
@@ -79,46 +83,29 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             status.setText(event.status.titleRes)
         }
         if (event.isOnline) {
-            text_location.visibility = View.INVISIBLE
-            text_online.visibility = View.VISIBLE
+            text_location.text = context?.getString(R.string.online)
+            icon_location.setImageResource(R.drawable.ic_online)
         } else {
-            text_online.visibility = View.INVISIBLE
-            text_location.visibility = View.VISIBLE
             text_location.text =
-                context?.getLocationName(event.xCoordinate, event.yCoordinate) ?: getString(
-                    R.string.unavailable_location
-                )
-            text_location.setOnClickListener {
-                val uri = String.format(
-                    Locale.ENGLISH,
-                    "geo:%f,%f?z=%d&q=%f,%f (%s)",
-                    event.xCoordinate,
-                    event.yCoordinate,
-                    13,
-                    event.xCoordinate,
-                    event.yCoordinate,
-                    event.name
-                )
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-                context?.startActivity(intent)
+                context?.getLocationName(event.xCoordinate, event.yCoordinate)
+                    ?: context?.getString(R.string.unavailable_location_short)
+            if (event.xCoordinate != null && event.yCoordinate != null) {
+                text_location.setOnClickListener {
+                    val uri = String.format(
+                        Locale.ENGLISH,
+                        "geo:%f,%f?z=%d&q=%f,%f (%s)",
+                        event.xCoordinate,
+                        event.yCoordinate,
+                        13,
+                        event.xCoordinate,
+                        event.yCoordinate,
+                        event.name
+                    )
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+                    context?.startActivity(intent)
+                }
             }
         }
-
-        if (event.cityName == null || event.isOnline) {
-            city.visibility = View.GONE
-        } else {
-            city.text = "${getString(R.string.city)}: ${event.cityName}"
-            city.visibility = View.VISIBLE
-        }
-
-        val radius = resources.getDimension(R.dimen.radius_large)
-        image.shapeAppearanceModel = image.shapeAppearanceModel
-            .toBuilder()
-            .setTopRightCorner(CornerFamily.ROUNDED, radius)
-            .setTopLeftCorner(CornerFamily.ROUNDED, radius)
-            .setBottomRightCorner(CornerFamily.CUT, 0f)
-            .setBottomLeftCorner(CornerFamily.CUT, 0f)
-            .build()
 
         if (event.eventPrimaryImageContentUid == null) {
             image.setImageResource(R.mipmap.image_event_default)
@@ -163,6 +150,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                 event.maxAge
             )
         }
+
         count_participants.text = getString(
             R.string.count_participants,
             event.participants.size
@@ -171,7 +159,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             toParticipants(false, presenter.isAdministrator())
         }
         event.administrator?.let {
-            administrator.text = it.name
+            administrator_name.text = it.name
 
             if (it.imageContentUid != null) {
                 Glide.with(this)
@@ -182,16 +170,28 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
 
         if (event.participants.isEmpty()) {
             recycler_participants.visibility = View.GONE
+            more_participants.visibility = View.GONE
         } else {
+            val participantSize = event.participants.size
             recycler_participants.visibility = View.VISIBLE
             recycler_participants.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
                 visibility = View.VISIBLE
                 adapter =
                     ImagePersonAdapter(
-                        event.participants,
+                        event.participants.subList(
+                            0,
+                            if (participantSize < MAX_VIEW_PARTICIPANTS) participantSize else MAX_VIEW_PARTICIPANTS
+                        ),
                         this@EventFragment
                     )
+            }
+            if (participantSize > MAX_VIEW_PARTICIPANTS) {
+                more_participants.visibility = View.VISIBLE
+                more_participants.text = "+${participantSize - MAX_VIEW_PARTICIPANTS}"
+                more_participants.setOnClickListener {
+                    toParticipants(false, presenter.isAdministrator())
+                }
             }
         }
         if (event.notApprovedParticipants.isEmpty() || event.administrator?.personUid != AuthData.uid) {
@@ -224,13 +224,29 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             }
             button_cancel_event.visibility = View.VISIBLE
             button_cancel_event.setOnClickListener {
-                presenter.cancelEvent()
+                val dialogClickListener =
+                    DialogInterface.OnClickListener { dialog, which ->
+                        when (which) {
+                            DialogInterface.BUTTON_POSITIVE -> {
+                                presenter.cancelEvent()
+                            }
+                            DialogInterface.BUTTON_NEGATIVE -> {
+                            }
+                        }
+                    }
+                showDialog(
+                    getString(R.string.accept_cancel),
+                    getString(R.string.info_about_cancel),
+                    dialogClickListener
+                )
+
             }
         } else {
             button_search_participants.visibility = View.GONE
             button_invite.visibility =
                 if (event.isOpenForInvitations && event.isActive()) View.VISIBLE else View.GONE
             button_cancel_event.visibility = View.GONE
+            divider_three.visibility = View.GONE
         }
 
         if (event.eventPrimaryImageContentUid != null) {
@@ -263,6 +279,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             }
             ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER -> {
                 button_chat.visibility = View.GONE
+                divider_four.visibility = View.GONE
                 button_join.visibility = View.GONE
                 button_invite.visibility = View.GONE
                 button_accept.visibility = View.VISIBLE
@@ -284,6 +301,81 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                 button_invite.visibility = View.GONE
                 button_join.visibility = View.VISIBLE
             }
+        }
+
+        if (!event.isActive()) {
+            divider_three.visibility = View.GONE
+            divider_four.visibility = View.GONE
+        }
+    }
+
+    private fun showTime(startTime: String, endTime: String) {
+        //меньше суток разницы 10 августа 10:00 - 14:00
+        if (endTime.toLongTime(Const.DATE_FORMAT_TIME_ZONE) - startTime.toLongTime(Const.DATE_FORMAT_TIME_ZONE) < 1000 * 60 * 60 * 24) {
+            val startDate = startTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_ON_CARD)
+            val endTime = endTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_ONLY_TIME)
+            val timeText = "$startDate - $endTime"
+            val spannable = SpannableString(timeText)
+            spannable.setSpan(
+                ForegroundColorSpan(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.colorPrimaryAccent
+                    )
+                ),
+                startDate.length - 5, timeText.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannable.setSpan(
+                StyleSpan(Typeface.BOLD),
+                startDate.length - 5, timeText.length,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            start_date.text = spannable
+        } else { //больше суток разницы 10 августа 10:00 - 11 августа 15:00
+            val startDate = startTime.parse(
+                Const.DATE_FORMAT_TIME_ZONE,
+                Const.DATE_FORMAT_OUTPUT_WITH_NAME_MONTH
+            )
+            val endDate = endTime.parse(
+                Const.DATE_FORMAT_TIME_ZONE,
+                Const.DATE_FORMAT_OUTPUT_WITH_NAME_MONTH
+            )
+            val timeText = "$startDate - $endDate"
+            val indexOfFirst = timeText.indexOfFirst { it == ':' }
+            val indexOfLast = timeText.indexOfLast { it == ':' }
+            val spannable = SpannableString(timeText)
+            spannable.setSpan(
+                ForegroundColorSpan(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.colorPrimaryAccent
+                    )
+                ),
+                indexOfFirst - 2, indexOfFirst + 3,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannable.setSpan(
+                StyleSpan(Typeface.BOLD),
+                indexOfFirst - 2, indexOfFirst + 3,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannable.setSpan(
+                ForegroundColorSpan(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.colorPrimaryAccent
+                    )
+                ),
+                indexOfLast - 2, indexOfLast + 3,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            spannable.setSpan(
+                StyleSpan(Typeface.BOLD),
+                indexOfLast - 2, indexOfLast + 3,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            start_date.text = spannable
         }
     }
 

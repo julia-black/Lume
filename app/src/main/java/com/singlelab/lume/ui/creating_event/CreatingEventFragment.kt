@@ -176,7 +176,6 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
     override fun showLoading(isShow: Boolean, withoutBackground: Boolean) {
         super.showLoading(isShow, withoutBackground)
         button_create_event.isEnabled = !isShow
-
     }
 
     private fun setListeners() {

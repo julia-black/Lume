@@ -37,4 +37,5 @@
     <dimen name="margin_card">8dp</dimen>
     <dimen name="margin_card_pager">40dp</dimen>
     <dimen name="margin_cards">0dp</dimen>
+    <dimen name="stack_header_height">70dp</dimen>
 </resources>

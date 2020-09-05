@@ -100,10 +100,10 @@
     <string name="age_from_to">Возраст: %1$d-%2$d</string>
     <string name="age_from">Возраст: %1$d+</string>
     <string name="age_to">Возраст: до %1$d</string>
-    <string name="count_participants">Идут %1$d человек</string>
+    <string name="count_participants">Идёт %1$d человек</string>
     <string name="waiting_for_approve_event">Заявка подана</string>
-    <string name="waiting_for_approve_users">Ожидают подтверждения %1$d человек</string>
-    <string name="count_invited">Приглашены %1$d человек</string>
+    <string name="waiting_for_approve_users">Новые заявки (%1$d)</string>
+    <string name="count_invited">Приглашения (%1$d)</string>
     <string name="invite_friends">Пригласить друзей</string>
     <string name="search_participants">Найти участников</string>
     <string name="waiting_for_approve_user">Новое приглашение</string>
@@ -199,6 +199,11 @@
     <string name="choose_date">В любой день</string>
     <string name="mtrl_picker_range_header_only_start_selected">%1$s - Выберите конечную дату</string>
     <string name="range">%1$s - %2$s</string>
+    <string name="reject">Отклонить</string>
+    <string name="accept_cancel">Вы уверены, что хотите отменить событие?</string>
+    <string name="yes">Подтвердить</string>
+    <string name="no">Отмена</string>
+    <string name="info_about_cancel">Вы не сможете снова его открыть. Информация о событии и чат останутся</string>
 
     <!-- Arrays -->
     <string-array name="custom_weekdays">

@@ -69,3 +69,10 @@ fun Long.toDateFormat(format: String): String {
     val date = Date(this)
     return date.parseToString(format)
 }
+
+fun String.toLongTime(format: String): Long {
+    val inputFormat = SimpleDateFormat(format, Locale.getDefault())
+    inputFormat.timeZone = TimeZone.getTimeZone(Const.UTC)
+    val date = inputFormat.parse(this)
+    return date.time
+}

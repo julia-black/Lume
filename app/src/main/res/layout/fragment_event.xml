@@ -10,364 +10,471 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/margin_large"
-        android:background="@drawable/shape_card"
+        android:layout_height="wrap_content"
         android:paddingBottom="@dimen/padding_bottom_nav">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintDimensionRatio="10:7"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@drawable/shape_card"
-            tools:src="@mipmap/image_event_default" />
-
         <androidx.cardview.widget.CardView
-            android:id="@+id/emoji_card_one"
-            android:layout_width="@dimen/size_card_emoji"
-            android:layout_height="@dimen/size_card_emoji"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:visibility="gone"
-            app:cardCornerRadius="@dimen/size_emoji_event"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toStartOf="@id/emoji_card_two"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible">
+            android:id="@+id/card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="@dimen/radius_large"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/emoji_one"
-                android:layout_width="@dimen/size_emoji_event"
-                android:layout_height="@dimen/size_emoji_event"
-                android:layout_gravity="center"
-                tools:src="@drawable/ic_emoji_talk" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/margin_medium">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_top_card"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="2"
+                    android:padding="@dimen/margin_medium"
+                    android:paddingEnd="60dp"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_large"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Название" />
+
+                <ImageView
+                    android:id="@+id/button_share"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="@dimen/margin_medium"
+                    android:src="@drawable/ic_share"
+                    android:tint="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <ImageView
+                    android:id="@+id/button_chat"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="@dimen/margin_medium"
+                    android:src="@drawable/ic_chat_small"
+                    android:tint="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/title"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/emoji_card_one"
+                        android:layout_width="@dimen/size_card_emoji"
+                        android:layout_height="@dimen/size_card_emoji"
+                        android:layout_margin="@dimen/margin_medium"
+                        android:visibility="gone"
+                        app:cardBackgroundColor="@color/colorAccent"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="visible">
+
+                        <ImageView
+                            android:id="@+id/emoji_one"
+                            android:layout_width="@dimen/size_emoji_event"
+                            android:layout_height="@dimen/size_emoji_event"
+                            android:layout_gravity="center"
+                            android:layout_margin="@dimen/margin_small"
+                            tools:src="@drawable/ic_emoji_talk" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/emoji_card_two"
+                        android:layout_width="@dimen/size_card_emoji"
+                        android:layout_height="@dimen/size_card_emoji"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:visibility="gone"
+                        app:cardBackgroundColor="@color/colorAccent"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toEndOf="@id/emoji_card_one"
+                        app:layout_constraintTop_toTopOf="@id/emoji_card_one"
+                        tools:visibility="visible">
+
+                        <ImageView
+                            android:id="@+id/emoji_two"
+                            android:layout_width="@dimen/size_emoji_event"
+                            android:layout_height="@dimen/size_emoji_event"
+                            android:layout_gravity="center"
+                            android:layout_margin="@dimen/margin_small"
+                            tools:src="@drawable/ic_emoji_nature" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/emoji_card_three"
+                        android:layout_width="@dimen/size_card_emoji"
+                        android:layout_height="@dimen/size_card_emoji"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:visibility="gone"
+                        app:cardBackgroundColor="@color/colorAccent"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toEndOf="@id/emoji_card_two"
+                        app:layout_constraintTop_toTopOf="@id/emoji_card_one"
+                        tools:visibility="visible">
+
+                        <ImageView
+                            android:id="@+id/emoji_three"
+                            android:layout_width="@dimen/size_emoji_event"
+                            android:layout_height="@dimen/size_emoji_event"
+                            android:layout_gravity="center"
+                            android:layout_margin="@dimen/margin_small"
+                            tools:src="@drawable/ic_emoji_travel" />
+                    </androidx.cardview.widget.CardView>
+
+                    <ImageView
+                        android:id="@+id/icon_location"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_margin="@dimen/margin_medium"
+                        android:src="@drawable/ic_location"
+                        android:tint="@color/colorGrayMedium"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/emoji_card_one" />
+
+                    <TextView
+                        android:id="@+id/text_location"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_medium"
+                        android:layout_marginStart="16dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textColor="@color/colorGrayMedium"
+                        android:textSize="@dimen/text_size_standart"
+                        android:visibility="visible"
+                        app:layout_constraintBottom_toBottomOf="@id/icon_location"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/icon_location"
+                        app:layout_constraintTop_toTopOf="@id/icon_location"
+                        tools:text="Москва" />
+
+                    <ImageView
+                        android:id="@+id/icon_date"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_margin="@dimen/margin_medium"
+                        android:src="@drawable/ic_date"
+                        android:tint="@color/colorGrayMedium"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/icon_location" />
+
+                    <TextView
+                        android:id="@+id/start_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:textColor="@color/colorGrayMedium"
+                        android:textSize="@dimen/text_size_standart"
+                        app:layout_constraintBottom_toBottomOf="@id/icon_date"
+                        app:layout_constraintStart_toEndOf="@id/icon_date"
+                        app:layout_constraintTop_toTopOf="@id/icon_date"
+                        tools:text="10 августа, 15:00 - 02:00" />
+
+                    <TextView
+                        android:id="@+id/status"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_medium"
+                        android:textColor="@color/colorTextGray"
+                        android:textSize="@dimen/text_size_standart"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/icon_date"
+                        tools:text="@string/title_ended"
+                        tools:visibility="visible" />
+
+                    <View
+                        android:id="@+id/divider_one"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:background="@color/colorGrayVeryLight"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/status" />
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_margin="@dimen/margin_medium"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintDimensionRatio="2:1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/divider_one">
+
+                        <ImageView
+                            android:id="@+id/image"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/image_event_default" />
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/description"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:textColor="@color/colorText"
+                        android:textSize="@dimen/text_size_standart"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/card_image"
+                        tools:text="Описание" />
+
+                    <TextView
+                        android:id="@+id/age"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:textColor="@color/colorGrayMedium"
+                        android:textSize="@dimen/text_size_standart"
+                        app:layout_constraintTop_toBottomOf="@id/description"
+                        tools:text="Возраст: 18-25 лет" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_image_administrator"
+                        android:layout_width="@dimen/size_image_person_short"
+                        android:layout_height="@dimen/size_image_person_short"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:layout_marginVertical="@dimen/margin_small"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/age"
+                        tools:cardBackgroundColor="@color/colorGray">
+
+                        <ImageView
+                            android:id="@+id/image_administrator"
+                            android:layout_width="@dimen/size_image_person_short"
+                            android:layout_height="@dimen/size_image_person_short" />
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/administrator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_small"
+                        android:text="@string/administrator"
+                        android:textColor="@color/colorPrimaryAccent"
+                        android:textSize="@dimen/text_size_standart"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@id/card_image_administrator"
+                        app:layout_constraintTop_toTopOf="@id/card_image_administrator" />
+
+                    <TextView
+                        android:id="@+id/administrator_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_very_small"
+                        android:gravity="top"
+                        android:lines="1"
+                        android:textColor="@color/colorGrayMedium"
+                        android:textSize="@dimen/text_size_standart"
+                        app:layout_constraintBottom_toBottomOf="@id/card_image_administrator"
+                        app:layout_constraintStart_toStartOf="@id/administrator"
+                        app:layout_constraintTop_toBottomOf="@id/administrator"
+                        tools:text="Иван" />
+
+                    <View
+                        android:id="@+id/divider_two"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:background="@color/colorGrayVeryLight"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/card_image_administrator" />
+
+                    <TextView
+                        android:id="@+id/count_participants"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_medium"
+                        android:textColor="@color/colorText"
+                        android:textSize="@dimen/text_size_standart"
+                        app:layout_constraintTop_toBottomOf="@id/divider_two"
+                        tools:text="Идёт 10 человек" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_participants"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/count_participants"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/item_image_person" />
+
+                    <TextView
+                        android:id="@+id/count_not_approved"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:drawablePadding="@dimen/margin_small"
+                        android:textColor="@color/colorNotification"
+                        android:textSize="@dimen/text_size_standart"
+                        android:textStyle="bold"
+                        app:layout_constraintTop_toBottomOf="@id/recycler_participants"
+                        tools:text="Новые заявки (3)" />
+
+                    <TextView
+                        android:id="@+id/count_invited"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:textColor="@color/colorGrayMedium"
+                        android:textSize="@dimen/text_size_standart"
+                        app:layout_constraintTop_toBottomOf="@id/count_not_approved"
+                        tools:text="Приглашения (5)" />
+
+                    <TextView
+                        android:id="@+id/more_participants"
+                        android:layout_width="@dimen/size_image_person_short"
+                        android:layout_height="@dimen/size_image_person_short"
+                        android:background="@drawable/shape_rectangle"
+                        android:gravity="center"
+                        android:textColor="@color/colorGrayMedium"
+                        android:textSize="@dimen/text_size_standart"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@id/recycler_participants"
+                        app:layout_constraintStart_toEndOf="@id/recycler_participants"
+                        app:layout_constraintTop_toTopOf="@id/recycler_participants"
+                        tools:text="+9"
+                        tools:visibility="visible" />
+
+                    <View
+                        android:id="@+id/divider_three"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:background="@color/colorGrayVeryLight"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/count_invited" />
+
+                    <TextView
+                        android:id="@+id/button_cancel_event"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:clickable="true"
+                        android:drawableStart="@drawable/ic_reject"
+                        android:drawablePadding="@dimen/margin_small"
+                        android:focusable="true"
+                        android:text="@string/cancel_event"
+                        android:textColor="@color/colorGrayMedium"
+                        android:textSize="@dimen/text_size_standart"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider_three"
+                        tools:visibility="visible" />
+
+                    <View
+                        android:id="@+id/divider_four"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:background="@color/colorGrayVeryLight"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/button_cancel_event" />
+
+                    <Button
+                        android:id="@+id/button_join"
+                        style="@style/ButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:clickable="true"
+                        android:enabled="true"
+                        android:focusable="true"
+                        android:text="@string/join"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider_four" />
+
+                    <Button
+                        android:id="@+id/button_invite"
+                        style="@style/ButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:text="@string/invite_friends"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/button_join"
+                        tools:visibility="visible" />
+
+                    <Button
+                        android:id="@+id/button_search_participants"
+                        style="@style/ButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:text="@string/search_participants"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/button_invite"
+                        tools:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/button_reject"
+                        android:layout_width="@dimen/size_icon_button"
+                        android:layout_height="@dimen/size_icon_button"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        android:src="@drawable/ic_reject"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/button_accept"
+                        android:layout_width="@dimen/size_icon_button"
+                        android:layout_height="@dimen/size_icon_button"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:src="@drawable/ic_accept"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toStartOf="@id/button_reject"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="visible" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/emoji_card_two"
-            android:layout_width="@dimen/size_card_emoji"
-            android:layout_height="@dimen/size_card_emoji"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:visibility="gone"
-            app:cardCornerRadius="@dimen/size_emoji_event"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toStartOf="@id/emoji_card_three"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible">
 
-            <ImageView
-                android:id="@+id/emoji_two"
-                android:layout_width="@dimen/size_emoji_event"
-                android:layout_height="@dimen/size_emoji_event"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/margin_small"
-                tools:src="@drawable/ic_emoji_nature" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/emoji_card_three"
-            android:layout_width="@dimen/size_card_emoji"
-            android:layout_height="@dimen/size_card_emoji"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:visibility="gone"
-            app:cardCornerRadius="@dimen/size_emoji_event"
-            app:cardElevation="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible">
-
-            <ImageView
-                android:id="@+id/emoji_three"
-                android:layout_width="@dimen/size_emoji_event"
-                android:layout_height="@dimen/size_emoji_event"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/margin_small"
-                tools:src="@drawable/ic_emoji_travel" />
-
-        </androidx.cardview.widget.CardView>
-
-        <ImageView
-            android:id="@+id/button_chat"
-            android:layout_width="@dimen/size_image_chat"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:background="@drawable/ic_chat_button"
-            android:backgroundTint="@color/selector_button"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingHorizontal="@dimen/margin_medium"
-            android:paddingVertical="@dimen/margin_small"
-            android:src="@drawable/ic_chat"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="@id/button_share"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image"
-            tools:text="Название" />
-
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:textColor="@color/colorGray"
-            android:textSize="@dimen/text_size_standart"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="@id/button_share"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            tools:text="@string/title_ended"
-            tools:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/button_share"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="@dimen/margin_medium"
-            android:src="@drawable/ic_share"
-            android:tint="@color/colorAccent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image" />
-
-        <TextView
-            android:id="@+id/text_online"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:drawableStart="@drawable/ic_circle"
-            android:drawablePadding="@dimen/margin_small"
-            android:text="@string/online"
-            android:textSize="16sp"
-            android:visibility="invisible"
-            app:layout_constraintTop_toBottomOf="@id/status" />
-
-        <TextView
-            android:id="@+id/text_location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:drawableStart="@drawable/ic_place"
-            android:drawablePadding="@dimen/margin_small"
-            android:textSize="16sp"
-            android:visibility="invisible"
-            app:layout_constraintTop_toBottomOf="@id/status"
-            tools:text="ул. Пушкина, д. 10, Москва"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/text_location"
-            tools:text="Описание" />
-
-        <ImageView
-            android:id="@+id/button_reject"
-            android:layout_width="@dimen/size_icon_button"
-            android:layout_height="@dimen/size_icon_button"
-            android:layout_margin="@dimen/margin_small"
-            android:src="@drawable/ic_reject"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/description"
-            tools:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/button_accept"
-            android:layout_width="@dimen/size_icon_button"
-            android:layout_height="@dimen/size_icon_button"
-            android:layout_margin="@dimen/margin_small"
-            android:src="@drawable/ic_accept"
-            android:visibility="gone"
-            app:layout_constraintStart_toEndOf="@id/button_reject"
-            app:layout_constraintTop_toBottomOf="@id/description"
-            tools:visibility="visible" />
-
-        <Button
-            android:id="@+id/button_search_participants"
-            style="@style/ButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/search_participants"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/button_invite"
-            tools:visibility="visible" />
-
-        <Button
-            android:id="@+id/button_join"
-            style="@style/ButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:clickable="true"
-            android:enabled="true"
-            android:focusable="true"
-            android:text="@string/join"
-            app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/button_reject" />
-
-        <Button
-            android:id="@+id/button_invite"
-            style="@style/ButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/invite_friends"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/button_join"
-            tools:visibility="visible" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_image_administrator"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_margin="@dimen/margin_medium"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/age"
-            tools:cardBackgroundColor="@color/colorGray">
-
-            <ImageView
-                android:id="@+id/image_administrator"
-                android:layout_width="32dp"
-                android:layout_height="32dp" />
-        </androidx.cardview.widget.CardView>
-
-        <TextView
-            android:id="@+id/administrator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_small"
-            app:layout_constraintBottom_toBottomOf="@id/card_image_administrator"
-            app:layout_constraintStart_toEndOf="@id/card_image_administrator"
-            app:layout_constraintTop_toTopOf="@id/card_image_administrator"
-            tools:text="Организатор" />
-
-        <TextView
-            android:id="@+id/city"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
-            app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/button_search_participants"
-            tools:text="Город Москва" />
-
-        <TextView
-            android:id="@+id/start_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:drawableStart="@drawable/ic_date"
-            android:drawablePadding="@dimen/margin_small"
-            app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/city"
-            tools:text="Начало: 10.02.2020 15:00" />
-
-        <TextView
-            android:id="@+id/end_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:drawableStart="@drawable/ic_date"
-            android:drawablePadding="@dimen/margin_small"
-            app:layout_constraintStart_toStartOf="@id/start_date"
-            app:layout_constraintTop_toBottomOf="@id/start_date"
-            tools:text="Завершение: 10.02.2020 17:00" />
-
-        <TextView
-            android:id="@+id/count_not_approved"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:drawableStart="@drawable/ic_notifications"
-            android:drawablePadding="@dimen/margin_small"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/end_date"
-            tools:text="Ожидают подтверждения 5 человек" />
-
-        <TextView
-            android:id="@+id/count_invited"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:drawablePadding="@dimen/margin_small"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/count_not_approved"
-            tools:text="Приглашены 5 человек" />
-
-        <TextView
-            android:id="@+id/count_participants"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/count_invited"
-            tools:text="Идут 10 человек" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_participants"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/count_participants"
-            tools:itemCount="1"
-            tools:listitem="@layout/item_image_person" />
-
-        <TextView
-            android:id="@+id/age"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_medium"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@id/recycler_participants"
-            tools:text="18-25 лет" />
-
-        <TextView
-            android:id="@+id/button_cancel_event"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/margin_medium"
-            android:clickable="true"
-            android:drawableStart="@drawable/ic_reject"
-            android:drawablePadding="@dimen/margin_small"
-            android:focusable="true"
-            android:text="@string/cancel_event"
-            android:textColor="@color/colorBackground"
-            android:textSize="@dimen/text_size_standart"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/card_image_administrator"
-            tools:visibility="visible" />
-
+        <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
