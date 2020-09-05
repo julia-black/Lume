@@ -20,7 +20,6 @@ import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
 import kotlinx.android.synthetic.main.chat_message_image_view.view.*
 import kotlinx.android.synthetic.main.group_incoming_message_item.view.*
-import kotlinx.android.synthetic.main.outgoing_message_item.view.*
 
 class GroupChatIncomingMessageView
 @JvmOverloads
@@ -40,6 +39,7 @@ constructor(
     }
 
     fun setContent(messageItem: GroupChatMessageItem) {
+        incomingMessageTriangleView.isVisible = !(messageItem.hasImage && messageItem.text.isEmpty())
         setMessageTextMaxWidth(messageItem.hasImage)
 
         incomingMessageView.setMessageText(messageItem.text)
@@ -55,7 +55,7 @@ constructor(
             Glide.with(this)
                 .load(messageItem.personPhoto.generateImageLink())
                 .apply(RequestOptions.circleCropTransform())
-                .into(incomingMessagePhotoView)
+                .into(incomingMessageAuthorPhotoView)
         }
     }
 
@@ -65,6 +65,9 @@ constructor(
     private fun setMessageTextMaxWidth(withImage: Boolean) {
         if (withImage) {
             incomingMessageView.maxWidth = 200.px
+            incomingMessageView.setPadding(incomingMessageView.paddingLeft, incomingMessageView.paddingTop, 6.px, incomingMessageView.paddingBottom)
+        } else {
+            incomingMessageView.setPadding(incomingMessageView.paddingLeft, incomingMessageView.paddingTop, 32.px, incomingMessageView.paddingBottom)
         }
     }
 

@@ -4,52 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="30dp"
-    android:background="@drawable/private_incoming_message_input_background"
-    android:backgroundTint="#D5DADA"
-    android:padding="1dp"
-    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
+    tools:parentTag="android.widget.FrameLayout">
 
-    <com.singlelab.lume.ui.chat.common.view.ChatMessageImageView
-        android:id="@+id/incomingMessageImageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_goneMarginBottom="10dp"
-        tools:visibility="visible" />
-
-    <TextView
-        android:id="@+id/incomingMessageView"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/incomingMessageTriangleView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@id/incomingMessageImageView"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/incomingMessageImageView"
-        app:layout_constraintTop_toBottomOf="@id/incomingMessageImageView"
-        tools:text="Medium-Long Message"
-        tools:visibility="visible" />
+        android:layout_gravity="start|bottom"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/chat_incoming_message_triangle"
+        app:backgroundTint="@color/colorChatIncomingMessageBackground" />
 
-    <TextView
-        android:id="@+id/incomingMessageDateView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/incomingMessageBackgroundView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="2dp"
-        android:fontFamily="sans-serif"
-        android:textSize="12sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/incomingMessageView"
-        tools:text="13:48"
-        tools:visibility="visible" />
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="9dp"
+        android:background="@drawable/group_message_input_background"
+        android:backgroundTint="@color/colorChatIncomingMessageBackground"
+        android:padding="1dp">
+
+        <com.singlelab.lume.ui.chat.common.view.ChatMessageImageView
+            android:id="@+id/incomingMessageImageView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginBottom="10dp"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/incomingMessageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:includeFontPadding="false"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
+            android:textColor="@color/colorText"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/incomingMessageImageView"
+            tools:text="Medium-Long Message"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/incomingMessageDateView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="2dp"
+            android:paddingStart="16dp"
+            android:includeFontPadding="false"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintTop_toBottomOf="@id/incomingMessageView"
+            tools:text="13:48"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </merge>

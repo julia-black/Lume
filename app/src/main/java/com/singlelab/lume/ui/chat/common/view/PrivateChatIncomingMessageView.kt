@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.util.AttributeSet
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
@@ -17,7 +17,12 @@ import com.singlelab.lume.ui.chat.common.PrivateChatMessageItem
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
 import kotlinx.android.synthetic.main.chat_message_image_view.view.*
+import kotlinx.android.synthetic.main.group_incoming_message_item.view.*
 import kotlinx.android.synthetic.main.private_incoming_message_item.view.*
+import kotlinx.android.synthetic.main.private_incoming_message_item.view.incomingMessageDateView
+import kotlinx.android.synthetic.main.private_incoming_message_item.view.incomingMessageImageView
+import kotlinx.android.synthetic.main.private_incoming_message_item.view.incomingMessageTriangleView
+import kotlinx.android.synthetic.main.private_incoming_message_item.view.incomingMessageView
 
 class PrivateChatIncomingMessageView
 @JvmOverloads
@@ -25,7 +30,7 @@ constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : LinearLayout(
+) : FrameLayout(
     context,
     attrs,
     defStyleAttr
@@ -37,6 +42,7 @@ constructor(
     }
 
     fun setContent(messageItem: PrivateChatMessageItem) {
+        incomingMessageTriangleView.isVisible = !(messageItem.hasImage && messageItem.text.isEmpty())
         setMessageTextMaxWidth(messageItem.hasImage)
 
         incomingMessageView.setMessageText(messageItem.text)

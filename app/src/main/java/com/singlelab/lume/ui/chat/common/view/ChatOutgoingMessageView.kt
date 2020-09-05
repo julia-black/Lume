@@ -40,6 +40,7 @@ constructor(
     }
 
     fun setContent(messageItem: ChatMessageItem) {
+        outgoingMessageTriangleView.isVisible = !(messageItem.hasImage && messageItem.text.isEmpty())
         setMessageTextDimensions(messageItem.hasImage)
 
         outgoingMessageView.setMessageText(messageItem.text)

@@ -41,6 +41,8 @@
     <color name="colorChatPressed">#65C55B</color>
     <color name="colorChatImageForeground">#8C000000</color>
     <color name="colorChatDateChipBackground">#80000000</color>
+    <color name="colorChatDivider">#E7E8EB</color>
+    <color name="colorChatIncomingMessageBackground">#E3E9F6</color>
 
     <color name="colorSnackbar">#5C5C5C</color>
     <color name="colorSuccess">#63CD64</color>
