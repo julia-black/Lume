@@ -11,6 +11,7 @@ import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.creating_event.interactor.CreatingEventInteractor
 import com.singlelab.lume.ui.feedback.FeedbackPresenter
 import com.singlelab.lume.util.parseToString
+import com.singlelab.lume.util.resize
 import com.singlelab.lume.util.toBase64
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.auth.AuthData
@@ -118,7 +119,7 @@ class CreatingEventPresenter @Inject constructor(
 
     fun getPrimaryImage(): String? {
         return if (images.isNotEmpty()) {
-            images[0].toBase64(30)
+            images[0].resize(1200).toBase64(80)
         } else {
             null
         }
@@ -129,7 +130,7 @@ class CreatingEventPresenter @Inject constructor(
         if (images.size >= 1) {
             images.removeAt(0)
         }
-        newImages.addAll(images.map { it.toBase64(30) })
+        newImages.addAll(images.map { it.resize(1200).toBase64(80) })
         return newImages
     }
 
