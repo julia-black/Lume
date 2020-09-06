@@ -23,11 +23,15 @@ fun Bitmap.resize(size: Int): Bitmap {
     var height: Int = copiedBitmap.height
     val bitmapRatio = width.toFloat() / height.toFloat()
     if (bitmapRatio > 1) {
-        width = size
-        height = (width / bitmapRatio).toInt()
+        if (width > size) {
+            width = size
+            height = (width / bitmapRatio).toInt()
+        }
     } else {
-        height = size
-        width = (height * bitmapRatio).toInt()
+        if (height > size) {
+            height = size
+            width = (height * bitmapRatio).toInt()
+        }
     }
     return Bitmap.createScaledBitmap(copiedBitmap, width, height, true)
 }
