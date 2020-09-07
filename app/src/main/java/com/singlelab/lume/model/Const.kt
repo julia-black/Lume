@@ -32,6 +32,6 @@ object Const {
     const val IMAGE_RESOLUTION_WIDTH = 1000
     const val IMAGE_RESOLUTION_HEIGHT = 1000
 
-    const val MAX_COUNT_IMAGES = 10
+    const val MAX_COUNT_IMAGES = 5
     const val SELECT_IMAGE_REQUEST_CODE = 102
 }

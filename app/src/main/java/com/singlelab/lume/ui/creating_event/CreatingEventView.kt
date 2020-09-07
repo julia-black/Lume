@@ -3,6 +3,7 @@ package com.singlelab.lume.ui.creating_event
 import android.graphics.Bitmap
 import com.singlelab.lume.base.view.ErrorView
 import com.singlelab.lume.base.view.LoadingView
+import com.singlelab.lume.model.event.EventType
 import moxy.viewstate.strategy.AddToEndSingleStrategy
 import moxy.viewstate.strategy.OneExecutionStateStrategy
 import moxy.viewstate.strategy.StateStrategyType
@@ -33,8 +34,20 @@ interface CreatingEventView : LoadingView, ErrorView {
     fun showImages(images: MutableList<Bitmap>)
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showTypes(types: MutableList<Int>)
+    fun showTypes(types: MutableList<EventType>)
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun showLoadingImages(idx: Int, size: Int)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showTitle(title: String)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showDescription(description: String)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showClosedEvent(checked: Boolean)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showOnlineEvent(checked: Boolean)
 }

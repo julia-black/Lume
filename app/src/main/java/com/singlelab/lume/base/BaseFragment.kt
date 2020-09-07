@@ -112,6 +112,16 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         }
     }
 
+    fun showKeyboard() {
+        val imm: InputMethodManager =
+            activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        var view = activity?.currentFocus
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+    }
+
     fun hideKeyboard() {
         val imm: InputMethodManager =
             activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager

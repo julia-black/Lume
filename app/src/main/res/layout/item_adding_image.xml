@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="100dp"
     android:layout_height="100dp"
-    android:layout_marginHorizontal="@dimen/margin_small"
-    android:layout_marginTop="@dimen/margin_medium"
+    android:layout_marginEnd="@dimen/margin_small"
     app:cardCornerRadius="15dp"
     app:cardElevation="0dp">
 
@@ -12,5 +11,7 @@
         android:id="@+id/image_event"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/ic_image" />
+        android:scaleType="center"
+        android:src="@drawable/ic_upload" />
+
 </androidx.cardview.widget.CardView>

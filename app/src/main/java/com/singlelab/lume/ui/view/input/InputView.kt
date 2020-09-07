@@ -56,6 +56,10 @@ class InputView @JvmOverloads constructor(
         text_input_edit_text.setHorizontallyScrolling(false)
     }
 
+    fun enableLineBreaks() {
+        text_input_edit_text.isSingleLine = false
+    }
+
     fun setOnEditorListener(function: (Int) -> Boolean) {
         text_input_edit_text.setOnEditorActionListener { _, actionId, _ ->
             function.invoke(actionId)

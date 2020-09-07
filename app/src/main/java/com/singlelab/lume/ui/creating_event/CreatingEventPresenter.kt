@@ -6,10 +6,10 @@ import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
+import com.singlelab.lume.model.event.EventType
 import com.singlelab.lume.model.location.MapLocation
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.creating_event.interactor.CreatingEventInteractor
-import com.singlelab.lume.ui.feedback.FeedbackPresenter
 import com.singlelab.lume.util.parseToString
 import com.singlelab.lume.util.resize
 import com.singlelab.lume.util.toBase64
@@ -39,9 +39,16 @@ class CreatingEventPresenter @Inject constructor(
 
     var location: MapLocation? = null
 
-    private var types: MutableList<Int> = mutableListOf()
+    private var types: MutableList<EventType> = mutableListOf()
 
     private var images: MutableList<Bitmap> = mutableListOf()
+
+    private var title: String? = null
+
+    private var description: String? = null
+
+    private var isOnlineEvent = false
+    private var isClosedEvent = false
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -82,6 +89,26 @@ class CreatingEventPresenter @Inject constructor(
         }
     }
 
+    fun setTitle(title: String) {
+        this.title = title
+        viewState.showTitle(title)
+    }
+
+    fun setDescription(description: String) {
+        this.description = description
+        viewState.showDescription(description)
+    }
+
+    fun setClosedEvent(checked: Boolean) {
+        this.isClosedEvent = checked
+        viewState.showClosedEvent(checked)
+    }
+
+    fun setOnlineEvent(checked: Boolean) {
+        this.isOnlineEvent = checked
+        viewState.showOnlineEvent(checked)
+    }
+
     fun saveCurrentDate(year: Int, month: Int, day: Int, isStart: Boolean) {
         if (isStart) {
             if (currentDateStart == null) {
@@ -107,21 +134,21 @@ class CreatingEventPresenter @Inject constructor(
             }
             currentDateStart!!.set(Calendar.HOUR_OF_DAY, hours)
             currentDateStart!!.set(Calendar.MINUTE, minutes)
-            viewState.showDateStart(currentDateStart!!.parseToString(Const.DATE_FORMAT_OUTPUT))
+            viewState.showDateStart(currentDateStart!!.parseToString(Const.DATE_FORMAT_ON_CARD))
         } else {
             if (currentDateEnd == null) {
                 currentDateEnd = Calendar.getInstance()
             }
             currentDateEnd!!.set(Calendar.HOUR_OF_DAY, hours)
             currentDateEnd!!.set(Calendar.MINUTE, minutes)
-            viewState.showDateEnd(currentDateEnd!!.parseToString(Const.DATE_FORMAT_OUTPUT))
+            viewState.showDateEnd(currentDateEnd!!.parseToString(Const.DATE_FORMAT_ON_CARD))
         }
     }
 
     fun addImages(images: List<Bitmap>) {
         this.images.addAll(images)
-        if (this.images.size > FeedbackPresenter.MAX_COUNT_IMAGE) {
-            this.images = this.images.subList(0, FeedbackPresenter.MAX_COUNT_IMAGE)
+        if (this.images.size > Const.MAX_COUNT_IMAGES) {
+            this.images = this.images.subList(0, Const.MAX_COUNT_IMAGES)
             viewState.showError(R.string.too_many_images)
         }
         viewState.showImages(this.images)
@@ -185,7 +212,7 @@ class CreatingEventPresenter @Inject constructor(
     }
 
     fun onClickType(type: Int) {
-        if (types.contains(type)) {
+        if (types.find { it.id == type } != null) {
             removeType(type)
         } else {
             addType(type)
@@ -196,13 +223,13 @@ class CreatingEventPresenter @Inject constructor(
 
     private fun addType(type: Int) {
         if (types.size < MAX_TYPES_SIZE) {
-            types.add(type)
+            types.add(EventType.findById(type))
             viewState.showTypes(types)
         }
     }
 
     private fun removeType(type: Int) {
-        types.remove(type)
+        types.removeAll { it.id == type }
         viewState.showTypes(types)
     }
 }

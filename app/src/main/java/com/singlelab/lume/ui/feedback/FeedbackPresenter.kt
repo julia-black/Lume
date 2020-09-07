@@ -23,7 +23,7 @@ class FeedbackPresenter @Inject constructor(
 ) : BasePresenter<FeedbackView>(preferences, interactor as BaseInteractor) {
 
     companion object {
-        const val MAX_COUNT_IMAGE = 10
+        private const val MAX_COUNT_IMAGE = 5
     }
 
     private var images: MutableList<Bitmap> = mutableListOf()

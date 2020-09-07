@@ -2,18 +2,13 @@ package com.singlelab.lume.ui.event
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.text.toSpannable
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -315,23 +310,11 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             val startDate = startTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_ON_CARD)
             val endTime = endTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_ONLY_TIME)
             val timeText = "$startDate - $endTime"
-            val spannable = SpannableString(timeText)
-            spannable.setSpan(
-                ForegroundColorSpan(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.colorPrimaryAccent
-                    )
-                ),
-                startDate.length - 5, timeText.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            start_date.text = timeText.toSpannable().hightlight(
+                requireContext(),
+                startDate.length - 5,
+                timeText.length
             )
-            spannable.setSpan(
-                StyleSpan(Typeface.BOLD),
-                startDate.length - 5, timeText.length,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            start_date.text = spannable
         } else { //больше суток разницы 10 августа 10:00 - 11 августа 15:00
             val startDate = startTime.parse(
                 Const.DATE_FORMAT_TIME_ZONE,
@@ -344,36 +327,15 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             val timeText = "$startDate - $endDate"
             val indexOfFirst = timeText.indexOfFirst { it == ':' }
             val indexOfLast = timeText.indexOfLast { it == ':' }
-            val spannable = SpannableString(timeText)
-            spannable.setSpan(
-                ForegroundColorSpan(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.colorPrimaryAccent
-                    )
-                ),
-                indexOfFirst - 2, indexOfFirst + 3,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            var spannable = timeText.toSpannable().hightlight(
+                requireContext(),
+                indexOfFirst - 2,
+                indexOfFirst + 3
             )
-            spannable.setSpan(
-                StyleSpan(Typeface.BOLD),
-                indexOfFirst - 2, indexOfFirst + 3,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            spannable.setSpan(
-                ForegroundColorSpan(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.colorPrimaryAccent
-                    )
-                ),
-                indexOfLast - 2, indexOfLast + 3,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            spannable.setSpan(
-                StyleSpan(Typeface.BOLD),
-                indexOfLast - 2, indexOfLast + 3,
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            spannable = spannable.hightlight(
+                requireContext(),
+                indexOfLast - 2,
+                indexOfLast + 3
             )
             start_date.text = spannable
         }

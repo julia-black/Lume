@@ -15,6 +15,9 @@ class CheckBoxView @JvmOverloads constructor(
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_checkbox, this, true)
+        text.setOnClickListener {
+            checkbox.isChecked = !checkbox.isChecked
+        }
     }
 
     fun setText(textStr: String) {
@@ -28,9 +31,6 @@ class CheckBoxView @JvmOverloads constructor(
     fun getChecked() = checkbox.isChecked
 
     fun setListener(listener: CompoundButton.OnCheckedChangeListener) {
-        text.setOnClickListener {
-            checkbox.isChecked = !checkbox.isChecked
-        }
         checkbox.setOnCheckedChangeListener(listener)
     }
 }

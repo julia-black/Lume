@@ -7,8 +7,7 @@
     <string name="title_auth">Авторизация</string>
     <string name="title_my_friends">Друзья</string>
     <string name="title_registration">Регистрация</string>
-    <string name="title_creating_event">Создание события</string>
-    <string name="title_new_event">Новое событие</string>
+    <string name="title_creating_event">Новое событие</string>
     <string name="title_participants">Участники</string>
     <string name="meizu_model">MEIZU</string>
 
@@ -71,7 +70,7 @@
     <string name="hint_feedback">Проблема/отзыв</string>
     <string name="button_give_feedback">Отправить</string>
     <string name="feedback_send">Отзыв отправлен!</string>
-    <string name="too_many_images">Количество картинок должно быть не более 10</string>
+    <string name="too_many_images">Количество картинок должно быть не более 5</string>
 
     <plurals name="age_plurals">
         <item quantity="one">%1$d год</item>
@@ -86,13 +85,14 @@
     <string name="type_event">Тип события</string>
     <string name="title">Название *</string>
     <string name="description">Расскажи подробнее о событии *</string>
-    <string name="min_age">Минимальный возраст</string>
-    <string name="max_age">Максимальный возраст</string>
+    <string name="enable_age">Включить ограничения?</string>
+    <string name="min_age">Мин. возраст</string>
+    <string name="max_age">Макс. возраст</string>
     <string name="publish_event">Опубликовать</string>
     <string name="invite">Пригласить</string>
-    <string name="event_is_open">Событие открытое (подтверждение участия не требуется)</string>
-    <string name="date_start">Укажите время начала</string>
-    <string name="date_end">Укажите время окончания</string>
+    <string name="event_is_closed">Требуется подтверждение участия</string>
+    <string name="date_start">Выбери время начала</string>
+    <string name="date_end">Выбери время окончания</string>
     <string name="enter_fields">Заполните обязательные поля</string>
     <string name="party">Вечеринка</string>
     <string name="booze">Пьянка</string>
@@ -120,14 +120,14 @@
     <string name="choose_action">Выберите действие</string>
     <string name="set_main">Сделать основной</string>
     <string name="remove_image">Удалить изображение</string>
-    <string name="choose_emoji">Выберите до 3-х иконок, которыми можно кратко описать ваше событие:</string>
+    <string name="choose_emoji">Выбери до 3-х иконок, которыми можно кратко описать событие:</string>
     <string name="join">Присоединиться</string>
     <string name="add_request">Оставить заявку</string>
     <string name="date_start_title">Начало: %1$s</string>
-    <string name="date_end_title">Завершение: %1$s</string>
+    <string name="date_end_title">Окончание: %1$s</string>
     <string name="share">Поделиться</string>
     <string name="choose_age">Укажите ограничение по возрасту. Событие увидят только люди, которые подходят по возрасту</string>
-    <string name="attention_age">Вы можете указать ограничение по возрасту. Событие будет доступно только тем, кто подходит по возрасту:</string>
+    <string name="attention_age">Можно указать ограничения по возрасту. Событие будет доступно только тем, кто подходит по возрасту</string>
     <string name="you_create_event">Ура! Вы создали событие!</string>
     <string name="cancel_event">Отменить событие</string>
     <string name="title_cancel">Событие отменено</string>
@@ -143,6 +143,7 @@
     <string name="no">Отмена</string>
     <string name="info_about_cancel">Вы не сможете снова его открыть. Информация о событии и чат останутся</string>
     <string name="loading_images">Загрузка изображений (%1$d/%2$d)...</string>
+    <string name="add_photo_event">Добавь изображения для события (до 5 шт):</string>
 
     <!-- Types of events -->
     <string name="culture">Искусство</string>
@@ -151,7 +152,7 @@
     <string name="talk">Общение</string>
     <string name="game">Игры</string>
     <string name="study">Обучение</string>
-    <string name="food">Гастрономия</string>
+    <string name="food">Еда</string>
     <string name="concert">Выступление</string>
     <string name="travel">Путешествие</string>
 
@@ -160,7 +161,7 @@
     <string name="location_event">Место проведения</string>
     <string name="error_address">Не удалось найти местоположению</string>
     <string name="title_location_events">Выберите место проведения</string>
-    <string name="choose_location">Укажите на карте место проведения</string>
+    <string name="choose_location">Укажи на карте место проведения</string>
     <string name="search_location">Введите название или адрес</string>
     <string name="accept_location">Подтвердить</string>
     <string name="empty_location">Укажите место проведения кликом на карте или с помощью поиска</string>
@@ -203,6 +204,7 @@
     <string name="empty_persons">К сожалению, люди по выбранным фильтрам не найдены. Попробуйте расширить фильтры</string>
     <string name="selected_types">Выбрано:</string>
     <string name="selected_all">Любое событие</string>
+    <string name="selected_nothing">Ничего не выбрано</string>
     <string name="choose_date">В любой день</string>
     <string name="mtrl_picker_range_header_only_start_selected">%1$s - Выберите конечную дату</string>
 
