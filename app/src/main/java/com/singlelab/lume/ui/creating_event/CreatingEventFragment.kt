@@ -134,6 +134,10 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         }
     }
 
+    override fun showLoadingImages(idx: Int, size: Int) {
+        super.showLoadingText(getString(R.string.loading_images, idx, size))
+    }
+
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
         if (ImagePicker.shouldHandleResult(
                 requestCode,
@@ -215,7 +219,6 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                     isOpenForInvitations = switch_open_event.isChecked,
                     primaryImage = presenter.getPrimaryImage(),
                     types = presenter.getTypes().toTypedArray(),
-                    images = presenter.getImagesStr(),
                     cityId = if (switch_online.isChecked) null else presenter.cityId!!,
                     isOnline = switch_online.isChecked
                 )

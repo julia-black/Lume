@@ -16,6 +16,7 @@ import com.singlelab.lume.util.toBase64
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.event.EventRequest
+import com.singlelab.net.model.event.UpdateEventRequest
 import moxy.InjectViewState
 import java.util.*
 import javax.inject.Inject
@@ -53,6 +54,20 @@ class CreatingEventPresenter @Inject constructor(
         invokeSuspend {
             try {
                 val eventUid = interactor.createEvent(event)?.eventUid
+                eventUid?.let { uid ->
+                    val images = getImagesStr()
+                    images?.forEachIndexed { idx, it ->
+                        runOnMainThread {
+                            viewState.showLoadingImages(idx + 1, images.size)
+                        }
+                        interactor.updateEvent(
+                            UpdateEventRequest(
+                                eventUid = uid,
+                                extraImages = arrayListOf(it)
+                            )
+                        )
+                    }
+                }
                 runOnMainThread {
                     eventUid?.let {
                         viewState.onCompleteCreateEvent(it)
@@ -119,7 +134,7 @@ class CreatingEventPresenter @Inject constructor(
 
     fun getPrimaryImage(): String? {
         return if (images.isNotEmpty()) {
-            images[0].resize(1200).toBase64(80)
+            images[0].resize(1200).toBase64(30)
         } else {
             null
         }
@@ -130,7 +145,7 @@ class CreatingEventPresenter @Inject constructor(
         if (images.size >= 1) {
             images.removeAt(0)
         }
-        newImages.addAll(images.map { it.resize(1200).toBase64(80) })
+        newImages.addAll(images.map { it.resize(1200).toBase64(30) })
         return newImages
     }
 

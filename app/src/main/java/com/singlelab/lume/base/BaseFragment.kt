@@ -72,6 +72,10 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         (activity as MainActivity?)?.showLoading(isShow, withoutBackground)
     }
 
+    override fun showLoadingText(text: String) {
+        (activity as MainActivity?)?.showLoadingText(text)
+    }
+
     override fun showError(
         message: String,
         withRetry: Boolean,

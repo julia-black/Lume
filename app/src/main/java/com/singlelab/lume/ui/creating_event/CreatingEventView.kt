@@ -34,4 +34,7 @@ interface CreatingEventView : LoadingView, ErrorView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showTypes(types: MutableList<Int>)
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun showLoadingImages(idx: Int, size: Int)
 }

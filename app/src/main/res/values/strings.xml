@@ -136,6 +136,13 @@
     <string name="open_chat">Открыть чат</string>
     <string name="new_participants">Новые заявки</string>
     <string name="empty_events">У тебя пока нет событий.\nНайди новое в свайпах\nили создай своё!</string>
+    <string name="range">%1$s - %2$s</string>
+    <string name="reject">Отклонить</string>
+    <string name="accept_cancel">Вы уверены, что хотите отменить событие?</string>
+    <string name="yes">Подтвердить</string>
+    <string name="no">Отмена</string>
+    <string name="info_about_cancel">Вы не сможете снова его открыть. Информация о событии и чат останутся</string>
+    <string name="loading_images">Загрузка изображений (%1$d/%2$d)...</string>
 
     <!-- Types of events -->
     <string name="culture">Искусство</string>
@@ -198,12 +205,6 @@
     <string name="selected_all">Любое событие</string>
     <string name="choose_date">В любой день</string>
     <string name="mtrl_picker_range_header_only_start_selected">%1$s - Выберите конечную дату</string>
-    <string name="range">%1$s - %2$s</string>
-    <string name="reject">Отклонить</string>
-    <string name="accept_cancel">Вы уверены, что хотите отменить событие?</string>
-    <string name="yes">Подтвердить</string>
-    <string name="no">Отмена</string>
-    <string name="info_about_cancel">Вы не сможете снова его открыть. Информация о событии и чат останутся</string>
 
     <!-- Arrays -->
     <string-array name="custom_weekdays">

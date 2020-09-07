@@ -103,6 +103,7 @@ class MainActivity : AppCompatActivity() {
             loading_without_back.visibility = View.GONE
             loading.visibility = if (isShow) View.VISIBLE else View.GONE
         }
+        loading_text?.visibility = View.GONE
     }
 
     fun setActivityListener(listener: OnActivityResultListener) {
@@ -194,5 +195,11 @@ class MainActivity : AppCompatActivity() {
                 navController.navigate(R.id.event, bundleOf("eventUid" to target.targetId))
             }
         }
+    }
+
+    fun showLoadingText(text: String) {
+        showLoading(true)
+        loading_text.text = text
+        loading_text.visibility = View.VISIBLE
     }
 }
