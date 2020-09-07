@@ -13,6 +13,7 @@
         android:layout_marginEnd="30dp">
 
         <ImageView
+            android:layout_marginStart="4dp"
             android:id="@+id/incomingMessageAuthorPhotoView"
             android:layout_width="32dp"
             android:layout_height="32dp"
@@ -33,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start|bottom"
-                android:layout_marginStart="2dp"
+                android:layout_marginStart="4dp"
                 android:background="@drawable/chat_incoming_message_triangle"
                 app:backgroundTint="@color/colorChatIncomingMessageBackground" />
 
@@ -41,7 +42,7 @@
                 android:id="@+id/incomingMessageBackgroundView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginBottom="9dp"
                 android:background="@drawable/group_message_input_background"
                 android:backgroundTint="@color/colorChatIncomingMessageBackground"
@@ -55,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:includeFontPadding="false"
                     android:paddingStart="6dp"
-                    android:paddingTop="2dp"
+                    android:paddingTop="6dp"
                     android:paddingEnd="16dp"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toTopOf="@id/incomingMessageImageView"
@@ -99,8 +100,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginBottom="2dp"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginBottom="4dp"
                     android:includeFontPadding="false"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"

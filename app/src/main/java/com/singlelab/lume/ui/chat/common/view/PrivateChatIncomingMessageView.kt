@@ -83,14 +83,14 @@ constructor(
             setDateChip(true, message.date)
             Glide.with(this)
                 .load(message.images.first().generateImageLink())
-                .transform(CenterCrop(), GranularRoundedCorners(14f, 14f, 14f, 14f))
+                .transform(CenterCrop(), GranularRoundedCorners(16f, 16f, 16f, 16f))
                 .into(chatMessageImageView)
         } else if (hasImages) {
             setDateChip(false)
             setMultipleImage(imagesCount)
             Glide.with(this)
                 .load(message.images.first().generateImageLink())
-                .transform(CenterCrop(), GranularRoundedCorners(14f, 14f, 0f, 0f))
+                .transform(CenterCrop(), GranularRoundedCorners(16f, 16f, 0f, 0f))
                 .into(chatMessageImageView)
         }
 
