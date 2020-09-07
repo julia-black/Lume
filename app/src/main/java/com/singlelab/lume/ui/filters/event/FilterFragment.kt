@@ -1,4 +1,4 @@
-package com.singlelab.lume.ui.filters
+package com.singlelab.lume.ui.filters.event
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -32,8 +32,6 @@ import com.singlelab.lume.ui.cities.CitiesFragment
 import com.singlelab.lume.ui.view.range_picker.DateRangePicker
 import com.singlelab.lume.util.toDateFormat
 import dagger.hilt.android.AndroidEntryPoint
-import io.apptik.widget.MultiSlider
-import io.apptik.widget.MultiSlider.Thumb
 import kotlinx.android.synthetic.main.fragment_filters.*
 import kotlinx.android.synthetic.main.view_grid_emoji.*
 import moxy.presenter.InjectPresenter
@@ -42,7 +40,8 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
+class FilterFragment : BaseFragment(),
+    FilterView, OnPermissionListener {
 
     companion object {
         const val REQUEST_FILTER = "REQUEST_FILTER"
@@ -74,8 +73,12 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            presenter.filterEvent = FilterFragmentArgs.fromBundle(it).filterEvent
-            presenter.filterPerson = FilterFragmentArgs.fromBundle(it).filterPerson
+            presenter.filterEvent = FilterFragmentArgs.fromBundle(
+                it
+            ).filterEvent
+//            presenter.filterPerson = FilterFragmentArgs.fromBundle(
+//                it
+//            ).filterPerson
         }
         showFilters(presenter.isEvent())
         setListeners()
@@ -114,8 +117,6 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
             button_choose_date.visibility = View.VISIBLE
             checkbox_online.setText(getString(R.string.events_is_online))
             checkbox_not_online.setText(getString(R.string.events_not_online))
-            text_age.visibility = View.GONE
-            seek_bar_age.visibility = View.GONE
             presenter.filterEvent?.let {
                 seek_bar_distance.progress = it.distance.id
                 text_distance.text = it.distance.title
@@ -130,8 +131,6 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
             }
             showLocation(!checkbox_online.getChecked())
         } else {
-            text_age.visibility = View.VISIBLE
-            seek_bar_age.visibility = View.VISIBLE
             text_choose_date.visibility = View.GONE
             choose_types.visibility = View.GONE
             emoji_grid.visibility = View.GONE
@@ -141,21 +140,21 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
             checkbox_online.visibility = View.GONE
             checkbox_not_online.visibility = View.GONE
             button_choose_date.visibility = View.GONE
-            presenter.filterPerson?.let {
-                seek_bar_age.min = Const.MIN_AGE
-                seek_bar_age.max = Const.MAX_AGE
-                if (it.minAge == Const.MIN_AGE && it.maxAge == Const.MAX_AGE) {
-                    text_age.setText(R.string.any_age)
-                } else {
-                    seek_bar_age.getThumb(0).value = it.minAge
-                    seek_bar_age.getThumb(1).value = it.maxAge
-                    if (it.minAge == it.maxAge) {
-                        text_age.text = getString(R.string.age_exact, it.minAge)
-                    } else {
-                        text_age.text = getString(R.string.age_from_to, it.minAge, it.maxAge)
-                    }
-                }
-            }
+//            presenter.filterPerson?.let {
+//                seek_bar_age.min = Const.MIN_AGE
+//                seek_bar_age.max = Const.MAX_AGE
+//                if (it.minAge == Const.MIN_AGE && it.maxAge == Const.MAX_AGE) {
+//                    text_age.setText(R.string.any_age)
+//                } else {
+//                    seek_bar_age.getThumb(0).value = it.minAge
+//                    seek_bar_age.getThumb(1).value = it.maxAge
+//                    if (it.minAge == it.maxAge) {
+//                        text_age.text = getString(R.string.age_exact, it.minAge)
+//                    } else {
+//                        text_age.text = getString(R.string.age_from_to, it.minAge, it.maxAge)
+//                    }
+//                }
+//            }
             if (presenter.filterPerson?.cityName != null) {
                 text_city.text = presenter.filterPerson!!.cityName
             } else {
@@ -220,34 +219,34 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
             toChooseCity()
         }
 
-        seek_bar_age.setOnThumbValueChangeListener { _: MultiSlider?, _: Thumb?, thumbIndex: Int, value: Int ->
-            if (thumbIndex == 0) {
-                presenter.filterPerson?.minAge = value
-                if (value == presenter.filterPerson?.maxAge) {
-                    text_age.text = getString(R.string.age_exact, value)
-                } else {
-                    text_age.text = getString(
-                        R.string.age_from_to,
-                        presenter.filterPerson?.minAge,
-                        presenter.filterPerson?.maxAge
-                    )
-                }
-            } else {
-                presenter.filterPerson?.maxAge = value
-                if (value == presenter.filterPerson?.minAge) {
-                    text_age.text = getString(R.string.age_exact, value)
-                } else {
-                    text_age.text = getString(
-                        R.string.age_from_to,
-                        presenter.filterPerson?.minAge,
-                        presenter.filterPerson?.maxAge
-                    )
-                }
-            }
-            if (seek_bar_age.getThumb(0).value == Const.MIN_AGE && seek_bar_age.getThumb(1).value == Const.MAX_AGE) {
-                text_age.setText(R.string.any_age)
-            }
-        }
+//        seek_bar_age.setOnThumbValueChangeListener { _: MultiSlider?, _: Thumb?, thumbIndex: Int, value: Int ->
+//            if (thumbIndex == 0) {
+//                presenter.filterPerson?.minAge = value
+//                if (value == presenter.filterPerson?.maxAge) {
+//                    text_age.text = getString(R.string.age_exact, value)
+//                } else {
+//                    text_age.text = getString(
+//                        R.string.age_from_to,
+//                        presenter.filterPerson?.minAge,
+//                        presenter.filterPerson?.maxAge
+//                    )
+//                }
+//            } else {
+//                presenter.filterPerson?.maxAge = value
+//                if (value == presenter.filterPerson?.minAge) {
+//                    text_age.text = getString(R.string.age_exact, value)
+//                } else {
+//                    text_age.text = getString(
+//                        R.string.age_from_to,
+//                        presenter.filterPerson?.minAge,
+//                        presenter.filterPerson?.maxAge
+//                    )
+//                }
+//            }
+//            if (seek_bar_age.getThumb(0).value == Const.MIN_AGE && seek_bar_age.getThumb(1).value == Const.MAX_AGE) {
+//                text_age.setText(R.string.any_age)
+//            }
+//        }
         button_choose_date.setOnClickListener {
             showDateRangePicker()
         }
@@ -366,7 +365,8 @@ class FilterFragment : BaseFragment(), FilterView, OnPermissionListener {
     }
 
     private fun toChooseCity() {
-        val action = FilterFragmentDirections.actionFiltersToCities()
+        val action =
+            FilterFragmentDirections.actionFiltersToCities()
         action.containAnyCity = true
         findNavController().navigate(action)
     }

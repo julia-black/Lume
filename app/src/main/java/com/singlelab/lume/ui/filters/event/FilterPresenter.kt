@@ -1,4 +1,4 @@
-package com.singlelab.lume.ui.filters
+package com.singlelab.lume.ui.filters.event
 
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.event.Distance

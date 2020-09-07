@@ -9,7 +9,7 @@
         android:id="@+id/swiper_event"
         android:name="com.singlelab.lume.ui.swiper_event.SwiperEventFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_swiper">
+        tools:layout="@layout/fragment_swiper_person">
         <action
             android:id="@+id/action_swiper_event_to_event"
             app:destination="@id/event" />
@@ -259,7 +259,7 @@
         android:id="@+id/swiper_person"
         android:name="com.singlelab.lume.ui.swiper_person.SwiperPersonFragment"
         android:label="SwiperPersonFragment"
-        tools:layout="@layout/fragment_swiper">
+        tools:layout="@layout/fragment_swiper_person">
         <argument
             android:name="eventUid"
             app:argType="string" />
@@ -269,8 +269,8 @@
             app:argType="com.singlelab.lume.model.city.City"
             app:nullable="true" />
         <action
-            android:id="@+id/action_swiper_person_to_filters"
-            app:destination="@id/filters" />
+            android:id="@+id/action_swiper_person_to_filters_person"
+            app:destination="@id/filters_person" />
     </fragment>
     <fragment
         android:id="@+id/cities"
@@ -284,7 +284,7 @@
     </fragment>
     <fragment
         android:id="@+id/filters"
-        android:name="com.singlelab.lume.ui.filters.FilterFragment"
+        android:name="com.singlelab.lume.ui.filters.event.FilterFragment"
         android:label="FilterFragment"
         tools:layout="@layout/fragment_filters">
         <argument
@@ -299,6 +299,15 @@
             android:defaultValue="@null"
             app:argType="com.singlelab.lume.model.event.FilterEvent"
             app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/filters_person"
+        android:name="com.singlelab.lume.ui.filters.person.FilterPersonFragment"
+        android:label="FilterPersonFragment">
+        <action
+            android:id="@+id/action_filters_to_cities"
+            app:destination="@id/cities" />
         <argument
             android:name="filterPerson"
             android:defaultValue="@null"

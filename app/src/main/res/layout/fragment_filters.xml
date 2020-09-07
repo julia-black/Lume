@@ -157,25 +157,6 @@
                     android:max="2"
                     android:theme="@style/Widget.AppCompat.SeekBar.Discrete"
                     android:thumbTint="@color/colorPrimaryAccent" />
-
-                <TextView
-                    android:id="@+id/text_age"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_medium"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    android:text="@string/any_age"
-                    android:textSize="@dimen/text_size_standart" />
-
-                <io.apptik.widget.MultiSlider
-                    android:id="@+id/seek_bar_age"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_medium"
-                    app:rangeColor="@color/colorAccent"
-                    app:thumbColor="@color/colorAccent"
-                    app:thumbNumber="2" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.cardview.widget.CardView>

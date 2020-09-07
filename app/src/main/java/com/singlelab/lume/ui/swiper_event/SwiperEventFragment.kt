@@ -15,7 +15,7 @@ import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.model.event.FilterEvent
-import com.singlelab.lume.ui.filters.FilterFragment
+import com.singlelab.lume.ui.filters.event.FilterFragment
 import com.singlelab.lume.ui.swiper_event.adapter.CardStackEventAdapter
 import com.singlelab.lume.ui.swiper_event.adapter.OnCardEventListener
 import com.yuyakaido.android.cardstackview.*

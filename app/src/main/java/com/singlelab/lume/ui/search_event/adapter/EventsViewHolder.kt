@@ -23,9 +23,7 @@ class EventsViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         itemView.date.text =
             event.startTime.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_OUTPUT)
 
-        if (event.eventPrimaryImageContentUid == null) {
-            itemView.image.setImageResource(R.drawable.ic_event_image)
-        } else {
+        if (event.eventPrimaryImageContentUid != null) {
             Glide.with(itemView)
                 .load(event.eventPrimaryImageContentUid.generateImageLink())
                 .into(itemView.image)

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:paddingHorizontal="@dimen/margin_small"
+    android:paddingBottom="25dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_filters"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_card_person"
+        android:layout_marginHorizontal="@dimen/margin_large"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="@dimen/radius_large"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin_bottom_filter"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/margin_small">
+
+            <TextView
+                android:id="@+id/text_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/ic_arrow"
+                android:paddingHorizontal="@dimen/margin_medium"
+                android:paddingTop="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_medium"
+                android:text="@string/city"
+                android:textSize="@dimen/text_size_standart"
+                app:layout_goneMarginTop="@dimen/margin_medium" />
+
+            <View
+                android:id="@+id/divider_one"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGrayVeryLight" />
+
+            <TextView
+                android:id="@+id/text_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:text="@string/any_age"
+                android:textSize="@dimen/text_size_standart" />
+
+            <io.apptik.widget.MultiSlider
+                android:id="@+id/seek_bar_age"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_medium"
+                app:rangeColor="@color/colorAccent"
+                app:thumbColor="@color/colorPrimaryAccent"
+                app:thumbNumber="2" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="12dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="364dp"
+            android:layout_marginBottom="@dimen/margin_large" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/button_apply"
+            android:layout_width="@dimen/size_filter_button"
+            android:layout_height="@dimen/size_filter_button"
+            android:layout_gravity="end"
+            android:layout_marginEnd="@dimen/margin_end_filter_in_filter"
+            android:layout_marginBottom="@dimen/margin_large"
+            app:cardBackgroundColor="@color/colorPrimaryAccent"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="12dp">
+
+            <ImageView
+                android:layout_width="@dimen/size_filter_icon"
+                android:layout_height="@dimen/size_filter_icon"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_accept"
+                android:tint="@color/white" />
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
