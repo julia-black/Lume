@@ -264,7 +264,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
     private fun showToday() {
         val calendar = Calendar.getInstance()
         val dayOfWeek =
-            calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale("ru", "RU"))
+            calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Const.RUS_LOCALE)
         day_of_week.text = dayOfWeek?.toUpFirstSymbol()
         date.text = calendar.parseToString(Const.DATE_FORMAT_SIMPLE)
     }

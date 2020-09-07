@@ -2,12 +2,12 @@ package com.singlelab.lume.ui.cities
 
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.cities.interactor.CitiesInteractor
 import com.singlelab.net.exceptions.ApiException
 import moxy.InjectViewState
-import java.util.*
 import javax.inject.Inject
 
 @InjectViewState
@@ -49,8 +49,8 @@ class CitiesPresenter @Inject constructor(
         } else {
             allCities?.let { allCities ->
                 viewState.showCities(allCities.filter {
-                    it.cityName.toUpperCase(Locale("ru", "RU"))
-                        .startsWith(queryStr.toUpperCase(Locale("ru", "RU")))
+                    it.cityName.toUpperCase(Const.RUS_LOCALE)
+                        .startsWith(queryStr.toUpperCase(Const.RUS_LOCALE))
                 })
             }
         }

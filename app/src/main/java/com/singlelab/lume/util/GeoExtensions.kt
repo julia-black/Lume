@@ -3,12 +3,11 @@ package com.singlelab.lume.util
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
+import com.singlelab.lume.model.Const
 import java.io.IOException
-import java.util.*
 
 fun Context.getLocationName(xCoordinate: Double?, yCoordinate: Double?): String? {
-    val rusLocale = Locale("ru", "RU")
-    val geoCoder = Geocoder(this, rusLocale)
+    val geoCoder = Geocoder(this, Const.RUS_LOCALE)
     if (xCoordinate == null || yCoordinate == null) {
         return null
     }

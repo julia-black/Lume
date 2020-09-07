@@ -19,6 +19,7 @@ import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnPermissionListener
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.location.MapLocation
 import com.singlelab.lume.util.TextInputDebounce
 import com.singlelab.lume.util.removePostalCode
@@ -55,7 +56,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
 
     private var location = MapLocation()
 
-    private val geoCoder: Geocoder by lazy { Geocoder(context, Locale("ru", "RU")) }
+    private val geoCoder: Geocoder by lazy { Geocoder(context, Const.RUS_LOCALE) }
 
     override fun onCreateView(
         inflater: LayoutInflater,

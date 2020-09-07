@@ -1,5 +1,7 @@
 package com.singlelab.lume.model
 
+import java.util.*
+
 object Const {
     const val URL_KEY = "Url"
     const val APP_NAME = "Lume"
@@ -34,4 +36,6 @@ object Const {
 
     const val MAX_COUNT_IMAGES = 5
     const val SELECT_IMAGE_REQUEST_CODE = 102
+
+    val RUS_LOCALE = Locale("ru", "RU")
 }
