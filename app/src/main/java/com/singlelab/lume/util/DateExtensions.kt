@@ -7,13 +7,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun String.parse(inputDateFormat: String, outputDateFormat: String): String {
-    val inputFormat = SimpleDateFormat(inputDateFormat, Locale.getDefault())
+    val inputFormat = SimpleDateFormat(inputDateFormat, Locale("ru", "RU"))
     inputFormat.timeZone = TimeZone.getTimeZone(Const.UTC)
     return inputFormat.parse(this).parseToString(outputDateFormat)
 }
 
 fun Date?.parseToString(outputDateFormat: String): String {
-    val outputFormat = SimpleDateFormat(outputDateFormat, Locale.getDefault())
+    val outputFormat = SimpleDateFormat(outputDateFormat, Locale("ru", "RU"))
     return if (this != null) outputFormat.format(this) else ""
 }
 
@@ -43,7 +43,7 @@ fun Calendar.getFirstAndLastDayOfWeek(): Pair<CalendarDay, CalendarDay> {
 }
 
 fun Date?.formatToUTC(outputDateFormat: String): String {
-    val dateFormat = SimpleDateFormat(outputDateFormat, Locale.getDefault())
+    val dateFormat = SimpleDateFormat(outputDateFormat, Locale("ru", "RU"))
     dateFormat.timeZone = TimeZone.getTimeZone(Const.UTC)
     return if (this != null) dateFormat.format(this) else ""
 }
@@ -71,7 +71,7 @@ fun Long.toDateFormat(format: String): String {
 }
 
 fun String.toLongTime(format: String): Long {
-    val inputFormat = SimpleDateFormat(format, Locale.getDefault())
+    val inputFormat = SimpleDateFormat(format, Locale("ru", "RU"))
     inputFormat.timeZone = TimeZone.getTimeZone(Const.UTC)
     val date = inputFormat.parse(this)
     return date.time

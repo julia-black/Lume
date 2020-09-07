@@ -3,45 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="22dp">
+    android:background="@color/colorBackground"
+    android:paddingBottom="@dimen/padding_bottom_nav">
 
-    <EditText
+    <com.singlelab.lume.ui.view.input.InputView
         android:id="@+id/edit_text_search"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:hint="@string/search_location"
-        android:inputType="text"
-        app:layout_constraintBottom_toTopOf="@id/map_container"
-        app:layout_constraintEnd_toStartOf="@id/icon_search"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_very_small"
+        app:layout_constraintBottom_toTopOf="@id/card_map"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/icon_search"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="@dimen/margin_small"
-        android:src="@drawable/ic_search"
-        app:layout_constraintBottom_toBottomOf="@id/edit_text_search"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/edit_text_search" />
-
-    <FrameLayout
-        android:id="@+id/map_container"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_map"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:layout_marginVertical="@dimen/margin_small"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toTopOf="@id/button_accept_location"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_search" />
+        app:layout_constraintTop_toBottomOf="@id/edit_text_search">
+
+        <FrameLayout
+            android:id="@+id/map_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/button_accept_location"
         style="@style/ButtonStyle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/margin_very_small"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_small"
         android:clickable="true"
         android:focusable="true"
         android:text="@string/accept_location"

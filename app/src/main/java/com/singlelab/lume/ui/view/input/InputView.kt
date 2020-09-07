@@ -140,4 +140,6 @@ class InputView @JvmOverloads constructor(
     }
 
     fun getEditText(): EditText = text_input_edit_text
+
+    fun getFocused() = text_input_edit_text.isFocused
 }

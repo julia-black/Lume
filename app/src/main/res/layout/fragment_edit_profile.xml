@@ -82,37 +82,6 @@
             android:layout_marginTop="@dimen/margin_big"
             app:layout_constraintTop_toBottomOf="@id/text_city" />
 
-        <!--        <androidx.cardview.widget.CardView-->
-        <!--            android:id="@+id/card_image"-->
-        <!--            android:layout_width="100dp"-->
-        <!--            android:layout_height="100dp"-->
-        <!--            android:layout_marginTop="@dimen/margin_big"-->
-        <!--            android:background="@color/transparent"-->
-        <!--            app:cardCornerRadius="12dp"-->
-        <!--            app:cardElevation="0dp"-->
-        <!--            app:layout_constraintEnd_toStartOf="@id/button_upload_image"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/description">-->
-
-        <!--            <ImageView-->
-        <!--                android:id="@+id/image"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="match_parent"-->
-        <!--                android:scaleType="centerCrop"-->
-        <!--                android:src="@drawable/ic_image_profile" />-->
-        <!--        </androidx.cardview.widget.CardView>-->
-
-        <!--        <ImageView-->
-        <!--            android:id="@+id/button_upload_image"-->
-        <!--            android:layout_width="18dp"-->
-        <!--            android:layout_height="18dp"-->
-        <!--            android:src="@drawable/ic_upload"-->
-        <!--            app:layout_constraintBottom_toBottomOf="@id/card_image"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintHorizontal_bias="0.0"-->
-        <!--            app:layout_constraintStart_toEndOf="@id/card_image"-->
-        <!--            app:layout_constraintTop_toTopOf="@id/card_image" />-->
-
         <Button
             android:id="@+id/button_update"
             style="@style/ButtonStyle"

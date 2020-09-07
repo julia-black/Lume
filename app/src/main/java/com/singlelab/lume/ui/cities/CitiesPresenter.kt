@@ -49,8 +49,8 @@ class CitiesPresenter @Inject constructor(
         } else {
             allCities?.let { allCities ->
                 viewState.showCities(allCities.filter {
-                    it.cityName.toUpperCase(Locale.getDefault())
-                        .startsWith(queryStr.toUpperCase(Locale.getDefault()))
+                    it.cityName.toUpperCase(Locale("ru", "RU"))
+                        .startsWith(queryStr.toUpperCase(Locale("ru", "RU")))
                 })
             }
         }

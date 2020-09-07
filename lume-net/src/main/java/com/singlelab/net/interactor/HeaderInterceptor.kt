@@ -4,7 +4,6 @@ import com.singlelab.net.model.HeaderConst
 import com.singlelab.net.model.auth.AuthData
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.util.*
 
 class HeaderInterceptor : Interceptor {
 
@@ -23,11 +22,11 @@ class HeaderInterceptor : Interceptor {
             requestBuilder.addHeader(HeaderConst.UID, AuthData.uid!!)
         }
 
-        if (Locale.getDefault().toLanguageTag() == HeaderConst.RU) {
-            requestBuilder.addHeader(HeaderConst.ACCEPT_LANGUAGE, HeaderConst.RU)
-        } else {
-            requestBuilder.addHeader(HeaderConst.ACCEPT_LANGUAGE, HeaderConst.EN)
-        }
+        //if (Locale.getDefault().toLanguageTag() == HeaderConst.RU) {
+        requestBuilder.addHeader(HeaderConst.ACCEPT_LANGUAGE, HeaderConst.RU)
+        // } else {
+        //     requestBuilder.addHeader(HeaderConst.ACCEPT_LANGUAGE, HeaderConst.EN)
+        // }
 
         return chain.proceed(requestBuilder.build())
     }

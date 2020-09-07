@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -54,7 +55,7 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
 
     private var location = MapLocation()
 
-    private val geoCoder: Geocoder by lazy { Geocoder(context, Locale.getDefault()) }
+    private val geoCoder: Geocoder by lazy { Geocoder(context, Locale("ru", "RU")) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,10 +68,18 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMap()
-        searchDebounce =
-            TextInputDebounce(editText = edit_text_search, minimumSymbols = 4, delayMillis = 500)
+        edit_text_search.apply {
+            setSingleLine()
+            setHint(getString(R.string.search_location))
+            setStartDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.ic_search))
+        }
+        searchDebounce = TextInputDebounce(
+            editText = edit_text_search.getEditText(),
+            minimumSymbols = 4,
+            delayMillis = 500
+        )
         searchDebounce!!.watch {
-            if (edit_text_search.isFocused) {
+            if (edit_text_search != null && edit_text_search.getFocused()) {
                 presenter.searchPlace(it)
             }
         }
@@ -78,13 +87,12 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
             location.address = MapFragmentArgs.fromBundle(it).locationName
         }
         button_accept_location.setOnClickListener {
-            if (edit_text_search.text.isBlank()) {
+            if (edit_text_search.getText().isBlank()) {
                 showSnackbar(getString(R.string.empty_location))
             } else {
                 acceptLocation()
             }
         }
-
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {

@@ -7,7 +7,8 @@ import java.io.IOException
 import java.util.*
 
 fun Context.getLocationName(xCoordinate: Double?, yCoordinate: Double?): String? {
-    val geoCoder = Geocoder(this, Locale.getDefault())
+    val rusLocale = Locale("ru", "RU")
+    val geoCoder = Geocoder(this, rusLocale)
     if (xCoordinate == null || yCoordinate == null) {
         return null
     }

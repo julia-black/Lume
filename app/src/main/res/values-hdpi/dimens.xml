@@ -25,7 +25,6 @@
     <dimen name="size_emoji_event">20dp</dimen>
     <dimen name="text_size_very_small">6sp</dimen>
     <dimen name="size_image_badge">32dp</dimen>
-    <dimen name="padding_bottom_nav">60dp</dimen>
     <dimen name="height_input">46dp</dimen>
     <dimen name="margin_top_title">20dp</dimen>
     <dimen name="pager_min_height">300dp</dimen>
