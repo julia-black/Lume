@@ -18,19 +18,61 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/text_empty_swipes"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_empty_events"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_medium"
-        android:gravity="center"
-        android:textSize="@dimen/text_size_medium"
+        android:layout_marginHorizontal="@dimen/margin_medium"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="8dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toTopOf="@id/icon_empty_events"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/empty_swipes"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_empty_swipes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:paddingHorizontal="@dimen/margin_large"
+                android:paddingTop="@dimen/margin_medium"
+                android:paddingBottom="@dimen/margin_medium"
+                android:text="@string/empty_swipes"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/text_size_standart" />
+
+            <ImageView
+                android:id="@+id/icon_empty_events_full_filter"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:src="@drawable/ic_accept_card" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/icon_empty_events"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/padding_bottom_nav"
+        android:src="@drawable/ic_not_events"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/card_empty_events"
         tools:visibility="visible" />
 
     <androidx.cardview.widget.CardView

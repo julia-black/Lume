@@ -61,7 +61,8 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         } else {
             button_filter.visibility = View.VISIBLE
             card_stack_view.visibility = View.VISIBLE
-            text_empty_swipes.visibility = View.GONE
+            icon_empty_events.visibility = View.GONE
+            card_empty_events.visibility = View.GONE
             (card_stack_view.adapter as CardStackEventAdapter).setEvents(listOf(event))
         }
     }
@@ -80,11 +81,15 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
 
     override fun showEmptySwipes(isFullFilter: Boolean) {
         card_stack_view.visibility = View.GONE
-        text_empty_swipes.visibility = View.VISIBLE
+        card_empty_events.visibility = View.VISIBLE
         if (isFullFilter) {
             button_filter.visibility = View.GONE
+            icon_empty_events.visibility = View.VISIBLE
+            icon_empty_events_full_filter.visibility = View.VISIBLE
             text_empty_swipes.text = getString(R.string.empty_swipes)
         } else {
+            icon_empty_events_full_filter.visibility = View.GONE
+            icon_empty_events.visibility = View.GONE
             button_filter.visibility = View.VISIBLE
             text_empty_swipes.text = getString(R.string.empty_swipes_expand_filters)
         }
