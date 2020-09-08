@@ -103,7 +103,7 @@ constructor(
                 setMultipleImage(imagesCount)
                 Glide.with(this)
                     .load(message.images.first().generateImageLink())
-                    .transform(CenterCrop(), GranularRoundedCorners(14f, 14f, 0f, 0f))
+                    .transform(CenterCrop(), GranularRoundedCorners(16f, 16f, 0f, 0f))
                     .into(chatMessageImageView)
             }
         }

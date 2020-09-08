@@ -10,6 +10,7 @@ import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.custom.sliderimage.logic.SliderImage
 import com.singlelab.lume.R
@@ -57,7 +58,7 @@ constructor(
         if (messageItem.personPhoto.isNotEmpty()) {
             Glide.with(this)
                 .load(messageItem.personPhoto.generateImageLink())
-                .apply(RequestOptions.circleCropTransform())
+                .transform(CenterCrop(), RoundedCorners(10))
                 .into(incomingMessageAuthorPhotoView)
         }
     }
@@ -99,14 +100,14 @@ constructor(
             setDateChip(true, message.date)
             Glide.with(this)
                 .load(message.images.first().generateImageLink())
-                .transform(CenterCrop(), GranularRoundedCorners(14f, 14f, 14f, 14f))
+                .transform(CenterCrop(), GranularRoundedCorners(16f, 16f, 16f, 16f))
                 .into(chatMessageImageView)
         } else if (hasImages) {
             setDateChip(false)
             setMultipleImage(imagesCount)
             Glide.with(this)
                 .load(message.images.first().generateImageLink())
-                .transform(CenterCrop(), GranularRoundedCorners(14f, 14f, 0f, 0f))
+                .transform(CenterCrop(), GranularRoundedCorners(16f, 16f, 0f, 0f))
                 .into(chatMessageImageView)
         }
 

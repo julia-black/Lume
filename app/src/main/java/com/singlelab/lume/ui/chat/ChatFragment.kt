@@ -100,7 +100,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
                 }
             }
         })
-        chatView.addItemDecoration(SpaceDivider(4))
+        chatView.addItemDecoration(SpaceDivider(16))
         chatBackView.setOnClickListener { findNavController().popBackStack() }
         sendMessageView.setOnClickListener { sendMessage() }
         attachmentMessageView.setOnClickListener { addAttachment() }
