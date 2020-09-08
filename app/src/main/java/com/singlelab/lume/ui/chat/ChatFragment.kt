@@ -88,7 +88,12 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
 
     private fun initViews() {
         chatTitleView.text = chatType.title
-        chatMessagesAdapter = if (chatType.isGroup) GroupChatMessagesAdapter() else PrivateChatMessagesAdapter()
+        val listener = object : OnMessageClickListener {
+            override fun onPersonImageClick(personUid: String) {
+                navigateToPerson(personUid)
+            }
+        }
+        chatMessagesAdapter = if (chatType.isGroup) GroupChatMessagesAdapter(listener) else PrivateChatMessagesAdapter()
         chatView.adapter = chatMessagesAdapter
         chatView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false).apply { stackFromEnd = true; }
         chatView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -128,6 +133,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
                 images = images.map { it.toString() },
                 status = Status.PENDING,
                 date = "",
+                personUid = "",
                 personPhoto = "",
                 personName = ""
             )
@@ -142,5 +148,9 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
             )
         }
         showNewMessage(pendingMessage)
+    }
+
+    private fun navigateToPerson(personUid: String) {
+        findNavController().navigate(ChatFragmentDirections.actionChatToPerson(personUid))
     }
 }

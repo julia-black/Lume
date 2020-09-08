@@ -41,6 +41,7 @@ data class GroupChatMessageItem(
     override val images: List<String>,
     override val status: ChatMessageItem.Status,
     override val date: String,
+    val personUid : String,
     val personPhoto: String,
     val personName: String
 ) : ChatMessageItem

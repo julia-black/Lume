@@ -80,6 +80,9 @@
         <argument
             android:name="chatType"
             app:argType="com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType" />
+        <action
+            android:id="@+id/action_chat_to_person"
+            app:destination="@id/person" />
     </fragment>
 
     <fragment

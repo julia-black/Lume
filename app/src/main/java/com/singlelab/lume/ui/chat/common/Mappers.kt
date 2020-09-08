@@ -42,6 +42,7 @@ fun ChatMessage.toGroupItems(currentPersonUid: String): GroupChatMessageItem =
         uid = uid,
         text = text,
         type = if (personUid == currentPersonUid) Type.OUTGOING else Type.INCOMING,
+        personUid = personUid,
         personPhoto = personPhoto,
         personName = personName,
         images = images,

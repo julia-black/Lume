@@ -18,6 +18,7 @@ import com.singlelab.lume.model.Const
 import com.singlelab.lume.ui.chat.common.ChatMessageItem
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Companion.PENDING_MESSAGE_UID
 import com.singlelab.lume.ui.chat.common.GroupChatMessageItem
+import com.singlelab.lume.ui.chat.common.OnMessageClickListener
 import com.singlelab.lume.util.dpToPx
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
@@ -43,7 +44,7 @@ constructor(
         inflate(getContext(), R.layout.group_incoming_message_item, this)
     }
 
-    fun setContent(messageItem: GroupChatMessageItem) {
+    fun setContent(messageItem: GroupChatMessageItem, listener: OnMessageClickListener? = null) {
         incomingMessageTriangleView.isVisible = !(messageItem.hasImage && messageItem.text.isEmpty())
         setMessageTextMaxWidth(messageItem.hasImage)
 
@@ -61,6 +62,9 @@ constructor(
                 .load(messageItem.personPhoto.generateImageLink())
                 .transform(CenterCrop(), RoundedCorners(10.dpToPx().toInt()))
                 .into(incomingMessageAuthorPhotoView)
+        }
+        incomingMessageAuthorPhotoView.setOnClickListener {
+            listener?.onPersonImageClick(messageItem.personUid)
         }
     }
 
