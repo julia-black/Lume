@@ -87,7 +87,7 @@ constructor(
                 .into(chatMessageImageView)
         } else if (hasImages) {
             setDateChip(false)
-            setMultipleImage(imagesCount)
+            setMultipleImage(imagesCount, 16f, 0f)
             Glide.with(this)
                 .load(message.images.first().generateImageLink())
                 .transform(CenterCrop(), GranularRoundedCorners(16f, 16f, 0f, 0f))

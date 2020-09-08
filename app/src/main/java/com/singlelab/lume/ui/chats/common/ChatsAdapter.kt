@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.singlelab.lume.R
+import com.singlelab.lume.util.dpToPx
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.net.model.auth.AuthData
 import kotlinx.android.synthetic.main.chats_item.view.*
@@ -43,12 +45,6 @@ class ChatsAdapter(
         private val onClickAction: (ChatItem) -> Unit
     ) : RecyclerView.ViewHolder(view) {
         fun bind(chat: ChatItem, position: Int) {
-            if (position % 2 == 0) {
-                itemView.chatsContentContainer.background = itemView.context.getDrawable(R.drawable.chat_room_background)
-            } else {
-                itemView.chatsContentContainer.background = null
-            }
-
             itemView.chatsTitleView.text = chat.title
             itemView.chatsLastMessageView.isVisible = chat.lastMessage.isNotEmpty()
             val lastMessage = if (chat.isLastMessageImage) itemView.context.getString(R.string.chats_last_message_image) else chat.lastMessage
@@ -65,18 +61,24 @@ class ChatsAdapter(
                 }
             }
 
-            itemView.chatsUnreadCountMessagesView.isVisible = chat.unreadMessagesCount > 0
-            itemView.chatsUnreadCountMessagesView.text = chat.unreadMessagesCount.toString()
+            if (chat.unreadMessagesCount > 0) {
+                itemView.chatsUnreadCountMessagesView.text = chat.unreadMessagesCount.toString()
+                itemView.chatsUnreadCountMessagesView.isVisible = true
+                itemView.chatsContentContainer.background = itemView.context.getDrawable(R.drawable.chat_room_background)
+            } else {
+                itemView.chatsUnreadCountMessagesView.isVisible = false
+                itemView.chatsContentContainer.background = null
+            }
 
             if (chat.image.isNotEmpty()) {
                 Glide.with(itemView)
                     .load(chat.image.generateImageLink())
-                    .apply(RequestOptions.circleCropTransform())
+                    .transform(CenterCrop(), RoundedCorners(10.dpToPx().toInt()))
                     .into(itemView.chatsImageView)
             } else {
                 Glide.with(itemView)
                     .load(R.mipmap.image_event_default)
-                    .apply(RequestOptions.circleCropTransform())
+                    .transform(CenterCrop(), RoundedCorners(10.dpToPx().toInt()))
                     .into(itemView.chatsImageView)
             }
 

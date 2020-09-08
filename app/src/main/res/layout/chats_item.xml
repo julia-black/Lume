@@ -4,27 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:foreground="?selectableItemBackground"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:foreground="?selectableItemBackground">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/chatsContentContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:layout_marginVertical="@dimen/margin_small">
 
         <ImageView
             android:id="@+id/chatsImageView"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/ic_baseline_image_50"
+            android:layout_margin="@dimen/margin_small"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_small"
+            android:src="@drawable/ic_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +39,7 @@
             android:textColor="#2C2C2C"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@id/chatsLastMessageView"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/chatsUnreadCountMessagesView"
             app:layout_constraintStart_toEndOf="@id/chatsImageView"
             app:layout_constraintTop_toTopOf="@id/chatsImageView"
             tools:text="Medium-Long Chat title" />
@@ -53,12 +51,11 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:ellipsize="end"
-            android:fontFamily="@font/suisse_regular"
             android:maxLines="1"
             android:textColor="#A1A1A1"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@id/chatsImageView"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/chatsUnreadCountMessagesView"
             app:layout_constraintStart_toEndOf="@id/chatsImageView"
             app:layout_constraintTop_toBottomOf="@id/chatsTitleView"
             tools:text="Medium-Long Last Message" />
