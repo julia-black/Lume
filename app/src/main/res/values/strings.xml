@@ -17,13 +17,9 @@
     <string name="tutorial_text_3">Свайпай тусовки...</string>
     <string name="tutorial_text_4">...или создай свою!</string>
     <string name="tutorial_text_5">Собирай вещички и отправляйся к новым приключениям!</string>
-    <string name="enter_phone">Введите номер телефона</string>
-    <string name="send_code">Отправить код</string>
     <string name="continue_text">Продолжить</string>
-    <string name="wrong_phone">Некорректный номер</string>
     <string name="enter_code">Введите код</string>
     <string name="auth">Авторизоваться</string>
-    <string name="registration">Регистрация</string>
     <string name="welcome">Добро пожаловать в Lume!</string>
     <string name="fill_form">Пожалуйста, заполните небольшую анкету:</string>
     <string name="login">Логин</string>
@@ -31,13 +27,13 @@
     <string name="age">Возраст</string>
     <string name="login_digits">abcdefghijklmnopqrstuvwxyz0123456789_\.</string>
     <string name="max_length">Максимум %1$d символов</string>
-    <string name="add_photo">Будет замечательно, если на фото будете именно вы. Все мы любим милых котиков, но не каждый захочет идти куда-то только в их компании</string>
+    <string name="add_photo">Будет замечательно, если фото будем настоящим. Все мы любим милых котиков, но не каждый захочет идти куда-то только в их компании</string>
     <string name="empty_photo">Добавьте фото</string>
     <string name="about_yourself">Пару слов о себе</string>
     <string name="to_registration">Зарегистрироваться</string>
     <string name="error_pick_image">Не удалось выбрать изображение</string>
     <string name="sms_code_send">СМС-код отправлен на номер %1$s</string>
-    <string name="push_code_send">На ваше устройство отправлено Push-уведомление с кодом</string>
+    <string name="push_code_send">На устройство отправлено Push-уведомление с кодом</string>
     <string name="login_hint">Логин может содержать только латинские буквы, цифры, символы подчеркивания и точки. Максимум 25 символов</string>
     <string name="back">Вернуться</string>
 
@@ -45,9 +41,7 @@
     <string name="tab_friends">Друзья</string>
     <string name="tab_badges">Бейджи</string>
     <string name="tab_settings">Настройки</string>
-    <string name="person_info">Редактировать профиль</string>
     <string name="exit">Выход</string>
-    <string name="update_profile">Обновить профиль</string>
     <string name="title_edit_me_profile">Редактирование профиля</string>
     <string name="apply_edit">Подтвердить</string>
     <string name="show_image">Открыть изображение</string>
@@ -56,7 +50,7 @@
     <string name="new_friends">Заявки в друзья (%1$d)</string>
     <string name="import_contacts">Импорт контактов</string>
     <string name="empty_persons_from_contacts">Пользователей из контактов не найдено</string>
-    <string name="not_permission_contacts">Вы запретили доступ к контактам</string>
+    <string name="not_permission_contacts">Доступ к контактам запрещен</string>
 
     <!-- Profile -->
     <string name="go_to_chat">Перейти в чат</string>
@@ -65,8 +59,8 @@
 
     <!-- Feedback -->
     <string name="title_feedback">Обратная связь</string>
-    <string name="text_feedback">Если вы столкнулись с проблемой, или просто хотите оставить отзыв - напишите нам и мы постараемся быстро всё поправить!</string>
-    <string name="hint_images_feedback">Вы можете добавить скриншоты, чтобы нам было проще понять и исправить вашу проблему</string>
+    <string name="text_feedback">Если ты обнаружил(а) проблему, или просто хочешь оставить отзыв - напиши нам и мы постараемся быстро всё поправить!</string>
+    <string name="hint_images_feedback">Добавь скриншоты, чтобы нам было проще понять и исправить проблему</string>
     <string name="hint_feedback">Проблема/отзыв</string>
     <string name="button_give_feedback">Отправить</string>
     <string name="feedback_send">Отзыв отправлен!</string>
@@ -82,20 +76,16 @@
 
     <!-- Event -->
     <string name="create_event">Создать</string>
-    <string name="type_event">Тип события</string>
     <string name="title">Название *</string>
     <string name="description">Расскажи подробнее о событии *</string>
     <string name="enable_age">Включить ограничения?</string>
     <string name="min_age">Мин. возраст</string>
     <string name="max_age">Макс. возраст</string>
     <string name="publish_event">Опубликовать</string>
-    <string name="invite">Пригласить</string>
     <string name="event_is_closed">Требуется подтверждение участия</string>
     <string name="date_start">Выбери время начала</string>
     <string name="date_end">Выбери время окончания</string>
     <string name="enter_fields">Заполните обязательные поля</string>
-    <string name="party">Вечеринка</string>
-    <string name="booze">Пьянка</string>
     <string name="administrator">Организатор</string>
     <string name="age_from_to">Возраст: %1$d-%2$d</string>
     <string name="age_from">Возраст: %1$d+</string>
@@ -107,17 +97,15 @@
     <string name="invite_friends">Пригласить друзей</string>
     <string name="search_participants">Найти участников</string>
     <string name="waiting_for_approve_user">Новое приглашение</string>
-    <string name="search_events">Поиск события</string>
     <string name="search_event">Найти событие</string>
     <string name="person_invited">Пользователь %1$s приглашен</string>
-    <string name="empty_swipes">К сожалению, новых событий нет\nВы всегда можете создать своё событие!</string>
-    <string name="empty_swipes_expand_filters">К сожалению, новых событий нет\nПопробуйте расширить фильтры или создайте своё событие!</string>
+    <string name="empty_swipes">К сожалению, новых событий нет\nТы всегда можешь создать своё событие!</string>
+    <string name="empty_swipes_expand_filters">К сожалению, новых событий нет\nПопробуй расширить фильтры или создай своё событие!</string>
     <string name="online">Онлайн</string>
     <string name="event_is_online">Онлайн-событие</string>
-    <string name="unavailable_location">Неизвестное местоположение. Обратитесь к организатору в чате</string>
     <string name="unavailable_location_short">Неизвестное местоположение</string>
     <string name="warning_other_city">Город отличается от основного. Событие доступно только для города %1$s</string>
-    <string name="choose_action">Выберите действие</string>
+    <string name="choose_action">Выбери действие</string>
     <string name="set_main">Сделать основной</string>
     <string name="remove_image">Удалить изображение</string>
     <string name="choose_emoji">Выбери до 3-х иконок, которыми можно кратко описать событие:</string>
@@ -126,26 +114,25 @@
     <string name="date_start_title">Начало: %1$s</string>
     <string name="date_end_title">Окончание: %1$s</string>
     <string name="share">Поделиться</string>
-    <string name="choose_age">Укажите ограничение по возрасту. Событие увидят только люди, которые подходят по возрасту</string>
     <string name="attention_age">Можно указать ограничения по возрасту. Событие будет доступно только тем, кто подходит по возрасту</string>
-    <string name="you_create_event">Ура! Вы создали событие!</string>
+    <string name="you_create_event">Ура! Событие успешно создано!</string>
     <string name="cancel_event">Отменить событие</string>
     <string name="title_cancel">Событие отменено</string>
     <string name="title_ended">Событие завершено</string>
     <string name="new_event">Новое</string>
     <string name="open_chat">Открыть чат</string>
     <string name="new_participants">Новые заявки</string>
-    <string name="empty_events">У тебя пока нет событий.\nНайди новое в свайпах\nили создай своё!</string>
+    <string name="empty_events">У тебя пока нет событий.\nНайди новые события в свайпах\nили создай своё!</string>
     <string name="range">%1$s - %2$s</string>
-    <string name="reject">Отклонить</string>
-    <string name="accept_cancel">Вы уверены, что хотите отменить событие?</string>
+    <string name="accept_cancel">Отменить событие?</string>
     <string name="yes">Подтвердить</string>
     <string name="no">Отмена</string>
-    <string name="info_about_cancel">Вы не сможете снова его открыть. Информация о событии и чат останутся</string>
+    <string name="info_about_cancel">Открыть его заново будет невозможно. Информация о событии и чат останутся</string>
     <string name="loading_images">Загрузка изображений (%1$d/%2$d)...</string>
     <string name="add_photo_event">Добавь изображения для события (до 5 шт):</string>
 
     <!-- Types of events -->
+    <string name="party">Вечеринка</string>
     <string name="culture">Искусство</string>
     <string name="sport">Спорт</string>
     <string name="nature">Природа</string>
@@ -157,10 +144,7 @@
     <string name="travel">Путешествие</string>
 
     <!-- Map -->
-    <string name="title_activity_maps">Map</string>
-    <string name="location_event">Место проведения</string>
     <string name="error_address">Не удалось найти местоположению</string>
-    <string name="title_location_events">Выберите место проведения</string>
     <string name="choose_location">Укажи на карте место проведения</string>
     <string name="search_location">Введите название или адрес</string>
     <string name="accept_location">Подтвердить</string>
@@ -170,38 +154,35 @@
     <string name="search_friends">Найти друзей</string>
     <string name="empty_friends">У вас пока нет друзей\nНайдите их!</string>
     <string name="empty_search">Ничего не найдено\nПопробуйте изменить запрос</string>
-    <string name="in_friends">В друзьях</string>
 
     <!-- Chats -->
     <string name="chats_title">Чаты</string>
     <string name="chats_last_message_author">Вы: %1$s</string>
-    <string name="chats_empty_rooms">У вас пока нет активных чатов</string>
+    <string name="chats_empty_rooms">У тебя пока нет активных чатов</string>
     <string name="chats_last_message_image">Изображение</string>
 
     <!-- Chat -->
     <string name="chat_title">Чат</string>
     <string name="chat_message_hint">Сообщение</string>
-    <string name="chat_select_images_limit">Выберите не больше %1$d фотографий</string>
-    <string name="chat_empty_messages">Чат пока пуст. Напишите первое собщение!</string>
+    <string name="chat_select_images_limit">Выбери не больше %1$d фотографий</string>
+    <string name="chat_empty_messages">Чат пока пуст. Напиши первое собщение!</string>
     <string name="chat_message_images_count">+ %1$d</string>
 
     <!-- City -->
     <string name="city">Город</string>
-    <string name="title_cities">Выберите город</string>
     <string name="search_city">Найти город</string>
 
     <!-- Filters -->
-    <string name="title_filters">Фильтры</string>
-    <string name="choose_types">Выберите интересующие вас типы событий:</string>
+    <string name="choose_types">Выбери интересующие тебя типы событий:</string>
     <string name="apply">Применить</string>
-    <string name="permission_location_denied">Разрешите доступ к местоположению в настройках</string>
+    <string name="permission_location_denied">Доступ к местоположению запрещен</string>
     <string name="on_geolocation">Не удалось получить геопозицию</string>
     <string name="events_is_online">Только онлайн-события</string>
     <string name="events_not_online">Исключить онлайн-события</string>
     <string name="any_city">Любой город</string>
     <string name="any_age">Любой возраст</string>
     <string name="age_exact">Возраст: %1$d</string>
-    <string name="empty_persons">К сожалению, люди по выбранным фильтрам не найдены. Попробуйте расширить фильтры</string>
+    <string name="empty_persons">К сожалению, люди по выбранным фильтрам не найдены. Попробуй расширить фильтры</string>
     <string name="selected_types">Выбрано:</string>
     <string name="selected_all">Любое событие</string>
     <string name="selected_nothing">Ничего не выбрано</string>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#2B2B2B</color>
-    <color name="colorPrimaryBright">#2B2B2B</color>
     <color name="colorPrimaryDark">#0B0604</color>
     <color name="colorPrimaryAccent">#216FF4</color>
     <color name="colorPrimaryLight">#BCD3FB</color>
@@ -10,7 +9,6 @@
 
     <color name="colorAccentLight">#FFDE88</color>
     <color name="colorLight">#e6edff</color>
-    <color name="colorTransparentPart">#80FFFFFF</color>
     <color name="colorGray">#BEC4CA</color>
     <color name="colorGrayMedium">#98A0A8</color>
     <color name="colorGrayLight">#D3D3D3</color>
@@ -18,27 +16,14 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorParty">#F24C56</color>
 
-    <color name="colorButton">#F24C56</color>
-    <color name="colorButtonPressed">#F17E85</color>
-
-    <color name="colorAcceptFull">#50FB89</color>
-    <color name="colorAccept">#8850FB89</color>
-    <color name="colorReject">#88F24C56</color>
-    <color name="colorOverlay">#80000000</color>
     <color name="colorTransparent">#00FFFFFF</color>
     <color name="colorBackground">#F4F5F9</color>
-    <color name="colorTabNotSelected">#4C4C4C</color>
-    <color name="colorBackgroundLoading">#80FFFFFF</color>
 
     <color name="colorNavSelected">#216FF4</color>
     <color name="colorNavNotSelected">#D4D4DD</color>
 
-    <color name="colorBackgroundEvent">#FFE37F</color>
-    <color name="colorBackgroundChat">#FFFCFB</color>
     <color name="colorNewInvite">#F24C56</color>
     <color name="colorNotification">#F24C56</color>
-    <color name="colorChat">#23B832</color>
-    <color name="colorChatPressed">#65C55B</color>
     <color name="colorChatImageForeground">#8C000000</color>
     <color name="colorChatDateChipBackground">#80000000</color>
     <color name="colorChatDivider">#E7E8EB</color>
@@ -49,9 +34,7 @@
     <color name="colorText">#1E1E1E</color>
     <color name="colorTextGray">#52575C</color>
     <color name="colorError">#EF3E2E</color>
-    <color name="colorWarning">#B298A0A8</color>
 
     <color name="colorAcceptPerson">#1CAE81</color>
     <color name="colorRejectPerson">#FF3F33</color>
-
 </resources>
