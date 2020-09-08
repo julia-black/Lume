@@ -18,6 +18,7 @@ import com.singlelab.lume.model.Const
 import com.singlelab.lume.ui.chat.common.ChatMessageItem
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Companion.PENDING_MESSAGE_UID
 import com.singlelab.lume.ui.chat.common.GroupChatMessageItem
+import com.singlelab.lume.util.dpToPx
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
 import kotlinx.android.synthetic.main.chat_message_image_view.view.*
@@ -58,7 +59,7 @@ constructor(
         if (messageItem.personPhoto.isNotEmpty()) {
             Glide.with(this)
                 .load(messageItem.personPhoto.generateImageLink())
-                .transform(CenterCrop(), RoundedCorners(10))
+                .transform(CenterCrop(), RoundedCorners(10.dpToPx().toInt()))
                 .into(incomingMessageAuthorPhotoView)
         }
     }
