@@ -19,6 +19,7 @@ import com.singlelab.lume.ui.swiper_person.adapter.CardStackPersonAdapter
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_swiper_person.*
+import kotlinx.android.synthetic.main.view_template_person.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
@@ -141,6 +142,7 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
             presenter.loadRandomPerson()
         } else {
             button_filter.visibility = View.VISIBLE
+            view_template_person.visibility = View.VISIBLE
             card_stack_view.visibility = View.VISIBLE
             text_empty_swipes.visibility = View.GONE
             (card_stack_view.adapter as CardStackPersonAdapter).setData(listOf(person))
@@ -153,6 +155,7 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
     }
 
     override fun showEmptySwipes() {
+        view_template_person.visibility = View.GONE
         card_stack_view.visibility = View.GONE
         text_empty_swipes.visibility = View.VISIBLE
         text_empty_swipes.text = getString(R.string.empty_persons)

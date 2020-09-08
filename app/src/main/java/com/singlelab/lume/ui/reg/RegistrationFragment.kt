@@ -214,6 +214,10 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
     }
 
     private fun setListeners() {
+        card_image.setOnClickListener {
+            presenter.saveInputs()
+            onClickChangeImage()
+        }
         button_upload_image.setOnClickListener {
             presenter.saveInputs()
             onClickChangeImage()

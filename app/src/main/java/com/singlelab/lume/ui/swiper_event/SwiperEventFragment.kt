@@ -21,6 +21,7 @@ import com.singlelab.lume.ui.swiper_event.adapter.OnCardEventListener
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_swiper_event.*
+import kotlinx.android.synthetic.main.view_template_card.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import java.util.*
@@ -61,6 +62,7 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         } else {
             button_filter.visibility = View.VISIBLE
             card_stack_view.visibility = View.VISIBLE
+            view_template_card.visibility = View.VISIBLE
             icon_empty_events.visibility = View.GONE
             card_empty_events.visibility = View.GONE
             (card_stack_view.adapter as CardStackEventAdapter).setEvents(listOf(event))
@@ -81,6 +83,7 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
 
     override fun showEmptySwipes(isFullFilter: Boolean) {
         card_stack_view.visibility = View.GONE
+        view_template_card.visibility = View.GONE
         card_empty_events.visibility = View.VISIBLE
         if (isFullFilter) {
             button_filter.visibility = View.GONE
