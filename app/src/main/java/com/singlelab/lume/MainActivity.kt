@@ -26,6 +26,7 @@ import com.karumi.dexter.listener.single.PermissionListener
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.base.listeners.OnBackPressListener
 import com.singlelab.lume.base.listeners.OnPermissionListener
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.profile.PersonNotifications
 import com.singlelab.lume.model.target.Target
 import com.singlelab.lume.model.target.TargetType
@@ -51,7 +52,14 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
         getPushToken()
         val data: Uri? = intent?.data
-        val target = data?.toString()?.parseDeepLink()
+        var target: Target? = null
+        if (data == null) {
+            if (intent.extras != null && intent.extras!!.containsKey(Const.URL_KEY)) {
+                target = intent?.extras?.get(Const.URL_KEY).toString().parseDeepLink()
+            }
+        } else {
+            target = data.toString().parseDeepLink()
+        }
         target?.let {
             toTarget(navController, it)
         }
@@ -62,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         Firebase.dynamicLinks
             .getDynamicLink(intent)
             .addOnSuccessListener(this) { pendingDynamicLinkData ->
-                var deepLink: Uri?
+                val deepLink: Uri?
                 if (pendingDynamicLinkData != null) {
                     deepLink = pendingDynamicLinkData.link
                     deepLink.toString().parseDeepLink()?.let {
