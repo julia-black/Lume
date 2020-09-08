@@ -84,7 +84,9 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             text_location.text =
                 context?.getLocationName(event.xCoordinate, event.yCoordinate)
                     ?: context?.getString(R.string.unavailable_location_short)
-            if (event.xCoordinate != null && event.yCoordinate != null) {
+            if (event.xCoordinate != null && event.xCoordinate > 0
+                && event.yCoordinate != null && event.yCoordinate > 0
+            ) {
                 text_location.setOnClickListener {
                     val uri = String.format(
                         Locale.ENGLISH,
