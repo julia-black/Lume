@@ -41,7 +41,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="364dp"
+            android:layout_height="@dimen/height_card_person_without_button"
             android:layout_marginBottom="@dimen/margin_large" />
 
         <androidx.cardview.widget.CardView

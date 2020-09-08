@@ -42,5 +42,6 @@
     <dimen name="margin_card_pager">60dp</dimen>
     <dimen name="margin_cards">16dp</dimen>
     <dimen name="stack_header_height">80dp</dimen>
-    <dimen name="height_card_person">374dp</dimen>
+    <dimen name="height_card_person">394dp</dimen>
+    <dimen name="height_card_person_without_button">384dp</dimen>
 </resources>
