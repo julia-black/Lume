@@ -9,8 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/incomingMessageContainerView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/incomingMessageAuthorPhotoView"
@@ -43,6 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:layout_marginEnd="70dp"
                 android:layout_marginBottom="9dp"
                 android:background="@drawable/group_message_input_background"
                 android:backgroundTint="@color/colorChatIncomingMessageBackground"
@@ -76,7 +76,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/incomingMessageAuthorView"
                     app:layout_goneMarginBottom="10dp"
-                    tools:visibility="visible" />
+                    tools:visibility="gone" />
 
                 <TextView
                     android:id="@+id/incomingMessageView"
@@ -91,7 +91,7 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/incomingMessageImageView"
-                    tools:text="Message text" />
+                    tools:text="Очень очень очень очень очень очень очень длинное сообщение в чате" />
 
                 <TextView
                     android:id="@+id/incomingMessageDateView"
