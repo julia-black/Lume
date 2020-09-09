@@ -153,7 +153,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
 
     override fun onLoadedBadges(badges: List<Badge>) {
         badgesView.setBadges(badges)
-        (view_pager.adapter as PagerAdapter).updateBadgesView(badgesView)
+        (view_pager.adapter as PagerAdapter?)?.updateBadgesView(badgesView)
     }
 
     override fun showNewBadge(hasNewBadges: Boolean) {

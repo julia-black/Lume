@@ -25,10 +25,10 @@
     <string name="login">Логин</string>
     <string name="name">Имя</string>
     <string name="age">Возраст</string>
-    <string name="login_digits">abcdefghijklmnopqrstuvwxyz0123456789_\.</string>
+    <string name="login_digits">abcdefghijklmnopqrstuvwxyz0123456789_</string>
     <string name="max_length">Максимум %1$d символов</string>
     <string name="add_photo">Будет замечательно, если фото будем настоящим. Все мы любим милых котиков, но не каждый захочет идти куда-то только в их компании</string>
-    <string name="empty_photo">Добавьте фото</string>
+    <string name="empty_photo">Добавь фото</string>
     <string name="about_yourself">Пару слов о себе</string>
     <string name="to_registration">Зарегистрироваться</string>
     <string name="error_pick_image">Не удалось выбрать изображение</string>
@@ -85,7 +85,7 @@
     <string name="event_is_closed">Требуется подтверждение участия</string>
     <string name="date_start">Выбери время начала</string>
     <string name="date_end">Выбери время окончания</string>
-    <string name="enter_fields">Заполните обязательные поля</string>
+    <string name="enter_fields">Упс! Заполнены не все поля</string>
     <string name="administrator">Организатор</string>
     <string name="age_from_to">Возраст: %1$d-%2$d</string>
     <string name="age_from">Возраст: %1$d+</string>
@@ -188,6 +188,11 @@
     <string name="selected_nothing">Ничего не выбрано</string>
     <string name="choose_date">В любой день</string>
     <string name="mtrl_picker_range_header_only_start_selected">%1$s - Выберите конечную дату</string>
+    <string name="choose_city">Укажи город</string>
+    <string name="empty_login">Не заполнен логин</string>
+    <string name="empty_name">Не заполнено имя</string>
+    <string name="empty_description">Не заполнено описание профиля</string>
+    <string name="empty_age">Не заполнен возраст</string>
 
     <!-- Arrays -->
     <string-array name="custom_weekdays">

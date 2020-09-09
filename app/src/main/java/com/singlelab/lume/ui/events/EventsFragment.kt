@@ -251,10 +251,10 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
     }
 
     override fun showCurrentDayOnPager(day: CalendarDay) {
-        view_pager_events.apply {
-            val days = (view_pager_events.adapter as DaysAdapter).getList()
-            val position = days.indexOfFirst { it.first == day }
-            if (presenter.currentDayPosition != position) {
+        view_pager_events?.apply {
+            val days = (view_pager_events.adapter as DaysAdapter?)?.getList()
+            val position = days?.indexOfFirst { it.first == day }
+            if (presenter.currentDayPosition != position && position != null) {
                 presenter.currentDayPosition = position
                 setCurrentItem(position, true)
             }

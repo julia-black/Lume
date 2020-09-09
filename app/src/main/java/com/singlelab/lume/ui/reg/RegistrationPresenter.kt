@@ -72,16 +72,14 @@ class RegistrationPresenter @Inject constructor(
         age: String?,
         description: String?
     ): ValidationError? {
-        return if (login.isNullOrEmpty() ||
-            name.isNullOrEmpty() ||
-            age.isNullOrEmpty() ||
-            description.isNullOrEmpty()
-        ) {
-            ValidationError.UNFILLED_FIELDS
-        } else if (image == null) {
-            ValidationError.EMPTY_PHOTO
-        } else {
-            null
+        return when {
+            login.isNullOrEmpty() -> ValidationError.EMPTY_LOGIN
+            name.isNullOrEmpty() -> ValidationError.EMPTY_NAME
+            description.isNullOrEmpty() -> ValidationError.EMPTY_DESCRIPTION
+            age.isNullOrEmpty() -> ValidationError.EMPTY_AGE
+            image == null -> ValidationError.EMPTY_PHOTO
+            city == null -> ValidationError.EMPTY_CITY
+            else -> null
         }
     }
 

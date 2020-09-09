@@ -31,8 +31,8 @@ object Const {
     const val MIN_AGE = 0
     const val MAX_AGE = 100
 
-    const val IMAGE_RESOLUTION_WIDTH = 1000
-    const val IMAGE_RESOLUTION_HEIGHT = 1000
+    const val IMAGE_RESOLUTION_WIDTH = 800
+    const val IMAGE_RESOLUTION_HEIGHT = 800
 
     const val MAX_COUNT_IMAGES = 5
     const val SELECT_IMAGE_REQUEST_CODE = 102

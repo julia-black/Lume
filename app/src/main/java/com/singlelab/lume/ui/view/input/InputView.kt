@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.InputFilter.LengthFilter
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -93,7 +94,8 @@ class InputView @JvmOverloads constructor(
     }
 
     fun setDigits(digits: String) {
-        val regex = Regex("[^$digits]")
+        setInputType(InputType.TYPE_CLASS_TEXT)
+        val regex = Regex("[^$digits\\.]")
         var newStr = ""
 
         text_input_edit_text.addTextChangedListener(object : TextWatcher {
@@ -117,7 +119,8 @@ class InputView @JvmOverloads constructor(
                     newStr = ""
                 } else if (str != newStr) {
                     newStr = str.replace(regex, "")
-                    text_input_edit_text.setText("")
+                    text_input_edit_text.setText(newStr)
+                    text_input_edit_text.setSelection(newStr.length)
                 }
             }
 
