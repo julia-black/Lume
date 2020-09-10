@@ -76,6 +76,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
     }
 
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
+        attachmentMessageView.isEnabled = true
         if (ImagePicker.shouldHandleResult(requestCode, resultCode, data, SELECT_IMAGE_REQUEST_CODE)) {
             val images = ImagePicker.getImages(data).mapNotNull { it.uri.getBitmap(activity?.contentResolver) }
             if (resultCode == Activity.RESULT_OK && images.isNotEmpty()) {
@@ -103,7 +104,10 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         chatView.addItemDecoration(SpaceDivider(16))
         chatBackView.setOnClickListener { findNavController().popBackStack() }
         sendMessageView.setOnClickListener { sendMessage() }
-        attachmentMessageView.setOnClickListener { addAttachment() }
+        attachmentMessageView.setOnClickListener {
+            addAttachment()
+            attachmentMessageView.isEnabled = false
+        }
     }
 
     private fun sendMessage(images: List<Bitmap> = emptyList()) {
