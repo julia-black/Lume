@@ -100,6 +100,7 @@ class PersonFragment : BaseFragment(), PersonView {
         imageUid?.let {
             Glide.with(this)
                 .load(imageUid.generateImageLink())
+                .thumbnail(0.1f)
                 .into(image)
         }
     }

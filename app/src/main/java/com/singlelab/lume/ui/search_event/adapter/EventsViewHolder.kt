@@ -26,6 +26,7 @@ class EventsViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         if (event.eventPrimaryImageContentUid != null) {
             Glide.with(itemView)
                 .load(event.eventPrimaryImageContentUid.generateImageLink())
+                .thumbnail(0.3f)
                 .into(itemView.image)
         }
         itemView.setOnClickListener {

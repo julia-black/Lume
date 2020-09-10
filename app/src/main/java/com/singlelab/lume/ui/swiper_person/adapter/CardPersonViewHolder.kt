@@ -23,6 +23,7 @@ class CardPersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         if (!person.imageContentUid.isNullOrEmpty()) {
             Glide.with(itemView)
                 .load(person.imageContentUid.generateImageLink())
+                .thumbnail(0.1f)
                 .into(itemView.image)
             itemView.image.setOnClickListener {
                 showFullScreenImage(person.imageContentUid)

@@ -26,6 +26,7 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             event.eventPrimaryImageContentUid.let {
                 Glide.with(itemView)
                     .load(it.generateImageLink())
+                    .thumbnail(0.3f)
                     .into(itemView.image)
             }
         }
@@ -50,6 +51,7 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             if (it.imageContentUid != null) {
                 Glide.with(itemView.context)
                     .load(it.imageContentUid.generateImageLink())
+                    .thumbnail(0.1f)
                     .into(itemView.image_administrator)
             }
             itemView.administrator_name.text = it.name

@@ -175,6 +175,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         imageUid?.let {
             Glide.with(this)
                 .load(imageUid.generateImageLink())
+                .thumbnail(0.1f)
                 .into(image)
         }
     }

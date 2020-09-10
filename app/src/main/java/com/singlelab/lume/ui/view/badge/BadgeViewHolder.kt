@@ -19,6 +19,7 @@ class BadgeViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 
         Glide.with(itemView)
             .load(badge.badgeImageUid.generateImageLink())
+            .thumbnail(0.1f)
             .into(itemView.image)
 
         if (badge.isReceived) {

@@ -20,6 +20,7 @@ class PersonShortViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         if (person.imageContentUid != null) {
             Glide.with(itemView)
                 .load(person.imageContentUid.generateImageLink())
+                .thumbnail(0.1f)
                 .into(itemView.image_person)
         }
         itemView.setOnClickListener {

@@ -109,6 +109,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         } else {
             Glide.with(this)
                 .load(event.eventPrimaryImageContentUid.generateImageLink())
+                .thumbnail(0.3f)
                 .into(image)
         }
 
@@ -161,6 +162,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             if (it.imageContentUid != null) {
                 Glide.with(this)
                     .load(it.imageContentUid.generateImageLink())
+                    .thumbnail(0.1f)
                     .into(image_administrator)
             }
         }
