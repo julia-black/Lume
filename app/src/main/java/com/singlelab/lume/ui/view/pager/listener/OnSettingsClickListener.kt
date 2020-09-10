@@ -4,5 +4,7 @@ interface OnSettingsClickListener {
 
     fun onFeedbackClick()
 
+    fun onAgreementClick()
+
     fun onLogoutClick()
 }

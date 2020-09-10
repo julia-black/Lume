@@ -28,6 +28,9 @@ class SettingsView @JvmOverloads constructor(
         feedback.setOnClickListener {
             settingsClickListener?.onFeedbackClick()
         }
+        agreement.setOnClickListener {
+            settingsClickListener?.onAgreementClick()
+        }
         exit.setOnClickListener {
             settingsClickListener?.onLogoutClick()
         }

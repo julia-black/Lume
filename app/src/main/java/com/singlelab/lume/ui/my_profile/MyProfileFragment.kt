@@ -199,6 +199,10 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         findNavController().navigate(MyProfileFragmentDirections.actionMyProfileToFeedback())
     }
 
+    override fun onAgreementClick() {
+        openBrowser(getString(R.string.url_agreement))
+    }
+
     override fun onLogoutClick() {
         presenter.logout()
     }

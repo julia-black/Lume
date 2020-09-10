@@ -3,6 +3,7 @@ package com.singlelab.lume.base
 import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -195,6 +196,11 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
                 .setRequestCode(Const.SELECT_IMAGE_REQUEST_CODE)
                 .start()
         }
+    }
+
+    fun openBrowser(url: String) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(browserIntent)
     }
 
     fun shareText(text: String) {

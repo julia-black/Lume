@@ -22,6 +22,24 @@
         android:background="@color/colorGrayVeryLight" />
 
     <TextView
+        android:id="@+id/agreement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_very_small"
+        android:drawableStart="@drawable/ic_agreement"
+        android:drawablePadding="@dimen/margin_medium"
+        android:paddingHorizontal="@dimen/margin_big"
+        android:paddingVertical="@dimen/margin_medium"
+        android:text="@string/title_agreement"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/text_size_standart" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGrayVeryLight" />
+
+    <TextView
         android:id="@+id/exit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

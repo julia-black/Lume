@@ -61,6 +61,9 @@ open class BaseRepository(private val apiUnit: ApiUnit) {
                 throw RefreshTokenException()
             } else if (!errorBody.isNullOrEmpty()) {
                 try {
+                    if (response.code() == HttpURLConnection.HTTP_BAD_METHOD) {
+                        AuthData.isAnon = true
+                    }
                     val error = Gson().fromJson(errorBody, ErrorResponse::class.java)
                     ResultCoroutines.Error(ApiException(error.message, error.errorCode))
                 } catch (e: Exception) {

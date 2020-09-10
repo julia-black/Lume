@@ -196,6 +196,8 @@
     <string name="leave_event">Выйти из события</string>
     <string name="accept_leave">Выйти из события?</string>
     <string name="info_about_leave">Событие и его чат будут недоступны. Вернуться в событие можно будет только по приглашению</string>
+    <string name="title_agreement">Пользовательское соглашение</string>
+    <string name="url_agreement">http://lumeprod.azurewebsites.net/license</string>
 
     <!-- Arrays -->
     <string-array name="custom_weekdays">

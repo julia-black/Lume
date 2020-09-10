@@ -108,6 +108,9 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
         button_auth.setOnClickListener {
             onClickAuth()
         }
+        text_agreement.setOnClickListener {
+            openBrowser(getString(R.string.url_agreement))
+        }
     }
 
     private fun onClickAuth() {
