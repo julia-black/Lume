@@ -88,12 +88,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
 
     private fun initViews() {
         chatTitleView.text = chatType.title
-        val listener = object : OnMessageClickListener {
-            override fun onPersonImageClick(personUid: String) {
-                navigateToPerson(personUid)
-            }
-        }
-        chatMessagesAdapter = if (chatType.isGroup) GroupChatMessagesAdapter(listener) else PrivateChatMessagesAdapter()
+        chatMessagesAdapter = if (chatType.isGroup) GroupChatMessagesAdapter { personUid -> navigateToPerson(personUid) } else PrivateChatMessagesAdapter()
         chatView.adapter = chatMessagesAdapter
         chatView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false).apply { stackFromEnd = true; }
         chatView.addOnScrollListener(object : RecyclerView.OnScrollListener() {

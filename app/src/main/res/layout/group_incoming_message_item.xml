@@ -29,7 +29,7 @@
             app:layout_constraintStart_toEndOf="@id/incomingMessageAuthorPhotoView">
 
             <ImageView
-                android:id="@+id/incomingMessageTriangleView"
+                android:id="@+id/incomingMessageCloudView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start|bottom"

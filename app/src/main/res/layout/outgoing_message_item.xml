@@ -22,7 +22,7 @@
             app:constraint_referenced_ids="outgoingMessageContentView" />
 
         <ImageView
-            android:id="@+id/outgoingMessageTriangleView"
+            android:id="@+id/outgoingMessageCloudView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/chat_outgoing_message_triangle"

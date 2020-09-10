@@ -42,14 +42,8 @@ constructor(
             try {
                 isLoading = true
                 val chatResponse = when (type) {
-                    is ChatOpeningInvocationType.Person -> interactor.loadPersonChat(
-                        type.personUid,
-                        page
-                    )
-                    is ChatOpeningInvocationType.Common -> interactor.loadChatByUid(
-                        type.chatUid,
-                        page
-                    )
+                    is ChatOpeningInvocationType.Person -> interactor.loadPersonChat(type.personUid, page)
+                    is ChatOpeningInvocationType.Common -> interactor.loadChatByUid(type.chatUid, page)
                     else -> null
                 }
                 if (chatResponse != null) {

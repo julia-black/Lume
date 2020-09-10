@@ -13,7 +13,7 @@ import com.singlelab.lume.ui.chat.common.view.PrivateChatIncomingMessageView
 
 abstract class ChatMessagesAdapter(
     private val chatType: Type,
-    private val listener: OnMessageClickListener? = null
+    private val clickEvent: OnMessageAuthorClickEvent? = null
 ) : RecyclerView.Adapter<ChatMessagesAdapter.ChatMessageViewHolder>() {
 
     enum class Type {
@@ -30,7 +30,7 @@ abstract class ChatMessagesAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
         ChatMessageItem.Type.OUTGOING.code -> OutgoingMessageViewHolder(ChatOutgoingMessageView(parent.context))
         else -> if (chatType == Type.GROUP) {
-            GroupIncomingMessageViewHolder(GroupChatIncomingMessageView(parent.context), listener)
+            GroupIncomingMessageViewHolder(GroupChatIncomingMessageView(parent.context), clickEvent)
         } else {
             PrivateIncomingMessageViewHolder(PrivateChatIncomingMessageView(parent.context))
         }

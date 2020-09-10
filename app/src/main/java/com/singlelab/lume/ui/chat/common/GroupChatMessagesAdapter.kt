@@ -4,7 +4,12 @@ import android.view.View
 import androidx.recyclerview.widget.DiffUtil
 import com.singlelab.lume.ui.chat.common.view.GroupChatIncomingMessageView
 
-class GroupChatMessagesAdapter(private val listener: OnMessageClickListener? = null) : ChatMessagesAdapter(Type.GROUP, listener) {
+class GroupChatMessagesAdapter(
+    clickEvent: OnMessageAuthorClickEvent
+) : ChatMessagesAdapter(
+    Type.GROUP,
+    clickEvent
+) {
 
     override fun setMessages(newMessages: List<ChatMessageItem>) {
         val syncedMessages = newMessages.syncLast()
@@ -14,11 +19,14 @@ class GroupChatMessagesAdapter(private val listener: OnMessageClickListener? = n
         diffResult.dispatchUpdatesTo(this)
     }
 
-    class GroupIncomingMessageViewHolder(view: View, private val listener: OnMessageClickListener? = null) : ChatMessageViewHolder(view) {
+    class GroupIncomingMessageViewHolder(
+        view: View,
+        private val clickEvent: OnMessageAuthorClickEvent? = null
+    ) : ChatMessageViewHolder(view) {
         override fun bind(messageItem: ChatMessageItem) {
             if (messageItem !is GroupChatMessageItem) return
             if (itemView !is GroupChatIncomingMessageView) return
-            itemView.setContent(messageItem, listener)
+            itemView.setContent(messageItem, clickEvent)
         }
     }
 

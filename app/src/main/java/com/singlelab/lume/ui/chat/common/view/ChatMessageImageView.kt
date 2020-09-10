@@ -5,10 +5,15 @@ import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.custom.sliderimage.logic.SliderImage
 import com.singlelab.lume.R
 import com.singlelab.lume.model.Const
+import com.singlelab.lume.ui.chat.common.ChatMessageItem
+import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.parse
 import kotlinx.android.synthetic.main.chat_message_image_view.view.*
 
@@ -28,12 +33,51 @@ constructor(
         inflate(getContext(), R.layout.chat_message_image_view, this)
     }
 
-    fun setMultipleImage(imageCount: Int, topRadius: Float = 14f, bottomRadius: Float = 14f) {
+    fun setImage(message: ChatMessageItem) {
+        if (message.uid == ChatMessageItem.PENDING_MESSAGE_UID) {
+            isVisible = message.images.isNotEmpty()
+            chatMessageImageView.isVisible = message.images.isNotEmpty()
+            return
+        }
+
+        val imagesCount = message.images.count { it.isNotEmpty() }
+        val hasImages = imagesCount > 0
+
+        isVisible = hasImages
+
+        setMultipleImage(imagesCount, message.text)
+
+        if (hasImages) {
+            setDateChip(message.text.isEmpty(), message.date)
+
+            val transformations = mutableListOf<BitmapTransformation>(CenterCrop())
+            if (message.text.isEmpty()) {
+                transformations.add(RoundedCorners(CORNER_RADIUS_16.toInt()))
+            } else {
+                transformations.add(GranularRoundedCorners(CORNER_RADIUS_16, CORNER_RADIUS_16, CORNER_RADIUS_0, CORNER_RADIUS_0))
+            }
+            Glide.with(this)
+                .load(message.images.first().generateImageLink())
+                .thumbnail(0.1f)
+                .transform(*transformations.toTypedArray())
+                .into(chatMessageImageView)
+        }
+
+        chatMessageImageView.setOnClickListener { showFullScreenImages(message.images) }
+    }
+
+    private fun setMultipleImage(imageCount: Int, text: String) {
         val isMultipleImages = imageCount > 1
+
         chatMessageImageCountView.isVisible = isMultipleImages
         chatMessageImageForegroundView.isVisible = isMultipleImages
+
         if (isMultipleImages) {
             chatMessageImageCountView.text = context.getString(R.string.chat_message_images_count, imageCount - 1)
+
+            val topRadius = CORNER_RADIUS_16
+            val bottomRadius = if (text.isEmpty()) CORNER_RADIUS_16 else CORNER_RADIUS_0
+
             Glide.with(this)
                 .load(R.drawable.shape_chat_message_image_foreground)
                 .transform(CenterCrop(), GranularRoundedCorners(topRadius, topRadius, bottomRadius, bottomRadius))
@@ -41,13 +85,23 @@ constructor(
         }
     }
 
-    fun setDateChip(isVisible: Boolean, date: String? = null) {
-        chatMessageImageDateChip.isVisible = isVisible
-        if (isVisible && date != null && date.isNotEmpty()) {
-            val dateText = date.parse(Const.DATE_FORMAT_TIME_ZONE, "HH:mm")
-            chatMessageImageDateChip.text = dateText
-        } else {
-            chatMessageImageDateChip.isVisible = false
+    private fun setDateChip(isMessageTextEmpty: Boolean, date: String? = null) {
+        chatMessageImageDateChip.isVisible = isMessageTextEmpty
+        if (isMessageTextEmpty && date != null && date.isNotEmpty()) {
+            chatMessageImageDateChip.text = date.parse(Const.DATE_FORMAT_TIME_ZONE, "HH:mm")
         }
+    }
+
+    private fun showFullScreenImages(images: List<String>) {
+        SliderImage.openfullScreen(
+            context = context,
+            items = images.filter { it.isNotEmpty() }.map { it.generateImageLink() },
+            position = 0
+        )
+    }
+
+    companion object {
+        private const val CORNER_RADIUS_16 = 16F
+        private const val CORNER_RADIUS_0 = 0F
     }
 }
