@@ -2,6 +2,8 @@ package com.singlelab.lume.ui.chat.common.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
@@ -30,6 +32,7 @@ constructor(
 ) {
 
     init {
+        layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         inflate(getContext(), R.layout.chat_message_image_view, this)
     }
 
