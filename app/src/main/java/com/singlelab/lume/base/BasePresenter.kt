@@ -30,11 +30,14 @@ open class BasePresenter<ViewT : BaseView>(
         super.onFirstViewAttach()
         baseInteractor.setOnRefreshTokenListener(this)
         updateNotifications()
+        if (AuthData.isAnon) {
+            preferences?.setAnon(true)
+        }
     }
 
-   open fun onLoadedNotification(notifications: PersonNotifications) {
-       viewState.showNotifications(notifications)
-   }
+    open fun onLoadedNotification(notifications: PersonNotifications) {
+        viewState.showNotifications(notifications)
+    }
 
     fun updateNotifications() {
         if (AuthData.isAnon) {
