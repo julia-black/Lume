@@ -26,10 +26,9 @@
             android:id="@+id/button_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_big"
-            android:layout_marginTop="@dimen/margin_top_title"
+            android:padding="24dp"
             android:src="@drawable/ic_back"
-            android:tint="@color/white"
+            android:tint="@color/selector_white_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

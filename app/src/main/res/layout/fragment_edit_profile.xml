@@ -11,17 +11,15 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="@dimen/margin_medium"
-        android:paddingEnd="@dimen/margin_medium"
         android:paddingBottom="@dimen/padding_bottom_nav">
 
         <ImageView
             android:id="@+id/button_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_very_small"
+            android:padding="24dp"
             android:src="@drawable/ic_back"
-            android:tint="@color/colorGrayMedium"
+            android:tint="@color/selector_gray_icon"
             app:layout_constraintBottom_toBottomOf="@id/title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/title" />
@@ -43,6 +41,7 @@
             android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_medium"
             app:layout_constraintTop_toBottomOf="@id/title" />
 
@@ -50,6 +49,7 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_big"
             app:layout_constraintTop_toBottomOf="@id/login" />
 
@@ -57,6 +57,7 @@
             android:id="@+id/age"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_big"
             app:layout_constraintTop_toBottomOf="@id/name" />
 
@@ -64,6 +65,7 @@
             android:id="@+id/text_city"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_big"
             android:background="@drawable/shape_input"
             android:drawableEnd="@drawable/ic_arrow"
@@ -79,6 +81,7 @@
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_big"
             app:layout_constraintTop_toBottomOf="@id/text_city" />
 
@@ -87,6 +90,7 @@
             style="@style/ButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_big"
             android:clickable="true"
             android:focusable="true"

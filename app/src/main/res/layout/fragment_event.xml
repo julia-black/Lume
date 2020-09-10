@@ -50,7 +50,7 @@
                     android:layout_height="30dp"
                     android:layout_margin="@dimen/margin_medium"
                     android:src="@drawable/ic_share"
-                    android:tint="@color/white"
+                    android:tint="@color/selector_white_icon"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -61,7 +61,7 @@
                     android:layout_height="25dp"
                     android:layout_margin="@dimen/margin_medium"
                     android:src="@drawable/chat_send_message_icon"
-                    android:tint="@color/white"
+                    android:tint="@color/selector_white_icon"
                     app:layout_constraintBottom_toBottomOf="@id/title"
                     app:layout_constraintEnd_toEndOf="parent" />
 

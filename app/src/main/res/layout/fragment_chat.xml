@@ -11,9 +11,9 @@
         android:id="@+id/chatBackView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:padding="24dp"
         android:src="@drawable/ic_back"
-        android:tint="@color/colorGrayMedium"
+        android:tint="@color/selector_gray_icon"
         app:layout_constraintBottom_toBottomOf="@id/chatTitleView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/chatTitleView" />
