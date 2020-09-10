@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
@@ -32,11 +31,7 @@ class ChatsFragment : BaseFragment(), ChatsView, OnlyForAuthFragments {
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
 
-    private val onChatClicked: (ChatItem) -> Unit = { chat ->
-        navigateToChat(chat)
-    }
-
-    private val chatsAdapter: ChatsAdapter by lazy { ChatsAdapter(onChatClicked) }
+    private val chatsAdapter: ChatsAdapter by lazy { ChatsAdapter { navigateToChat(it) } }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         inflater.inflate(R.layout.fragment_chats, container, false)
@@ -57,12 +52,13 @@ class ChatsFragment : BaseFragment(), ChatsView, OnlyForAuthFragments {
         emptyChatsView.visibility = View.VISIBLE
     }
 
-    private fun navigateToChat(chat: ChatItem) =
+    private fun navigateToChat(chat: ChatItem) {
         findNavController().navigate(
             ChatsFragmentDirections.actionFromChatsToChat(
                 ChatOpeningInvocationType.Common(chat.title, chat.uid, chat.isGroup)
             )
         )
+    }
 
     private fun initViews() {
         chatsView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

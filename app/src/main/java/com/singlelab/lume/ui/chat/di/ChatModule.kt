@@ -16,7 +16,6 @@ import dagger.hilt.android.components.ActivityComponent
 import com.singlelab.lume.database.repository.ChatMessagesRepository as LocalChatRepository
 import com.singlelab.net.repositories.chat.ChatRepository as RemoteChatRepository
 
-
 @InstallIn(ActivityComponent::class)
 @Module
 object ChatModule {
