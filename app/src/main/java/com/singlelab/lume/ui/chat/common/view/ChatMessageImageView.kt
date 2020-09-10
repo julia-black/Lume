@@ -35,6 +35,7 @@ constructor(
 
     fun setImage(message: ChatMessageItem) {
         if (message.uid == ChatMessageItem.PENDING_MESSAGE_UID) {
+            // Для сообщения, которое ждет отправки, отображаем только область картинки, если в сообщении есть картинки
             isVisible = message.images.isNotEmpty()
             chatMessageImageView.isVisible = message.images.isNotEmpty()
             return
@@ -45,11 +46,18 @@ constructor(
 
         isVisible = hasImages
 
+        // Если сообщение содержит больше одной картинки,
+        // то показывем фейд поверх первой картинки и счетчик количества кортинок в сообщении
         setMultipleImage(imagesCount, message.text)
 
         if (hasImages) {
+            // Если сообщение содержит только картинки без текста,
+            // то отображаем дату поверх картинки в правом нижнем углу, чтобы не отрисовывать область облака
             setDateChip(message.text.isEmpty(), message.date)
 
+            // Определяем углы закругления для картинкок в сообщении:
+            // если сообщение содержит только картинки без текста, то делаем закругление по всем сторонам,
+            // иначе - делаем закругление только по внешнему краю картинки
             val transformations = mutableListOf<BitmapTransformation>(CenterCrop())
             if (message.text.isEmpty()) {
                 transformations.add(RoundedCorners(CORNER_RADIUS_16.toInt()))

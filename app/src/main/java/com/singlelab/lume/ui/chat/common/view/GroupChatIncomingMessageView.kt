@@ -54,6 +54,7 @@ constructor(
     }
 
     private fun setAuthorView(messageItem: GroupChatMessageItem, clickEvent: OnMessageAuthorClickEvent? = null) {
+        // Отображаем имя автора сообщения в групповом чате, тольео если сообщение не содержит картинки
         incomingMessageAuthorView.isVisible = messageItem.images.count { it.isNotEmpty() } == 0
         if (messageItem.images.count { it.isNotEmpty() } == 0) {
             incomingMessageAuthorView.text = messageItem.personName

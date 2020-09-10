@@ -17,6 +17,7 @@ interface ChatMessageViewExtensions {
     }
 
     fun TextView.setMessageTextViewDimensions(messageImages: List<String>, maxMessageViewWidth: Int) {
+        // Если сообщение содержит картинки, то подстраиваем максимальную ширину текста сообщения под ширину картинки
         if (messageImages.count { it.isNotEmpty() } > 0) {
             maxWidth = MESSAGE_TEXT_MAX_WIDTH.px
             setPadding(paddingLeft, paddingTop, 6.px, paddingBottom)
@@ -27,6 +28,7 @@ interface ChatMessageViewExtensions {
     }
 
     fun TextView.setMessageDate(messageText: String, messageDate: String) {
+        // Если сообщение содержит только картинки без текста, то не отображаем дату в облаке
         isVisible = messageText.isNotEmpty()
         if (messageText.isNotEmpty()) {
             isVisible = messageDate.isNotEmpty()
@@ -37,6 +39,7 @@ interface ChatMessageViewExtensions {
     }
 
     fun ImageView.setCloudView(messageText: String, messageImages: List<String>) {
+        // Если сообщение содержит только картинки без текста, то не отображаем облако
         isVisible = messageImages.count { it.isNotEmpty() } == 0 && messageText.isNotEmpty()
     }
 

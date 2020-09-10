@@ -50,6 +50,7 @@ constructor(
     }
 
     private fun setPendingMessageProgress(messageStatus: ChatMessageItem.Status) {
+        // Отображаем прогресс бар для сообщения, которое ожидает отправки
         val isPending = messageStatus == ChatMessageItem.Status.PENDING
         val background = if (isPending) R.drawable.group_message_input_background else R.drawable.private_outgoing_message_input_background
         outgoingMessageImageProgressView.isVisible = isPending
