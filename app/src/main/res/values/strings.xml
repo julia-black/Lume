@@ -182,7 +182,7 @@
     <string name="any_city">Любой город</string>
     <string name="any_age">Любой возраст</string>
     <string name="age_exact">Возраст: %1$d</string>
-    <string name="empty_persons">К сожалению, люди по выбранным фильтрам не найдены. Попробуй расширить фильтры</string>
+    <string name="empty_persons">Возможные новые участники не найдены. Попробуй изменить фильтры</string>
     <string name="selected_types">Выбрано:</string>
     <string name="selected_all">Любое событие</string>
     <string name="selected_nothing">Ничего не выбрано</string>
@@ -193,6 +193,9 @@
     <string name="empty_name">Не заполнено имя</string>
     <string name="empty_description">Не заполнено описание профиля</string>
     <string name="empty_age">Не заполнен возраст</string>
+    <string name="leave_event">Выйти из события</string>
+    <string name="accept_leave">Выйти из события?</string>
+    <string name="info_about_leave">Событие и его чат будут недоступны. Вернуться в событие можно будет только по приглашению</string>
 
     <!-- Arrays -->
     <string-array name="custom_weekdays">

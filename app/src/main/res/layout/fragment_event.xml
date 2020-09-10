@@ -376,7 +376,7 @@
                         app:layout_constraintTop_toBottomOf="@id/count_invited" />
 
                     <TextView
-                        android:id="@+id/button_cancel_event"
+                        android:id="@+id/button_cancel_or_leave_event"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_medium"
@@ -400,7 +400,7 @@
                         android:layout_marginTop="@dimen/margin_medium"
                         android:background="@color/colorGrayVeryLight"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/button_cancel_event" />
+                        app:layout_constraintTop_toBottomOf="@id/button_cancel_or_leave_event" />
 
                     <Button
                         android:id="@+id/button_join"
@@ -408,7 +408,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_medium"
-                        android:layout_marginTop="@dimen/margin_small"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
                         android:clickable="true"
                         android:enabled="true"
                         android:focusable="true"

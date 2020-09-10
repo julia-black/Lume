@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/empty_swipes"
+        tools:text="@string/empty_persons"
         tools:visibility="visible" />
 
     <LinearLayout

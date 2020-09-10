@@ -159,5 +159,6 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
         card_stack_view.visibility = View.GONE
         text_empty_swipes.visibility = View.VISIBLE
         text_empty_swipes.text = getString(R.string.empty_persons)
+        button_filter.visibility = View.VISIBLE
     }
 }

@@ -219,30 +219,12 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                     toSwiperPeople(event.eventUid)
                 }
             }
-            button_cancel_event.visibility = View.VISIBLE
-            button_cancel_event.setOnClickListener {
-                val dialogClickListener =
-                    DialogInterface.OnClickListener { dialog, which ->
-                        when (which) {
-                            DialogInterface.BUTTON_POSITIVE -> {
-                                presenter.cancelEvent()
-                            }
-                            DialogInterface.BUTTON_NEGATIVE -> {
-                            }
-                        }
-                    }
-                showDialog(
-                    getString(R.string.accept_cancel),
-                    getString(R.string.info_about_cancel),
-                    dialogClickListener
-                )
-
-            }
+            button_cancel_or_leave_event.visibility = View.VISIBLE
         } else {
             button_search_participants.visibility = View.GONE
             button_invite.visibility =
                 if (event.isOpenForInvitations && event.isActive()) View.VISIBLE else View.GONE
-            button_cancel_event.visibility = View.GONE
+            button_cancel_or_leave_event.visibility = View.GONE
             divider_three.visibility = View.GONE
         }
 
@@ -266,6 +248,11 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                 button_chat.visibility = View.VISIBLE
                 button_accept.visibility = View.GONE
                 button_reject.visibility = View.GONE
+                if (!presenter.isAdministrator()) {
+                    button_cancel_or_leave_event.text = getString(R.string.leave_event)
+                    button_cancel_or_leave_event.visibility = View.VISIBLE
+                    divider_three.visibility = View.VISIBLE
+                }
             }
             ParticipantStatus.WAITING_FOR_APPROVE_FROM_EVENT -> {
                 button_join.visibility = View.VISIBLE
@@ -303,6 +290,42 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         if (!event.isActive()) {
             divider_three.visibility = View.GONE
             divider_four.visibility = View.GONE
+        }
+
+        button_cancel_or_leave_event.setOnClickListener {
+            if (presenter.isAdministrator()) {
+                val dialogClickListener =
+                    DialogInterface.OnClickListener { dialog, which ->
+                        when (which) {
+                            DialogInterface.BUTTON_POSITIVE -> {
+                                presenter.cancelEvent()
+                            }
+                            DialogInterface.BUTTON_NEGATIVE -> {
+                            }
+                        }
+                    }
+                showDialog(
+                    getString(R.string.accept_cancel),
+                    getString(R.string.info_about_cancel),
+                    dialogClickListener
+                )
+            } else {
+                val dialogClickListener =
+                    DialogInterface.OnClickListener { dialog, which ->
+                        when (which) {
+                            DialogInterface.BUTTON_POSITIVE -> {
+                                presenter.rejectEvent(currentUid, event.eventUid)
+                            }
+                            DialogInterface.BUTTON_NEGATIVE -> {
+                            }
+                        }
+                    }
+                showDialog(
+                    getString(R.string.accept_leave),
+                    getString(R.string.info_about_leave),
+                    dialogClickListener
+                )
+            }
         }
     }
 
