@@ -86,6 +86,7 @@ constructor(
         if (isMultipleImages) {
             chatMessageImageCountView.text = context.getString(R.string.chat_message_images_count, imageCount - 1)
 
+            // Делаем закругление фейда аналогично закруглению картинки
             val topRadius = CORNER_RADIUS_16
             val bottomRadius = if (text.isEmpty()) CORNER_RADIUS_16 else CORNER_RADIUS_0
 
@@ -99,7 +100,7 @@ constructor(
     private fun setDateChip(isMessageTextEmpty: Boolean, date: String? = null) {
         chatMessageImageDateChip.isVisible = isMessageTextEmpty
         if (isMessageTextEmpty && date != null && date.isNotEmpty()) {
-            chatMessageImageDateChip.text = date.parse(Const.DATE_FORMAT_TIME_ZONE, "HH:mm")
+            chatMessageImageDateChip.text = date.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_ONLY_TIME)
         }
     }
 

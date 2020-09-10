@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="44dp"
         android:layout_marginBottom="9dp"
-        android:background="@drawable/group_message_input_background"
+        android:background="@drawable/message_rounded_background"
         android:backgroundTint="@color/colorChatIncomingMessageBackground"
         android:padding="1dp">
 

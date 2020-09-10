@@ -21,7 +21,7 @@ class GroupChatMessagesAdapter(
 
     class GroupIncomingMessageViewHolder(
         view: View,
-        private val clickEvent: OnMessageAuthorClickEvent? = null
+        private val clickEvent: OnMessageAuthorClickEvent?
     ) : ChatMessageViewHolder(view) {
         override fun bind(messageItem: ChatMessageItem) {
             if (messageItem !is GroupChatMessageItem) return

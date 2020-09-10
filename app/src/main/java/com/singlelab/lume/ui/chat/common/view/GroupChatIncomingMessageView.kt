@@ -36,7 +36,7 @@ constructor(
         inflate(getContext(), R.layout.group_incoming_message_item, this)
     }
 
-    fun setContent(messageItem: GroupChatMessageItem, clickEvent: OnMessageAuthorClickEvent? = null) {
+    fun setContent(messageItem: GroupChatMessageItem, clickEvent: OnMessageAuthorClickEvent?) {
         setText(messageItem)
         setAuthorView(messageItem, clickEvent)
 
@@ -53,7 +53,7 @@ constructor(
         incomingMessageView.setMessageTextViewDimensions(messageItem.images, maxMessageViewWidth)
     }
 
-    private fun setAuthorView(messageItem: GroupChatMessageItem, clickEvent: OnMessageAuthorClickEvent? = null) {
+    private fun setAuthorView(messageItem: GroupChatMessageItem, clickEvent: OnMessageAuthorClickEvent?) {
         // Отображаем имя автора сообщения в групповом чате, тольео если сообщение не содержит картинки
         incomingMessageAuthorView.isVisible = messageItem.images.count { it.isNotEmpty() } == 0
         if (messageItem.images.count { it.isNotEmpty() } == 0) {
