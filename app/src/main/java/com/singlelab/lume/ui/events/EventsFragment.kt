@@ -242,11 +242,13 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
         date: CalendarDay,
         selected: Boolean
     ) {
-        val days = (view_pager_events.adapter as DaysAdapter).getList()
-        val position = days.indexOfFirst { it.first == date }
-        if (position >= 0) {
-            showFullCalendar(false)
-            view_pager_events.setCurrentItem(position, true)
+        view_pager_events.adapter?.let {
+            val days = (it as DaysAdapter).getList()
+            val position = days.indexOfFirst { day -> day.first == date }
+            if (position >= 0) {
+                showFullCalendar(false)
+                view_pager_events.setCurrentItem(position, true)
+            }
         }
     }
 
@@ -287,7 +289,8 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
             callbackBackPressed
         )
         calendar_full_view.addDecorator(currentDayDecorator)
-        calendar_full_view.visibility = if (isShow) View.VISIBLE else View.INVISIBLE
+        calendar_full_view.isVisible = isShow
+        card_empty_events.isVisible = !isShow
     }
 
     private fun onDaySelected(position: Int) {
