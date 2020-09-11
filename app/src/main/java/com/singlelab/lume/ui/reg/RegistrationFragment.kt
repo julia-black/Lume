@@ -114,6 +114,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
             setDigits(getString(R.string.login_digits))
             addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
+                    presenter.setLogin(s.toString())
                 }
 
                 override fun beforeTextChanged(
@@ -125,7 +126,6 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    presenter.setLogin(s.toString())
                 }
             })
         }
