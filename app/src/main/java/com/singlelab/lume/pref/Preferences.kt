@@ -15,6 +15,7 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
         const val PREF_CITY_NAME = "pref_city_name"
         const val PREF_FIRST_LAUNCH = "pref_first_launch"
         const val PREF_PUSH_TOKEN = "pref_push_token"
+        const val PREF_AGE = "pref_age"
     }
 
     init {
@@ -25,7 +26,8 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
             getUid(),
             isAnon(),
             getCityId(),
-            getCityName()
+            getCityName(),
+            getAge()
         )
     }
 
@@ -41,7 +43,7 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
         setRefreshToken(null)
         setUid(null)
         setAnon(true)
-        AuthData.setAuthData(null, null, null, true, null, null)
+        AuthData.setAuthData(null, null, null, true, null, null, null)
     }
 
     fun setUid(uid: String?) {
@@ -59,6 +61,11 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
         setCityName(cityName)
         AuthData.cityId = cityId
         AuthData.cityName = cityName
+    }
+
+    fun setAge(age: Int? = null) {
+        AuthData.age = age
+        sharedPreferences?.edit()?.putInt(PREF_AGE, age ?: 0)?.apply()
     }
 
     fun setFirstLaunch(isFirstLaunch: Boolean) {
@@ -102,4 +109,6 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
     private fun getCityId() = sharedPreferences?.getInt(PREF_CITY_ID, -1)
 
     private fun getCityName() = sharedPreferences?.getString(PREF_CITY_NAME, "")
+
+    private fun getAge() = sharedPreferences?.getInt(PREF_AGE, 0)
 }

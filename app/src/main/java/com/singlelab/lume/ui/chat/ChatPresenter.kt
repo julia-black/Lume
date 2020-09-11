@@ -1,6 +1,7 @@
 package com.singlelab.lume.ui.chat
 
 import android.graphics.Bitmap
+import com.singlelab.lume.analytics.Analytics
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.pref.Preferences
@@ -36,6 +37,7 @@ constructor(
     fun showChat(type: ChatOpeningInvocationType, page: Int = 1) {
         // TODO: Сделать прогресс бар для загрузки сообщений с сервера, изначально показывать сообщения из бд?
         if (page == 1) {
+            Analytics.logOpenChat()
             viewState.showLoading(true)
         }
         invokeSuspend {
@@ -90,6 +92,7 @@ constructor(
                             val chatType = chatSettings.chatType
                             if (chatType != null && currentPersonUid != null) {
                                 val message = messageEntity.toUiEntity(chatType.isGroup, currentPersonUid)
+                                Analytics.logSendMessage()
                                 runOnMainThread {
                                     viewState.showNewMessage(message)
                                 }

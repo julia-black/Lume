@@ -7,7 +7,6 @@ import com.singlelab.lume.model.profile.Badge
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.model.profile.PersonNotifications
 import com.singlelab.lume.model.profile.Profile
-import com.singlelab.lume.model.view.PagerTab
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.my_profile.interactor.MyProfileInteractor
 import com.singlelab.lume.util.toBase64
@@ -49,12 +48,12 @@ class MyProfilePresenter @Inject constructor(
                     profile = interactor.loadProfile()
                     profile?.let {
                         preferences?.setCity(it.cityId, it.cityName)
+                        preferences?.setAge(it.age)
                     }
                     runOnMainThread {
                         viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
                         if (profile != null) {
                             viewState.showProfile(profile!!)
-                           // loadFriends(profile!!.personUid)
                         } else {
                             viewState.showError("Не удалось получить профиль")
                         }

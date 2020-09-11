@@ -2,6 +2,7 @@ package com.singlelab.lume.ui.creating_event
 
 import android.graphics.Bitmap
 import com.singlelab.lume.R
+import com.singlelab.lume.analytics.Analytics
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.Const
@@ -75,8 +76,9 @@ class CreatingEventPresenter @Inject constructor(
                         )
                     }
                 }
-                runOnMainThread {
-                    eventUid?.let {
+                eventUid?.let {
+                    Analytics.logCreateEvent(it, event)
+                    runOnMainThread {
                         viewState.onCompleteCreateEvent(it)
                     }
                 }

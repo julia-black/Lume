@@ -23,6 +23,7 @@ import com.karumi.dexter.listener.PermissionDeniedResponse
 import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
+import com.singlelab.lume.analytics.Analytics
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.base.listeners.OnBackPressListener
 import com.singlelab.lume.base.listeners.OnPermissionListener
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
+        Analytics.init()
         getPushToken()
         val data: Uri? = intent?.data
         var target: Target? = null

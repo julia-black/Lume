@@ -7,6 +7,7 @@ object AuthData {
     var isAnon: Boolean = true
     var cityId: Int? = null
     var cityName: String? = null
+    var age: Int? = null
 
     fun setAuth(accessToken: String?, refreshToken: String?) {
         AuthData.accessToken = accessToken
@@ -19,7 +20,8 @@ object AuthData {
         uid: String?,
         isAnon: Boolean,
         cityId: Int?,
-        cityName: String?
+        cityName: String?,
+        age: Int?
     ) {
         AuthData.accessToken = accessToken
         AuthData.refreshToken = refreshToken
@@ -27,5 +29,6 @@ object AuthData {
         AuthData.isAnon = isAnon
         AuthData.cityId = cityId
         AuthData.cityName = cityName
+        AuthData.age = age
     }
 }
