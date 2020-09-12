@@ -32,7 +32,7 @@
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/margin_big"
                 android:background="@color/transparent"
                 app:tabBackground="@drawable/tab_selector"
@@ -46,19 +46,19 @@
             android:id="@+id/input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@id/text_info"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_pager_layout">
+            app:layout_constraintTop_toBottomOf="@id/view_pager_layout"
+            app:layout_constraintVertical_bias="1.0">
 
             <com.singlelab.lume.ui.view.input.PhoneInputView
                 android:id="@+id/layout_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_medium"
-                android:layout_marginTop="@dimen/margin_big" />
+                android:layout_marginHorizontal="@dimen/margin_medium" />
 
             <com.singlelab.lume.ui.view.input.InputView
                 android:id="@+id/layout_code"
@@ -96,7 +96,7 @@
             android:id="@+id/text_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
             android:gravity="center"
             android:textSize="@dimen/text_size_standart"
             android:visibility="invisible"
@@ -111,7 +111,7 @@
             android:id="@+id/button_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
             android:drawableStart="@drawable/ic_back"
             android:drawablePadding="@dimen/margin_small"
             android:gravity="center"
@@ -128,10 +128,13 @@
             android:id="@+id/text_agreement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
             android:gravity="center"
             android:text="@string/title_agreement"
             android:textSize="@dimen/text_size_small"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_back"
+            app:layout_constraintVertical_bias="1.0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
