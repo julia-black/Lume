@@ -5,7 +5,7 @@
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_very_small">4dp</dimen>
     <dimen name="text_size_medium">18sp</dimen>
-    <dimen name="text_size_large">24sp</dimen>
+    <dimen name="text_size_large">20sp</dimen>
     <dimen name="text_size_standart">14sp</dimen>
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="action_swipe_size">180dp</dimen>
@@ -33,7 +33,7 @@
     <dimen name="margin_bottom_filter">60dp</dimen>
     <dimen name="size_filter_icon">25dp</dimen>
     <dimen name="margin_bottom_card_filter">76dp</dimen>
-    <dimen name="margin_card">16dp</dimen>
+    <dimen name="margin_card">8dp</dimen>
     <dimen name="margin_card_pager">60dp</dimen>
     <dimen name="margin_cards">16dp</dimen>
     <dimen name="stack_header_height">80dp</dimen>

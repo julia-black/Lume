@@ -15,7 +15,6 @@
         app:cardElevation="8dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="8:10"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
@@ -23,13 +22,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <View
+            <ImageView
                 android:id="@+id/shape"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@drawable/shape_top_card"
+                android:scaleType="centerCrop"
+                android:src="@drawable/shape_top_card"
                 app:layout_constraintBottom_toBottomOf="@id/title"
-                app:layout_constraintBottom_toTopOf="@id/content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,6 +40,7 @@
                 android:paddingTop="@dimen/margin_card"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_standart"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="12:00" />
 
@@ -49,17 +49,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:gravity="top"
+                android:gravity="center_vertical"
                 android:maxLines="2"
                 android:paddingHorizontal="@dimen/margin_card"
                 android:paddingBottom="@dimen/margin_small"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_medium"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/shape"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/time"
-                app:layout_constraintVertical_bias="0.0"
                 tools:text="Название" />
+            <!--            </LinearLayout>-->
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/content"
