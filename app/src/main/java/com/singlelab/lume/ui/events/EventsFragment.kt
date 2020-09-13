@@ -58,6 +58,8 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
 
     private var firstDayInWeek: Int? = null
 
+    private var isEmptyDays: Boolean = false
+
     private val callbackBackPressed: OnBackPressedCallback =
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -163,8 +165,10 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
         notification.isVisible = countInvites > 0
         notification.text = countInvites.toString()
         if (days.isEmpty()) {
+            isEmptyDays = true
             card_empty_events.isVisible = true
         } else {
+            isEmptyDays = false
             card_empty_events.isVisible = false
             view_pager_events?.apply {
                 adapter = DaysAdapter(days, this@EventsFragment)
@@ -290,7 +294,11 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
         )
         calendar_full_view.addDecorator(currentDayDecorator)
         calendar_full_view.isVisible = isShow
-        card_empty_events.isVisible = !isShow
+        if (isShow) {
+            card_empty_events.isVisible = false
+        } else {
+            card_empty_events.isVisible = isEmptyDays
+        }
     }
 
     private fun onDaySelected(position: Int) {

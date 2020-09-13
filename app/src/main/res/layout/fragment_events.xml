@@ -96,16 +96,6 @@
         app:layout_constraintTop_toBottomOf="@id/calendar_week_view"
         app:layout_constraintVertical_bias="0.0" />
 
-    <com.singlelab.lume.ui.view.calendar.FullCalendarView
-        android:id="@+id/calendar_full_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/margin_small"
-        android:background="@color/colorWhite"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_create_event" />
-
     <androidx.cardview.widget.CardView
         android:id="@+id/card_empty_events"
         android:layout_width="wrap_content"
@@ -131,4 +121,14 @@
             android:textColor="@color/colorText"
             android:textSize="@dimen/text_size_standart" />
     </androidx.cardview.widget.CardView>
+
+    <com.singlelab.lume.ui.view.calendar.FullCalendarView
+        android:id="@+id/calendar_full_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_small"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_create_event" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
