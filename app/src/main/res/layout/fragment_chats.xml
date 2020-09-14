@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
-        android:fontFamily="@font/suisse_bold"
+        android:fontFamily="@font/noto_sans_bold"
         android:includeFontPadding="false"
         android:textColor="@color/colorText"
         android:textSize="16sp"

@@ -35,7 +35,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:ellipsize="end"
-            android:fontFamily="@font/suisse_bold"
+            android:fontFamily="@font/noto_sans_bold"
             android:maxLines="1"
             android:textColor="#2C2C2C"
             android:textSize="16sp"

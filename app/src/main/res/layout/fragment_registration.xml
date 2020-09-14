@@ -18,7 +18,7 @@
             android:id="@+id/text_welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/suisse_bold"
+            android:fontFamily="@font/noto_sans_bold"
             android:paddingHorizontal="@dimen/margin_very_small"
             android:text="@string/welcome"
             android:textColor="@color/colorText"

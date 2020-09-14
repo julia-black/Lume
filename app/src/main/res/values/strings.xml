@@ -83,8 +83,8 @@
     <string name="max_age">Макс. возраст</string>
     <string name="publish_event">Опубликовать</string>
     <string name="event_is_closed">Требуется подтверждение участия</string>
-    <string name="date_start">Выбери время начала</string>
-    <string name="date_end">Выбери время окончания</string>
+    <string name="date_start">Выбери время начала *</string>
+    <string name="date_end">Выбери время окончания *</string>
     <string name="enter_fields">Упс! Заполнены не все поля</string>
     <string name="administrator">Организатор</string>
     <string name="age_from_to">Возраст: %1$d-%2$d</string>
@@ -198,6 +198,10 @@
     <string name="info_about_leave">Событие и его чат будут недоступны. Вернуться в событие можно будет только по приглашению</string>
     <string name="title_agreement">Пользовательское соглашение</string>
     <string name="url_agreement">http://lumeprod.azurewebsites.net/license</string>
+    <string name="empty_title">Не заполнено название</string>
+    <string name="empty_description_event">Не заполнено описание события</string>
+    <string name="empty_start_time">Не выбрано время начала</string>
+    <string name="empty_end_time">Не выбрано время окончания</string>
 
     <!-- Arrays -->
     <string-array name="custom_weekdays">

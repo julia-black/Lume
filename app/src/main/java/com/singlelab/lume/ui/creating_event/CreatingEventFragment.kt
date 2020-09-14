@@ -28,6 +28,7 @@ import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.event.EventType
 import com.singlelab.lume.model.location.MapLocation
 import com.singlelab.lume.model.view.ToastType
+import com.singlelab.lume.model.view.ValidationError
 import com.singlelab.lume.ui.cities.CitiesFragment
 import com.singlelab.lume.ui.map.MapFragment
 import com.singlelab.lume.ui.view.image.ImageAdapter
@@ -283,7 +284,8 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         }
         setGridLayoutListeners()
         button_create_event.setOnClickListener {
-            if (validation()) {
+            val validationResult = validation()
+            if (validationResult == null) {
                 showLoading(true)
 
                 val minAge = if (!checkbox_age.getChecked() || min_age.text.isNullOrEmpty()) null
@@ -308,7 +310,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                 )
                 presenter.createEvent(event)
             } else {
-                showError(getString(R.string.enter_fields))
+                showError(getString(validationResult.titleResId))
             }
         }
     }
@@ -354,25 +356,25 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         findNavController().navigate(CreatingEventFragmentDirections.actionCreatingEventToCities())
     }
 
-    private fun validation(): Boolean {
+    private fun validation(): ValidationError? {
         when {
             layout_title.getText().isBlank() -> {
-                return false
+                return ValidationError.EMPTY_TITLE
             }
             layout_description.getText().isBlank() -> {
-                return false
+                return ValidationError.EMPTY_DESCRIPTION_EVENT
             }
             presenter.currentDateStart == null -> {
-                return false
+                return ValidationError.EMPTY_START_TIME
             }
             presenter.currentDateEnd == null -> {
-                return false
+                return ValidationError.EMPTY_END_TIME
             }
             presenter.cityId == null || presenter.cityId!! < 0 -> {
-                return false
+                return ValidationError.EMPTY_CITY
             }
         }
-        return true
+        return null
     }
 
     private fun showDatePicker(currentDateTime: Calendar?, isStart: Boolean) {
