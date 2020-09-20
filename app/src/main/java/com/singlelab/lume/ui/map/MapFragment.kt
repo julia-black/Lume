@@ -28,7 +28,6 @@ import kotlinx.android.synthetic.main.fragment_map.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import java.io.IOException
-import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -81,11 +80,17 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
         )
         searchDebounce!!.watch {
             if (edit_text_search != null && edit_text_search.getFocused()) {
+                location.latLong = null
                 presenter.searchPlace(it)
             }
         }
         arguments?.let {
             location.address = MapFragmentArgs.fromBundle(it).locationName
+            val xCoordinate = MapFragmentArgs.fromBundle(it).xCoordinate
+            val yCoordinate = MapFragmentArgs.fromBundle(it).yCoordinate
+            if (xCoordinate > 0 && yCoordinate > 0) {
+                location.latLong = LatLng(xCoordinate.toDouble(), yCoordinate.toDouble())
+            }
         }
         button_accept_location.setOnClickListener {
             if (edit_text_search.getText().isBlank()) {
@@ -164,9 +169,16 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
                 map.addMarker(MarkerOptions().position(it))
                 presenter.searchPlace(it)
             }
-            location.address?.let {
-                edit_text_search.setText(it)
-                presenter.searchPlace(it)
+            if (location.latLong != null) {
+                presenter.searchPlace(location.latLong!!)
+                map.clear()
+                map.addMarker(MarkerOptions().position(location.latLong!!))
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(location.latLong!!, 17f))
+            } else {
+                location.address?.let {
+                    edit_text_search.setText(it)
+                    presenter.searchPlace(it)
+                }
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.singlelab.lume.ui.event
 
+import android.graphics.Bitmap
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.event.Event
@@ -7,6 +8,8 @@ import com.singlelab.lume.model.event.EventStatus
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.event.interactor.EventInteractor
+import com.singlelab.lume.util.resize
+import com.singlelab.lume.util.toBase64
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.event.ParticipantRequest
@@ -42,6 +45,61 @@ class EventPresenter @Inject constructor(
                 }
             }
         }
+    }
+
+    fun updateEvent(
+        description: String? = null,
+        images: List<Bitmap>? = null,
+        xCoordinate: Double? = null,
+        yCoordinate: Double? = null
+    ) {
+        event?.eventUid?.let { uid ->
+            viewState.showLoading(isShow = true, withoutBackground = true)
+            invokeSuspend {
+                var primaryImage: String? = null
+                var extraImages: List<String>? = null
+                if (!images.isNullOrEmpty()) {
+                    if (event?.eventPrimaryImageContentUid == null) {
+                        primaryImage = images[0].resize(1200).toBase64(30)
+                        extraImages = getImagesStr(images.toMutableList())
+                    } else {
+                        extraImages = images.map { it.resize(1200).toBase64(30) }
+                    }
+                }
+                try {
+                    event = interactor.updateEvent(
+                        UpdateEventRequest(
+                            eventUid = uid,
+                            description = description,
+                            primaryImage = primaryImage,
+                            extraImages = extraImages,
+                            xCoordinate = xCoordinate,
+                            yCoordinate = yCoordinate
+                        )
+                    )
+                    runOnMainThread {
+                        viewState.showLoading(isShow = false, withoutBackground = true)
+                        event?.let {
+                            viewState.showEvent(it)
+                        }
+                    }
+                } catch (e: ApiException) {
+                    runOnMainThread {
+                        viewState.showLoading(isShow = false, withoutBackground = true)
+                        viewState.showError(e.message)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getImagesStr(images: MutableList<Bitmap>): List<String>? {
+        val newImages = mutableListOf<String>()
+        if (images.isNotEmpty()) {
+            images.removeAt(0)
+        }
+        newImages.addAll(images.map { it.resize(1200).toBase64(30) })
+        return newImages
     }
 
     fun onClickAdministrator() {

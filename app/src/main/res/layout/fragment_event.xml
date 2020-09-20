@@ -238,10 +238,23 @@
                         android:layout_marginTop="@dimen/margin_medium"
                         android:textColor="@color/colorText"
                         android:textSize="@dimen/text_size_standart"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/icon_edit_description"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/card_image"
                         tools:text="Описание" />
+
+                    <ImageView
+                        android:id="@+id/icon_edit_description"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:padding="20dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_edit"
+                        android:tint="@color/selector_primary_icon"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@id/description"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/description" />
 
                     <TextView
                         android:id="@+id/age"

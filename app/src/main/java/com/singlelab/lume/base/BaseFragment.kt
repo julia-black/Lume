@@ -27,6 +27,7 @@ import com.singlelab.net.model.auth.AuthData
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.view_edit_dialog.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -159,6 +160,32 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         }
     }
 
+    fun showEditTextDialog(text: String?, emptyText: String, callback: (String) -> Unit) {
+        context?.let {
+            val customLayout = layoutInflater.inflate(R.layout.view_edit_dialog, null)
+            text?.let {
+                customLayout.edit_text.setText(text)
+            }
+            customLayout.edit_text.requestFocus()
+
+            val builder = AlertDialog.Builder(it)
+            builder.setView(customLayout)
+            builder.setTitle(getString(R.string.edit_description))
+            builder.setPositiveButton(getString(R.string.apply_edit)) { _, _ ->
+                if (customLayout.edit_text.text.isNullOrEmpty()) {
+                    showSnackbar(emptyText)
+                } else {
+                    callback.invoke(customLayout.edit_text.text.toString())
+                }
+            }
+
+            builder.setNegativeButton(
+                getString(R.string.cancel_action)
+            ) { _, _ -> }
+            builder.show()
+        }
+    }
+
     fun showBottomNavigation(isShow: Boolean) {
         (activity as MainActivity).showBottomNavigation(isShow)
     }
@@ -186,6 +213,7 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
                 .setDirectoryName(Const.FOLDER_NAME)
                 .setMultipleMode(true)
                 .setShowNumberIndicator(true)
+                .setDoneTitle(getString(R.string.choose))
                 .setMaxSize(Const.MAX_COUNT_IMAGES)
                 .setLimitMessage(
                     getString(

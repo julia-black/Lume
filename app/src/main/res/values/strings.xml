@@ -10,6 +10,7 @@
     <string name="title_creating_event">Новое событие</string>
     <string name="title_participants">Участники</string>
     <string name="meizu_model">MEIZU</string>
+    <string name="choose">Выбрать</string>
 
     <!-- Auth -->
     <string name="tutorial_text_1">Lume - море новых событий каждый день!</string>
@@ -130,6 +131,12 @@
     <string name="info_about_cancel">Открыть его заново будет невозможно. Информация о событии и чат останутся</string>
     <string name="loading_images">Загрузка изображений (%1$d/%2$d)...</string>
     <string name="add_photo_event">Добавь изображения для события (до 5 шт):</string>
+    <string name="edit_description">Изменить описание</string>
+    <string name="cancel_action">Отменить</string>
+    <string name="show_images">Открыть изображения</string>
+    <string name="add_images">Добавить изображения</string>
+    <string name="open_map">Открыть карту</string>
+    <string name="change_location">Изменить местоположение</string>
 
     <!-- Types of events -->
     <string name="party">Вечеринка</string>

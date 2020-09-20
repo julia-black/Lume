@@ -178,6 +178,9 @@
         <action
             android:id="@+id/action_event_to_events"
             app:destination="@id/events" />
+        <action
+            android:id="@+id/action_event_to_map"
+            app:destination="@id/map" />
     </fragment>
 
     <fragment
@@ -325,6 +328,14 @@
         <argument
             android:name="locationName"
             app:argType="string" />
+        <argument
+            android:name="xCoordinate"
+            android:defaultValue="0f"
+            app:argType="float" />
+        <argument
+            android:name="yCoordinate"
+            android:defaultValue="0f"
+            app:argType="float" />
     </fragment>
 
     <fragment

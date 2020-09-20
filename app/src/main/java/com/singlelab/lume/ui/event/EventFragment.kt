@@ -1,25 +1,30 @@
 package com.singlelab.lume.ui.event
 
+import android.app.Activity
 import android.content.DialogInterface
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.text.toSpannable
+import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.custom.sliderimage.logic.SliderImage
+import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
+import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.event.Event
+import com.singlelab.lume.model.location.MapLocation
 import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
+import com.singlelab.lume.ui.map.MapFragment
 import com.singlelab.lume.ui.view.image_person.ImagePersonAdapter
 import com.singlelab.lume.ui.view.image_person.OnPersonImageClickListener
 import com.singlelab.lume.util.*
@@ -27,6 +32,7 @@ import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.event.ParticipantStatus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_event.*
+import kotlinx.android.synthetic.main.fragment_event.description
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import java.util.*
@@ -34,7 +40,8 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonImageClickListener {
+class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonImageClickListener,
+    OnActivityResultListener {
 
     companion object {
         const val REQUEST_EVENT = "REQUEST_EVENT"
@@ -98,8 +105,16 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                         event.yCoordinate,
                         event.name
                     )
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-                    context?.startActivity(intent)
+                    if (presenter.isAdministrator()) {
+                        showLocationAction(
+                            uri,
+                            event.cityName ?: "",
+                            event.xCoordinate,
+                            event.yCoordinate
+                        )
+                    } else {
+                        openBrowser(uri)
+                    }
                 }
             }
         }
@@ -222,7 +237,12 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                 }
             }
             button_cancel_or_leave_event.visibility = View.VISIBLE
+            icon_edit_description.visibility = View.VISIBLE
+            icon_edit_description.setOnClickListener {
+                editDescription(description.text.toString())
+            }
         } else {
+            icon_edit_description.visibility = View.GONE
             button_search_participants.visibility = View.GONE
             button_invite.visibility =
                 if (event.isOpenForInvitations && event.isActive()) View.VISIBLE else View.GONE
@@ -230,9 +250,13 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             divider_three.visibility = View.GONE
         }
 
-        if (event.eventPrimaryImageContentUid != null) {
-            image.setOnClickListener {
-                showFullScreenImages(event.eventPrimaryImageContentUid, event.images)
+        image.setOnClickListener {
+            if (presenter.isAdministrator()) {
+                showImagesAction(event)
+            } else {
+                if (event.eventPrimaryImageContentUid != null) {
+                    showFullScreenImages(event.eventPrimaryImageContentUid, event.images)
+                }
             }
         }
 
@@ -331,6 +355,127 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         }
     }
 
+    override fun toMyProfile() {
+        findNavController().navigate(R.id.action_event_to_my_profile)
+    }
+
+    override fun toProfile(personUid: String) {
+        findNavController().navigate(EventFragmentDirections.actionEventToPerson(personUid))
+    }
+
+    override fun onRejectedEvent() {
+        parentFragmentManager.setFragmentResult(
+            REQUEST_EVENT, bundleOf(RESULT_EVENT to presenter.event?.eventUid)
+        )
+        parentFragmentManager.popBackStack()
+    }
+
+    override fun onPersonClick(personUid: String) {
+        findNavController().navigate(EventFragmentDirections.actionEventToPerson(personUid))
+    }
+
+    override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (ImagePicker.shouldHandleResult(
+                requestCode,
+                resultCode,
+                data,
+                Const.SELECT_IMAGE_REQUEST_CODE
+            )
+        ) {
+            val images = ImagePicker.getImages(data)
+                .mapNotNull { it.uri.getBitmap(activity?.contentResolver) }
+            if (resultCode == Activity.RESULT_OK && images.isNotEmpty()) {
+                presenter.updateEvent(images = images)
+            } else {
+                showError(getString(R.string.error_pick_image))
+            }
+        }
+    }
+
+    private fun showImagesAction(event: Event) {
+        if (event.eventPrimaryImageContentUid != null) {
+            showListDialog(
+                getString(R.string.choose_action),
+                arrayOf(
+                    getString(R.string.show_images),
+                    getString(R.string.add_images)
+                ), DialogInterface.OnClickListener { _, which ->
+                    when (which) {
+                        0 -> showFullScreenImages(
+                            event.eventPrimaryImageContentUid,
+                            event.images
+                        )
+                        1 -> onClickAddImages()
+                    }
+                }
+            )
+        } else {
+            showListDialog(
+                getString(R.string.choose_action),
+                arrayOf(getString(R.string.add_images)),
+                DialogInterface.OnClickListener { _, which ->
+                    when (which) {
+                        0 -> onClickAddImages()
+                    }
+                }
+            )
+        }
+    }
+
+    private fun showLocationAction(
+        uri: String,
+        cityName: String,
+        xCoordinate: Double? = null,
+        yCoordinate: Double? = null
+    ) {
+        showListDialog(
+            getString(R.string.choose_action),
+            arrayOf(
+                getString(R.string.open_map),
+                getString(R.string.change_location)
+            ), DialogInterface.OnClickListener { _, which ->
+                when (which) {
+                    0 -> openBrowser(uri)
+                    1 -> toChooseLocation(cityName, xCoordinate, yCoordinate)
+                }
+            }
+        )
+    }
+
+    private fun toChooseLocation(cityName: String, xCoordinate: Double?, yCoordinate: Double?) {
+        parentFragmentManager.setFragmentResultListener(
+            MapFragment.REQUEST_LOCATION,
+            this,
+            FragmentResultListener { requestKey, result ->
+                onFragmentResult(requestKey, result)
+            })
+        val action = EventFragmentDirections.actionEventToMap(cityName)
+        if (xCoordinate != null && yCoordinate != null) {
+            action.xCoordinate = xCoordinate.toFloat()
+            action.yCoordinate = yCoordinate.toFloat()
+        }
+        findNavController().navigate(action)
+    }
+
+    private fun onFragmentResult(requestKey: String, result: Bundle) {
+        when (requestKey) {
+            MapFragment.REQUEST_LOCATION -> {
+                val location: MapLocation =
+                    result.getParcelable(MapFragment.RESULT_LOCATION) ?: return
+                presenter.updateEvent(
+                    xCoordinate = location.latLong?.latitude,
+                    yCoordinate = location.latLong?.longitude
+                )
+            }
+        }
+    }
+
+    private fun editDescription(text: String?) {
+        showEditTextDialog(text, getString(R.string.empty_description_event)) {
+            presenter.updateEvent(description = it)
+        }
+    }
+
     private fun showTime(startTime: String, endTime: String) {
         //меньше суток разницы 10 августа 10:00 - 14:00
         if (endTime.toLongTime(Const.DATE_FORMAT_TIME_ZONE) - startTime.toLongTime(Const.DATE_FORMAT_TIME_ZONE) < 1000 * 60 * 60 * 24) {
@@ -398,25 +543,6 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             action.isAdministrator = isAdministrator
             findNavController().navigate(action)
         }
-    }
-
-    override fun toMyProfile() {
-        findNavController().navigate(R.id.action_event_to_my_profile)
-    }
-
-    override fun toProfile(personUid: String) {
-        findNavController().navigate(EventFragmentDirections.actionEventToPerson(personUid))
-    }
-
-    override fun onRejectedEvent() {
-        parentFragmentManager.setFragmentResult(
-            REQUEST_EVENT, bundleOf(RESULT_EVENT to presenter.event?.eventUid)
-        )
-        parentFragmentManager.popBackStack()
-    }
-
-    override fun onPersonClick(personUid: String) {
-        findNavController().navigate(EventFragmentDirections.actionEventToPerson(personUid))
     }
 
     private fun setListeners() {
