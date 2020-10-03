@@ -73,15 +73,16 @@
         tools:visibility="visible" />
 
     <ImageView
-        android:id="@+id/button_money"
+        android:id="@+id/button_reward"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_marginEnd="@dimen/margin_small"
         android:src="@drawable/ic_emoji_money"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/button_create_event"
         app:layout_constraintEnd_toStartOf="@id/button_calendar"
-        app:layout_constraintTop_toTopOf="@id/button_create_event" />
+        app:layout_constraintTop_toTopOf="@id/button_create_event"
+        tools:visibility="visible" />
 
     <Button
         android:id="@+id/button_create_event"

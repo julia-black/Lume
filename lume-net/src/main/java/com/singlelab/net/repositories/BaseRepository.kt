@@ -11,6 +11,7 @@ import com.singlelab.net.model.ResultCoroutines
 import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.auth.AuthResponse
 import com.singlelab.net.model.person.PersonNotificationsResponse
+import com.singlelab.net.model.promo.PromoInfoResponse
 import retrofit2.Response
 import java.net.HttpURLConnection
 import java.net.SocketTimeoutException
@@ -28,6 +29,13 @@ open class BaseRepository(private val apiUnit: ApiUnit) {
         return safeApiCall(
             call = { apiUnit.personApi.getNotificationsAsync().await() },
             errorMessage = "Не удалось получить уведомления"
+        )
+    }
+
+    suspend fun getPromo(): PromoInfoResponse? {
+        return safeApiCall(
+            call = { apiUnit.promoApi.getPromoAsync().await() },
+            errorMessage = "Не удалось получить промо-акции"
         )
     }
 

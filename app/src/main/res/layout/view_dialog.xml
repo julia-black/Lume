@@ -43,7 +43,7 @@
                 android:gravity="center"
                 android:textColor="@color/colorText"
                 android:textStyle="bold"
-                tools:text="@string/title_promo" />
+                tools:text="@string/title_promo_reward" />
 
             <TextView
                 android:id="@+id/description_dialog"
@@ -52,7 +52,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/margin_medium"
                 android:gravity="center_horizontal"
-                android:text="@string/description_promo"
+                android:text="@string/description_promo_reward"
                 android:textColor="@color/colorText"
                 android:textSize="@dimen/text_size_standart" />
 

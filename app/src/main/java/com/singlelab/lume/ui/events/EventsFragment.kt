@@ -89,17 +89,12 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
         button_calendar.setOnClickListener {
             showFullCalendar(!calendar_full_view.isVisible)
         }
-        button_money.setOnClickListener {
+        button_reward.setOnClickListener {
             showMoneyInfo(true)
         }
     }
 
     private fun initDialogPromo() {
-        dialog_view.apply {
-            setDialogListener(this@EventsFragment)
-            setTitle(getString(R.string.title_promo))
-            setDescription(getString(R.string.description_promo))
-        }
     }
 
     override fun showEvents(days: List<Pair<CalendarDay, List<EventSummary>>>, countInvites: Int) {
@@ -205,6 +200,15 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
                 presenter.currentDayPosition = position
                 setCurrentItem(position, true)
             }
+        }
+    }
+
+    override fun showPromoReward(numberOfEvents: Int) {
+        button_reward.isVisible = true
+        dialog_view.apply {
+            setDialogListener(this@EventsFragment)
+            setTitle(getString(R.string.title_promo_reward))
+            setDescription(getString(R.string.description_promo_reward, numberOfEvents))
         }
     }
 

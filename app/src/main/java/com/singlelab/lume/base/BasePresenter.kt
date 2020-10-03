@@ -33,6 +33,21 @@ open class BasePresenter<ViewT : BaseView>(
         if (AuthData.isAnon) {
             preferences?.setAnon(true)
         }
+        if (preferences != null && preferences.isFirstLaunch()) {
+            loadPromo()
+        }
+    }
+
+    private fun loadPromo() {
+        invokeSuspend {
+            try {
+                val promoInfo = baseInteractor.getPromo()
+                promoInfo?.let {
+                    preferences?.setEventPromoRewardEnabled(promoInfo.isEventPromoRewardEnabled)
+                }
+            } catch (e: ApiException) {
+            }
+        }
     }
 
     open fun onLoadedNotification(notifications: PersonNotifications) {
