@@ -37,4 +37,6 @@
 
     <color name="colorAcceptPerson">#1CAE81</color>
     <color name="colorRejectPerson">#FF3F33</color>
+
+    <color name="colorOverlay">#40000000</color>
 </resources>

@@ -202,6 +202,8 @@
     <string name="empty_description_event">Не заполнено описание события</string>
     <string name="empty_start_time">Не выбрано время начала</string>
     <string name="empty_end_time">Не выбрано время окончания</string>
+    <string name="title_promo">Получи 200 рублей за проведенное событие!</string>
+    <string name="description_promo">После проведения события нажми на кнопку \"Получить вознаграждение\" в деталях события, предоставь фото, показывающие, что событие действительно, и вознаграждение будет ждать тебя!</string>
 
     <!-- Arrays -->
     <string-array name="custom_weekdays">

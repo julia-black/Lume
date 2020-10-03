@@ -31,6 +31,7 @@ import com.singlelab.lume.ui.view.calendar.FutureDaysDecorator
 import com.singlelab.lume.ui.view.calendar.HighlightDecorator
 import com.singlelab.lume.ui.view.calendar.PastDaysDecorator
 import com.singlelab.lume.ui.view.calendar.SelectorDecorator
+import com.singlelab.lume.ui.view.dialog.OnDialogViewClickListener
 import com.singlelab.lume.ui.view.event.OnEventItemClickListener
 import com.singlelab.lume.util.*
 import com.singlelab.net.model.event.ParticipantStatus
@@ -43,7 +44,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
-    OnEventItemClickListener, OnDateSelectedListener {
+    OnEventItemClickListener, OnDateSelectedListener, OnDialogViewClickListener {
 
     @Inject
     lateinit var daggerPresenter: EventsPresenter
@@ -82,82 +83,22 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
             toCreateEvent()
         }
         initWeekCalendar()
+        initDialogPromo()
         showToday()
         showCalendar(Calendar.getInstance())
         button_calendar.setOnClickListener {
             showFullCalendar(!calendar_full_view.isVisible)
         }
-    }
-
-    private fun toCreateEvent() {
-        parentFragmentManager.setFragmentResultListener(
-            CreatingEventFragment.REQUEST_CREATING_EVENT,
-            this,
-            FragmentResultListener { requestKey, result ->
-                onFragmentResult(requestKey, result)
-            })
-        val action = EventsFragmentDirections.actionEventsToCreatingEvent()
-        findNavController().navigate(action)
-    }
-
-    private fun onFragmentResult(requestKey: String, result: Bundle) {
-        when (requestKey) {
-            CreatingEventFragment.REQUEST_CREATING_EVENT -> {
-                val eventUid: String =
-                    result.getString(CreatingEventFragment.RESULT_CREATING_EVENT) ?: return
-                presenter.loadEvents(eventUid)
-            }
-            EventFragment.REQUEST_EVENT -> {
-                val eventUid: String = result.getString(EventFragment.RESULT_EVENT) ?: return
-                presenter.loadEvents(eventUid)
-                presenter.updateNotifications()
-            }
+        button_money.setOnClickListener {
+            showMoneyInfo(true)
         }
     }
 
-    private fun initWeekCalendar() {
-        val today = CalendarDay.today()
-        calendar_week_view.apply {
-            addDecorators(
-                SelectorDecorator(context),
-                PastDaysDecorator(today),
-                FutureDaysDecorator(today)
-            )
-            topbarVisible = false
-            setOnDateChangedListener(this@EventsFragment)
-            state().edit()
-                .setCalendarDisplayMode(CalendarMode.WEEKS)
-                .commit()
-        }
-    }
-
-    private fun showViewPager() {
-        val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.page_margin)
-        val offsetPx = resources.getDimensionPixelOffset(R.dimen.page_offset)
-        view_pager_events?.apply {
-            orientation = ViewPager2.ORIENTATION_HORIZONTAL
-            (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
-            clipToPadding = false
-            clipChildren = false
-            offscreenPageLimit = 3
-            setPageTransformer { page, position ->
-                val viewPager = page.parent.parent as ViewPager2
-                val offset = position * -(2 * offsetPx + pageMarginPx)
-                if (viewPager.orientation == ViewPager2.ORIENTATION_HORIZONTAL) {
-                    if (ViewCompat.getLayoutDirection(viewPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
-                        page.translationX = -offset
-                    } else {
-                        page.translationX = offset
-                    }
-                } else {
-                    page.translationY = offset
-                }
-            }
-            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    onDaySelected(position)
-                }
-            })
+    private fun initDialogPromo() {
+        dialog_view.apply {
+            setDialogListener(this@EventsFragment)
+            setTitle(getString(R.string.title_promo))
+            setDescription(getString(R.string.description_promo))
         }
     }
 
@@ -265,6 +206,86 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
                 setCurrentItem(position, true)
             }
         }
+    }
+
+    override fun onCloseDialogClick() {
+        showMoneyInfo(false)
+    }
+
+    private fun toCreateEvent() {
+        parentFragmentManager.setFragmentResultListener(
+            CreatingEventFragment.REQUEST_CREATING_EVENT,
+            this,
+            FragmentResultListener { requestKey, result ->
+                onFragmentResult(requestKey, result)
+            })
+        val action = EventsFragmentDirections.actionEventsToCreatingEvent()
+        findNavController().navigate(action)
+    }
+
+    private fun onFragmentResult(requestKey: String, result: Bundle) {
+        when (requestKey) {
+            CreatingEventFragment.REQUEST_CREATING_EVENT -> {
+                val eventUid: String =
+                    result.getString(CreatingEventFragment.RESULT_CREATING_EVENT) ?: return
+                presenter.loadEvents(eventUid)
+            }
+            EventFragment.REQUEST_EVENT -> {
+                val eventUid: String = result.getString(EventFragment.RESULT_EVENT) ?: return
+                presenter.loadEvents(eventUid)
+                presenter.updateNotifications()
+            }
+        }
+    }
+
+    private fun initWeekCalendar() {
+        val today = CalendarDay.today()
+        calendar_week_view.apply {
+            addDecorators(
+                SelectorDecorator(context),
+                PastDaysDecorator(today),
+                FutureDaysDecorator(today)
+            )
+            topbarVisible = false
+            setOnDateChangedListener(this@EventsFragment)
+            state().edit()
+                .setCalendarDisplayMode(CalendarMode.WEEKS)
+                .commit()
+        }
+    }
+
+    private fun showViewPager() {
+        val pageMarginPx = resources.getDimensionPixelOffset(R.dimen.page_margin)
+        val offsetPx = resources.getDimensionPixelOffset(R.dimen.page_offset)
+        view_pager_events?.apply {
+            orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+            clipToPadding = false
+            clipChildren = false
+            offscreenPageLimit = 3
+            setPageTransformer { page, position ->
+                val viewPager = page.parent.parent as ViewPager2
+                val offset = position * -(2 * offsetPx + pageMarginPx)
+                if (viewPager.orientation == ViewPager2.ORIENTATION_HORIZONTAL) {
+                    if (ViewCompat.getLayoutDirection(viewPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                        page.translationX = -offset
+                    } else {
+                        page.translationX = offset
+                    }
+                } else {
+                    page.translationY = offset
+                }
+            }
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    onDaySelected(position)
+                }
+            })
+        }
+    }
+
+    private fun showMoneyInfo(isShow: Boolean) {
+        dialog_view.isVisible = isShow
     }
 
     private fun showToday() {

@@ -72,6 +72,17 @@
         tools:text="10"
         tools:visibility="visible" />
 
+    <ImageView
+        android:id="@+id/button_money"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:src="@drawable/ic_emoji_money"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@id/button_create_event"
+        app:layout_constraintEnd_toStartOf="@id/button_calendar"
+        app:layout_constraintTop_toTopOf="@id/button_create_event" />
+
     <Button
         android:id="@+id/button_create_event"
         style="@style/ButtonStyle"
@@ -130,5 +141,13 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button_create_event" />
+
+    <com.singlelab.lume.ui.view.dialog.DialogView
+        android:id="@+id/dialog_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
