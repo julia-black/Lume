@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import androidx.annotation.StringRes
 import com.singlelab.lume.R
 import kotlinx.android.synthetic.main.view_dialog.view.*
 
@@ -18,6 +19,18 @@ class DialogView @JvmOverloads constructor(
 
     fun setTitle(title: String) {
         title_dialog.text = title
+    }
+
+    fun setPromoRules(
+        @StringRes description: Int,
+        @StringRes titleRules: Int,
+        @StringRes rulesInfo: Int,
+        @StringRes citiesInfo: Int
+    ) {
+        description_dialog.setText(description)
+        title_rules.setText(titleRules)
+        rules.setText(rulesInfo)
+        cities_info.setText(citiesInfo)
     }
 
     fun setDescription(description: String) {

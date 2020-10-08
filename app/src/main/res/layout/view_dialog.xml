@@ -51,10 +51,43 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/margin_medium"
-                android:gravity="center_horizontal"
+                android:gravity="start"
                 android:text="@string/description_promo_reward"
                 android:textColor="@color/colorText"
-                android:textSize="@dimen/text_size_standart" />
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/title_rules"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:gravity="start"
+                android:text="@string/title_rules_promo_reward"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/text_size_small"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/rules"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:gravity="start"
+                android:text="@string/rules_promo_reward"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/text_size_small" />
+
+            <TextView
+                android:id="@+id/cities_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_medium"
+                android:gravity="start"
+                android:text="@string/cities_promo_reward"
+                android:textColor="@color/colorTextGray"
+                android:textSize="@dimen/text_size_small" />
 
             <ImageView
                 android:id="@+id/icon_money"
