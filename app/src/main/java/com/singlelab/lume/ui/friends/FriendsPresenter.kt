@@ -59,7 +59,7 @@ class FriendsPresenter @Inject constructor(
 
     fun search(searchStr: String, page: Int = 1) {
         pageNumber = page
-        if (searchStr.isEmpty()) {
+        if (searchStr.isBlank()) {
             viewState.showFriends(friends)
         } else {
             isLoading = true

@@ -29,19 +29,23 @@ class FeedbackPresenter @Inject constructor(
     private var images: MutableList<Bitmap> = mutableListOf()
 
     fun onGiveFeedBackClick(text: String) {
-        viewState.showLoading(true)
-        val feedbackRequest = generateFeedback(text, images)
-        invokeSuspend {
-            try {
-                interactor.addFeedback(feedbackRequest)
-                runOnMainThread {
-                    viewState.showSuccessSendFeedback()
-                    viewState.showLoading(false)
-                }
-            } catch (e: ApiException) {
-                runOnMainThread {
-                    viewState.showLoading(false)
-                    viewState.showError(e.message)
+        if (text.isBlank()) {
+            viewState.showEmptyFeedback()
+        } else {
+            viewState.showLoading(true)
+            val feedbackRequest = generateFeedback(text, images)
+            invokeSuspend {
+                try {
+                    interactor.addFeedback(feedbackRequest)
+                    runOnMainThread {
+                        viewState.showSuccessSendFeedback()
+                        viewState.showLoading(false)
+                    }
+                } catch (e: ApiException) {
+                    runOnMainThread {
+                        viewState.showLoading(false)
+                        viewState.showError(e.message)
+                    }
                 }
             }
         }

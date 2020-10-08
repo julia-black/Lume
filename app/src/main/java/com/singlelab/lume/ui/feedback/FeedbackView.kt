@@ -12,6 +12,9 @@ interface FeedbackView : LoadingView, ErrorView {
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun showSuccessSendFeedback()
 
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun showEmptyFeedback()
+
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showImages(images: List<Bitmap>)
 }

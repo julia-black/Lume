@@ -76,6 +76,10 @@ class FeedbackFragment : BaseFragment(), FeedbackView, OnImageClickListener,
         findNavController().popBackStack()
     }
 
+    override fun showEmptyFeedback() {
+        showError(getString(R.string.empty_feedback))
+    }
+
     override fun showImages(images: List<Bitmap>) {
         (recycler_images.adapter as ImageAdapter).setData(images.toMutableList())
     }
