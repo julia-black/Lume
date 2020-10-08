@@ -60,4 +60,8 @@ class ApiUnit(baseUrl: String) {
     val citiesApi: CitiesApi = retrofit.create(
         CitiesApi::class.java
     )
+
+    val promoApi: PromoApi = retrofit.create(
+        PromoApi::class.java
+    )
 }

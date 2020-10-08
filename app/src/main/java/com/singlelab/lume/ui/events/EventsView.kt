@@ -22,4 +22,7 @@ interface EventsView : LoadingView, ErrorView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showCurrentDayOnPager(day: CalendarDay)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showPromoReward(numberOfEvents: Int)
 }

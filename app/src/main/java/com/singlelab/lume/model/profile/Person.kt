@@ -21,13 +21,17 @@ class Person(
 ) : Parcelable {
     companion object {
         fun fromResponse(personResponse: PersonResponse?): Person? {
-            return if (personResponse != null) {
+            return if (personResponse?.personUid != null &&
+                personResponse.name != null &&
+                personResponse.login != null &&
+                personResponse.age != null
+            ) {
                 Person(
-                    personResponse.personUid,
-                    personResponse.name,
-                    personResponse.login,
+                    personResponse.personUid!!,
+                    personResponse.name!!,
+                    personResponse.login!!,
                     personResponse.description,
-                    personResponse.age,
+                    personResponse.age!!,
                     personResponse.cityName,
                     personResponse.imageContentUid,
                     personResponse.isFriend,

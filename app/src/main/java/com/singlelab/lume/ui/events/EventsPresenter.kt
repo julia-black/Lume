@@ -11,6 +11,7 @@ import com.singlelab.lume.ui.events.interactor.EventsInteractor
 import com.singlelab.lume.util.toCalendarDay
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.exceptions.NotConnectionException
+import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.event.ParticipantStatus
 import moxy.InjectViewState
 import javax.inject.Inject
@@ -34,6 +35,9 @@ class EventsPresenter @Inject constructor(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         loadEvents()
+        if (preferences != null && preferences.getEventPromoRewardEnabled()) {
+            checkPromoReward()
+        }
     }
 
     fun loadEvents(currentEventUid: String? = null) {
@@ -67,6 +71,23 @@ class EventsPresenter @Inject constructor(
                         callRetry = { loadEvents(currentEventUid) }
                     )
                 }
+            }
+        }
+    }
+
+    private fun checkPromoReward() {
+        invokeSuspend {
+            try {
+                val cityId = AuthData.cityId
+                if (cityId != null) {
+                    val promoReward = interactor.checkPromoReward(cityId)
+                    if (promoReward != null && promoReward.isCitySuitableForPromoReward) {
+                        runOnMainThread {
+                            viewState.showPromoReward(promoReward.numberOfCityPromoEvents)
+                        }
+                    }
+                }
+            } catch (e: ApiException) {
             }
         }
     }

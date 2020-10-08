@@ -16,6 +16,7 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
         const val PREF_FIRST_LAUNCH = "pref_first_launch"
         const val PREF_PUSH_TOKEN = "pref_push_token"
         const val PREF_AGE = "pref_age"
+        const val PREF_PROMO_REWARD = "pref_promo_reward"
     }
 
     init {
@@ -79,6 +80,13 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
     }
 
     fun getPushToken() = sharedPreferences?.getString(PREF_PUSH_TOKEN, "")
+
+    fun setEventPromoRewardEnabled(eventPromoRewardEnabled: Boolean) {
+        sharedPreferences?.edit()?.putBoolean(PREF_PROMO_REWARD, eventPromoRewardEnabled)?.apply()
+    }
+
+    fun getEventPromoRewardEnabled() =
+        sharedPreferences?.getBoolean(PREF_PROMO_REWARD, false) ?: false
 
     private fun isAnon(): Boolean {
         return sharedPreferences == null || sharedPreferences.getBoolean(PREF_IS_ANON, true)

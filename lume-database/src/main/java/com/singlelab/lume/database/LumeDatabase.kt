@@ -10,7 +10,7 @@ import com.singlelab.lume.database.entity.Chat
 import com.singlelab.lume.database.entity.ChatMessage
 
 @Database(
-    version = 2,
+    version = 3,
     entities = [
         Chat::class,
         ChatMessage::class
