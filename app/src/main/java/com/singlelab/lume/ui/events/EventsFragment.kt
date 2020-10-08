@@ -203,12 +203,18 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
         }
     }
 
-    override fun showPromoReward(numberOfEvents: Int) {
+    override fun showPromoReward() {
         button_reward.isVisible = true
         dialog_view.apply {
             setDialogListener(this@EventsFragment)
             setTitle(getString(R.string.title_promo_reward))
-            setDescription(getString(R.string.description_promo_reward, numberOfEvents))
+            setPromoRules(
+                R.string.description_promo_reward,
+                R.string.title_rules_promo_reward,
+                R.string.rules_promo_reward,
+                R.string.cities_promo_reward
+            )
+            setDescription(getString(R.string.description_promo_reward))
         }
     }
 
