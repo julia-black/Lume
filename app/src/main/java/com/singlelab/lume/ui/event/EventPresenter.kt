@@ -60,10 +60,10 @@ class EventPresenter @Inject constructor(
                 var extraImages: List<String>? = null
                 if (!images.isNullOrEmpty()) {
                     if (event?.eventPrimaryImageContentUid == null) {
-                        primaryImage = images[0].resize(1200).toBase64(30)
+                        primaryImage = images[0].resize().toBase64()
                         extraImages = getImagesStr(images.toMutableList())
                     } else {
-                        extraImages = images.map { it.resize(1200).toBase64(30) }
+                        extraImages = images.map { it.resize().toBase64() }
                     }
                 }
                 try {
@@ -98,7 +98,7 @@ class EventPresenter @Inject constructor(
         if (images.isNotEmpty()) {
             images.removeAt(0)
         }
-        newImages.addAll(images.map { it.resize(1200).toBase64(30) })
+        newImages.addAll(images.map { it.resize().toBase64() })
         return newImages
     }
 

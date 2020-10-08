@@ -11,13 +11,13 @@ import com.singlelab.lume.model.Const
 import java.io.ByteArrayOutputStream
 
 
-fun Bitmap.toBase64(quality: Int = 100): String {
+fun Bitmap.toBase64(quality: Int = 60): String {
     val outputStream = ByteArrayOutputStream()
-    this.compress(Bitmap.CompressFormat.PNG, quality, outputStream)
+    this.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
     return Base64.encodeToString(outputStream.toByteArray(), Base64.NO_WRAP)
 }
 
-fun Bitmap.resize(size: Int): Bitmap {
+fun Bitmap.resize(size: Int = 1200): Bitmap {
     val copiedBitmap = copy(Bitmap.Config.ARGB_8888, true)
     var width: Int = copiedBitmap.width
     var height: Int = copiedBitmap.height

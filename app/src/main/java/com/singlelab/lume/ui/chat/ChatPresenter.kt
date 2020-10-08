@@ -81,7 +81,7 @@ constructor(
                 runOnMainThread { viewState.enableMessageSending(false) }
                 val chatUid = chatSettings.chatUid
                 if (chatUid != null) {
-                    val compressedImages = images.map { it.resize(1200).toBase64(80) }
+                    val compressedImages = images.map { it.resize().toBase64() }
                     val newMessage = interactor.sendMessage(ChatMessageRequest(chatUid, messageText, compressedImages))
                     if (newMessage != null) {
                         chatSettings.setLastMessageUid(newMessage)

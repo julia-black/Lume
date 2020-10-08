@@ -9,6 +9,7 @@ import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.feedback.interactor.FeedbackInteractor
+import com.singlelab.lume.util.resize
 import com.singlelab.lume.util.toBase64
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.person.FeedbackRequest
@@ -71,7 +72,7 @@ class FeedbackPresenter @Inject constructor(
             operatingSystem = Const.ANDROID,
             phoneModel = "${Build.MANUFACTURER} ${Build.MODEL}",
             applicationVersion = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
-            images = images.map { it.toBase64() }
+            images = images.map { it.resize().toBase64() }
         )
     }
 }

@@ -9,6 +9,7 @@ import com.singlelab.lume.model.profile.PersonNotifications
 import com.singlelab.lume.model.profile.Profile
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.my_profile.interactor.MyProfileInteractor
+import com.singlelab.lume.util.resize
 import com.singlelab.lume.util.toBase64
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.exceptions.NotConnectionException
@@ -95,7 +96,7 @@ class MyProfilePresenter @Inject constructor(
         viewState.showLoading(isShow = true, withoutBackground = true)
         invokeSuspend {
             try {
-                val uid = interactor.updateImageProfile(image.toBase64())
+                val uid = interactor.updateImageProfile(image.resize().toBase64())
                 runOnMainThread {
                     viewState.loadImage(uid)
                     viewState.showLoading(isShow = false, withoutBackground = true)

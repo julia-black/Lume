@@ -163,7 +163,7 @@ class CreatingEventPresenter @Inject constructor(
 
     fun getPrimaryImage(): String? {
         return if (images.isNotEmpty()) {
-            images[0].resize(1200).toBase64(30)
+            images[0].resize().toBase64()
         } else {
             null
         }
@@ -174,7 +174,7 @@ class CreatingEventPresenter @Inject constructor(
         if (images.size >= 1) {
             images.removeAt(0)
         }
-        newImages.addAll(images.map { it.resize(1200).toBase64(30) })
+        newImages.addAll(images.map { it.resize().toBase64() })
         return newImages
     }
 

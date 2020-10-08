@@ -7,6 +7,7 @@ import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.view.ValidationError
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.reg.interactor.RegistrationInteractor
+import com.singlelab.lume.util.resize
 import com.singlelab.lume.util.toBase64
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.auth.AuthData
@@ -38,7 +39,7 @@ class RegistrationPresenter @Inject constructor(
                     age = age,
                     description = description,
                     cityId = city!!.cityId,
-                    image = image!!.toBase64()
+                    image = image!!.resize().toBase64()
                 )
                 try {
                     interactor.registration(profile)
