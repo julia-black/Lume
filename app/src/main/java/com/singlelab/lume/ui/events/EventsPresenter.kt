@@ -83,7 +83,7 @@ class EventsPresenter @Inject constructor(
                     val promoReward = interactor.checkPromoReward(cityId)
                     if (promoReward != null && promoReward.isCitySuitableForPromoReward) {
                         runOnMainThread {
-                            viewState.showPromoReward()
+                            viewState.showPromoReward(promoReward.numberOfCityPromoEvents)
                         }
                     }
                 }

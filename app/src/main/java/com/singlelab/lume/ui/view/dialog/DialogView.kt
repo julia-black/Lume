@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.annotation.StringRes
+import androidx.core.view.isVisible
 import com.singlelab.lume.R
 import kotlinx.android.synthetic.main.view_dialog.view.*
 
@@ -25,12 +26,19 @@ class DialogView @JvmOverloads constructor(
         @StringRes description: Int,
         @StringRes titleRules: Int,
         @StringRes rulesInfo: Int,
-        @StringRes citiesInfo: Int
+        @StringRes citiesInfo: Int,
+        counterInfo: String? = null
     ) {
         description_dialog.setText(description)
         title_rules.setText(titleRules)
         rules.setText(rulesInfo)
         cities_info.setText(citiesInfo)
+        if (counterInfo == null) {
+            counter_info.isVisible = false
+        } else {
+            counter_info.isVisible = true
+            counter_info.text = counterInfo
+        }
     }
 
     fun setDescription(description: String) {
