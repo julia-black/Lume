@@ -55,8 +55,9 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
     }
 
     override fun onRegistration() {
-        Navigation.createNavigateOnClickListener(R.id.action_registration_to_my_profile)
-            .onClick(view)
+        findNavController().popBackStack()
+        findNavController().popBackStack()
+        findNavController().navigate(R.id.my_profile)
     }
 
     override fun showLogin(login: String?) {
