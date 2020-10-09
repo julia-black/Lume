@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.text.toSpannable
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -278,6 +279,9 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                     button_cancel_or_leave_event.text = getString(R.string.leave_event)
                     button_cancel_or_leave_event.visibility = View.VISIBLE
                     divider_three.visibility = View.VISIBLE
+                    if (!event.isOpenForInvitations) {
+                        divider_four.visibility = View.GONE
+                    }
                 }
             }
             ParticipantStatus.WAITING_FOR_APPROVE_FROM_EVENT -> {
@@ -316,6 +320,22 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         if (!event.isActive()) {
             divider_three.visibility = View.GONE
             divider_four.visibility = View.GONE
+            button_cancel_or_leave_event.visibility = View.GONE
+        }
+
+        if (presenter.isAdministrator() && event.isCanReceiveReward()) {
+            divider_four.visibility = View.VISIBLE
+            button_receive_reward.visibility = View.VISIBLE
+        }
+
+        button_receive_reward.setOnClickListener {
+            event.eventUid?.let {
+                findNavController().navigate(
+                    EventFragmentDirections.actionFromEventToReceiveReward(
+                        event.eventUid
+                    )
+                )
+            }
         }
 
         button_cancel_or_leave_event.setOnClickListener {

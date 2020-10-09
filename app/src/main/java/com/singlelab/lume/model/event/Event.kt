@@ -88,4 +88,8 @@ class Event(
     fun isActive(): Boolean {
         return status != EventStatus.ENDED && status != EventStatus.CANCELLED
     }
+
+    fun isCanReceiveReward(): Boolean {
+        return status == EventStatus.ENDED && participants.size >= 3 && isOpenForInvitations
+    }
 }

@@ -223,6 +223,11 @@
     <string name="cities_promo_reward">Акция действует в городах: Москва, Санкт-Петербург, Саратов.</string>
     <string name="counter_reward">Вознаграждение уже получили %1$d из 500 организаторов!</string>
     <string name="counter_reward_many">Поторопись! Вознаграждение уже получили %1$d из 500 организаторов!</string>
+    <string name="title_receive_reward">Получить вознаграждение</string>
+    <string name="text_reward">Введи номер карты, на которую будет отправлено вознагрждение после проверки достоверности события (проверка занимает до 2-х дней).</string>
+    <string name="hint_images_reward">Добавь одно или два фото с мероприятия. На фото должно быть видно всех участников, или большинство, если всех сфотографировать нет возможности.</string>
+    <string name="apply_reward">Отправить заявку</string>
+    <string name="hint_card_number">Номер карты</string>
 
     <!-- Arrays -->
     <string-array name="custom_weekdays">
