@@ -104,11 +104,7 @@ class EventPresenter @Inject constructor(
 
     fun onClickAdministrator() {
         event?.administrator?.personUid?.let {
-            if (it == AuthData.uid) {
-                viewState.toMyProfile()
-            } else {
-                viewState.toProfile(it)
-            }
+            viewState.toProfile(it)
         }
     }
 

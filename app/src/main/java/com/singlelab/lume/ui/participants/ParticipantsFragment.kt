@@ -12,6 +12,7 @@ import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.ui.view.person.OnPersonItemClickListener
 import com.singlelab.lume.ui.view.person.PersonAdapter
+import com.singlelab.net.model.auth.AuthData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_participants.*
 import moxy.presenter.InjectPresenter
@@ -67,11 +68,15 @@ class ParticipantsFragment : BaseFragment(), ParticipantsView, OnlyForAuthFragme
     }
 
     override fun onPersonClick(personUid: String) {
-        findNavController().navigate(
-            ParticipantsFragmentDirections.actionParticipantsToPerson(
-                personUid
+        if (personUid == AuthData.uid) {
+            findNavController().navigate(ParticipantsFragmentDirections.actionParticipantsToMyProfile())
+        } else {
+            findNavController().navigate(
+                ParticipantsFragmentDirections.actionParticipantsToPerson(
+                    personUid
+                )
             )
-        )
+        }
     }
 
     override fun onChatClick(personName: String, personUid: String) {

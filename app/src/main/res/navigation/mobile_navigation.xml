@@ -256,6 +256,11 @@
         <action
             android:id="@+id/action_participants_to_person"
             app:destination="@id/person" />
+
+        <action
+            android:id="@+id/action_participants_to_my_profile"
+            app:destination="@id/my_profile" />
+
         <argument
             android:name="isAdministrator"
             android:defaultValue="false"

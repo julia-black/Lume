@@ -12,9 +12,6 @@ interface EventView : LoadingView, ErrorView {
     fun showEvent(event: Event)
 
     @StateStrategyType(OneExecutionStateStrategy::class)
-    fun toMyProfile()
-
-    @StateStrategyType(OneExecutionStateStrategy::class)
     fun toProfile(personUid: String)
 
     @StateStrategyType(OneExecutionStateStrategy::class)

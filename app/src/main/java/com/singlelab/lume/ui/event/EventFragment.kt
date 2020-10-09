@@ -355,12 +355,12 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         }
     }
 
-    override fun toMyProfile() {
-        findNavController().navigate(R.id.action_event_to_my_profile)
-    }
-
     override fun toProfile(personUid: String) {
-        findNavController().navigate(EventFragmentDirections.actionEventToPerson(personUid))
+        if (personUid == AuthData.uid) {
+            findNavController().navigate(R.id.action_event_to_my_profile)
+        } else {
+            findNavController().navigate(EventFragmentDirections.actionEventToPerson(personUid))
+        }
     }
 
     override fun onRejectedEvent() {
@@ -371,7 +371,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
     }
 
     override fun onPersonClick(personUid: String) {
-        findNavController().navigate(EventFragmentDirections.actionEventToPerson(personUid))
+        toProfile(personUid)
     }
 
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
