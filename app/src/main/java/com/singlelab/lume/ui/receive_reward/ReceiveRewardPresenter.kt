@@ -1,18 +1,16 @@
 package com.singlelab.lume.ui.receive_reward
 
 import android.graphics.Bitmap
-import android.os.Build
-import com.singlelab.lume.BuildConfig
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
-import com.singlelab.lume.model.Const
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.receive_reward.interactor.ReceiveRewardInteractor
+import com.singlelab.lume.util.isValidCardNum
 import com.singlelab.lume.util.resize
 import com.singlelab.lume.util.toBase64
 import com.singlelab.net.exceptions.ApiException
-import com.singlelab.net.model.person.FeedbackRequest
+import com.singlelab.net.model.promo.PromoRequest
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -35,17 +33,21 @@ class ReceiveRewardPresenter @Inject constructor(
         this.eventUid = eventUid
     }
 
-    fun onGiveFeedBackClick(text: String) {
-        if (text.isBlank()) {
-            viewState.showEmptyFeedback()
+    fun onApplyReward(cardNum: String) {
+        if (cardNum.isBlank()) {
+            viewState.showEmptyCardNum()
+        } else if (!cardNum.isValidCardNum()) {
+            viewState.showInvalidCardNum()
+        } else if (images.isEmpty()) {
+            viewState.showEmptyImages()
         } else {
             viewState.showLoading(true)
-            val feedbackRequest = generateFeedback(text, images)
+            val promoRequest = generateRequest(cardNum, images)
             invokeSuspend {
                 try {
-                    interactor.addFeedback(feedbackRequest)
+                    interactor.sendPromoRequest(promoRequest)
                     runOnMainThread {
-                        viewState.showSuccessSendFeedback()
+                        viewState.showSuccess()
                         viewState.showLoading(false)
                     }
                 } catch (e: ApiException) {
@@ -72,12 +74,10 @@ class ReceiveRewardPresenter @Inject constructor(
         viewState.showImages(this.images)
     }
 
-    private fun generateFeedback(text: String, images: List<Bitmap>): FeedbackRequest {
-        return FeedbackRequest(
-            text = text,
-            operatingSystem = Const.ANDROID,
-            phoneModel = "${Build.MANUFACTURER} ${Build.MODEL}",
-            applicationVersion = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
+    private fun generateRequest(cardNum: String, images: List<Bitmap>): PromoRequest {
+        return PromoRequest(
+            eventUid = eventUid,
+            accountingNumber = cardNum,
             images = images.map { it.resize().toBase64() }
         )
     }

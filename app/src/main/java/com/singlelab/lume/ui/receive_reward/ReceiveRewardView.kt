@@ -10,11 +10,17 @@ import moxy.viewstate.strategy.StateStrategyType
 interface ReceiveRewardView : LoadingView, ErrorView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
-    fun showSuccessSendFeedback()
-
-    @StateStrategyType(OneExecutionStateStrategy::class)
-    fun showEmptyFeedback()
+    fun showSuccess()
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showImages(images: List<Bitmap>)
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun showEmptyCardNum()
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun showInvalidCardNum()
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun showEmptyImages()
 }

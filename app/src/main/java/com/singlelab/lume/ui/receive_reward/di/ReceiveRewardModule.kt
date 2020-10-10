@@ -4,7 +4,7 @@ import com.singlelab.lume.LumeApplication
 import com.singlelab.lume.ui.receive_reward.ReceiveRewardPresenter
 import com.singlelab.lume.ui.receive_reward.interactor.ReceiveRewardInteractor
 import com.singlelab.lume.ui.receive_reward.interactor.ReceiveRewardInteractorImpl
-import com.singlelab.net.repositories.person.PersonRepository
+import com.singlelab.net.repositories.events.EventsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +19,7 @@ object ReceiveRewardModule {
     }
 
     @Provides
-    fun provideInteractor(repository: PersonRepository): ReceiveRewardInteractor {
+    fun provideInteractor(repository: EventsRepository): ReceiveRewardInteractor {
         return ReceiveRewardInteractorImpl(repository)
     }
 }

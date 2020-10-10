@@ -4,6 +4,7 @@ import com.singlelab.net.ApiUnit
 import com.singlelab.net.model.event.*
 import com.singlelab.net.model.person.PersonResponse
 import com.singlelab.net.model.person.RandomPersonRequest
+import com.singlelab.net.model.promo.PromoRequest
 import com.singlelab.net.model.promo.PromoRewardResponse
 import com.singlelab.net.repositories.BaseRepository
 
@@ -113,6 +114,13 @@ class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository,
         return safeApiCall(
             call = { apiUnit.citiesApi.checkCityForPromoRewardAsync(cityId).await() },
             errorMessage = "Не удалось получить информацию о промо"
+        )
+    }
+
+    override suspend fun sendPromoRequest(promoRequest: PromoRequest) {
+        safeApiCall(
+            call = { apiUnit.eventsApi.sendPromoRequestAsync(promoRequest).await() },
+            errorMessage = "Не удалось отправить заявку"
         )
     }
 }

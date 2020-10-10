@@ -53,12 +53,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title" />
 
-        <com.singlelab.lume.ui.view.input.InputView
-            android:id="@+id/layout_card_num"
+        <EditText
+            android:id="@+id/edit_text_card_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_margin="@dimen/margin_medium"
+            android:background="@drawable/message_rounded_background"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:hint="@string/hint_card_number"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:padding="@dimen/margin_medium"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_reward" />
 
         <TextView
@@ -73,7 +80,7 @@
             android:textSize="@dimen/text_size_standart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_card_num" />
+            app:layout_constraintTop_toBottomOf="@id/edit_text_card_num" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_images"

@@ -18,6 +18,7 @@ import com.singlelab.lume.model.Const.SELECT_IMAGE_REQUEST_CODE
 import com.singlelab.lume.model.view.ToastType
 import com.singlelab.lume.ui.view.image.ImageAdapter
 import com.singlelab.lume.ui.view.image.OnImageClickListener
+import com.singlelab.lume.util.addCardNumMask
 import com.singlelab.lume.util.getBitmap
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_receive_reward.*
@@ -28,6 +29,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ReceiveRewardFragment : BaseFragment(), ReceiveRewardView, OnImageClickListener,
     OnActivityResultListener {
+
+    companion object {
+        const val MAX_COUNT_IMAGES = 2
+    }
 
     @Inject
     lateinit var daggerPresenter: ReceiveRewardPresenter
@@ -73,21 +78,30 @@ class ReceiveRewardFragment : BaseFragment(), ReceiveRewardView, OnImageClickLis
         }
     }
 
-    override fun showSuccessSendFeedback() {
-        showSnackbar(getString(R.string.feedback_send), ToastType.SUCCESS)
+    override fun showSuccess() {
+        showSnackbar(getString(R.string.promo_request_send), ToastType.SUCCESS)
         findNavController().popBackStack()
     }
 
-    override fun showEmptyFeedback() {
-        showError(getString(R.string.empty_feedback))
-    }
 
     override fun showImages(images: List<Bitmap>) {
         (recycler_images.adapter as ImageAdapter).setData(images.toMutableList())
     }
 
+    override fun showEmptyCardNum() {
+        showError(getString(R.string.empty_card_num))
+    }
+
+    override fun showInvalidCardNum() {
+        showError(getString(R.string.not_valid_card_num))
+    }
+
+    override fun showEmptyImages() {
+        showError(getString(R.string.empty_photo))
+    }
+
     override fun onClickNewImage() {
-        onClickAddImages()
+        onClickAddImages(MAX_COUNT_IMAGES)
     }
 
     override fun onClickImage(position: Int) {
@@ -105,16 +119,12 @@ class ReceiveRewardFragment : BaseFragment(), ReceiveRewardView, OnImageClickLis
     }
 
     private fun initViews() {
+        edit_text_card_num.addCardNumMask()
+
         recycler_images.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = ImageAdapter()
+            adapter = ImageAdapter(MAX_COUNT_IMAGES)
             (adapter as ImageAdapter).setClickListener(this@ReceiveRewardFragment)
-        }
-        layout_card_num.apply {
-            setHint(getString(R.string.hint_card_number))
-            setSingleLine()
-            setDigits("0123456789")
-            setMaxLength(16)
         }
     }
 
@@ -123,12 +133,7 @@ class ReceiveRewardFragment : BaseFragment(), ReceiveRewardView, OnImageClickLis
             findNavController().popBackStack()
         }
         button_apply.setOnClickListener {
-            val text = layout_card_num.getText()
-            if (text.isEmpty()) {
-                showSnackbar(getString(R.string.enter_fields), ToastType.ERROR)
-            } else {
-                presenter.onGiveFeedBackClick(text)
-            }
+            presenter.onApplyReward(edit_text_card_num.text.toString())
         }
     }
 }

@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.text.toSpannable
-import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -425,7 +424,9 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                             event.eventPrimaryImageContentUid,
                             event.images
                         )
-                        1 -> onClickAddImages()
+                        1 -> if (event.images == null || event.images.size < 10) {
+                            onClickAddImages()
+                        }
                     }
                 }
             )

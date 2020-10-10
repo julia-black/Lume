@@ -228,6 +228,9 @@
     <string name="hint_images_reward">Добавь одно или два фото с мероприятия. На фото должно быть видно всех участников, или большинство, если всех сфотографировать нет возможности.</string>
     <string name="apply_reward">Отправить заявку</string>
     <string name="hint_card_number">Номер карты</string>
+    <string name="empty_card_num">Не заполнен номер карты</string>
+    <string name="promo_request_send">Заявка отправлена, ожидайте вознаграждения!</string>
+    <string name="not_valid_card_num">Некорректный номер карты</string>
 
     <!-- Arrays -->
     <string-array name="custom_weekdays">

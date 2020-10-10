@@ -199,7 +199,7 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         }
     }
 
-    fun onClickAddImages() {
+    fun onClickAddImages(countImage: Int = Const.MAX_COUNT_IMAGES) {
         activity?.let {
             ImagePicker.with(it)
                 .setFolderMode(true)
@@ -209,11 +209,11 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
                 .setMultipleMode(true)
                 .setShowNumberIndicator(true)
                 .setDoneTitle(getString(R.string.choose))
-                .setMaxSize(Const.MAX_COUNT_IMAGES)
+                .setMaxSize(countImage)
                 .setLimitMessage(
                     getString(
                         R.string.chat_select_images_limit,
-                        Const.MAX_COUNT_IMAGES
+                        countImage
                     )
                 )
                 .setRequestCode(Const.SELECT_IMAGE_REQUEST_CODE)

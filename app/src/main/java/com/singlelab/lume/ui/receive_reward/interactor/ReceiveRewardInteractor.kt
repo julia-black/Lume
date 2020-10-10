@@ -1,7 +1,7 @@
 package com.singlelab.lume.ui.receive_reward.interactor
 
-import com.singlelab.net.model.person.FeedbackRequest
+import com.singlelab.net.model.promo.PromoRequest
 
 interface ReceiveRewardInteractor {
-    suspend fun addFeedback(request: FeedbackRequest)
+    suspend fun sendPromoRequest(request: PromoRequest)
 }
