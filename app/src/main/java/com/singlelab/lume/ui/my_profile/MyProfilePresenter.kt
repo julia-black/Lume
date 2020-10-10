@@ -96,7 +96,9 @@ class MyProfilePresenter @Inject constructor(
         viewState.showLoading(isShow = true, withoutBackground = true)
         invokeSuspend {
             try {
-                val uid = interactor.updateImageProfile(image.resize().toBase64())
+                val imageStr = image.resize().toBase64()
+                val miniImageStr = image.resize(200).toBase64()
+                val uid = interactor.updateImageProfile(imageStr, miniImageStr)
                 runOnMainThread {
                     viewState.loadImage(uid)
                     viewState.showLoading(isShow = false, withoutBackground = true)

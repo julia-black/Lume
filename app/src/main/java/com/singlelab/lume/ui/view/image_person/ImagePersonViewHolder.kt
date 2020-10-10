@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.singlelab.lume.R
 import com.singlelab.lume.model.profile.Person
-import com.singlelab.lume.util.generateImageLink
+import com.singlelab.lume.util.generateMiniImageLink
 import kotlinx.android.synthetic.main.item_person.view.*
 
 class ImagePersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
@@ -15,8 +15,7 @@ class ImagePersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     fun bind(person: Person, listener: OnPersonImageClickListener?) {
         if (person.imageContentUid != null) {
             Glide.with(itemView)
-                .load(person.imageContentUid.generateImageLink())
-                .thumbnail(0.1f)
+                .load(person.imageContentUid.generateMiniImageLink())
                 .into(itemView.image_person)
         }
         itemView.image_person.setOnClickListener {

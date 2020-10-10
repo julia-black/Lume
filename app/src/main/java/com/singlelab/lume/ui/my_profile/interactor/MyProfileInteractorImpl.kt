@@ -23,8 +23,9 @@ class MyProfileInteractorImpl(
         }
     }
 
-    override suspend fun updateImageProfile(imageStr: String): String? {
-        val profileResponse = repository.updateProfile(ProfileRequest(image = imageStr))
+    override suspend fun updateImageProfile(imageStr: String, miniImageStr: String): String? {
+        val profileResponse =
+            repository.updateProfile(ProfileRequest(image = imageStr, miniImage = miniImageStr))
         return profileResponse?.imageContentUid
     }
 

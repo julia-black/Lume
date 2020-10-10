@@ -33,13 +33,16 @@ class RegistrationPresenter @Inject constructor(
         if (!uid.isNullOrEmpty() && city?.cityId != null && image != null) {
             viewState.showLoading(true)
             invokeSuspend {
+                val imageStr = image!!.resize().toBase64()
+                val miniImageStr = image!!.resize(200).toBase64()
                 val profile = ProfileRequest(
                     login = login,
                     name = name,
                     age = age,
                     description = description,
                     cityId = city!!.cityId,
-                    image = image!!.resize().toBase64()
+                    image = imageStr,
+                    miniImage = miniImageStr
                 )
                 try {
                     interactor.registration(profile)

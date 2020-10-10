@@ -40,6 +40,10 @@ fun String.generateImageLink(): String {
     return "${Const.BASE_URL}image/get-image?imageUid=$this"
 }
 
+fun String.generateMiniImageLink(): String {
+    return "${Const.BASE_URL}image/get-miniature-image?imageUid=$this"
+}
+
 fun Uri.getBitmap(contentResolver: ContentResolver?): Bitmap? {
     contentResolver ?: return null
     return if (Build.VERSION.SDK_INT < 28) {

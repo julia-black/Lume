@@ -176,8 +176,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
 
             if (it.imageContentUid != null) {
                 Glide.with(this)
-                    .load(it.imageContentUid.generateImageLink())
-                    .thumbnail(0.1f)
+                    .load(it.imageContentUid.generateMiniImageLink())
                     .into(image_administrator)
             }
         }
