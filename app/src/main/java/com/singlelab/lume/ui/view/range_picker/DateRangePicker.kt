@@ -7,6 +7,7 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener
 import com.singlelab.lume.R
+import com.singlelab.lume.model.Const
 import java.util.*
 
 class DateRangePicker(
@@ -20,6 +21,7 @@ class DateRangePicker(
     fun show() {
         val builder = MaterialDatePicker.Builder.dateRangePicker()
         val now = Calendar.getInstance()
+        now.timeZone =  TimeZone.getTimeZone(Const.UTC)
         builder.setSelection(Pair(now.timeInMillis, now.timeInMillis))
         builder.setTitleText("")
         builder.setTheme(R.style.ThemeOverlay_MaterialComponents_MaterialCalendar)
@@ -39,7 +41,7 @@ class DateRangePicker(
 
     private fun limitRange(): CalendarConstraints.Builder? {
         val constraintsBuilderRange = CalendarConstraints.Builder()
-        val calendarStart = Calendar.getInstance()
+        val calendarStart = Calendar.getInstance(Const.RUS_LOCALE)
         calendarStart[Calendar.DAY_OF_MONTH] = calendarStart[Calendar.DAY_OF_MONTH] - 1
         val minDate = calendarStart.timeInMillis
         constraintsBuilderRange.setStart(minDate)

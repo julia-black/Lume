@@ -70,6 +70,14 @@ fun Long.toDateFormat(format: String): String {
     return date.parseToString(format)
 }
 
+fun Long.toFormatUTC(format: String) : String {
+    val date = Date(this)
+    val sdf = SimpleDateFormat(format, Locale.getDefault())
+    sdf.timeZone = TimeZone.getTimeZone("UTC")
+    val gmtTime = SimpleDateFormat(format, Locale.getDefault()).parse(sdf.format(date))
+    return gmtTime.formatToUTC(format)
+}
+
 fun String.toLongTime(format: String): Long {
     val inputFormat = SimpleDateFormat(format, Const.RUS_LOCALE)
     inputFormat.timeZone = TimeZone.getTimeZone(Const.UTC)
