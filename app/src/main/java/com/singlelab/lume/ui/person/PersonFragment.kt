@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.custom.sliderimage.logic.SliderImage
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.model.profile.Profile
@@ -91,8 +90,8 @@ class PersonFragment : BaseFragment(), PersonView {
 
     private fun showFullScreenImage(imageContentUid: String) {
         context?.let {
-            val links = listOf(imageContentUid.generateImageLink())
-            SliderImage.openfullScreen(it, links, 0)
+            val links = listOf(imageContentUid)
+            findNavController().navigate(PersonFragmentDirections.actionPersonToImageSlider(links.toTypedArray()))
         }
     }
 
