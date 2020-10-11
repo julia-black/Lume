@@ -4,16 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.custom.sliderimage.logic.SliderImage
 import com.singlelab.lume.R
 import com.singlelab.lume.model.profile.Person
+import com.singlelab.lume.ui.chat.common.view.OnClickImageListener
 import com.singlelab.lume.util.generateImageLink
 import kotlinx.android.synthetic.main.item_card_person.view.*
 
 class CardPersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     RecyclerView.ViewHolder(inflater.inflate(R.layout.item_card_person, parent, false)) {
 
-    fun bind(person: Person) {
+    private var listener: OnClickImageListener? = null
+
+    fun bind(person: Person, listener: OnClickImageListener) {
+        this.listener = listener
         val age =
             itemView.resources.getQuantityString(R.plurals.age_plurals, person.age, person.age)
         itemView.name.text = "${person.name}, $age"
@@ -33,8 +36,8 @@ class CardPersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 
     private fun showFullScreenImage(imageContentUid: String) {
         itemView.context?.let {
-            val links = listOf(imageContentUid.generateImageLink())
-            SliderImage.openfullScreen(it, links, 0)
+            val links = listOf(imageContentUid)
+            listener?.onClickImage(links)
         }
     }
 }

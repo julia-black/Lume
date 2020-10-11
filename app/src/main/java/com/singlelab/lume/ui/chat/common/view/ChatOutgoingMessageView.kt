@@ -27,17 +27,18 @@ constructor(
     private var maxMessageViewWidth: Int = 0
 
     init {
-        layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        layoutParams =
+            LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         gravity = Gravity.END
         inflate(getContext(), R.layout.outgoing_message_item, this)
     }
 
-    fun setContent(messageItem: ChatMessageItem) {
+    fun setContent(messageItem: ChatMessageItem, listener: OnClickImageListener) {
         setText(messageItem)
         setPendingMessageProgress(messageItem.status)
 
         outgoingMessageCloudView.setCloudView(messageItem.text, messageItem.images)
-        outgoingMessageImageView.setImage(messageItem)
+        outgoingMessageImageView.setImage(messageItem, listener)
         outgoingMessageDateView.setMessageDate(messageItem.text, messageItem.date)
     }
 

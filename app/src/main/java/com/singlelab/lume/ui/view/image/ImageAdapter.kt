@@ -4,9 +4,9 @@ import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.singlelab.lume.model.Const.MAX_COUNT_IMAGES
+import com.singlelab.lume.model.Const
 
-class ImageAdapter :
+class ImageAdapter(private var maxCountImages: Int = Const.MAX_COUNT_IMAGES) :
     RecyclerView.Adapter<ImageViewHolder>() {
 
     private var images = mutableListOf<Bitmap?>()
@@ -45,7 +45,7 @@ class ImageAdapter :
     fun setData(images: MutableList<Bitmap>) {
         this.images.clear()
         this.images.addAll(images)
-        if (this.images.size < MAX_COUNT_IMAGES) {
+        if (this.images.size < maxCountImages) {
             addNewImageItem()
         }
         notifyDataSetChanged()

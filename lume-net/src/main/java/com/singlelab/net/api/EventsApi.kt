@@ -4,6 +4,7 @@ import com.singlelab.net.model.MessageResponse
 import com.singlelab.net.model.event.*
 import com.singlelab.net.model.person.PersonResponse
 import com.singlelab.net.model.person.RandomPersonRequest
+import com.singlelab.net.model.promo.PromoRequest
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.*
@@ -57,4 +58,10 @@ interface EventsApi {
         @Query("eventUid") eventUid: String,
         @Query("personUid") personUid: String
     ): Deferred<Response<MessageResponse>>
+
+    @POST("event/add-promo-reward-request")
+    fun sendPromoRequestAsync(@Body promoRequest: PromoRequest): Deferred<Response<MessageResponse>>
+
+    @HTTP(method = "DELETE", path = "event/remove-event-image", hasBody = true)
+    fun removeImageAsync(@Body eventImageRequest: EventImageRequest): Deferred<Response<MessageResponse>>
 }

@@ -54,13 +54,11 @@
                     android:layout_width="@dimen/size_card_emoji"
                     android:layout_height="@dimen/size_card_emoji"
                     android:layout_margin="@dimen/margin_card"
-                    android:visibility="gone"
                     app:cardBackgroundColor="@color/colorAccent"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="0dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:visibility="visible">
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:id="@+id/emoji_one"
@@ -77,7 +75,6 @@
                     android:layout_width="@dimen/size_card_emoji"
                     android:layout_height="@dimen/size_card_emoji"
                     android:layout_marginStart="@dimen/margin_small"
-                    android:visibility="gone"
                     app:cardBackgroundColor="@color/colorAccent"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="0dp"
@@ -99,7 +96,6 @@
                     android:layout_width="@dimen/size_card_emoji"
                     android:layout_height="@dimen/size_card_emoji"
                     android:layout_marginStart="@dimen/margin_small"
-                    android:visibility="gone"
                     app:cardBackgroundColor="@color/colorAccent"
                     app:cardCornerRadius="12dp"
                     app:cardElevation="0dp"

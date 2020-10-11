@@ -14,7 +14,7 @@ import com.singlelab.lume.ui.chat.common.ChatMessageViewExtensions.Companion.MES
 import com.singlelab.lume.ui.chat.common.GroupChatMessageItem
 import com.singlelab.lume.ui.chat.common.OnMessageAuthorClickEvent
 import com.singlelab.lume.util.dpToPx
-import com.singlelab.lume.util.generateImageLink
+import com.singlelab.lume.util.generateMiniImageLink
 import kotlinx.android.synthetic.main.group_incoming_message_item.view.*
 
 class GroupChatIncomingMessageView
@@ -32,17 +32,22 @@ constructor(
     private var maxMessageViewWidth: Int = 0
 
     init {
-        layoutParams = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        layoutParams =
+            LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         inflate(getContext(), R.layout.group_incoming_message_item, this)
     }
 
-    fun setContent(messageItem: GroupChatMessageItem, clickEvent: OnMessageAuthorClickEvent?) {
+    fun setContent(
+        messageItem: GroupChatMessageItem,
+        clickEvent: OnMessageAuthorClickEvent?,
+        listener: OnClickImageListener
+    ) {
         setText(messageItem)
         setAuthorView(messageItem, clickEvent)
 
         incomingMessageCloudView.setCloudView(messageItem.text, messageItem.images)
         incomingMessageDateView.setMessageDate(messageItem.text, messageItem.date)
-        incomingMessageImageView.setImage(messageItem)
+        incomingMessageImageView.setImage(messageItem, listener)
     }
 
     private fun setText(messageItem: GroupChatMessageItem) {
@@ -53,7 +58,10 @@ constructor(
         incomingMessageView.setMessageTextViewDimensions(messageItem.images, maxMessageViewWidth)
     }
 
-    private fun setAuthorView(messageItem: GroupChatMessageItem, clickEvent: OnMessageAuthorClickEvent?) {
+    private fun setAuthorView(
+        messageItem: GroupChatMessageItem,
+        clickEvent: OnMessageAuthorClickEvent?
+    ) {
         // Отображаем имя автора сообщения в групповом чате, тольео если сообщение не содержит картинки
         incomingMessageAuthorView.isVisible = messageItem.images.count { it.isNotEmpty() } == 0
         if (messageItem.images.count { it.isNotEmpty() } == 0) {
@@ -62,8 +70,7 @@ constructor(
 
         if (messageItem.personPhoto.isNotEmpty()) {
             Glide.with(this)
-                .load(messageItem.personPhoto.generateImageLink())
-                .thumbnail(0.1f)
+                .load(messageItem.personPhoto.generateMiniImageLink())
                 .transform(CenterCrop(), RoundedCorners(CORNER_RADIUS.dpToPx().toInt()))
                 .into(incomingMessageAuthorPhotoView)
         }

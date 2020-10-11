@@ -15,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.custom.sliderimage.logic.SliderImage
 import com.google.android.material.tabs.TabLayoutMediator
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
@@ -233,8 +232,12 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
 
     private fun showFullScreenImage(imageContentUid: String) {
         context?.let {
-            val links = listOf(imageContentUid.generateImageLink())
-            SliderImage.openfullScreen(it, links, 0)
+            val links = listOf(imageContentUid)
+            findNavController().navigate(
+                MyProfileFragmentDirections.actionMyProfileToImageSlider(
+                    links.toTypedArray()
+                )
+            )
         }
     }
 

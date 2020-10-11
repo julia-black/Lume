@@ -421,8 +421,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_medium"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="@dimen/margin_medium"
                         android:clickable="true"
                         android:enabled="true"
                         android:focusable="true"
@@ -457,6 +456,21 @@
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/button_invite"
+                        tools:visibility="visible" />
+
+                    <Button
+                        android:id="@+id/button_receive_reward"
+                        style="@style/ButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:text="@string/title_receive_reward"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/button_search_participants"
                         tools:visibility="visible" />
 
                     <ImageView

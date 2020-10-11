@@ -44,13 +44,21 @@ constructor(
             try {
                 isLoading = true
                 val chatResponse = when (type) {
-                    is ChatOpeningInvocationType.Person -> interactor.loadPersonChat(type.personUid, page)
-                    is ChatOpeningInvocationType.Common -> interactor.loadChatByUid(type.chatUid, page)
+                    is ChatOpeningInvocationType.Person -> interactor.loadPersonChat(
+                        type.personUid,
+                        page
+                    )
+                    is ChatOpeningInvocationType.Common -> interactor.loadChatByUid(
+                        type.chatUid,
+                        page
+                    )
                     else -> null
                 }
                 if (chatResponse != null) {
                     chatSettings.chatType = type
                     chatSettings.chatUid = chatResponse.chatUid
+                    chatSettings.eventUid = chatResponse.eventUid
+                    chatSettings.personUid = chatResponse.personUid
                     chatSettings.setLastMessageUid(chatResponse.messages)
                     runOnMainThread {
                         if (chatResponse.unreadMessagesCount > 0) {
@@ -82,7 +90,13 @@ constructor(
                 val chatUid = chatSettings.chatUid
                 if (chatUid != null) {
                     val compressedImages = images.map { it.resize().toBase64() }
-                    val newMessage = interactor.sendMessage(ChatMessageRequest(chatUid, messageText, compressedImages))
+                    val newMessage = interactor.sendMessage(
+                        ChatMessageRequest(
+                            chatUid,
+                            messageText,
+                            compressedImages
+                        )
+                    )
                     if (newMessage != null) {
                         chatSettings.setLastMessageUid(newMessage)
                         val messageEntity = newMessage.toDbEntity(chatUid)
@@ -91,7 +105,8 @@ constructor(
                             val currentPersonUid = AuthData.uid
                             val chatType = chatSettings.chatType
                             if (chatType != null && currentPersonUid != null) {
-                                val message = messageEntity.toUiEntity(chatType.isGroup, currentPersonUid)
+                                val message =
+                                    messageEntity.toUiEntity(chatType.isGroup, currentPersonUid)
                                 Analytics.logSendMessage()
                                 runOnMainThread {
                                     viewState.showNewMessage(message)
@@ -106,6 +121,18 @@ constructor(
                     viewState.showError(e.message)
                     viewState.enableMessageSending(true)
                 }
+            }
+        }
+    }
+
+    fun onChatTitleClick() {
+        if (chatSettings.chatType != null && chatSettings.chatType!!.isGroup) {
+            chatSettings.eventUid?.let {
+                viewState.navigateToEvent(it)
+            }
+        } else {
+            chatSettings.personUid?.let {
+                viewState.navigateToPerson(it)
             }
         }
     }
@@ -160,7 +187,9 @@ constructor(
     data class ChatSettings(
         private var _lastMessageUid: String? = null,
         var chatType: ChatOpeningInvocationType? = null,
-        var chatUid: String? = null
+        var chatUid: String? = null,
+        var eventUid: String? = null,
+        var personUid: String? = null
     ) {
         val lastMessageUid
             get() = _lastMessageUid

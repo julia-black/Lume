@@ -3,12 +3,14 @@ package com.singlelab.lume.ui.swiper_event.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.singlelab.lume.R
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.util.generateImageLink
+import com.singlelab.lume.util.generateMiniImageLink
 import com.singlelab.lume.util.getLocationName
 import com.singlelab.lume.util.parse
 import kotlinx.android.synthetic.main.item_card_event.view.*
@@ -31,27 +33,35 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             }
         }
 
+        if (event.types.size < 3) {
+            itemView.emoji_card_three.visibility = View.GONE
+        }
+        if (event.types.size < 2) {
+            itemView.emoji_card_two.visibility = View.GONE
+        }
         event.types.forEachIndexed { index, eventType ->
             when (index) {
                 0 -> {
-                    itemView.emoji_card_one.visibility = View.VISIBLE
-                    itemView.emoji_one.setImageResource(eventType.resId)
+                    Glide.with(itemView)
+                        .load(ContextCompat.getDrawable(itemView.context, eventType.resId))
+                        .into(itemView.emoji_one)
                 }
                 1 -> {
-                    itemView.emoji_card_two.visibility = View.VISIBLE
-                    itemView.emoji_two.setImageResource(eventType.resId)
+                    Glide.with(itemView)
+                        .load(ContextCompat.getDrawable(itemView.context, eventType.resId))
+                        .into(itemView.emoji_two)
                 }
                 2 -> {
-                    itemView.emoji_card_three.visibility = View.VISIBLE
-                    itemView.emoji_three.setImageResource(eventType.resId)
+                    Glide.with(itemView)
+                        .load(ContextCompat.getDrawable(itemView.context, eventType.resId))
+                        .into(itemView.emoji_three)
                 }
             }
         }
         event.administrator?.let {
             if (it.imageContentUid != null) {
                 Glide.with(itemView.context)
-                    .load(it.imageContentUid.generateImageLink())
-                    .thumbnail(0.1f)
+                    .load(it.imageContentUid.generateMiniImageLink())
                     .into(itemView.image_administrator)
             }
             itemView.administrator_name.text = it.name

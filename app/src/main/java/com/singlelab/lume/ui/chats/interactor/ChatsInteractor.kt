@@ -26,8 +26,10 @@ class DefaultChatsInteractor(
     override suspend fun remoteChats() =
         remoteRepository.loadChats()
 
-    override suspend fun saveChats(chats: List<Chat>) =
+    override suspend fun saveChats(chats: List<Chat>) {
+        localRepository.clear()
         localRepository.insert(chats)
+    }
 
     override suspend fun localChats() =
         localRepository.all()

@@ -9,11 +9,13 @@ import com.singlelab.lume.ui.chat.common.GroupChatMessagesAdapter.GroupIncomingM
 import com.singlelab.lume.ui.chat.common.PrivateChatMessagesAdapter.PrivateIncomingMessageViewHolder
 import com.singlelab.lume.ui.chat.common.view.ChatOutgoingMessageView
 import com.singlelab.lume.ui.chat.common.view.GroupChatIncomingMessageView
+import com.singlelab.lume.ui.chat.common.view.OnClickImageListener
 import com.singlelab.lume.ui.chat.common.view.PrivateChatIncomingMessageView
 
 abstract class ChatMessagesAdapter(
     private val chatType: Type,
-    private val clickEvent: OnMessageAuthorClickEvent? = null
+    private val clickEvent: OnMessageAuthorClickEvent? = null,
+    private var listener: OnClickImageListener
 ) : RecyclerView.Adapter<ChatMessagesAdapter.ChatMessageViewHolder>() {
 
     enum class Type {
@@ -28,7 +30,11 @@ abstract class ChatMessagesAdapter(
     override fun getItemCount() = messages.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
-        ChatMessageItem.Type.OUTGOING.code -> OutgoingMessageViewHolder(ChatOutgoingMessageView(parent.context))
+        ChatMessageItem.Type.OUTGOING.code -> OutgoingMessageViewHolder(
+            ChatOutgoingMessageView(
+                parent.context
+            )
+        )
         else -> if (chatType == Type.GROUP) {
             GroupIncomingMessageViewHolder(GroupChatIncomingMessageView(parent.context), clickEvent)
         } else {
@@ -37,11 +43,12 @@ abstract class ChatMessagesAdapter(
     }
 
     override fun onBindViewHolder(holder: ChatMessageViewHolder, position: Int) =
-        holder.bind(messages[position])
+        holder.bind(messages[position], listener)
 
     open fun setMessages(newMessages: List<ChatMessageItem>) {
         val syncedMessages = newMessages.syncLast()
-        val diffResult = DiffUtil.calculateDiff(ChatMessagesDiffCallback(messages, syncedMessages), false)
+        val diffResult =
+            DiffUtil.calculateDiff(ChatMessagesDiffCallback(messages, syncedMessages), false)
         messages.clear()
         messages.addAll(syncedMessages)
         diffResult.dispatchUpdatesTo(this)
@@ -67,13 +74,13 @@ abstract class ChatMessagesAdapter(
     }
 
     abstract class ChatMessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        abstract fun bind(messageItem: ChatMessageItem)
+        abstract fun bind(messageItem: ChatMessageItem, listener: OnClickImageListener)
     }
 
     class OutgoingMessageViewHolder(view: View) : ChatMessageViewHolder(view) {
-        override fun bind(messageItem: ChatMessageItem) {
+        override fun bind(messageItem: ChatMessageItem, listener: OnClickImageListener) {
             if (itemView !is ChatOutgoingMessageView) return
-            itemView.setContent(messageItem)
+            itemView.setContent(messageItem, listener)
         }
     }
 

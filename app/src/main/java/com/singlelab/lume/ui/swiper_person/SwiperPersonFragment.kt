@@ -14,6 +14,7 @@ import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.profile.FilterPerson
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.model.view.ToastType
+import com.singlelab.lume.ui.chat.common.view.OnClickImageListener
 import com.singlelab.lume.ui.filters.person.FilterPersonFragment
 import com.singlelab.lume.ui.swiper_person.adapter.CardStackPersonAdapter
 import com.yuyakaido.android.cardstackview.*
@@ -89,6 +90,11 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
     }
 
     private fun initCardStack() {
+        val listenerImage = object : OnClickImageListener {
+            override fun onClickImage(imageUids: List<String>) {
+                navigateToImages(imageUids)
+            }
+        }
         cardStackManager = CardStackLayoutManager(context, this)
         cardStackManager?.apply {
             setStackFrom(StackFrom.None)
@@ -104,12 +110,20 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
             setOverlayInterpolator(LinearInterpolator())
         }
         card_stack_view.layoutManager = cardStackManager
-        card_stack_view.adapter = CardStackPersonAdapter()
+        card_stack_view.adapter = CardStackPersonAdapter(listener = listenerImage)
         card_stack_view.itemAnimator.apply {
             if (this is DefaultItemAnimator) {
                 supportsChangeAnimations = false
             }
         }
+    }
+
+    private fun navigateToImages(imageUids: List<String>) {
+        findNavController().navigate(
+            SwiperPersonFragmentDirections.actionSwiperPersonToImageSlider(
+                imageUids.toTypedArray()
+            )
+        )
     }
 
     private fun setListeners() {

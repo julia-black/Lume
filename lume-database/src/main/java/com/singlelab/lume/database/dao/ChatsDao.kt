@@ -8,4 +8,7 @@ import com.singlelab.lume.database.entity.Chat
 internal abstract class ChatsDao : BaseDao<Chat> {
     @Query("select * from chats")
     internal abstract suspend fun all(): List<Chat>
+
+    @Query("delete from chats")
+    internal abstract suspend fun clear()
 }

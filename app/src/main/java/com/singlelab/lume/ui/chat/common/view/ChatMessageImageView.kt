@@ -11,7 +11,6 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.custom.sliderimage.logic.SliderImage
 import com.singlelab.lume.R
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.ui.chat.common.ChatMessageItem
@@ -31,12 +30,18 @@ constructor(
     defStyleAttr
 ) {
 
+    private var listener: OnClickImageListener? = null
+
     init {
-        layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        layoutParams = FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         inflate(getContext(), R.layout.chat_message_image_view, this)
     }
 
-    fun setImage(message: ChatMessageItem) {
+    fun setImage(message: ChatMessageItem, listener: OnClickImageListener) {
+        this.listener = listener
         if (message.uid == ChatMessageItem.PENDING_MESSAGE_UID) {
             // Для сообщения, которое ждет отправки, отображаем только область картинки, если в сообщении есть картинки
             isVisible = message.images.isNotEmpty()
@@ -65,7 +70,14 @@ constructor(
             if (message.text.isEmpty()) {
                 transformations.add(RoundedCorners(CORNER_RADIUS_16.toInt()))
             } else {
-                transformations.add(GranularRoundedCorners(CORNER_RADIUS_16, CORNER_RADIUS_16, CORNER_RADIUS_0, CORNER_RADIUS_0))
+                transformations.add(
+                    GranularRoundedCorners(
+                        CORNER_RADIUS_16,
+                        CORNER_RADIUS_16,
+                        CORNER_RADIUS_0,
+                        CORNER_RADIUS_0
+                    )
+                )
             }
             Glide.with(this)
                 .load(message.images.first().generateImageLink())
@@ -84,7 +96,8 @@ constructor(
         chatMessageImageForegroundView.isVisible = isMultipleImages
 
         if (isMultipleImages) {
-            chatMessageImageCountView.text = context.getString(R.string.chat_message_images_count, imageCount - 1)
+            chatMessageImageCountView.text =
+                context.getString(R.string.chat_message_images_count, imageCount - 1)
 
             // Делаем закругление фейда аналогично закруглению картинки
             val topRadius = CORNER_RADIUS_16
@@ -92,7 +105,10 @@ constructor(
 
             Glide.with(this)
                 .load(R.drawable.shape_chat_message_image_foreground)
-                .transform(CenterCrop(), GranularRoundedCorners(topRadius, topRadius, bottomRadius, bottomRadius))
+                .transform(
+                    CenterCrop(),
+                    GranularRoundedCorners(topRadius, topRadius, bottomRadius, bottomRadius)
+                )
                 .into(chatMessageImageForegroundView)
         }
     }
@@ -100,16 +116,13 @@ constructor(
     private fun setDateChip(isMessageTextEmpty: Boolean, date: String? = null) {
         chatMessageImageDateChip.isVisible = isMessageTextEmpty
         if (isMessageTextEmpty && date != null && date.isNotEmpty()) {
-            chatMessageImageDateChip.text = date.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_ONLY_TIME)
+            chatMessageImageDateChip.text =
+                date.parse(Const.DATE_FORMAT_TIME_ZONE, Const.DATE_FORMAT_ONLY_TIME)
         }
     }
 
     private fun showFullScreenImages(images: List<String>) {
-        SliderImage.openfullScreen(
-            context = context,
-            items = images.filter { it.isNotEmpty() }.map { it.generateImageLink() },
-            position = 0
-        )
+        listener?.onClickImage(images.filter { it.isNotEmpty() })
     }
 
     companion object {

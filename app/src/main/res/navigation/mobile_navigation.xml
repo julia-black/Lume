@@ -83,6 +83,14 @@
         <action
             android:id="@+id/action_chat_to_person"
             app:destination="@id/person" />
+
+        <action
+            android:id="@+id/action_chat_to_event"
+            app:destination="@id/event" />
+
+        <action
+            android:id="@+id/action_chat_to_image_slider"
+            app:destination="@id/image_slider" />
     </fragment>
 
     <fragment
@@ -112,6 +120,10 @@
         <action
             android:id="@+id/action_my_profile_to_feedback"
             app:destination="@id/feedback" />
+        <action
+            android:id="@+id/action_my_profile_to_image_slider"
+            app:destination="@id/image_slider" />
+
     </fragment>
 
     <fragment
@@ -181,6 +193,14 @@
         <action
             android:id="@+id/action_event_to_map"
             app:destination="@id/map" />
+
+        <action
+            android:id="@+id/action_from_event_to_receive_reward"
+            app:destination="@id/receive_reward" />
+
+        <action
+            android:id="@+id/action_from_event_to_image_slider"
+            app:destination="@id/image_slider" />
     </fragment>
 
     <fragment
@@ -226,6 +246,9 @@
         <action
             android:id="@+id/action_person_to_chat"
             app:destination="@id/chat" />
+        <action
+            android:id="@+id/action_person_to_image_slider"
+            app:destination="@id/image_slider" />
     </fragment>
 
     <fragment
@@ -282,6 +305,9 @@
         <action
             android:id="@+id/action_swiper_person_to_filters_person"
             app:destination="@id/filters_person" />
+        <action
+            android:id="@+id/action_swiper_person_to_image_slider"
+            app:destination="@id/image_slider" />
     </fragment>
     <fragment
         android:id="@+id/cities"
@@ -359,4 +385,29 @@
         android:id="@+id/feedback"
         android:name="com.singlelab.lume.ui.feedback.FeedbackFragment"
         android:label="FeedbackFragment" />
+
+    <fragment
+        android:id="@+id/receive_reward"
+        android:name="com.singlelab.lume.ui.receive_reward.ReceiveRewardFragment"
+        android:label="ReceiveRewardFragment">
+        <argument
+            android:name="eventUid"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/image_slider"
+        android:name="com.singlelab.lume.ui.image_slider.SliderFragment"
+        android:label="SliderFragment">
+
+        <argument
+            android:name="imageUids"
+            app:argType="string[]" />
+
+        <argument
+            android:name="eventUid"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

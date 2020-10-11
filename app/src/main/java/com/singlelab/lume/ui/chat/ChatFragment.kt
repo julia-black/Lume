@@ -20,6 +20,7 @@ import com.singlelab.lume.ui.chat.common.*
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Companion.PENDING_MESSAGE_UID
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Status
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Type
+import com.singlelab.lume.ui.chat.common.view.OnClickImageListener
 import com.singlelab.lume.util.getBitmap
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chat.*
@@ -42,7 +43,11 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
 
     private lateinit var chatType: ChatOpeningInvocationType
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
         inflater.inflate(R.layout.fragment_chat, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -77,8 +82,15 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
 
     override fun onActivityResultFragment(requestCode: Int, resultCode: Int, data: Intent?) {
         attachmentMessageView.isEnabled = true
-        if (ImagePicker.shouldHandleResult(requestCode, resultCode, data, SELECT_IMAGE_REQUEST_CODE)) {
-            val images = ImagePicker.getImages(data).mapNotNull { it.uri.getBitmap(activity?.contentResolver) }
+        if (ImagePicker.shouldHandleResult(
+                requestCode,
+                resultCode,
+                data,
+                SELECT_IMAGE_REQUEST_CODE
+            )
+        ) {
+            val images = ImagePicker.getImages(data)
+                .mapNotNull { it.uri.getBitmap(activity?.contentResolver) }
             if (resultCode == Activity.RESULT_OK && images.isNotEmpty()) {
                 sendMessage(images)
             } else {
@@ -87,11 +99,36 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         }
     }
 
+    override fun navigateToPerson(personUid: String) {
+        findNavController().navigate(ChatFragmentDirections.actionChatToPerson(personUid))
+    }
+
+    override fun navigateToEvent(eventUid: String) {
+        findNavController().navigate(ChatFragmentDirections.actionChatToEvent(eventUid))
+    }
+
     private fun initViews() {
         chatTitleView.text = chatType.title
-        chatMessagesAdapter = if (chatType.isGroup) GroupChatMessagesAdapter { personUid -> navigateToPerson(personUid) } else PrivateChatMessagesAdapter()
+        val listener = object : OnClickImageListener {
+            override fun onClickImage(imageUids: List<String>) {
+                navigateToImages(imageUids)
+            }
+        }
+        val clickEvent = object : OnMessageAuthorClickEvent {
+            override fun invoke(personUid: String) {
+                navigateToPerson(personUid)
+            }
+        }
+        chatMessagesAdapter = if (chatType.isGroup) {
+            GroupChatMessagesAdapter(clickEvent, listener)
+        } else {
+            PrivateChatMessagesAdapter(listener)
+        }
         chatView.adapter = chatMessagesAdapter
-        chatView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false).apply { stackFromEnd = true; }
+        chatView.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false).apply {
+                stackFromEnd = true;
+            }
         chatView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 (chatView.layoutManager as LinearLayoutManager?)?.let { layoutManager ->
@@ -101,6 +138,9 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
                 }
             }
         })
+        chatTitleView.setOnClickListener {
+            presenter.onChatTitleClick()
+        }
         chatView.addItemDecoration(SpaceDivider(16))
         chatBackView.setOnClickListener { findNavController().popBackStack() }
         sendMessageView.setOnClickListener { sendMessage() }
@@ -108,6 +148,11 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
             addAttachment()
             attachmentMessageView.isEnabled = false
         }
+    }
+
+    private fun navigateToImages(imageUids: List<String>) {
+        val action = ChatFragmentDirections.actionChatToImageSlider(imageUids.toTypedArray())
+        findNavController().navigate(action)
     }
 
     private fun sendMessage(images: List<Bitmap> = emptyList()) {
@@ -147,9 +192,5 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
             )
         }
         showNewMessage(pendingMessage)
-    }
-
-    private fun navigateToPerson(personUid: String) {
-        findNavController().navigate(ChatFragmentDirections.actionChatToPerson(personUid))
     }
 }

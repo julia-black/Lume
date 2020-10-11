@@ -8,7 +8,7 @@ import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.model.event.FilterEvent
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.swiper_event.interactor.SwiperEventInteractor
-import com.singlelab.lume.util.toDateFormat
+import com.singlelab.lume.util.toFormatUTC
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.exceptions.NotConnectionException
 import com.singlelab.net.model.auth.AuthData
@@ -65,8 +65,8 @@ class SwiperEventPresenter @Inject constructor(
                     personYCoordinate = if (filterEvent.isOnlyOnline || filterEvent.distance == Distance.FAR) null else filterEvent.longitude,
                     distance = if (filterEvent.isOnlyOnline) null else filterEvent.distance.value,
                     isOnline = filterEvent.isOnlineForRequest(),
-                    minimalStartTime = filterEvent.minimalStartTime?.toDateFormat(Const.DATE_FORMAT_TIME_ZONE),
-                    maximalEndTime = filterEvent.maximalEndTime?.toDateFormat(Const.DATE_FORMAT_TIME_ZONE)
+                    minimalStartTime = filterEvent.minimalStartTime?.toFormatUTC(Const.DATE_FORMAT_TIME_ZONE),
+                    maximalEndTime = filterEvent.maximalEndTime?.toFormatUTC(Const.DATE_FORMAT_TIME_ZONE)
                 )
                 val event = interactor.getRandomEvent(randomEventRequest)
                 runOnMainThread {

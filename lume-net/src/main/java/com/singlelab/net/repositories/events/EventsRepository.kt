@@ -3,6 +3,7 @@ package com.singlelab.net.repositories.events
 import com.singlelab.net.model.event.*
 import com.singlelab.net.model.person.PersonResponse
 import com.singlelab.net.model.person.RandomPersonRequest
+import com.singlelab.net.model.promo.PromoRequest
 import com.singlelab.net.model.promo.PromoRewardResponse
 
 interface EventsRepository {
@@ -35,4 +36,8 @@ interface EventsRepository {
     suspend fun updateEvent(request: UpdateEventRequest): EventResponse?
 
     suspend fun checkCityForPromoReward(cityId: Int): PromoRewardResponse?
+
+    suspend fun sendPromoRequest(promoRequest: PromoRequest)
+
+    suspend fun removeImage(eventImageRequest: EventImageRequest)
 }

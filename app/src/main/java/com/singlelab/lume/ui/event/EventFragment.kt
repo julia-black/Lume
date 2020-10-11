@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.custom.sliderimage.logic.SliderImage
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
@@ -176,8 +175,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
 
             if (it.imageContentUid != null) {
                 Glide.with(this)
-                    .load(it.imageContentUid.generateImageLink())
-                    .thumbnail(0.1f)
+                    .load(it.imageContentUid.generateMiniImageLink())
                     .into(image_administrator)
             }
         }
@@ -278,6 +276,9 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                     button_cancel_or_leave_event.text = getString(R.string.leave_event)
                     button_cancel_or_leave_event.visibility = View.VISIBLE
                     divider_three.visibility = View.VISIBLE
+                    if (!event.isOpenForInvitations) {
+                        divider_four.visibility = View.GONE
+                    }
                 }
             }
             ParticipantStatus.WAITING_FOR_APPROVE_FROM_EVENT -> {
@@ -316,6 +317,22 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         if (!event.isActive()) {
             divider_three.visibility = View.GONE
             divider_four.visibility = View.GONE
+            button_cancel_or_leave_event.visibility = View.GONE
+        }
+
+        if (presenter.isAdministrator() && event.isCanReceiveReward()) {
+            divider_four.visibility = View.VISIBLE
+            button_receive_reward.visibility = View.VISIBLE
+        }
+
+        button_receive_reward.setOnClickListener {
+            event.eventUid?.let {
+                findNavController().navigate(
+                    EventFragmentDirections.actionFromEventToReceiveReward(
+                        event.eventUid
+                    )
+                )
+            }
         }
 
         button_cancel_or_leave_event.setOnClickListener {
@@ -405,7 +422,9 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                             event.eventPrimaryImageContentUid,
                             event.images
                         )
-                        1 -> onClickAddImages()
+                        1 -> if (event.images == null || event.images.size < 10) {
+                            onClickAddImages()
+                        }
                     }
                 }
             )
@@ -519,10 +538,11 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             if (!images.isNullOrEmpty()) {
                 allImages.addAll(images)
             }
-            val links = allImages.map { image ->
-                image.generateImageLink()
+            allImages.let {
+                val action = EventFragmentDirections.actionFromEventToImageSlider(it.toTypedArray())
+                action.eventUid = if (presenter.isAdministrator()) presenter.getEventUid() else null
+                findNavController().navigate(action)
             }
-            SliderImage.openfullScreen(it, links, 0)
         }
     }
 
