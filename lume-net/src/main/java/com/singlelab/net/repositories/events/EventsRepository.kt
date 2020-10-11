@@ -38,4 +38,6 @@ interface EventsRepository {
     suspend fun checkCityForPromoReward(cityId: Int): PromoRewardResponse?
 
     suspend fun sendPromoRequest(promoRequest: PromoRequest)
+
+    suspend fun removeImage(eventImageRequest: EventImageRequest)
 }

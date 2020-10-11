@@ -123,4 +123,11 @@ class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository,
             errorMessage = "Не удалось отправить заявку"
         )
     }
+
+    override suspend fun removeImage(eventImageRequest: EventImageRequest) {
+        safeApiCall(
+            call = { apiUnit.eventsApi.removeImageAsync(eventImageRequest).await() },
+            errorMessage = "Не удалось удалить фото"
+        )
+    }
 }

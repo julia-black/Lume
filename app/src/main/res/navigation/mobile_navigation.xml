@@ -189,6 +189,10 @@
         <action
             android:id="@+id/action_from_event_to_receive_reward"
             app:destination="@id/receive_reward" />
+
+        <action
+            android:id="@+id/action_from_event_to_image_slider"
+            app:destination="@id/image_slider" />
     </fragment>
 
     <fragment
@@ -375,5 +379,21 @@
         <argument
             android:name="eventUid"
             app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/image_slider"
+        android:name="com.singlelab.lume.ui.image_slider.SliderFragment"
+        android:label="SliderFragment">
+
+        <argument
+            android:name="imageUids"
+            app:argType="string[]" />
+
+        <argument
+            android:name="eventUid"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

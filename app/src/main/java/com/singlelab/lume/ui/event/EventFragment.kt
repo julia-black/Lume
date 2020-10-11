@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.custom.sliderimage.logic.SliderImage
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
@@ -539,10 +538,11 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             if (!images.isNullOrEmpty()) {
                 allImages.addAll(images)
             }
-            val links = allImages.map { image ->
-                image.generateImageLink()
+            allImages.let {
+                val action = EventFragmentDirections.actionFromEventToImageSlider(it.toTypedArray())
+                action.eventUid = if (presenter.isAdministrator()) presenter.getEventUid() else null
+                findNavController().navigate(action)
             }
-            SliderImage.openfullScreen(it, links, 0)
         }
     }
 

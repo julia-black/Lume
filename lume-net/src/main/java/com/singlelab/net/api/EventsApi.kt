@@ -61,4 +61,7 @@ interface EventsApi {
 
     @POST("event/add-promo-reward-request")
     fun sendPromoRequestAsync(@Body promoRequest: PromoRequest): Deferred<Response<MessageResponse>>
+
+    @HTTP(method = "DELETE", path = "event/remove-event-image", hasBody = true)
+    fun removeImageAsync(@Body eventImageRequest: EventImageRequest): Deferred<Response<MessageResponse>>
 }
