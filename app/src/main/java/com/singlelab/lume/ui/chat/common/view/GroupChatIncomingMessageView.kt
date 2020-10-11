@@ -37,13 +37,17 @@ constructor(
         inflate(getContext(), R.layout.group_incoming_message_item, this)
     }
 
-    fun setContent(messageItem: GroupChatMessageItem, clickEvent: OnMessageAuthorClickEvent?) {
+    fun setContent(
+        messageItem: GroupChatMessageItem,
+        clickEvent: OnMessageAuthorClickEvent?,
+        listener: OnClickImageListener
+    ) {
         setText(messageItem)
         setAuthorView(messageItem, clickEvent)
 
         incomingMessageCloudView.setCloudView(messageItem.text, messageItem.images)
         incomingMessageDateView.setMessageDate(messageItem.text, messageItem.date)
-        incomingMessageImageView.setImage(messageItem)
+        incomingMessageImageView.setImage(messageItem, listener)
     }
 
     private fun setText(messageItem: GroupChatMessageItem) {

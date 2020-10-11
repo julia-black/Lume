@@ -3,17 +3,21 @@ package com.singlelab.lume.ui.chat.common
 import android.view.View
 import androidx.recyclerview.widget.DiffUtil
 import com.singlelab.lume.ui.chat.common.view.GroupChatIncomingMessageView
+import com.singlelab.lume.ui.chat.common.view.OnClickImageListener
 
 class GroupChatMessagesAdapter(
-    clickEvent: OnMessageAuthorClickEvent
+    clickEvent: OnMessageAuthorClickEvent,
+    listener: OnClickImageListener
 ) : ChatMessagesAdapter(
     Type.GROUP,
-    clickEvent
+    clickEvent,
+    listener
 ) {
 
     override fun setMessages(newMessages: List<ChatMessageItem>) {
         val syncedMessages = newMessages.syncLast()
-        val diffResult = DiffUtil.calculateDiff(GroupChatMessagesDiffCallback(messages, syncedMessages), false)
+        val diffResult =
+            DiffUtil.calculateDiff(GroupChatMessagesDiffCallback(messages, syncedMessages), false)
         messages.clear()
         messages.addAll(syncedMessages)
         diffResult.dispatchUpdatesTo(this)
@@ -23,10 +27,10 @@ class GroupChatMessagesAdapter(
         view: View,
         private val clickEvent: OnMessageAuthorClickEvent?
     ) : ChatMessageViewHolder(view) {
-        override fun bind(messageItem: ChatMessageItem) {
+        override fun bind(messageItem: ChatMessageItem, listener: OnClickImageListener) {
             if (messageItem !is GroupChatMessageItem) return
             if (itemView !is GroupChatIncomingMessageView) return
-            itemView.setContent(messageItem, clickEvent)
+            itemView.setContent(messageItem, clickEvent, listener)
         }
     }
 

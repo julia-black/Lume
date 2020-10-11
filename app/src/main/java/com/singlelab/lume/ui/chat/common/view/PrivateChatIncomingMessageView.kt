@@ -25,16 +25,17 @@ constructor(
     private var maxMessageViewWidth: Int = 0
 
     init {
-        layoutParams = LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        layoutParams =
+            LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         inflate(getContext(), R.layout.private_incoming_message_item, this)
     }
 
-    fun setContent(messageItem: PrivateChatMessageItem) {
+    fun setContent(messageItem: PrivateChatMessageItem, listener: OnClickImageListener) {
         setText(messageItem)
 
         incomingMessageCloudView.setCloudView(messageItem.text, messageItem.images)
         incomingMessageDateView.setMessageDate(messageItem.text, messageItem.date)
-        incomingMessageImageView.setImage(messageItem)
+        incomingMessageImageView.setImage(messageItem, listener)
     }
 
     private fun setText(messageItem: PrivateChatMessageItem) {

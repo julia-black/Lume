@@ -1,6 +1,8 @@
 package com.singlelab.lume.ui.image_slider
 
 
+import android.app.DownloadManager
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.view.ToastType
 import com.singlelab.lume.ui.view.image_slider.SliderAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,7 +70,11 @@ class SliderFragment : BaseFragment(), SliderView {
                 }
             })
         }
-        TabLayoutMediator(tab_layout, view_pager) { _, _ -> }.attach()
+        if (links.size > 1) {
+            TabLayoutMediator(tab_layout, view_pager) { _, _ -> }.attach()
+        } else {
+            tab_layout.isVisible = false
+        }
     }
 
     override fun showOptionsButton(isShowDeleteButton: Boolean, isShowDownloadButton: Boolean) {
@@ -78,6 +85,16 @@ class SliderFragment : BaseFragment(), SliderView {
     override fun showSuccessDeleting(position: Int) {
         (view_pager.adapter as SliderAdapter).deleteItem(position)
         showSnackbar(getString(R.string.success_delete), ToastType.SUCCESS)
+    }
+
+    override fun saveImage(request: DownloadManager.Request) {
+        context?.let {
+            (it.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
+        }
+    }
+
+    override fun showStartDownload() {
+        showSnackbar(getString(R.string.start_downloading, Const.FOLDER_NAME), ToastType.SUCCESS)
     }
 
     private fun setListeners() {
