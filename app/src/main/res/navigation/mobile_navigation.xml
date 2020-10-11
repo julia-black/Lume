@@ -83,6 +83,10 @@
         <action
             android:id="@+id/action_chat_to_person"
             app:destination="@id/person" />
+
+        <action
+            android:id="@+id/action_chat_to_event"
+            app:destination="@id/event" />
     </fragment>
 
     <fragment

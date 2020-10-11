@@ -87,6 +87,14 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         }
     }
 
+    override fun navigateToPerson(personUid: String) {
+        findNavController().navigate(ChatFragmentDirections.actionChatToPerson(personUid))
+    }
+
+    override fun navigateToEvent(eventUid: String) {
+        findNavController().navigate(ChatFragmentDirections.actionChatToEvent(eventUid))
+    }
+
     private fun initViews() {
         chatTitleView.text = chatType.title
         chatMessagesAdapter = if (chatType.isGroup) GroupChatMessagesAdapter { personUid -> navigateToPerson(personUid) } else PrivateChatMessagesAdapter()
@@ -101,6 +109,9 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
                 }
             }
         })
+        chatTitleView.setOnClickListener {
+            presenter.onChatTitleClick()
+        }
         chatView.addItemDecoration(SpaceDivider(16))
         chatBackView.setOnClickListener { findNavController().popBackStack() }
         sendMessageView.setOnClickListener { sendMessage() }
@@ -147,9 +158,5 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
             )
         }
         showNewMessage(pendingMessage)
-    }
-
-    private fun navigateToPerson(personUid: String) {
-        findNavController().navigate(ChatFragmentDirections.actionChatToPerson(personUid))
     }
 }
