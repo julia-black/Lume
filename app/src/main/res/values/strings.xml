@@ -138,6 +138,7 @@
     <string name="add_images">Добавить изображения</string>
     <string name="open_map">Открыть карту</string>
     <string name="change_location">Изменить местоположение</string>
+    <string name="success_delete">Изображение успешно удалено</string>
 
     <!-- Types of events -->
     <string name="party">Вечеринка</string>

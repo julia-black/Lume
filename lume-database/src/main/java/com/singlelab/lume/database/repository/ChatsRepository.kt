@@ -7,6 +7,7 @@ interface ChatsRepository {
     suspend fun insert(chats: Collection<Chat>)
     suspend fun insert(chat: Chat)
     suspend fun all(): List<Chat>
+    suspend fun clear()
 }
 
 class RoomChatsRepository(db: LumeDatabase) : ChatsRepository {
@@ -20,4 +21,7 @@ class RoomChatsRepository(db: LumeDatabase) : ChatsRepository {
 
     override suspend fun all() =
         dao.all()
+
+    override suspend fun clear() =
+        dao.clear()
 }
