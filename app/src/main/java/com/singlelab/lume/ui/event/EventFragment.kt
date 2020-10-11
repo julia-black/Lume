@@ -320,7 +320,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             button_cancel_or_leave_event.visibility = View.GONE
         }
 
-        if (presenter.isAdministrator() && event.isCanReceiveReward()) {
+        if (presenter.isAdministrator() && event.isCanReceiveReward() && event.promoRequestUid == null) {
             divider_four.visibility = View.VISIBLE
             button_receive_reward.visibility = View.VISIBLE
         }

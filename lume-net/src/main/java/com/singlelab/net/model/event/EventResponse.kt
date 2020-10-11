@@ -22,7 +22,8 @@ class EventResponse(
     val images: List<String>? = null,
     val cityId: Int? = null,
     val cityName: String? = null,
-    val isOnline: Boolean
+    val isOnline: Boolean,
+    val promoRequestUid: String? = null
 ) {
     fun getApprovedParticipants(): List<PersonResponse> {
         return participants.filter {

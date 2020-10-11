@@ -26,7 +26,8 @@ class Event(
     val images: List<String>? = null,
     val cityId: Int? = null,
     val cityName: String? = null,
-    val isOnline: Boolean
+    val isOnline: Boolean,
+    val promoRequestUid: String? = null
 ) {
 
     companion object {
@@ -60,7 +61,8 @@ class Event(
                     eventResponse.images,
                     eventResponse.cityId,
                     eventResponse.cityName,
-                    eventResponse.isOnline
+                    eventResponse.isOnline,
+                    eventResponse.promoRequestUid
                 )
             } else {
                 null
