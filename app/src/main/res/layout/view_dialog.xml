@@ -5,7 +5,8 @@
     android:id="@+id/view_dialog"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorOverlay">
+    android:background="@color/colorOverlay"
+    android:paddingBottom="@dimen/padding_bottom_nav">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_dialog"
@@ -35,84 +36,96 @@
                 android:layout_marginEnd="@dimen/margin_small"
                 android:src="@drawable/ic_close" />
 
-            <TextView
-                android:id="@+id/title_dialog"
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_medium"
-                android:gravity="center"
-                android:textColor="@color/colorText"
-                android:textStyle="bold"
-                tools:text="@string/title_promo_reward" />
+                android:overScrollMode="never">
 
-            <TextView
-                android:id="@+id/description_dialog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="@dimen/margin_medium"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:gravity="start"
-                android:text="@string/description_promo_reward"
-                android:textColor="@color/colorText"
-                android:textSize="@dimen/text_size_small" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/counter_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_medium"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:gravity="start"
-                android:textColor="@color/colorText"
-                android:textSize="@dimen/text_size_small"
-                android:textStyle="bold"
-                android:visibility="gone"
-                tools:text="@string/counter_reward_many"
-                tools:visibility="visible" />
+                    <TextView
+                        android:id="@+id/title_dialog"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:gravity="center"
+                        android:textColor="@color/colorText"
+                        android:textStyle="bold"
+                        tools:text="@string/title_promo_reward" />
 
-            <TextView
-                android:id="@+id/title_rules"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginHorizontal="@dimen/margin_medium"
-                android:layout_marginTop="@dimen/margin_medium"
-                android:gravity="start"
-                android:text="@string/title_rules_promo_reward"
-                android:textColor="@color/colorText"
-                android:textSize="@dimen/text_size_small"
-                android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/description_dialog"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:gravity="start"
+                        android:text="@string/description_promo_reward"
+                        android:textColor="@color/colorText"
+                        android:textSize="@dimen/text_size_small" />
 
-            <TextView
-                android:id="@+id/rules"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="@dimen/margin_medium"
-                android:gravity="start"
-                android:text="@string/rules_promo_reward"
-                android:textColor="@color/colorText"
-                android:textSize="@dimen/text_size_small" />
+                    <TextView
+                        android:id="@+id/counter_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:gravity="start"
+                        android:textColor="@color/colorText"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        tools:text="@string/counter_reward_many"
+                        tools:visibility="visible" />
 
-            <TextView
-                android:id="@+id/cities_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_medium"
-                android:gravity="start"
-                android:text="@string/cities_promo_reward"
-                android:textColor="@color/colorTextGray"
-                android:textSize="@dimen/text_size_small" />
+                    <TextView
+                        android:id="@+id/title_rules"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="start"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:gravity="start"
+                        android:text="@string/title_rules_promo_reward"
+                        android:textColor="@color/colorText"
+                        android:textSize="@dimen/text_size_small"
+                        android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/icon_money"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center"
-                android:layout_marginHorizontal="@dimen/margin_medium"
-                android:layout_marginBottom="@dimen/margin_medium"
-                android:src="@drawable/ic_emoji_money" />
+                    <TextView
+                        android:id="@+id/rules"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:gravity="start"
+                        android:text="@string/rules_promo_reward"
+                        android:textColor="@color/colorText"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <TextView
+                        android:id="@+id/cities_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_medium"
+                        android:gravity="start"
+                        android:text="@string/cities_promo_reward"
+                        android:textColor="@color/colorTextGray"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <ImageView
+                        android:id="@+id/icon_money"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:layout_marginBottom="@dimen/margin_medium"
+                        android:src="@drawable/ic_emoji_money" />
+                </LinearLayout>
+            </ScrollView>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
