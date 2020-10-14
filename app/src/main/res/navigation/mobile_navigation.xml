@@ -232,6 +232,13 @@
             android:name="hasFriends"
             android:defaultValue="false"
             app:argType="boolean" />
+
+        <argument
+            android:name="participant_ids"
+            app:argType="string[]"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
     </fragment>
 
     <fragment

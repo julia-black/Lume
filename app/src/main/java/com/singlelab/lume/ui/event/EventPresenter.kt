@@ -224,4 +224,11 @@ class EventPresenter @Inject constructor(
     }
 
     fun isAdministrator() = event?.administrator?.personUid == AuthData.uid
+
+    fun onClickInviteFriends() {
+        val allParticipantIds = event?.getAllParticipants()?.map { it.personUid }
+        event?.eventUid?.let { eventUid ->
+            viewState.toInviteFriends(eventUid, allParticipantIds)
+        }
+    }
 }

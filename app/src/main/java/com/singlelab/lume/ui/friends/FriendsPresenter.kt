@@ -24,6 +24,8 @@ class FriendsPresenter @Inject constructor(
 
     var isLoading = false
 
+    var participantIds: Array<String>? = null
+
     private var friends: MutableList<Person>? = null
 
     private var searchResults: MutableList<Person>? = null

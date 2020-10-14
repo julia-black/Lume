@@ -94,4 +94,11 @@ class Event(
     fun isCanReceiveReward(): Boolean {
         return status == EventStatus.ENDED && participants.size >= 3 && isOpenForInvitations
     }
+
+    fun getAllParticipants(): List<Person> {
+        val list = participants.toMutableList()
+        list.addAll(invitedParticipants)
+        list.addAll(notApprovedParticipants)
+        return list
+    }
 }

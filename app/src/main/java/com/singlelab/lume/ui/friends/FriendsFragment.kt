@@ -64,6 +64,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
                 edit_text_search.requestFocus()
             }
             presenter.eventUid = FriendsFragmentArgs.fromBundle(it).eventUid
+            presenter.participantIds = FriendsFragmentArgs.fromBundle(it).participantIds
             showSearch(presenter.eventUid.isNullOrEmpty())
         }
         recycler_friends.apply {
@@ -107,6 +108,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
                 PersonAdapter(
                     list = friends,
                     eventUid = presenter.eventUid,
+                    participantIds = presenter.participantIds,
                     isInviting = true,
                     isAdministrator = false,
                     listener = this
@@ -146,6 +148,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
                 searchAdapter = PersonAdapter(
                     list = searchResults,
                     eventUid = presenter.eventUid,
+                    participantIds = presenter.participantIds,
                     isInviting = true,
                     isAdministrator = false,
                     listener = this@FriendsFragment

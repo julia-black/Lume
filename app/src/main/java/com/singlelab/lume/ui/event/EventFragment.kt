@@ -390,6 +390,13 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         parentFragmentManager.popBackStack()
     }
 
+    override fun toInviteFriends(eventUid: String, allParticipantIds: List<String>?) {
+        val action = EventFragmentDirections.actionEventToFriends()
+        action.eventUid = eventUid
+        action.participantIds = allParticipantIds?.toTypedArray()
+        findNavController().navigate(action)
+    }
+
     override fun onPersonClick(personUid: String) {
         toProfile(personUid)
     }
@@ -582,9 +589,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             }
         }
         button_invite.setOnClickListener {
-            presenter.event?.eventUid?.let { eventUid ->
-                toInvite(eventUid)
-            }
+            presenter.onClickInviteFriends()
         }
         button_join.setOnClickListener {
             presenter.joinEvent()
@@ -612,11 +617,5 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                 )
             )
         )
-    }
-
-    private fun toInvite(eventUid: String) {
-        val action = EventFragmentDirections.actionEventToFriends()
-        action.eventUid = eventUid
-        findNavController().navigate(action)
     }
 }

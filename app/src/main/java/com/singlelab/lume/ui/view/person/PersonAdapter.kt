@@ -8,6 +8,7 @@ import com.singlelab.lume.model.profile.Person
 class PersonAdapter(
     private val list: MutableList<Person>,
     private val eventUid: String? = null,
+    private val participantIds: Array<String>? = null,
     private val isInviting: Boolean = false,
     private val isAdministrator: Boolean = false,
     private val listener: OnPersonItemClickListener
@@ -23,7 +24,7 @@ class PersonAdapter(
 
     override fun onBindViewHolder(holder: PersonViewHolder, position: Int) {
         val person = list[position]
-        holder.bind(person, eventUid, isInviting, isAdministrator, listener)
+        holder.bind(person, eventUid, participantIds, isInviting, isAdministrator, listener)
     }
 
     override fun getItemCount(): Int = list.size

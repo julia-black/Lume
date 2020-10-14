@@ -18,6 +18,7 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     fun bind(
         person: Person,
         eventUid: String? = null,
+        participantIds: Array<String>? = null,
         isInviting: Boolean = false,
         isAdministrator: Boolean = false,
         listener: OnPersonItemClickListener
@@ -76,6 +77,9 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
                     itemView.button_reject.visibility = View.VISIBLE
                 }
             }
+            if (isInviting && isPersonAlreadyInEvent(participantIds, person.personUid)) {
+                itemView.button_accept.visibility = View.GONE
+            }
         } else {
             if (person.friendshipApprovalRequired) {
                 itemView.button_accept.visibility = View.VISIBLE
@@ -94,4 +98,7 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             }
         }
     }
+
+    private fun isPersonAlreadyInEvent(ids: Array<String>?, personUid: String) =
+        ids?.find { it == personUid } != null
 }
