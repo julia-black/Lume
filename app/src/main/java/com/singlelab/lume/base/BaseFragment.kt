@@ -206,6 +206,7 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
                 .setFolderTitle(Const.APP_NAME)
                 .setRootDirectoryName(Config.ROOT_DIR_DCIM)
                 .setDirectoryName(Const.FOLDER_NAME)
+                .setShowCamera(false)
                 .setMultipleMode(true)
                 .setShowNumberIndicator(true)
                 .setDoneTitle(getString(R.string.choose))
