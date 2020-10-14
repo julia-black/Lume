@@ -11,6 +11,7 @@
     <string name="title_participants">Участники</string>
     <string name="meizu_model">MEIZU</string>
     <string name="choose">Выбрать</string>
+    <string name="start_downloading">Файл сохранен в папку %1$s</string>
 
     <!-- Auth -->
     <string name="tutorial_text_1">Lume - море новых событий каждый день!</string>
@@ -42,6 +43,8 @@
     <string name="tab_friends">Друзья</string>
     <string name="tab_badges">Бейджи</string>
     <string name="tab_settings">Настройки</string>
+    <string name="title_agreement">Пользовательское соглашение</string>
+    <string name="title_developer">О разработчике</string>
     <string name="exit">Выход</string>
     <string name="title_edit_me_profile">Редактирование профиля</string>
     <string name="apply_edit">Подтвердить</string>
@@ -52,6 +55,10 @@
     <string name="import_contacts">Импорт контактов</string>
     <string name="empty_persons_from_contacts">Пользователей из контактов не найдено</string>
     <string name="not_permission_contacts">Доступ к контактам запрещен</string>
+
+    <!-- Url -->
+    <string name="url_about_developer">http://single-lab.tilda.ws</string>
+    <string name="url_agreement">http://lumeprod.azurewebsites.net/license</string>
 
     <!-- Profile -->
     <string name="go_to_chat">Перейти в чат</string>
@@ -205,8 +212,6 @@
     <string name="leave_event">Выйти из события</string>
     <string name="accept_leave">Выйти из события?</string>
     <string name="info_about_leave">Событие и его чат будут недоступны. Вернуться в событие можно будет только по приглашению</string>
-    <string name="title_agreement">Пользовательское соглашение</string>
-    <string name="url_agreement">http://lumeprod.azurewebsites.net/license</string>
     <string name="empty_title">Не заполнено название</string>
     <string name="empty_description_event">Не заполнено описание события</string>
     <string name="empty_start_time">Не выбрано время начала</string>
@@ -232,7 +237,6 @@
     <string name="empty_card_num">Не заполнен номер карты</string>
     <string name="promo_request_send">Заявка отправлена, ожидайте вознаграждения!</string>
     <string name="not_valid_card_num">Некорректный номер карты</string>
-    <string name="start_downloading">Файл сохранен в папку %1$s</string>
 
     <!-- Arrays -->
     <string-array name="custom_weekdays">

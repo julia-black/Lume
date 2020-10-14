@@ -203,6 +203,10 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         openBrowser(getString(R.string.url_agreement))
     }
 
+    override fun onAboutDeveloperClick() {
+        openBrowser(getString(R.string.url_about_developer))
+    }
+
     override fun onLogoutClick() {
         presenter.logout()
     }

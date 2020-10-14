@@ -40,6 +40,24 @@
         android:background="@color/colorGrayVeryLight" />
 
     <TextView
+        android:id="@+id/about_developer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_very_small"
+        android:drawableStart="@drawable/ic_info"
+        android:drawablePadding="@dimen/margin_medium"
+        android:paddingHorizontal="@dimen/margin_big"
+        android:paddingVertical="@dimen/margin_medium"
+        android:text="@string/title_developer"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/text_size_standart" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGrayVeryLight" />
+
+    <TextView
         android:id="@+id/exit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

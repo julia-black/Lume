@@ -6,5 +6,7 @@ interface OnSettingsClickListener {
 
     fun onAgreementClick()
 
+    fun onAboutDeveloperClick()
+
     fun onLogoutClick()
 }
