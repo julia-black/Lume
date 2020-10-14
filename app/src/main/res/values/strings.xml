@@ -146,6 +146,11 @@
     <string name="open_map">Открыть карту</string>
     <string name="change_location">Изменить местоположение</string>
     <string name="success_delete">Изображение успешно удалено</string>
+    <string name="title_swipes">Выбор событий становится удобным и простым!</string>
+    <string name="description_swipes">Если событие тебе по душе, и ты хочешь на него пойти - свайпай вправо!
+        \n\nИгнорируй мероприятие при помощи свайпа влево.
+        \n\nПерсонализируй подборку событий с помощью фильтров!
+        \n\nВсё просто! </string>
 
     <!-- Types of events -->
     <string name="party">Вечеринка</string>

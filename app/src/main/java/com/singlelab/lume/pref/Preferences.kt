@@ -14,6 +14,7 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
         const val PREF_CITY_ID = "pref_city_id"
         const val PREF_CITY_NAME = "pref_city_name"
         const val PREF_FIRST_LAUNCH = "pref_first_launch"
+        const val PREF_AFTER_INSTALL = "pref_after_install"
         const val PREF_PUSH_TOKEN = "pref_push_token"
         const val PREF_AGE = "pref_age"
         const val PREF_PROMO_REWARD = "pref_promo_reward"
@@ -74,6 +75,12 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
     }
 
     fun isFirstLaunch() = sharedPreferences?.getBoolean(PREF_FIRST_LAUNCH, true) ?: true
+
+    fun setAfterInstall(isAfterInstall: Boolean) {
+        sharedPreferences?.edit()?.putBoolean(PREF_AFTER_INSTALL, isAfterInstall)?.apply()
+    }
+
+    fun isAfterInstall() = sharedPreferences?.getBoolean(PREF_AFTER_INSTALL, true) ?: true
 
     fun setPushToken(token: String?) {
         sharedPreferences?.edit()?.putString(PREF_PUSH_TOKEN, token)?.apply()

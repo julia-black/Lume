@@ -19,4 +19,7 @@ interface SwiperEventView : LoadingView, ErrorView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun hideFilter()
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun showInfoDialog()
 }

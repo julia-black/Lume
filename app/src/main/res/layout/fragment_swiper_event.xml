@@ -7,7 +7,9 @@
     android:background="@color/colorBackground"
     android:paddingBottom="25dp">
 
-    <include layout="@layout/view_template_card" tools:visibility="gone"/>
+    <include
+        layout="@layout/view_template_card"
+        tools:visibility="gone" />
 
     <com.yuyakaido.android.cardstackview.CardStackView
         android:id="@+id/card_stack_view"
@@ -100,5 +102,13 @@
             android:src="@drawable/ic_filter"
             android:tint="@color/white" />
     </androidx.cardview.widget.CardView>
+
+    <com.singlelab.lume.ui.view.dialog.InfoDialogView
+        android:id="@+id/info_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

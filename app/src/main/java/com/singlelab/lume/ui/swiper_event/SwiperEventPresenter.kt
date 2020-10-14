@@ -31,8 +31,14 @@ class SwiperEventPresenter @Inject constructor(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         loadRandomEvent(true)
-        if (preferences != null && preferences.isFirstLaunch()) {
-            sendPushToken(preferences.getPushToken())
+        preferences?.let {
+            if (it.isAfterInstall()) {
+                viewState.showInfoDialog()
+                preferences.setAfterInstall(false)
+            }
+            if (it.isFirstLaunch()) {
+                sendPushToken(preferences.getPushToken())
+            }
         }
     }
 

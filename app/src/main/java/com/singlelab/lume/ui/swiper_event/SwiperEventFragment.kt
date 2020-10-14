@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -18,6 +19,7 @@ import com.singlelab.lume.model.event.FilterEvent
 import com.singlelab.lume.ui.filters.event.FilterFragment
 import com.singlelab.lume.ui.swiper_event.adapter.CardStackEventAdapter
 import com.singlelab.lume.ui.swiper_event.adapter.OnCardEventListener
+import com.singlelab.lume.ui.view.dialog.OnDialogViewClickListener
 import com.yuyakaido.android.cardstackview.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_swiper_event.*
@@ -29,7 +31,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragments,
-    CardStackListener, OnCardEventListener {
+    CardStackListener, OnCardEventListener, OnDialogViewClickListener {
 
     @Inject
     lateinit var daggerPresenter: SwiperEventPresenter
@@ -121,6 +123,11 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         button_filter.visibility = View.GONE
     }
 
+    override fun showInfoDialog() {
+        info_dialog.setDialogListener(this)
+        info_dialog.isVisible = true
+    }
+
     override fun onCardCanceled() {
     }
 
@@ -196,5 +203,9 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         )
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
         context?.startActivity(intent)
+    }
+
+    override fun onCloseDialogClick() {
+        info_dialog.isVisible = false
     }
 }
