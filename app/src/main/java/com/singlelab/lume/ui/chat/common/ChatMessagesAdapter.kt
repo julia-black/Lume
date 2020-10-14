@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.singlelab.lume.database.entity.ChatMessage
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Status
 import com.singlelab.lume.ui.chat.common.GroupChatMessagesAdapter.GroupIncomingMessageViewHolder
 import com.singlelab.lume.ui.chat.common.PrivateChatMessagesAdapter.PrivateIncomingMessageViewHolder
@@ -23,13 +24,15 @@ abstract class ChatMessagesAdapter(
         GROUP
     }
 
-    protected val messages = mutableListOf<ChatMessageItem>()
+    protected val messages = mutableListOf<ChatItem>()
 
     override fun getItemViewType(position: Int) = messages[position].type.code
 
     override fun getItemCount() = messages.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
+        ChatMessageItem.Type.DATE.code -> DateMessageViewHolder()
+
         ChatMessageItem.Type.OUTGOING.code -> OutgoingMessageViewHolder(
             ChatOutgoingMessageView(
                 parent.context
@@ -45,7 +48,7 @@ abstract class ChatMessagesAdapter(
     override fun onBindViewHolder(holder: ChatMessageViewHolder, position: Int) =
         holder.bind(messages[position], listener)
 
-    open fun setMessages(newMessages: List<ChatMessageItem>) {
+    open fun setMessages(newMessages: List<ChatItem>) {
         val syncedMessages = newMessages.syncLast()
         val diffResult =
             DiffUtil.calculateDiff(ChatMessagesDiffCallback(messages, syncedMessages), false)
@@ -54,15 +57,21 @@ abstract class ChatMessagesAdapter(
         diffResult.dispatchUpdatesTo(this)
     }
 
-    protected fun List<ChatMessageItem>.syncLast(): List<ChatMessageItem> {
+    open fun setItems(items: List<ChatItem>) {
+
+    }
+
+    protected fun List<ChatItem>.syncLast(): List<ChatItem> {
         val messages = this.toMutableList()
         if (messages.size > 1) {
             val lastMessage = messages.last()
             val preLastMessage = messages[messages.size - 2]
-            if (preLastMessage.status == Status.PENDING && lastMessage.status == Status.SYNCED) {
-                messages.remove(preLastMessage)
-                if (lastMessage.type != preLastMessage.type && lastMessage.text != preLastMessage.text && lastMessage.images.size != preLastMessage.images.size) {
-                    messages.add(preLastMessage)
+            if (preLastMessage is ChatMessageItem && lastMessage is ChatMessageItem) {
+                if (preLastMessage.status == Status.PENDING && lastMessage.status == Status.SYNCED) {
+                    messages.remove(preLastMessage)
+                    if (lastMessage.type != preLastMessage.type && lastMessage.text != preLastMessage.text && lastMessage.images.size != preLastMessage.images.size) {
+                        messages.add(preLastMessage)
+                    }
                 }
             }
         }
@@ -70,17 +79,21 @@ abstract class ChatMessagesAdapter(
     }
 
     open fun addMessage(newMessage: ChatMessageItem) {
-        setMessages(messages + newMessage)
+        setMessages(messages + (newMessage as ChatItem))
     }
 
-    abstract class ChatMessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    abstract class ChatMessageViewHolder(view: View) : ChatItemViewHolder(view) {
         abstract fun bind(messageItem: ChatMessageItem, listener: OnClickImageListener)
     }
 
-    class OutgoingMessageViewHolder(view: View) : ChatMessageViewHolder(view) {
-        override fun bind(messageItem: ChatMessageItem, listener: OnClickImageListener) {
+    abstract class ChatItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        abstract fun bind(messageItem: ChatItem, listener: OnClickImageListener)
+    }
+
+    class OutgoingMessageViewHolder(view: View) : ChatItemViewHolder(view) {
+        override fun bind(messageItem: ChatItem, listener: OnClickImageListener) {
             if (itemView !is ChatOutgoingMessageView) return
-            itemView.setContent(messageItem, listener)
+            itemView.setContent(messageItem as ChatMessageItem, listener)
         }
     }
 

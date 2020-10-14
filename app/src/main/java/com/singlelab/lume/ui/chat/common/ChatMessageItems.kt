@@ -1,16 +1,15 @@
 package com.singlelab.lume.ui.chat.common
 
-interface ChatMessageItem {
-    val uid: String
-    val text: String
-    val type: Type
-    val images: List<String>
-    val status: Status
-    val date: String
+abstract class ChatMessageItem : ChatItem {
+    abstract val uid: String
+    abstract val text: String
+    abstract val images: List<String>
+    abstract val status: Status
 
     enum class Type(val code: Int) {
         INCOMING(0),
-        OUTGOING(1)
+        OUTGOING(1),
+        DATE(2)
     }
 
     enum class Status {
@@ -31,7 +30,7 @@ data class PrivateChatMessageItem(
     override val images: List<String>,
     override val status: ChatMessageItem.Status,
     override val date: String
-) : ChatMessageItem
+) : ChatMessageItem()
 
 
 data class GroupChatMessageItem(
@@ -41,7 +40,7 @@ data class GroupChatMessageItem(
     override val images: List<String>,
     override val status: ChatMessageItem.Status,
     override val date: String,
-    val personUid : String,
+    val personUid: String,
     val personPhoto: String,
     val personName: String
-) : ChatMessageItem
+) : ChatMessageItem()
