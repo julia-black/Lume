@@ -14,7 +14,7 @@
         android:layout_gravity="center"
         android:layout_marginHorizontal="@dimen/margin_medium"
         app:cardCornerRadius="12dp"
-        app:cardElevation="8dp"
+        app:cardElevation="15dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toTopOf="@id/icon_empty_events"
         app:layout_constraintEnd_toEndOf="parent"
