@@ -105,6 +105,7 @@
 
     <com.singlelab.lume.ui.view.dialog.InfoDialogView
         android:id="@+id/info_dialog"
+        android:elevation="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
