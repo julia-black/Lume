@@ -145,6 +145,7 @@
 
     <com.singlelab.lume.ui.view.dialog.DialogView
         android:id="@+id/dialog_view"
+        android:elevation="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
