@@ -39,4 +39,5 @@
     <dimen name="stack_header_height">80dp</dimen>
     <dimen name="height_card_person">394dp</dimen>
     <dimen name="height_card_person_without_button">384dp</dimen>
+    <dimen name="size_image_dialog">200dp</dimen>
 </resources>

@@ -37,4 +37,5 @@
     <dimen name="margin_card_pager">40dp</dimen>
     <dimen name="margin_cards">0dp</dimen>
     <dimen name="stack_header_height">70dp</dimen>
+    <dimen name="size_image_dialog">100dp</dimen>
 </resources>
