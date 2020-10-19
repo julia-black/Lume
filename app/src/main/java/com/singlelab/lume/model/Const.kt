@@ -36,5 +36,7 @@ object Const {
 
     const val CARD_NUM_LENGTH = 16
 
+    const val CODE_CHAR_SPACE = 160
+
     val RUS_LOCALE = Locale("ru", "RU")
 }

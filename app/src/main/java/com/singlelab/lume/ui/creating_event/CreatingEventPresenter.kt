@@ -11,6 +11,7 @@ import com.singlelab.lume.model.event.EventType
 import com.singlelab.lume.model.location.MapLocation
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.creating_event.interactor.CreatingEventInteractor
+import com.singlelab.lume.util.compareCities
 import com.singlelab.lume.util.parseToString
 import com.singlelab.lume.util.resize
 import com.singlelab.lume.util.toBase64
@@ -188,7 +189,7 @@ class CreatingEventPresenter @Inject constructor(
 
     fun setMapLocation(location: MapLocation) {
         this.location = location
-        if (cityName != null && cityName != location.city) {
+        if (cityName != null && !cityName.compareCities(location.city)) {
             viewState.showWarningOtherCity(cityName!!)
         }
         viewState.showLocationName(location.address)

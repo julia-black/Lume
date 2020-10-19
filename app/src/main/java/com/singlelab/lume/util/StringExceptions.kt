@@ -143,3 +143,13 @@ fun EditText.addCardNumMask() {
     })
 
 }
+
+fun String?.compareCities(city: String?): Boolean {
+    val cityOne = this?.split(Const.CODE_CHAR_SPACE.toChar())
+    val cityTwo = city?.split(Const.CODE_CHAR_SPACE.toChar())
+    return if (!cityOne.isNullOrEmpty() && !cityTwo.isNullOrEmpty()) {
+        cityOne[0] == cityTwo[0]
+    } else {
+        false
+    }
+}
