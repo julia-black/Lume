@@ -15,8 +15,8 @@ android {
         applicationId "com.singlelab.lume"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 10031
-        versionName "1.14"
+        versionCode 10032
+        versionName "1.15"
     }
     signingConfigs {
         release {
