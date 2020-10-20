@@ -1,6 +1,7 @@
 package com.singlelab.lume.ui.event.interactor
 
 import com.singlelab.lume.model.event.Event
+import com.singlelab.lume.model.promo.PromoReward
 import com.singlelab.net.model.event.UpdateEventRequest
 import com.singlelab.net.model.event.ParticipantRequest
 
@@ -14,4 +15,6 @@ interface EventInteractor {
     suspend fun rejectEvent(personUid: String, eventUid: String)
 
     suspend fun updateEvent(request: UpdateEventRequest): Event?
+
+    suspend fun checkPromoReward(cityId: Int): PromoReward?
 }

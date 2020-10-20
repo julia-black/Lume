@@ -231,4 +231,26 @@ class EventPresenter @Inject constructor(
             viewState.toInviteFriends(eventUid, allParticipantIds)
         }
     }
+
+    fun getAvailablePromoReward() {
+        event?.let {
+            if (isAdministrator() && it.isCanReceiveReward() && it.promoRequestUid == null
+                && preferences != null && preferences.getEventPromoRewardEnabled()
+                && it.cityId != null
+            ) {
+                invokeSuspend {
+                    val promoReward = interactor.checkPromoReward(it.cityId)
+                    if (promoReward != null && promoReward.isCitySuitableForPromoReward) {
+                        runOnMainThread {
+                            viewState.showPromoReceiveButton(true)
+                        }
+                    }
+                }
+            } else {
+                runOnMainThread {
+                    viewState.showPromoReceiveButton(false)
+                }
+            }
+        }
+    }
 }

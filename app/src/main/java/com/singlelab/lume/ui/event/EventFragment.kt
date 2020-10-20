@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.text.toSpannable
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -323,10 +324,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             button_reject.visibility = View.GONE
         }
 
-        if (presenter.isAdministrator() && event.isCanReceiveReward() && event.promoRequestUid == null) {
-            divider_four.visibility = View.VISIBLE
-            button_receive_reward.visibility = View.VISIBLE
-        }
+        presenter.getAvailablePromoReward()
 
         button_receive_reward.setOnClickListener {
             event.eventUid?.let {
@@ -417,6 +415,11 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                 showError(getString(R.string.error_pick_image))
             }
         }
+    }
+
+    override fun showPromoReceiveButton(isShow: Boolean) {
+        divider_four.isVisible = isShow
+        button_receive_reward.isVisible = isShow
     }
 
     private fun showImagesAction(event: Event) {

@@ -19,4 +19,7 @@ interface EventView : LoadingView, ErrorView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun toInviteFriends(eventUid: String, allParticipantIds: List<String>?)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showPromoReceiveButton(isShow: Boolean)
 }
