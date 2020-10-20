@@ -36,5 +36,7 @@ object Const {
 
     const val CARD_NUM_LENGTH = 16
 
+    const val REGEX_LOGIN = "[a-z0-9_.]+"
+
     val RUS_LOCALE = Locale("ru", "RU")
 }

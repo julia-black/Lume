@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.InputFilter.LengthFilter
-import android.text.InputType
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -18,6 +17,8 @@ import kotlinx.android.synthetic.main.view_input.view.*
 class InputView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
+
+    private var invalidStringsListener: OnInvalidStringsListener? = null
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_input, this, true)
@@ -93,11 +94,8 @@ class InputView @JvmOverloads constructor(
         text_input_edit_text.addTextChangedListener(watcher)
     }
 
-    fun setDigits(digits: String) {
-        setInputType(InputType.TYPE_CLASS_TEXT)
-        val regex = Regex("[^$digits\\.]")
-        var newStr = ""
-
+    fun setInvalidStringsListener(pattern: Regex, listener: OnInvalidStringsListener) {
+        this.invalidStringsListener = listener
         text_input_edit_text.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence,
@@ -113,18 +111,14 @@ class InputView @JvmOverloads constructor(
                 before: Int,
                 count: Int
             ) {
-                val str = s.toString()
-                if (str.isEmpty()) {
-                    text_input_edit_text.append(newStr)
-                    newStr = ""
-                } else if (str != newStr) {
-                    newStr = str.replace(regex, "")
-                    text_input_edit_text.setText(newStr)
-                    text_input_edit_text.setSelection(newStr.length)
-                }
             }
 
             override fun afterTextChanged(s: Editable) {
+                if (s.matches(pattern)) {
+                    invalidStringsListener?.onCorrectString(this@InputView)
+                } else {
+                    invalidStringsListener?.onInvalidString(this@InputView)
+                }
             }
         })
     }

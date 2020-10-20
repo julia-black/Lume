@@ -36,7 +36,7 @@
     <string name="error_pick_image">Не удалось выбрать изображение</string>
     <string name="sms_code_send">СМС-код отправлен на номер %1$s</string>
     <string name="push_code_send">На устройство отправлено Push-уведомление с кодом</string>
-    <string name="login_hint">Логин может содержать только латинские буквы, цифры, символы подчеркивания и точки. Максимум 25 символов</string>
+    <string name="login_hint">Логин может содержать только строчные латинские буквы, цифры, символы подчеркивания и точки. Максимум 25 символов</string>
     <string name="back">Вернуться</string>
 
     <!-- My Profile -->
@@ -210,6 +210,7 @@
     <string name="choose_date">В любой день</string>
     <string name="mtrl_picker_range_header_only_start_selected">%1$s - Выберите конечную дату</string>
     <string name="choose_city">Укажи город</string>
+    <string name="invalid_login">Некорректный логин</string>
     <string name="empty_login">Не заполнен логин</string>
     <string name="empty_name">Не заполнено имя</string>
     <string name="empty_description">Не заполнено описание профиля</string>
