@@ -29,18 +29,21 @@ class ParticipantsPresenter @Inject constructor(
         viewState.showLoading(true)
         invokeSuspend {
             try {
-                val event = interactor.approvePerson(
+                interactor.approvePerson(
                     ParticipantRequest(
                         personUid,
                         eventUid,
                         ParticipantStatus.ACTIVE.id
                     )
                 )
-                participants = event?.participants?.toMutableList()
-                runOnMainThread {
-                    viewState.showLoading(false)
-                    participants?.let {
-                        viewState.showParticipants(it.toList())
+                participants?.let { list ->
+                    list.find { it.personUid == personUid }?.participantStatus =
+                        ParticipantStatus.ACTIVE
+                    val newList = mutableListOf<Person>()
+                    newList.addAll(list)
+                    runOnMainThread {
+                        viewState.showLoading(false)
+                        viewState.showParticipants(newList)
                     }
                 }
             } catch (e: ApiException) {
@@ -56,12 +59,14 @@ class ParticipantsPresenter @Inject constructor(
         viewState.showLoading(true)
         invokeSuspend {
             try {
-                val event = interactor.rejectPerson(personUid, eventUid)
-                participants = event?.participants?.toMutableList()
-                runOnMainThread {
-                    viewState.showLoading(false)
-                    participants?.let {
-                        viewState.showParticipants(it.toList())
+                interactor.rejectPerson(personUid, eventUid)
+                participants?.let { list ->
+                    val newList = mutableListOf<Person>()
+                    newList.addAll(list)
+                    newList.removeAll { it.personUid == personUid }
+                    runOnMainThread {
+                        viewState.showLoading(false)
+                        viewState.showParticipants(newList)
                     }
                 }
             } catch (e: ApiException) {
