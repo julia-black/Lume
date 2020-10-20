@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
-    android:paddingBottom="@dimen/padding_bottom_nav">
+    android:background="@color/colorBackground">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -34,6 +33,7 @@
                 android:layout_margin="@dimen/margin_medium"
                 android:drawableStart="@drawable/ic_location"
                 android:drawablePadding="@dimen/margin_medium"
+                android:gravity="center_vertical"
                 android:paddingHorizontal="@dimen/margin_small"
                 android:text="@string/any_city"
                 android:textColor="@color/colorTextGray"

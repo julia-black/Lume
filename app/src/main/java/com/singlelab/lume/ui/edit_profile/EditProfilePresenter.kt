@@ -3,6 +3,7 @@ package com.singlelab.lume.ui.edit_profile
 
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.profile.NewProfile
 import com.singlelab.lume.model.profile.Profile
@@ -82,12 +83,16 @@ class EditProfilePresenter @Inject constructor(
     }
 
     private fun validation(): ValidationError? {
-        return if (newProfile.login != null && newProfile.login!!.isEmpty() ||
+        return if (!newProfile.login.isNullOrEmpty() && !newProfile.login!!.matches(Const.REGEX_LOGIN.toRegex())) {
+            ValidationError.INVALID_LOGIN
+        } else if (newProfile.login != null && newProfile.login!!.isEmpty() ||
             newProfile.name != null && newProfile.name!!.isEmpty() ||
             newProfile.age != null && (newProfile.age == null) ||
             newProfile.description != null && newProfile.description!!.isEmpty()
         )
             ValidationError.UNFILLED_FIELDS
-        else null
+        else {
+            null
+        }
     }
 }

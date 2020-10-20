@@ -134,8 +134,7 @@ class FilterPersonFragment : BaseFragment(), FilterPersonView {
     }
 
     private fun toChooseCity() {
-        val action =
-            FilterPersonFragmentDirections.actionFiltersToCities()
+        val action = FilterPersonFragmentDirections.actionFiltersToCities()
         action.containAnyCity = true
         findNavController().navigate(action)
     }

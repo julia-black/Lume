@@ -12,9 +12,12 @@ import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.profile.NewProfile
 import com.singlelab.lume.ui.cities.CitiesFragment
+import com.singlelab.lume.ui.view.input.InputView
+import com.singlelab.lume.ui.view.input.OnInvalidStringsListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_edit_profile.*
 import moxy.presenter.InjectPresenter
@@ -23,7 +26,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class EditProfileFragment : BaseFragment(), EditProfileView {
+class EditProfileFragment : BaseFragment(), EditProfileView, OnInvalidStringsListener {
 
     @Inject
     lateinit var daggerPresenter: EditProfilePresenter
@@ -79,6 +82,14 @@ class EditProfileFragment : BaseFragment(), EditProfileView {
         findNavController().popBackStack()
     }
 
+    override fun onInvalidString(view: InputView) {
+        view.setError(getString(R.string.login_hint))
+    }
+
+    override fun onCorrectString(view: InputView) {
+        view.setWarning(getString(R.string.login_hint))
+    }
+
     private fun initInputViews() {
         login.apply {
             setHint(getString(R.string.login))
@@ -95,7 +106,8 @@ class EditProfileFragment : BaseFragment(), EditProfileView {
             }
             setSingleLine()
             setMaxLength(25)
-            setDigits(getString(R.string.login_digits))
+            val pattern = Regex(Const.REGEX_LOGIN)
+            login.setInvalidStringsListener(pattern, this@EditProfileFragment)
         }
         name.apply {
             setHint(getString(R.string.name))

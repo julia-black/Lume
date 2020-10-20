@@ -3,6 +3,7 @@ package com.singlelab.lume.ui.reg
 import android.graphics.Bitmap
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.view.ValidationError
 import com.singlelab.lume.pref.Preferences
@@ -77,6 +78,7 @@ class RegistrationPresenter @Inject constructor(
         description: String?
     ): ValidationError? {
         return when {
+            !login.isNullOrEmpty() && !login.matches(Const.REGEX_LOGIN.toRegex()) -> ValidationError.INVALID_LOGIN
             login.isNullOrEmpty() -> ValidationError.EMPTY_LOGIN
             name.isNullOrEmpty() -> ValidationError.EMPTY_NAME
             description.isNullOrEmpty() -> ValidationError.EMPTY_DESCRIPTION

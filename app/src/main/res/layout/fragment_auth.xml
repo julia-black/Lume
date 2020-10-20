@@ -126,13 +126,17 @@
 
         <TextView
             android:id="@+id/text_agreement"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"
+            android:background="?attr/selectableItemBackground"
             android:gravity="center"
+            android:padding="@dimen/margin_very_small"
             android:text="@string/title_agreement"
             android:textSize="@dimen/text_size_small"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_back"
             app:layout_constraintVertical_bias="1.0" />
 

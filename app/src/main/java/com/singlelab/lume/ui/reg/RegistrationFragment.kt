@@ -12,14 +12,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.FragmentResultListener
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.view.ValidationError
 import com.singlelab.lume.ui.cities.CitiesFragment
+import com.singlelab.lume.ui.view.input.InputView
+import com.singlelab.lume.ui.view.input.OnInvalidStringsListener
 import com.singlelab.lume.util.getBitmap
 import com.theartofdev.edmodo.cropper.CropImage
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +31,8 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultListener {
+class RegistrationFragment : BaseFragment(), RegistrationView,
+    OnActivityResultListener, OnInvalidStringsListener {
 
     @Inject
     lateinit var daggerPresenter: RegistrationPresenter
@@ -96,6 +99,14 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
         }
     }
 
+    override fun onInvalidString(view: InputView) {
+        view.setError(getString(R.string.login_hint))
+    }
+
+    override fun onCorrectString(view: InputView) {
+        view.setWarning(getString(R.string.login_hint))
+    }
+
     private fun initInputViews() {
         layout_login.apply {
             setHint(getString(R.string.login))
@@ -112,7 +123,8 @@ class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultL
             }
             setSingleLine()
             setMaxLength(25)
-            setDigits(getString(R.string.login_digits))
+            val pattern = Regex(Const.REGEX_LOGIN)
+            setInvalidStringsListener(pattern, this@RegistrationFragment)
             addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(s: Editable?) {
                     presenter.setLogin(s.toString())
