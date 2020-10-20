@@ -67,7 +67,7 @@
 
     <!-- Feedback -->
     <string name="title_feedback">Обратная связь</string>
-    <string name="text_feedback">Если ты обнаружил(а) проблему, или просто хочешь оставить отзыв - напиши нам и мы постараемся быстро всё поправить!</string>
+    <string name="text_feedback">Если ты обнаружил(а) проблему или просто хочешь оставить отзыв - напиши нам и мы постараемся быстро всё поправить!</string>
     <string name="hint_images_feedback">Добавь скриншоты, чтобы нам было проще понять и исправить проблему</string>
     <string name="hint_feedback">Проблема/отзыв</string>
     <string name="button_give_feedback">Отправить</string>
@@ -173,7 +173,7 @@
 
     <!-- Friends -->
     <string name="search_friends">Найти друзей</string>
-    <string name="empty_friends">У вас пока нет друзей\nНайдите их!</string>
+    <string name="empty_friends">У тебя пока нет друзей\nНайдите их!</string>
     <string name="empty_search">Ничего не найдено\nПопробуйте изменить запрос</string>
 
     <!-- Chats -->

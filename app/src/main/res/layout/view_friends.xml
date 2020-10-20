@@ -16,6 +16,7 @@
         android:layout_marginBottom="@dimen/margin_small"
         android:drawableEnd="@drawable/ic_search"
         android:drawablePadding="@dimen/margin_very_small"
+        android:gravity="center_vertical"
         android:text="@string/search_friends"
         android:textColor="@color/colorGrayMedium"
         android:textSize="@dimen/text_size_standart"

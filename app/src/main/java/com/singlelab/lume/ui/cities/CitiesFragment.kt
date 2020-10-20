@@ -48,6 +48,7 @@ class CitiesFragment : BaseFragment(), CitiesView, OnCityClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showBottomNavigation(false)
         arguments?.let {
             presenter.containsAnyCity = CitiesFragmentArgs.fromBundle(it).containAnyCity
         }
