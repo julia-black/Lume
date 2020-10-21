@@ -72,7 +72,7 @@ class PhoneEditText : TextInputEditText, OnFocusChangeListener, OnTouchListener 
             if (b) {
                 if (TextUtils.isEmpty(s) || s.length < 2) {
                     setText("+7")
-                    setSelection(s.length)
+                    setSelection(length())
                     setHint(bufferHint)
                 }
                 requestFocus()
