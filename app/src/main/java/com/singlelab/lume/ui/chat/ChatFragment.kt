@@ -1,7 +1,7 @@
 package com.singlelab.lume.ui.chat
 
 import android.app.Activity
-import android.content.Intent
+import android.content.*
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,17 +16,20 @@ import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnActivityResultListener
 import com.singlelab.lume.model.Const.SELECT_IMAGE_REQUEST_CODE
+import com.singlelab.lume.model.view.ToastType
 import com.singlelab.lume.ui.chat.common.*
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Companion.PENDING_MESSAGE_UID
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Status
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Type
 import com.singlelab.lume.ui.chat.common.view.OnClickImageListener
+import com.singlelab.lume.ui.chat.common.view.OnClickMessageListener
 import com.singlelab.lume.util.getBitmap
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_chat.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityResultListener {
@@ -114,15 +117,20 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
                 navigateToImages(imageUids)
             }
         }
+        val messageListener = object : OnClickMessageListener {
+            override fun onLongClick(text: String) {
+                showMessageAction(text)
+            }
+        }
         val clickEvent = object : OnMessageAuthorClickEvent {
             override fun invoke(personUid: String) {
                 navigateToPerson(personUid)
             }
         }
         chatMessagesAdapter = if (chatType.isGroup) {
-            GroupChatMessagesAdapter(clickEvent, listener)
+            GroupChatMessagesAdapter(clickEvent, listener, messageListener)
         } else {
-            PrivateChatMessagesAdapter(listener)
+            PrivateChatMessagesAdapter(listener, messageListener)
         }
         chatView.adapter = chatMessagesAdapter
         chatView.layoutManager =
@@ -153,6 +161,27 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
     private fun navigateToImages(imageUids: List<String>) {
         val action = ChatFragmentDirections.actionChatToImageSlider(imageUids.toTypedArray())
         findNavController().navigate(action)
+    }
+
+    private fun showMessageAction(text: String) {
+        showListDialog(
+            getString(R.string.choose_action),
+            arrayOf(
+                getString(R.string.copy_message)
+            ), DialogInterface.OnClickListener { _, which ->
+                when (which) {
+                    0 -> copy(text)
+                }
+            }
+        )
+    }
+
+    private fun copy(text: String) {
+        val clipboard: ClipboardManager? =
+            context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager?
+        val clip = ClipData.newPlainText("Сообщение", text)
+        clipboard?.setPrimaryClip(clip)
+        showSnackbar(getString(R.string.text_copied), ToastType.SUCCESS)
     }
 
     private fun sendMessage(images: List<Bitmap> = emptyList()) {

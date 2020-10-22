@@ -40,7 +40,8 @@ constructor(
     fun setContent(
         messageItem: GroupChatMessageItem,
         clickEvent: OnMessageAuthorClickEvent?,
-        listener: OnClickImageListener
+        listener: OnClickImageListener,
+        messageListener: OnClickMessageListener
     ) {
         setText(messageItem)
         setAuthorView(messageItem, clickEvent)
@@ -48,6 +49,11 @@ constructor(
         incomingMessageCloudView.setCloudView(messageItem.text, messageItem.images)
         incomingMessageDateView.setMessageDate(messageItem.text, messageItem.date)
         incomingMessageImageView.setImage(messageItem, listener)
+
+        setOnLongClickListener {
+            messageListener.onLongClick(messageItem.text)
+            return@setOnLongClickListener true
+        }
     }
 
     private fun setText(messageItem: GroupChatMessageItem) {

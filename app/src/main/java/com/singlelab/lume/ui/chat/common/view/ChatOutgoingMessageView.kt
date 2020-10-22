@@ -33,13 +33,21 @@ constructor(
         inflate(getContext(), R.layout.outgoing_message_item, this)
     }
 
-    fun setContent(messageItem: ChatMessageItem, listener: OnClickImageListener) {
+    fun setContent(
+        messageItem: ChatMessageItem, listener: OnClickImageListener,
+        messageListener: OnClickMessageListener
+    ) {
         setText(messageItem)
         setPendingMessageProgress(messageItem.status)
 
         outgoingMessageCloudView.setCloudView(messageItem.text, messageItem.images)
         outgoingMessageImageView.setImage(messageItem, listener)
         outgoingMessageDateView.setMessageDate(messageItem.text, messageItem.date)
+
+        setOnLongClickListener {
+            messageListener.onLongClick(messageItem.text)
+            return@setOnLongClickListener true
+        }
     }
 
     private fun setText(messageItem: ChatMessageItem) {

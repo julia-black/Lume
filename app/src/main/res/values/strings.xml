@@ -83,7 +83,7 @@
     <string name="min_age">Мин. возраст</string>
     <string name="max_age">Макс. возраст</string>
     <string name="publish_event">Опубликовать</string>
-    <string name="event_is_closed">Требуется подтверждение участия</string>
+    <string name="event_is_closed">Требуется подтверждение участия от организатора</string>
     <string name="date_start">Выбери время начала *</string>
     <string name="date_end">Выбери время окончания *</string>
     <string name="enter_fields">Упс! Заполнены не все поля</string>
@@ -137,6 +137,7 @@
     <string name="add_images">Добавить изображения</string>
     <string name="open_map">Открыть карту</string>
     <string name="change_location">Изменить местоположение</string>
+    <string name="set_location">Выбрать местоположение</string>
     <string name="success_delete">Изображение успешно удалено</string>
     <string name="title_swipes">Выбор событий становится удобным и простым!</string>
     <string name="description_swipes">Если событие тебе по душе, и ты хочешь на него пойти - свайпай вправо!
@@ -180,6 +181,8 @@
     <string name="chat_select_images_limit">Выбери не больше %1$d фотографий</string>
     <string name="chat_empty_messages">Чат пока пуст. Напиши первое собщение!</string>
     <string name="chat_message_images_count">+ %1$d</string>
+    <string name="text_copied">Текст скопирован в буфер обмена</string>
+    <string name="copy_message">Скопировать</string>
 
     <!-- City -->
     <string name="city">Город</string>

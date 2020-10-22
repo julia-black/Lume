@@ -4,14 +4,17 @@ import android.view.View
 import androidx.recyclerview.widget.DiffUtil
 import com.singlelab.lume.ui.chat.common.view.GroupChatIncomingMessageView
 import com.singlelab.lume.ui.chat.common.view.OnClickImageListener
+import com.singlelab.lume.ui.chat.common.view.OnClickMessageListener
 
 class GroupChatMessagesAdapter(
     clickEvent: OnMessageAuthorClickEvent,
-    listener: OnClickImageListener
+    listener: OnClickImageListener,
+    messageListener: OnClickMessageListener
 ) : ChatMessagesAdapter(
     Type.GROUP,
     clickEvent,
-    listener
+    listener,
+    messageListener
 ) {
 
     override fun setMessages(newMessages: List<ChatMessageItem>) {
@@ -27,10 +30,14 @@ class GroupChatMessagesAdapter(
         view: View,
         private val clickEvent: OnMessageAuthorClickEvent?
     ) : ChatMessageViewHolder(view) {
-        override fun bind(messageItem: ChatMessageItem, listener: OnClickImageListener) {
+        override fun bind(
+            messageItem: ChatMessageItem,
+            listener: OnClickImageListener,
+            messageListener: OnClickMessageListener
+        ) {
             if (messageItem !is GroupChatMessageItem) return
             if (itemView !is GroupChatIncomingMessageView) return
-            itemView.setContent(messageItem, clickEvent, listener)
+            itemView.setContent(messageItem, clickEvent, listener, messageListener)
         }
     }
 

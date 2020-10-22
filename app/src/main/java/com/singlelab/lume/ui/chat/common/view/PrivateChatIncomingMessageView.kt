@@ -30,12 +30,21 @@ constructor(
         inflate(getContext(), R.layout.private_incoming_message_item, this)
     }
 
-    fun setContent(messageItem: PrivateChatMessageItem, listener: OnClickImageListener) {
+    fun setContent(
+        messageItem: PrivateChatMessageItem,
+        listener: OnClickImageListener,
+        messageListener: OnClickMessageListener
+    ) {
         setText(messageItem)
 
         incomingMessageCloudView.setCloudView(messageItem.text, messageItem.images)
         incomingMessageDateView.setMessageDate(messageItem.text, messageItem.date)
         incomingMessageImageView.setImage(messageItem, listener)
+
+        setOnLongClickListener {
+            messageListener.onLongClick(messageItem.text)
+            return@setOnLongClickListener true
+        }
     }
 
     private fun setText(messageItem: PrivateChatMessageItem) {

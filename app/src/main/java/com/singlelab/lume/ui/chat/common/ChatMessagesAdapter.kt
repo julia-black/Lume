@@ -7,15 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.singlelab.lume.ui.chat.common.ChatMessageItem.Status
 import com.singlelab.lume.ui.chat.common.GroupChatMessagesAdapter.GroupIncomingMessageViewHolder
 import com.singlelab.lume.ui.chat.common.PrivateChatMessagesAdapter.PrivateIncomingMessageViewHolder
-import com.singlelab.lume.ui.chat.common.view.ChatOutgoingMessageView
-import com.singlelab.lume.ui.chat.common.view.GroupChatIncomingMessageView
-import com.singlelab.lume.ui.chat.common.view.OnClickImageListener
-import com.singlelab.lume.ui.chat.common.view.PrivateChatIncomingMessageView
+import com.singlelab.lume.ui.chat.common.view.*
 
 abstract class ChatMessagesAdapter(
     private val chatType: Type,
     private val clickEvent: OnMessageAuthorClickEvent? = null,
-    private var listener: OnClickImageListener
+    private var listener: OnClickImageListener,
+    private var messageListener: OnClickMessageListener
 ) : RecyclerView.Adapter<ChatMessagesAdapter.ChatMessageViewHolder>() {
 
     enum class Type {
@@ -43,7 +41,7 @@ abstract class ChatMessagesAdapter(
     }
 
     override fun onBindViewHolder(holder: ChatMessageViewHolder, position: Int) =
-        holder.bind(messages[position], listener)
+        holder.bind(messages[position], listener, messageListener)
 
     open fun setMessages(newMessages: List<ChatMessageItem>) {
         val syncedMessages = newMessages.syncLast()
@@ -74,13 +72,13 @@ abstract class ChatMessagesAdapter(
     }
 
     abstract class ChatMessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        abstract fun bind(messageItem: ChatMessageItem, listener: OnClickImageListener)
+        abstract fun bind(messageItem: ChatMessageItem, listener: OnClickImageListener, messageListener: OnClickMessageListener)
     }
 
     class OutgoingMessageViewHolder(view: View) : ChatMessageViewHolder(view) {
-        override fun bind(messageItem: ChatMessageItem, listener: OnClickImageListener) {
+        override fun bind(messageItem: ChatMessageItem, listener: OnClickImageListener, messageListener: OnClickMessageListener) {
             if (itemView !is ChatOutgoingMessageView) return
-            itemView.setContent(messageItem, listener)
+            itemView.setContent(messageItem, listener, messageListener)
         }
     }
 
