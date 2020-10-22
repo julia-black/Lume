@@ -99,9 +99,9 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
     }
 
     override fun showFriends(friends: MutableList<Person>?) {
-        // showSearch(presenter.eventUid.isNullOrEmpty()) //если перешли из события, чтобы пригласить друзей - поиск отсутствует
         isSearchResults = false
         recycler_search_results.visibility = View.GONE
+        title_empty_search.visibility = View.GONE
         if (friends.isNullOrEmpty()) {
             showEmptyFriends()
         } else {
@@ -125,6 +125,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
         recycler_friends.visibility = View.GONE
         title_empty_friends.visibility = View.GONE
         title_invite_friends.visibility = View.GONE
+        title_empty_search.visibility = View.GONE
         if (searchResults.isNullOrEmpty() && page == 1) {
             title_empty_search.visibility = View.VISIBLE
             recycler_search_results.visibility = View.GONE
