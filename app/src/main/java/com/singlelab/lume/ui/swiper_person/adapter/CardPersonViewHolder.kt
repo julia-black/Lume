@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.singlelab.lume.R
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.ui.chat.common.view.OnClickImageListener
+import com.singlelab.lume.util.PluralsUtil
 import com.singlelab.lume.util.generateImageLink
 import kotlinx.android.synthetic.main.item_card_person.view.*
 
@@ -17,8 +18,14 @@ class CardPersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 
     fun bind(person: Person, listener: OnClickImageListener) {
         this.listener = listener
-        val age =
-            itemView.resources.getQuantityString(R.plurals.age_plurals, person.age, person.age)
+        val age = PluralsUtil.getString(
+            person.age,
+            "год",
+            "года",
+            "года",
+            "года",
+            "лет"
+        )
         itemView.name.text = "${person.name}, $age"
         itemView.login.text = "@${person.login}"
         itemView.description.text = person.description

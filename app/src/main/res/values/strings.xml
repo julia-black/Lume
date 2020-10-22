@@ -75,14 +75,6 @@
     <string name="too_many_images">Количество картинок должно быть не более 5</string>
     <string name="empty_feedback">Отзыв не заполнен</string>
 
-    <plurals name="age_plurals">
-        <item quantity="one">%1$d год</item>
-        <item quantity="two">%1$d года</item>
-        <item quantity="few">%1$d года</item>
-        <item quantity="many">%1$d лет</item>
-        <item quantity="other">%1$d лет</item>
-    </plurals>
-
     <!-- Event -->
     <string name="create_event">Создать</string>
     <string name="title">Название *</string>

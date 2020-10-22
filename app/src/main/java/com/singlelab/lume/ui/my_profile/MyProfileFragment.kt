@@ -27,6 +27,7 @@ import com.singlelab.lume.ui.view.pager.*
 import com.singlelab.lume.ui.view.pager.listener.OnFriendsClickListener
 import com.singlelab.lume.ui.view.pager.listener.OnSettingsClickListener
 import com.singlelab.lume.ui.view.person_short.OnPersonShortClickListener
+import com.singlelab.lume.util.PluralsUtil
 import com.singlelab.lume.util.generateImageLink
 import com.singlelab.lume.util.getBitmap
 import com.singlelab.net.model.auth.AuthData
@@ -120,7 +121,14 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
     }
 
     override fun showProfile(profile: Profile) {
-        val age = resources.getQuantityString(R.plurals.age_plurals, profile.age, profile.age)
+        val age = PluralsUtil.getString(
+            profile.age,
+            "год",
+            "года",
+            "года",
+            "года",
+            "лет"
+        )
         name.text = "${profile.name}, $age"
         login.text = "@${profile.login}"
         description.text = profile.description

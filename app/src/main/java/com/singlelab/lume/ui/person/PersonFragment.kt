@@ -10,6 +10,7 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.model.profile.Profile
 import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
+import com.singlelab.lume.util.PluralsUtil
 import com.singlelab.lume.util.generateImageLink
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_person.*
@@ -45,7 +46,14 @@ class PersonFragment : BaseFragment(), PersonView {
     }
 
     override fun showProfile(profile: Profile) {
-        val age = resources.getQuantityString(R.plurals.age_plurals, profile.age, profile.age)
+        val age = PluralsUtil.getString(
+            profile.age,
+            "год",
+            "года",
+            "года",
+            "года",
+            "лет"
+        )
         name.text = "${profile.name}, $age"
         login.text = "@${profile.login}"
         description.text = profile.description

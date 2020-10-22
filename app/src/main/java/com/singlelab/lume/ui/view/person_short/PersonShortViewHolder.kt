@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.singlelab.lume.R
 import com.singlelab.lume.model.profile.Person
+import com.singlelab.lume.util.PluralsUtil
 import com.singlelab.lume.util.generateMiniImageLink
 import kotlinx.android.synthetic.main.item_person.view.image_person
 import kotlinx.android.synthetic.main.item_person.view.name
@@ -25,10 +26,14 @@ class PersonShortViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         itemView.setOnClickListener {
             listener?.onPersonClick(person.personUid)
         }
-        val age = itemView.context.resources.getQuantityString(
-            R.plurals.age_plurals,
+
+        val age = PluralsUtil.getString(
             person.age,
-            person.age
+            "год",
+            "года",
+            "года",
+            "года",
+            "лет"
         )
         itemView.age_and_city.text = "$age, ${person.cityName}"
     }
