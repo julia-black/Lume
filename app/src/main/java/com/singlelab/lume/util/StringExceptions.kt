@@ -54,10 +54,18 @@ fun String.toUpFirstSymbol(): String {
 }
 
 fun String.parseDeepLink(): Target? {
-    val parts = this.split("/")
-    val targetType = TargetType.findByTitle(parts[3]) ?: return null
-    val targetId = parts[4]
-    return Target(targetType, targetId)
+    if (contains("/")) {
+        val parts = this.split("/")
+        if (parts.size > 4) {
+            val targetType = TargetType.findByTitle(parts[3]) ?: return null
+            val targetId = parts[4]
+            return Target(targetType, targetId)
+        } else {
+            return null
+        }
+    } else {
+        return null
+    }
 }
 
 fun String.generateEventLink(): String {

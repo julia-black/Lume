@@ -36,6 +36,10 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorPrimaryAccent" />
 
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -53,9 +57,23 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
+                    android:host="lumemobile"
+                    android:scheme="start" />
+
+                <data
                     android:host="lumemobile.page.link"
                     android:pathPrefix="/event"
                     android:scheme="https" />
+            </intent-filter>
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="lumemobile" />
             </intent-filter>
         </activity>
         <activity
