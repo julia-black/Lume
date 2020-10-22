@@ -96,6 +96,7 @@
     <string name="waiting_for_approve_users">Новые заявки (%1$d)</string>
     <string name="count_invited">Приглашения (%1$d)</string>
     <string name="invite_friends">Пригласить друзей</string>
+    <string name="invite_friends_link"><u>Пригласить друзей</u></string>
     <string name="search_participants">Найти участников</string>
     <string name="waiting_for_approve_user">Новое приглашение</string>
     <string name="search_event">Найти событие</string>
@@ -167,6 +168,7 @@
     <!-- Friends -->
     <string name="search_friends">Найти друзей</string>
     <string name="empty_friends">У тебя пока нет друзей\nНайдите их!</string>
+    <string name="empty_friends_short">У тебя пока нет друзей</string>
     <string name="empty_search">Ничего не найдено\nПопробуйте изменить запрос</string>
 
     <!-- Chats -->

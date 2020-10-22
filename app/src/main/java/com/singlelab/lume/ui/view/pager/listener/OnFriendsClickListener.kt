@@ -4,4 +4,6 @@ interface OnFriendsClickListener {
     fun onSearchFriendsClick()
 
     fun onNewFriendsClick()
+
+    fun onInviteFriendsClick()
 }

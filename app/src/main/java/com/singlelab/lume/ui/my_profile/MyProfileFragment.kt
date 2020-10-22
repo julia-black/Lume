@@ -19,6 +19,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.profile.Badge
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.model.profile.Profile
@@ -225,6 +226,10 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
 
     override fun onNewFriendsClick() {
         toFriends(true)
+    }
+
+    override fun onInviteFriendsClick() {
+        shareText(Const.STORE_URL)
     }
 
     private fun onClickImage(imageContentUid: String) {

@@ -70,6 +70,7 @@ class FriendsView @JvmOverloads constructor(
         if (this.friends.isNullOrEmpty()) {
             recycler_friends.visibility = View.GONE
             title_empty_friends.visibility = View.VISIBLE
+            title_invite_friends.visibility = View.VISIBLE
             if (newFriends.isNullOrEmpty()) {
                 show_all.visibility = View.GONE
             } else {
@@ -78,6 +79,7 @@ class FriendsView @JvmOverloads constructor(
             }
         } else {
             title_empty_friends.visibility = View.GONE
+            title_invite_friends.visibility = View.GONE
             recycler_friends.visibility = View.VISIBLE
             recycler_friends.apply {
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -98,6 +100,9 @@ class FriendsView @JvmOverloads constructor(
                 )
                 show_all.text = spannable
             }
+        }
+        title_invite_friends.setOnClickListener {
+            clickListener?.onInviteFriendsClick()
         }
     }
 

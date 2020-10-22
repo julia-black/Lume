@@ -31,12 +31,28 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/empty_friends"
-        android:textSize="@dimen/text_size_medium"
+        android:textSize="@dimen/text_size_standart"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/title_invite_friends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:gravity="center"
+        android:linksClickable="true"
+        android:text="@string/invite_friends_link"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/text_size_standart"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_empty_friends"
         tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView

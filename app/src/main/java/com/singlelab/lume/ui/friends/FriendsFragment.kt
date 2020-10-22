@@ -13,6 +13,7 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnPermissionListener
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
 import com.singlelab.lume.ui.view.person.OnPersonItemClickListener
@@ -92,17 +93,20 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
         button_import_contacts.setOnClickListener {
             onImportContactsClick()
         }
+        title_invite_friends.setOnClickListener {
+            shareText(Const.STORE_URL)
+        }
     }
 
     override fun showFriends(friends: MutableList<Person>?) {
         // showSearch(presenter.eventUid.isNullOrEmpty()) //если перешли из события, чтобы пригласить друзей - поиск отсутствует
         isSearchResults = false
-        title_empty_search.visibility = View.GONE
         recycler_search_results.visibility = View.GONE
         if (friends.isNullOrEmpty()) {
             showEmptyFriends()
         } else {
             title_empty_friends.visibility = View.GONE
+            title_invite_friends.visibility = View.GONE
             recycler_friends.visibility = View.VISIBLE
             recycler_friends.adapter =
                 PersonAdapter(
@@ -120,6 +124,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
         isSearchResults = true
         recycler_friends.visibility = View.GONE
         title_empty_friends.visibility = View.GONE
+        title_invite_friends.visibility = View.GONE
         if (searchResults.isNullOrEmpty() && page == 1) {
             title_empty_search.visibility = View.VISIBLE
             recycler_search_results.visibility = View.GONE
@@ -171,6 +176,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
         title_empty_search.visibility = View.GONE
         recycler_friends.visibility = View.GONE
         title_empty_friends.visibility = View.VISIBLE
+        title_invite_friends.visibility = View.VISIBLE
     }
 
     override fun showEmptyPersonsFromContacts() {

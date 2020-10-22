@@ -6,7 +6,8 @@ object Const {
     const val URL_KEY = "Url"
     const val APP_NAME = "Lume"
     const val FOLDER_NAME = "Lume Images"
-    const val BASE_URL = "https://lumeprod.azurewebsites.net/api/"
+    const val BASE_URL = "https://lumewebapp.azurewebsites.net/api/"
+    const val STORE_URL = "https://play.google.com/store/apps/details?id=com.singlelab.lume"
 
     const val PREF = "lume_pref"
     const val LOG_TAG = "lume_app"
