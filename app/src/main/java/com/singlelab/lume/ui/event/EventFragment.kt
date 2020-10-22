@@ -116,6 +116,17 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                         openBrowser(uri)
                     }
                 }
+            } else {
+                text_location.setOnClickListener {
+                    if (presenter.isAdministrator()) {
+                        showLocationAction(
+                            null,
+                            event.cityName ?: "",
+                            event.xCoordinate,
+                            event.yCoordinate
+                        )
+                    }
+                }
             }
         }
 
@@ -455,23 +466,36 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
     }
 
     private fun showLocationAction(
-        uri: String,
+        uri: String? = null,
         cityName: String,
         xCoordinate: Double? = null,
         yCoordinate: Double? = null
     ) {
-        showListDialog(
-            getString(R.string.choose_action),
-            arrayOf(
-                getString(R.string.open_map),
-                getString(R.string.change_location)
-            ), DialogInterface.OnClickListener { _, which ->
-                when (which) {
-                    0 -> openBrowser(uri)
-                    1 -> toChooseLocation(cityName, xCoordinate, yCoordinate)
+        if (uri != null) {
+            showListDialog(
+                getString(R.string.choose_action),
+                arrayOf(
+                    getString(R.string.open_map),
+                    getString(R.string.change_location)
+                ), DialogInterface.OnClickListener { _, which ->
+                    when (which) {
+                        0 -> openBrowser(uri)
+                        1 -> toChooseLocation(cityName, xCoordinate, yCoordinate)
+                    }
                 }
-            }
-        )
+            )
+        } else {
+            showListDialog(
+                getString(R.string.choose_action),
+                arrayOf(
+                    getString(R.string.set_location)
+                ), DialogInterface.OnClickListener { _, which ->
+                    when (which) {
+                        0 -> toChooseLocation(cityName, xCoordinate, yCoordinate)
+                    }
+                }
+            )
+        }
     }
 
     private fun toChooseLocation(cityName: String, xCoordinate: Double?, yCoordinate: Double?) {
