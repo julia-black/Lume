@@ -161,7 +161,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
                 )
                 recycler_search_results.adapter = searchAdapter
             } else {
-                (recycler_search_results.adapter as PersonAdapter).addData(searchResults)
+                (recycler_search_results.adapter as PersonAdapter?)?.addData(searchResults)
             }
         }
     }
