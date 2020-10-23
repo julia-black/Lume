@@ -156,7 +156,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
 
     override fun onLoadedFriends(friends: List<Person>?) {
         friendsView.setFriends(friends)
-        (view_pager.adapter as PagerAdapter).updateFriendsView(friendsView)
+        (view_pager.adapter as PagerAdapter?)?.updateFriendsView(friendsView)
     }
 
     override fun onLoadedBadges(badges: List<Badge>) {
