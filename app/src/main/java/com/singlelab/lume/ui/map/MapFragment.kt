@@ -120,6 +120,12 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
     override fun onContactsPermissionDenied() {
     }
 
+    override fun onWriteExternalPermissionGranted() {
+    }
+
+    override fun onWriteExternalPermissionDenied() {
+    }
+
     override fun searchPlace(queryStr: String) {
         locationMap?.let { map ->
             try {

@@ -8,4 +8,8 @@ interface OnPermissionListener {
     fun onContactsPermissionGranted()
 
     fun onContactsPermissionDenied()
+
+    fun onWriteExternalPermissionGranted()
+
+    fun onWriteExternalPermissionDenied()
 }

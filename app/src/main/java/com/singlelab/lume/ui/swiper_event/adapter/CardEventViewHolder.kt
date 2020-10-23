@@ -31,6 +31,12 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
                     .thumbnail(0.3f)
                     .into(itemView.image)
             }
+            itemView.image.setOnClickListener {
+                val images = mutableListOf<String>()
+                images.add(event.eventPrimaryImageContentUid)
+                images.addAll(event.images ?: arrayListOf())
+                listener.onImageClick(images)
+            }
         }
 
         if (event.types.size < 3) {
@@ -65,6 +71,13 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
                     .into(itemView.image_administrator)
             }
             itemView.administrator_name.text = it.name
+
+            itemView.administrator.setOnClickListener { view ->
+                listener.onAdministratorClick(it.personUid)
+            }
+            itemView.image_administrator.setOnClickListener { view ->
+                listener.onAdministratorClick(it.personUid)
+            }
         }
 
         if (event.isOnline) {

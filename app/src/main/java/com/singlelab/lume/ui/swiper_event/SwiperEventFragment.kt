@@ -205,6 +205,20 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         context?.startActivity(intent)
     }
 
+    override fun onAdministratorClick(personUid: String) {
+        findNavController().navigate(
+            SwiperEventFragmentDirections.actionSwiperEventToPerson(
+                personUid
+            )
+        )
+    }
+
+    override fun onImageClick(images: List<String>) {
+        val action =
+            SwiperEventFragmentDirections.actionSwiperEventToImageSlider(images.toTypedArray())
+        findNavController().navigate(action)
+    }
+
     override fun onCloseDialogClick() {
         info_dialog.isVisible = false
     }

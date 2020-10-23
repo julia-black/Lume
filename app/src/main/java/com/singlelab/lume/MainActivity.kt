@@ -188,6 +188,27 @@ class MainActivity : AppCompatActivity() {
             }).check()
     }
 
+    fun checkWriteExternalPermission() {
+        Dexter.withContext(this)
+            .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            .withListener(object : PermissionListener {
+                override fun onPermissionGranted(response: PermissionGrantedResponse) {
+                    permissionListener?.onWriteExternalPermissionGranted()
+                }
+
+                override fun onPermissionDenied(response: PermissionDeniedResponse) {
+                    permissionListener?.onWriteExternalPermissionDenied()
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    permission: PermissionRequest?,
+                    token: PermissionToken?
+                ) {
+                    permissionListener?.onWriteExternalPermissionDenied()
+                }
+            }).check()
+    }
+
     fun showBottomNavigation(isShow: Boolean) {
         nav_view.visibility = if (isShow) View.VISIBLE else View.GONE
     }

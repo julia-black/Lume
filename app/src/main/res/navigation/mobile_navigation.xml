@@ -19,6 +19,12 @@
         <action
             android:id="@+id/action_swiper_event_to_filterFragment"
             app:destination="@id/filters" />
+        <action
+            android:id="@+id/action_swiper_event_to_person"
+            app:destination="@id/person" />
+        <action
+            android:id="@+id/action_swiper_event_to_image_slider"
+            app:destination="@id/image_slider" />
     </fragment>
 
     <fragment
@@ -235,9 +241,9 @@
 
         <argument
             android:name="participant_ids"
+            android:defaultValue="@null"
             app:argType="string[]"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
 
     </fragment>
 

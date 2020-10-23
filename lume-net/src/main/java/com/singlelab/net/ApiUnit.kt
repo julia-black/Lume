@@ -17,6 +17,9 @@ class ApiUnit(baseUrl: String) {
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
     private val client = OkHttpClient().newBuilder()
+        .readTimeout(30, TimeUnit.SECONDS)
+        .connectTimeout(30, TimeUnit.SECONDS)
+        .callTimeout(30, TimeUnit.SECONDS)
         .addInterceptor(headerInterceptor)
         .addInterceptor(loggingInterceptor)
         .build()

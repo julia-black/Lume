@@ -245,4 +245,10 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
     override fun onContactsPermissionDenied() {
         showSnackbar(getString(R.string.not_permission_contacts))
     }
+
+    override fun onWriteExternalPermissionGranted() {
+    }
+
+    override fun onWriteExternalPermissionDenied() {
+    }
 }

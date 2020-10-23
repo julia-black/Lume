@@ -107,6 +107,12 @@ class FilterFragment : BaseFragment(),
     override fun onContactsPermissionDenied() {
     }
 
+    override fun onWriteExternalPermissionGranted() {
+    }
+
+    override fun onWriteExternalPermissionDenied() {
+    }
+
     private fun showFilters(isEvent: Boolean) {
         if (isEvent) {
             emoji_grid.visibility = View.VISIBLE

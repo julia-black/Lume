@@ -12,8 +12,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
+import com.singlelab.lume.base.listeners.OnPermissionListener
 import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.view.ToastType
 import com.singlelab.lume.ui.view.image_slider.SliderAdapter
@@ -24,7 +26,7 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SliderFragment : BaseFragment(), SliderView {
+class SliderFragment : BaseFragment(), SliderView, OnPermissionListener {
 
     @Inject
     lateinit var daggerPresenter: SliderPresenter
@@ -105,7 +107,27 @@ class SliderFragment : BaseFragment(), SliderView {
             presenter.onClickDelete()
         }
         button_download.setOnClickListener {
-            presenter.onClickDownload()
+            (activity as MainActivity?)?.checkWriteExternalPermission()
         }
+    }
+
+    override fun onLocationPermissionGranted() {
+    }
+
+    override fun onLocationPermissionDenied() {
+    }
+
+    override fun onContactsPermissionGranted() {
+    }
+
+    override fun onContactsPermissionDenied() {
+    }
+
+    override fun onWriteExternalPermissionGranted() {
+        presenter.onClickDownload()
+    }
+
+    override fun onWriteExternalPermissionDenied() {
+        showSnackbar(getString(R.string.access_denied))
     }
 }
