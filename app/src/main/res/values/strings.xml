@@ -145,6 +145,7 @@
         \n\nИгнорируй мероприятие при помощи свайпа влево.
         \n\nПерсонализируй подборку событий с помощью фильтров!
         \n\nВсё просто! </string>
+    <string name="access_denied">Доступ запрещен</string>
 
     <!-- Types of events -->
     <string name="party">Вечеринка</string>
