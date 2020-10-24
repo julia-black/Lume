@@ -60,7 +60,12 @@ class MainActivity : AppCompatActivity() {
         var target: Target? = null
         if (data == null) {
             if (intent.extras != null && intent.extras!!.containsKey(Const.URL_KEY)) {
-                target = intent?.extras?.get(Const.URL_KEY).toString().parseDeepLink()
+                val url = intent?.extras?.get(Const.URL_KEY).toString()
+                if (url.contains(Const.GOOGLE_PLAY)) {
+                    openBrowser(url)
+                } else {
+                    target = url.parseDeepLink()
+                }
             }
         } else {
             target = data.toString().parseDeepLink()
@@ -70,6 +75,11 @@ class MainActivity : AppCompatActivity() {
         }
         getDynamicLink(navController)
         fetchFacebookLinks()
+    }
+
+    private fun openBrowser(url: String) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(browserIntent)
     }
 
     private fun fetchFacebookLinks() {
