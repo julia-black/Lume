@@ -3,8 +3,9 @@ package com.singlelab.lume.ui.event.interactor
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.model.promo.PromoReward
-import com.singlelab.net.model.event.UpdateEventRequest
 import com.singlelab.net.model.event.ParticipantRequest
+import com.singlelab.net.model.event.ReportEventRequest
+import com.singlelab.net.model.event.UpdateEventRequest
 import com.singlelab.net.repositories.BaseRepository
 import com.singlelab.net.repositories.events.EventsRepository
 
@@ -19,7 +20,7 @@ class EventInteractorImpl(private val repository: EventsRepository) : EventInter
         return Event.fromResponse(repository.updateParticipants(participantRequest))
     }
 
-    override suspend fun joinEvent(participantRequest: ParticipantRequest) : Event? {
+    override suspend fun joinEvent(participantRequest: ParticipantRequest): Event? {
         return Event.fromResponse(repository.addParticipants(participantRequest))
     }
 
@@ -33,5 +34,9 @@ class EventInteractorImpl(private val repository: EventsRepository) : EventInter
 
     override suspend fun checkPromoReward(cityId: Int): PromoReward? {
         return PromoReward.fromResponse(repository.checkCityForPromoReward(cityId))
+    }
+
+    override suspend fun sendReport(uid: String, reasonReport: String) {
+        repository.sendReport(ReportEventRequest(uid, reasonReport))
     }
 }

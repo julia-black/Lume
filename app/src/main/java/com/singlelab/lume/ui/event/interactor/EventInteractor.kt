@@ -17,4 +17,6 @@ interface EventInteractor {
     suspend fun updateEvent(request: UpdateEventRequest): Event?
 
     suspend fun checkPromoReward(cityId: Int): PromoReward?
+
+    suspend fun sendReport(uid: String, reasonReport: String)
 }

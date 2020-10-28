@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -129,9 +130,11 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
     }
 
     fun hideKeyboard() {
+        setSoftInputType(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         val imm: InputMethodManager =
             context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
+        setSoftInputType(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     }
 
     fun showDialog(title: String, text: String, listener: DialogInterface.OnClickListener) {

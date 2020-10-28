@@ -22,4 +22,7 @@ interface EventView : LoadingView, ErrorView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showPromoReceiveButton(isShow: Boolean)
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun showSuccessReport()
 }

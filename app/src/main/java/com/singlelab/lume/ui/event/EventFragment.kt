@@ -23,6 +23,7 @@ import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.model.location.MapLocation
+import com.singlelab.lume.model.view.ToastType
 import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
 import com.singlelab.lume.ui.map.MapFragment
 import com.singlelab.lume.ui.view.image_person.ImagePersonAdapter
@@ -334,6 +335,10 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             button_reject.visibility = View.GONE
         }
 
+        if (!presenter.isAdministrator()) {
+            button_report_event.visibility = View.VISIBLE
+            divider_three.visibility = View.VISIBLE
+        }
         presenter.getAvailablePromoReward()
 
         button_receive_reward.setOnClickListener {
@@ -344,6 +349,10 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                     )
                 )
             }
+        }
+
+        button_report_event.setOnClickListener {
+            showReport()
         }
 
         button_cancel_or_leave_event.setOnClickListener {
@@ -381,6 +390,20 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                 )
             }
         }
+    }
+
+    private fun showReport() {
+        showEditTextDialog(
+            title = getString(R.string.enter_reason_report),
+            emptyText = getString(R.string.empty_reason),
+            callback = {
+                hideKeyboard()
+                presenter.sendReport(it)
+            },
+            cancelCallback = {
+                hideKeyboard()
+            }
+        )
     }
 
     override fun toProfile(personUid: String) {
@@ -430,6 +453,10 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
     override fun showPromoReceiveButton(isShow: Boolean) {
         divider_four.isVisible = isShow
         button_receive_reward.isVisible = isShow
+    }
+
+    override fun showSuccessReport() {
+        showSnackbar(getString(R.string.report_send), ToastType.SUCCESS)
     }
 
     private fun showImagesAction(event: Event) {

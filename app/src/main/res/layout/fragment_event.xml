@@ -389,6 +389,26 @@
                         app:layout_constraintTop_toBottomOf="@id/count_invited" />
 
                     <TextView
+                        android:id="@+id/button_report_event"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|center_horizontal"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:clickable="true"
+                        android:drawableStart="@drawable/ic_report"
+                        android:drawablePadding="@dimen/margin_small"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:text="@string/report"
+                        android:textColor="@color/colorGrayMedium"
+                        android:textSize="@dimen/text_size_standart"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/divider_three"
+                        tools:visibility="visible" />
+
+                    <TextView
                         android:id="@+id/button_cancel_or_leave_event"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -398,12 +418,13 @@
                         android:drawableStart="@drawable/ic_reject"
                         android:drawablePadding="@dimen/margin_small"
                         android:focusable="true"
+                        android:gravity="center"
                         android:text="@string/cancel_event"
                         android:textColor="@color/colorGrayMedium"
                         android:textSize="@dimen/text_size_standart"
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/divider_three"
+                        app:layout_constraintTop_toBottomOf="@id/button_report_event"
                         tools:visibility="visible" />
 
                     <View
@@ -463,8 +484,8 @@
                         style="@style/ButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_medium"
                         android:layout_marginHorizontal="@dimen/margin_medium"
+                        android:layout_marginTop="@dimen/margin_medium"
                         android:clickable="true"
                         android:focusable="true"
                         android:text="@string/title_receive_reward"

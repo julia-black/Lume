@@ -232,12 +232,10 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
             emptyText = getString(R.string.empty_reason),
             callback = {
                 hideKeyboard()
-                setSoftInputType(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
                 presenter.sendReport(it)
             },
             cancelCallback = {
                 hideKeyboard()
-                setSoftInputType(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
             }
         )
     }

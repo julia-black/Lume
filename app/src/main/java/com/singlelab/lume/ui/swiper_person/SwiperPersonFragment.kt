@@ -148,17 +148,16 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
     }
 
     private fun showReport() {
+        setSoftInputType(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         showEditTextDialog(
             title = getString(R.string.enter_reason_report),
             emptyText = getString(R.string.empty_reason),
             callback = {
                 hideKeyboard()
-                setSoftInputType(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
                 presenter.sendReport(it)
             },
             cancelCallback = {
                 hideKeyboard()
-                setSoftInputType(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
             }
         )
     }
@@ -176,6 +175,7 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
             presenter.loadRandomPerson()
         } else {
             button_filter.visibility = View.VISIBLE
+            button_report_person.visibility = View.VISIBLE
             view_template_person.visibility = View.VISIBLE
             card_stack_view.visibility = View.VISIBLE
             text_empty_swipes.visibility = View.GONE
@@ -194,6 +194,7 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
         text_empty_swipes.visibility = View.VISIBLE
         text_empty_swipes.text = getString(R.string.empty_persons)
         button_filter.visibility = View.VISIBLE
+        button_report_person.visibility = View.GONE
     }
 
     override fun showSuccessReport() {
