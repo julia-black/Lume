@@ -18,7 +18,8 @@ class EventSummary(
     val participantStatus: ParticipantStatus,
     val anyPersonWaitingForApprove: Boolean,
     val isOnline: Boolean,
-    val chatUid: String? = null
+    val chatUid: String? = null,
+    val cityName: String? = null
 ) {
     companion object {
         fun fromResponse(eventSummaryResponse: EventSummaryResponse?): EventSummary? {
@@ -38,7 +39,8 @@ class EventSummary(
                     ParticipantStatus.findStatus(eventSummaryResponse.participantStatus)!!,
                     eventSummaryResponse.anyPersonWaitingForApprove,
                     eventSummaryResponse.isOnline,
-                    eventSummaryResponse.chatUid
+                    eventSummaryResponse.chatUid,
+                    eventSummaryResponse.cityName
                 )
             } else {
                 null

@@ -56,8 +56,7 @@ class CardDayEventViewHolder(view: View) :
             itemView.icon_location.setImageResource(R.drawable.ic_online)
         } else {
             itemView.text_location.text =
-                context?.getLocationName(event.xCoordinate, event.yCoordinate)
-                    ?: itemView.context.getString(R.string.unavailable_location_short)
+                context?.getLocationName(event.xCoordinate, event.yCoordinate) ?: event.cityName
         }
         if (position % 2 == 0) {
             itemView.shape.alpha = 1f

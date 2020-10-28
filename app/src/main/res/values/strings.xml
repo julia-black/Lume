@@ -105,7 +105,6 @@
     <string name="empty_swipes_expand_filters">По выбранны фильтрам событий нет. Попробуй расширить фильтры или создай своё событие!</string>
     <string name="online">Онлайн</string>
     <string name="event_is_online">Онлайн-событие</string>
-    <string name="unavailable_location_short">Неизвестное местоположение</string>
     <string name="warning_other_city">Город отличается от основного. Событие доступно только для города %1$s</string>
     <string name="choose_action">Выбери действие</string>
     <string name="set_main">Сделать основной</string>

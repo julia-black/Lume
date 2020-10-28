@@ -85,8 +85,7 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             itemView.icon_location.setImageResource(R.drawable.ic_online)
         } else {
             itemView.text_location.text =
-                itemView.context.getLocationName(event.xCoordinate, event.yCoordinate)
-                    ?: itemView.context.getString(R.string.unavailable_location_short)
+                itemView.context.getLocationName(event.xCoordinate, event.yCoordinate) ?: event.cityName
             if (event.xCoordinate != null && event.xCoordinate > 0
                 && event.yCoordinate != null && event.yCoordinate > 0
             ) {

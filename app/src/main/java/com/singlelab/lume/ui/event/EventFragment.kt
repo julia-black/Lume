@@ -89,8 +89,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             icon_location.setImageResource(R.drawable.ic_online)
         } else {
             text_location.text =
-                context?.getLocationName(event.xCoordinate, event.yCoordinate)
-                    ?: context?.getString(R.string.unavailable_location_short)
+                context?.getLocationName(event.xCoordinate, event.yCoordinate) ?: event.cityName
             if (event.xCoordinate != null && event.xCoordinate > 0
                 && event.yCoordinate != null && event.yCoordinate > 0
             ) {
