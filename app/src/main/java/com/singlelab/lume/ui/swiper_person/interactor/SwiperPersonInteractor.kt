@@ -10,4 +10,6 @@ interface SwiperPersonInteractor {
     suspend fun invitePerson(participantRequest: ParticipantRequest)
 
     suspend fun rejectPerson(eventUid: String, personUid: String)
+
+    suspend fun sendReport(uid: String, reasonReport: String)
 }

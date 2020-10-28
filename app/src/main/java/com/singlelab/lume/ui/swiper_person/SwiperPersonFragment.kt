@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.animation.LinearInterpolator
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
@@ -135,12 +136,31 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
                 findNavController().navigate(action)
             }
         }
+        button_report_person.setOnClickListener {
+            showReport()
+        }
         parentFragmentManager.setFragmentResultListener(
             FilterPersonFragment.REQUEST_FILTER,
             this,
             FragmentResultListener { requestKey, result ->
                 onFragmentResult(requestKey, result)
             })
+    }
+
+    private fun showReport() {
+        showEditTextDialog(
+            title = getString(R.string.enter_reason_report),
+            emptyText = getString(R.string.empty_reason),
+            callback = {
+                hideKeyboard()
+                setSoftInputType(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                presenter.sendReport(it)
+            },
+            cancelCallback = {
+                hideKeyboard()
+                setSoftInputType(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+            }
+        )
     }
 
     private fun onFragmentResult(requestKey: String, result: Bundle) {
@@ -174,5 +194,10 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
         text_empty_swipes.visibility = View.VISIBLE
         text_empty_swipes.text = getString(R.string.empty_persons)
         button_filter.visibility = View.VISIBLE
+    }
+
+    override fun showSuccessReport() {
+        hideKeyboard()
+        showSnackbar(getString(R.string.report_send), ToastType.SUCCESS)
     }
 }

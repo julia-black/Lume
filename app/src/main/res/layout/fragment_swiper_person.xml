@@ -35,6 +35,7 @@
         tools:visibility="visible" />
 
     <LinearLayout
+        android:id="@+id/layout_filters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -52,7 +53,6 @@
             android:layout_height="@dimen/size_filter_button"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/margin_end_filter"
-            android:layout_marginBottom="@dimen/margin_large"
             android:visibility="gone"
             app:cardBackgroundColor="@color/colorPrimaryAccent"
             app:cardCornerRadius="25dp"
@@ -66,6 +66,21 @@
                 android:src="@drawable/ic_filter"
                 android:tint="@color/white" />
         </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/button_report_person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_gravity="top|center_horizontal"
+            android:drawableStart="@drawable/ic_report"
+            android:drawablePadding="@dimen/margin_small"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="@string/report"
+            android:textColor="@color/colorGrayMedium"
+            android:textSize="@dimen/text_size_small" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

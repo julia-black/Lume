@@ -116,4 +116,24 @@ class SwiperPersonPresenter @Inject constructor(
             loadRandomPerson()
         }
     }
+
+    fun sendReport(reasonReport: String) {
+        person?.personUid?.let { uid ->
+            viewState.showLoading(true)
+            invokeSuspend {
+                try {
+                    interactor.sendReport(uid, reasonReport)
+                    runOnMainThread {
+                        viewState.showLoading(false)
+                        viewState.showSuccessReport()
+                    }
+                } catch (e: ApiException) {
+                    runOnMainThread {
+                        viewState.showLoading(false)
+                        viewState.showError(e.message)
+                    }
+                }
+            }
+        }
+    }
 }
