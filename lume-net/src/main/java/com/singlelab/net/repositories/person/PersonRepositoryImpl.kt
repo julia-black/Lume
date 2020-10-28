@@ -70,4 +70,11 @@ class PersonRepositoryImpl(
             errorMessage = "Не удалось получить бейджи"
         )
     }
+
+    override suspend fun sendReport(reportPersonRequest: ReportPersonRequest) {
+        safeApiCall(
+            call = { apiUnit.personApi.sendReportAsync(reportPersonRequest).await() },
+            errorMessage = "Не удалось отправить жалобу"
+        )
+    }
 }

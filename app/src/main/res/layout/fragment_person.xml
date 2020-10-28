@@ -7,7 +7,7 @@
     android:background="@color/colorBackground"
     android:fillViewport="true"
     android:overScrollMode="never"
-    android:paddingBottom="56dp">
+    android:paddingBottom="@dimen/padding_bottom_nav">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -137,20 +137,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/description" />
 
-        <!--        <Button-->
-        <!--            android:id="@+id/button_remove_from_friends"-->
-        <!--            style="@style/ButtonStyle"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_margin="@dimen/margin_medium"-->
-        <!--            android:clickable="true"-->
-        <!--            android:focusable="true"-->
-        <!--            android:text="@string/remove_from_friends"-->
-        <!--            android:visibility="gone"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/description"-->
-        <!--            tools:visibility="visible" />-->
-
         <Button
             android:id="@+id/button_chat"
             style="@style/ButtonStyle"
@@ -162,5 +148,25 @@
             android:focusable="true"
             android:text="@string/go_to_chat"
             app:layout_constraintTop_toBottomOf="@id/button_action_friend" />
+
+        <TextView
+            android:id="@+id/button_report_person"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:clickable="true"
+            android:drawableStart="@drawable/ic_report"
+            android:drawablePadding="@dimen/margin_small"
+            android:focusable="true"
+            android:text="@string/report"
+            android:textColor="@color/colorGrayMedium"
+            android:textSize="@dimen/text_size_standart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_chat"
+            tools:visibility="visible" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

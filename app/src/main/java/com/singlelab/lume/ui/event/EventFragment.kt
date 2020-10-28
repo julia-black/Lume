@@ -527,7 +527,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
     }
 
     private fun editDescription(text: String?) {
-        showEditTextDialog(text, getString(R.string.empty_description_event)) {
+        showEditTextDialog(getString(R.string.edit_description), text, getString(R.string.empty_description_event)) {
             presenter.updateEvent(description = it)
         }
     }

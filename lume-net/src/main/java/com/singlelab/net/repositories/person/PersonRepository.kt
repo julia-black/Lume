@@ -21,4 +21,6 @@ interface PersonRepository {
     suspend fun addFeedback(request: FeedbackRequest)
 
     suspend fun getBadges(personUid: String): List<BadgeResponse>?
+
+    suspend fun sendReport(reportPersonRequest: ReportPersonRequest)
 }

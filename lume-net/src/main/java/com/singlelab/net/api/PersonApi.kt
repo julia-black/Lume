@@ -46,4 +46,7 @@ interface PersonApi {
 
     @GET("person/get-badges")
     fun getBadgesAsync(@Query("personUid") personUid: String): Deferred<Response<List<BadgeResponse>>>
+
+    @POST("person/add-report")
+    fun sendReportAsync(@Body request: ReportPersonRequest): Deferred<Response<MessageResponse>>
 }

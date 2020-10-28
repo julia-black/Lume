@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.model.profile.Profile
+import com.singlelab.lume.model.view.ToastType
 import com.singlelab.lume.ui.chat.common.ChatOpeningInvocationType
 import com.singlelab.lume.util.PluralsUtil
 import com.singlelab.lume.util.generateImageLink
@@ -82,6 +83,19 @@ class PersonFragment : BaseFragment(), PersonView {
         }
         button_back.setOnClickListener {
             findNavController().popBackStack()
+        }
+        button_report_person.setOnClickListener {
+            showReport()
+        }
+    }
+
+    override fun showSuccessReport() {
+        showSnackbar(getString(R.string.report_send), ToastType.SUCCESS)
+    }
+
+    private fun showReport() {
+        showEditTextDialog(title = getString(R.string.enter_reason_report), emptyText = getString(R.string.empty_reason)) {
+            presenter.sendReport(it)
         }
     }
 

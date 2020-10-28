@@ -226,7 +226,7 @@
     <string name="description_promo_reward">Первые 500 организаторов получат вознаграждение за организацию события.</string>
     <string name="title_rules_promo_reward">Правила акции:</string>
     <string name="rules_promo_reward">
-        1. Создай открытое событие (чтобы любой пользователь мог принять участие).
+        1. Создай открытое событие (не нужно ставить галочку "Требуется подтверждене участия от организатора" при создании).
         \n2. В событии должны участвовать более 3-х человек.
         \n3. После завершения события нажми на кнопку \"Получить вознаграждение\" в деталях события,
         предоставь фото, показывающие, что событие действительно состоялось, и мы отправим тебе вознаграждение! </string>
@@ -241,6 +241,10 @@
     <string name="empty_card_num">Не заполнен номер карты</string>
     <string name="promo_request_send">Заявка отправлена, ожидайте вознаграждения!</string>
     <string name="not_valid_card_num">Некорректный номер карты</string>
+    <string name="report">Пожаловаться</string>
+    <string name="enter_reason_report">Причина жалобы</string>
+    <string name="empty_reason">Не указана причина</string>
+    <string name="report_send">Жалоба отпрвлена, спасибо за помощь!</string>
 
     <!-- Arrays -->
     <string-array name="custom_weekdays">

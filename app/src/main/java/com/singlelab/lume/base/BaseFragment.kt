@@ -160,7 +160,7 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         }
     }
 
-    fun showEditTextDialog(text: String?, emptyText: String, callback: (String) -> Unit) {
+    fun showEditTextDialog(title: String?, text: String? = null, emptyText: String, callback: (String) -> Unit) {
         context?.let {
             val customLayout = layoutInflater.inflate(R.layout.view_edit_dialog, null)
             text?.let {
@@ -170,7 +170,7 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
 
             val builder = AlertDialog.Builder(it)
             builder.setView(customLayout)
-            builder.setTitle(getString(R.string.edit_description))
+            builder.setTitle(title)
             builder.setPositiveButton(getString(R.string.apply_edit)) { _, _ ->
                 if (customLayout.edit_text.text.isNullOrEmpty()) {
                     showSnackbar(emptyText)
