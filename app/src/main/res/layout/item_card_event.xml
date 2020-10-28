@@ -186,7 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_card"
                     android:ellipsize="end"
-                    android:maxLines="5"
+                    android:maxLines="7"
                     android:scrollY="2dp"
                     android:textColor="@color/colorText"
                     android:textSize="@dimen/text_size_standart"
