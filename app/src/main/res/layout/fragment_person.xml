@@ -153,7 +153,6 @@
             android:id="@+id/button_report_person"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_medium"
             android:clickable="true"
             android:drawableStart="@drawable/ic_report"

@@ -90,13 +90,17 @@ class PersonFragment : BaseFragment(), PersonView {
     }
 
     override fun showSuccessReport() {
+        hideKeyboard()
         showSnackbar(getString(R.string.report_send), ToastType.SUCCESS)
     }
 
     private fun showReport() {
-        showEditTextDialog(title = getString(R.string.enter_reason_report), emptyText = getString(R.string.empty_reason)) {
-            presenter.sendReport(it)
-        }
+        showEditTextDialog(
+            title = getString(R.string.enter_reason_report),
+            emptyText = getString(R.string.empty_reason),
+            callback = {
+                presenter.sendReport(it)
+            })
     }
 
     private fun toChat(title: String, personUid: String) {

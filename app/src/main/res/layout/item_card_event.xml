@@ -49,6 +49,18 @@
                 app:layout_constraintTop_toBottomOf="@id/title"
                 app:layout_constraintVertical_weight="5">
 
+                <ImageView
+                    android:id="@+id/button_report_event"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:padding="15dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/ic_report"
+                    android:tint="@color/selector_gray_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/emoji_card_one"
                     android:layout_width="@dimen/size_card_emoji"

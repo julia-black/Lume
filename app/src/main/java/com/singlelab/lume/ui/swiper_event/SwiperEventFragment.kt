@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.animation.LinearInterpolator
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentResultListener
@@ -16,6 +17,7 @@ import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.model.event.FilterEvent
+import com.singlelab.lume.model.view.ToastType
 import com.singlelab.lume.ui.filters.event.FilterFragment
 import com.singlelab.lume.ui.swiper_event.adapter.CardStackEventAdapter
 import com.singlelab.lume.ui.swiper_event.adapter.OnCardEventListener
@@ -128,6 +130,10 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         info_dialog.isVisible = true
     }
 
+    override fun showSuccessReport() {
+        showSnackbar(getString(R.string.report_send), ToastType.SUCCESS)
+    }
+
     override fun onCardCanceled() {
     }
 
@@ -217,6 +223,23 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         val action =
             SwiperEventFragmentDirections.actionSwiperEventToImageSlider(images.toTypedArray())
         findNavController().navigate(action)
+    }
+
+    override fun onReportClick() {
+        setSoftInputType(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        showEditTextDialog(
+            title = getString(R.string.enter_reason_report),
+            emptyText = getString(R.string.empty_reason),
+            callback = {
+                hideKeyboard()
+                setSoftInputType(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                presenter.sendReport(it)
+            },
+            cancelCallback = {
+                hideKeyboard()
+                setSoftInputType(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+            }
+        )
     }
 
     override fun onCloseDialogClick() {

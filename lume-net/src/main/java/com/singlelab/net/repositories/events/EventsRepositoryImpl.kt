@@ -130,4 +130,11 @@ class EventsRepositoryImpl(private val apiUnit: ApiUnit) : EventsRepository,
             errorMessage = "Не удалось удалить фото"
         )
     }
+
+    override suspend fun sendReport(reportEventRequest: ReportEventRequest) {
+        safeApiCall(
+            call = { apiUnit.eventsApi.sendReportAsync(reportEventRequest).await() },
+            errorMessage = "Не удалось отправить жалобу"
+        )
+    }
 }

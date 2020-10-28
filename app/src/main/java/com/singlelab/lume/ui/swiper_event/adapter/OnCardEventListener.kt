@@ -6,4 +6,6 @@ interface OnCardEventListener {
     fun onAdministratorClick(personUid: String)
 
     fun onImageClick(images: List<String>)
+
+    fun onReportClick()
 }

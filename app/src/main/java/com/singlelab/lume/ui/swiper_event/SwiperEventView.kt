@@ -22,4 +22,7 @@ interface SwiperEventView : LoadingView, ErrorView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun showInfoDialog()
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun showSuccessReport()
 }

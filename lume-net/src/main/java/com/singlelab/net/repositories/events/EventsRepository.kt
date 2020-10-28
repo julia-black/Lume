@@ -40,4 +40,6 @@ interface EventsRepository {
     suspend fun sendPromoRequest(promoRequest: PromoRequest)
 
     suspend fun removeImage(eventImageRequest: EventImageRequest)
+
+    suspend fun sendReport(reportEventRequest: ReportEventRequest)
 }

@@ -124,14 +124,14 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
     }
 
+    fun setSoftInputType(mode: Int) {
+        activity?.window?.setSoftInputMode(mode)
+    }
+
     fun hideKeyboard() {
         val imm: InputMethodManager =
-            activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        var view = activity?.currentFocus
-        if (view == null) {
-            view = View(activity)
-        }
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
+            context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     fun showDialog(title: String, text: String, listener: DialogInterface.OnClickListener) {
@@ -160,7 +160,13 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         }
     }
 
-    fun showEditTextDialog(title: String?, text: String? = null, emptyText: String, callback: (String) -> Unit) {
+    fun showEditTextDialog(
+        title: String?,
+        text: String? = null,
+        emptyText: String,
+        callback: (String) -> Unit,
+        cancelCallback: () -> Unit = {}
+    ) {
         context?.let {
             val customLayout = layoutInflater.inflate(R.layout.view_edit_dialog, null)
             text?.let {
@@ -181,7 +187,7 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
 
             builder.setNegativeButton(
                 getString(R.string.cancel_action)
-            ) { _, _ -> }
+            ) { _, _ -> cancelCallback.invoke() }
             builder.show()
         }
     }

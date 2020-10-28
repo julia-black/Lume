@@ -4,6 +4,7 @@ import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.model.event.Event
 import com.singlelab.net.model.event.ParticipantRequest
 import com.singlelab.net.model.event.RandomEventRequest
+import com.singlelab.net.model.event.ReportEventRequest
 import com.singlelab.net.model.person.ProfileRequest
 import com.singlelab.net.repositories.BaseRepository
 import com.singlelab.net.repositories.events.EventsRepository
@@ -28,5 +29,9 @@ class SwiperEventInteractorImpl(
 
     override suspend fun updatePushToken(token: String) {
         personRepository.updateProfile(ProfileRequest(token = token))
+    }
+
+    override suspend fun sendReport(uid: String, reasonReport: String) {
+        repository.sendReport(ReportEventRequest(uid, reasonReport))
     }
 }

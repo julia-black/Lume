@@ -64,4 +64,7 @@ interface EventsApi {
 
     @HTTP(method = "DELETE", path = "event/remove-event-image", hasBody = true)
     fun removeImageAsync(@Body eventImageRequest: EventImageRequest): Deferred<Response<MessageResponse>>
+
+    @POST("event/add-report")
+    fun sendReportAsync(@Body request: ReportEventRequest): Deferred<Response<MessageResponse>>
 }

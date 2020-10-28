@@ -85,7 +85,8 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             itemView.icon_location.setImageResource(R.drawable.ic_online)
         } else {
             itemView.text_location.text =
-                itemView.context.getLocationName(event.xCoordinate, event.yCoordinate) ?: event.cityName
+                itemView.context.getLocationName(event.xCoordinate, event.yCoordinate)
+                    ?: event.cityName
             if (event.xCoordinate != null && event.xCoordinate > 0
                 && event.yCoordinate != null && event.yCoordinate > 0
             ) {
@@ -93,6 +94,10 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
                     listener.onLocationClick(event.xCoordinate, event.yCoordinate, event.name)
                 }
             }
+        }
+
+        itemView.button_report_event.setOnClickListener {
+            listener.onReportClick()
         }
     }
 }
