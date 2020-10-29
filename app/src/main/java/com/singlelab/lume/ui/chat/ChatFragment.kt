@@ -127,7 +127,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
 
     override fun showMute(isMuted: Boolean) {
         context?.let { context ->
-            val drawable = if (isMuted) R.drawable.ic_volume else R.drawable.ic_mute
+            val drawable = if (isMuted) R.drawable.ic_mute else R.drawable.ic_volume
             chatMuteView.setImageDrawable(ContextCompat.getDrawable(context, drawable))
         }
     }
