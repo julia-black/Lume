@@ -112,6 +112,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView,
             setHint(getString(R.string.login))
             setWarning(getString(R.string.login_hint))
             setImeAction(EditorInfo.IME_ACTION_NEXT)
+            setInputType(InputType.TYPE_CLASS_TEXT)
             setOnEditorListener {
                 if (it == EditorInfo.IME_ACTION_NEXT) {
                     runOnMainThread {

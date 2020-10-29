@@ -70,10 +70,8 @@ open class BasePresenter<ViewT : BaseView>(
         }
     }
 
-    override fun onRefreshToken(auth: AuthResponse?) {
-        if (auth != null) {
-            preferences?.setAuth(Auth.fromResponse(auth)!!)
-        }
+    override fun onRefreshToken(accessToken: String, refreshToken: String?) {
+        preferences?.setAuth(Auth(accessToken, refreshToken))
     }
 
     override fun onRefreshTokenFailed() {

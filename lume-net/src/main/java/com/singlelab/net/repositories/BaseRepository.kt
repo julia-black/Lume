@@ -85,7 +85,10 @@ open class BaseRepository(private val apiUnit: ApiUnit) {
         } catch (e: RefreshTokenException) {
             when (val responseAuth = updateToken(apiUnit)) { //обновляем токен
                 is ResultCoroutines.Success<AuthResponse> -> {
-                    onRefreshTokenListener?.onRefreshToken(responseAuth.data)
+                    onRefreshTokenListener?.onRefreshToken(
+                        responseAuth.data.accessToken,
+                        AuthData.refreshToken
+                    )
                     AuthData.accessToken = responseAuth.data.accessToken
                     safeApiResult(call, errorMessage) //повторно выполняем запрос
                 }

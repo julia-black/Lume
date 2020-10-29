@@ -46,7 +46,9 @@ class AuthPresenter @Inject constructor(
         }
         invokeSuspend {
             try {
-                val pushToken = if (isPushSend) preferences?.getPushToken() else null
+                val pushToken = if (isPushSend && !preferences?.getPushToken()
+                        .isNullOrEmpty()
+                ) preferences?.getPushToken() else null
                 val personUid = interactor.sendCode(phone, pushToken)
                 preferences?.setUid(personUid)
                 this.phone = phone

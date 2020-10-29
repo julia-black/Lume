@@ -43,6 +43,7 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
         setFirstLaunch(true)
         setAccessToken(null)
         setRefreshToken(null)
+        setPushToken(null)
         setUid(null)
         setAnon(true)
         AuthData.setAuthData(null, null, null, true, null, null, null)
