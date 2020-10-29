@@ -106,6 +106,7 @@ class PersonFragment : BaseFragment(), PersonView {
     private fun toChat(title: String, personUid: String) {
         findNavController().navigate(
             PersonFragmentDirections.actionPersonToChat(
+                null,
                 ChatOpeningInvocationType.Person(
                     title = title,
                     personUid = personUid

@@ -253,6 +253,13 @@ class MainActivity : AppCompatActivity() {
             TargetType.EVENT -> {
                 navController.navigate(R.id.event, bundleOf("eventUid" to target.targetId))
             }
+            TargetType.CHAT -> {
+                navController.navigate(R.id.chats)
+                navController.navigate(
+                    R.id.chat,
+                    bundleOf("chatUid" to target.targetId, "chatType" to null)
+                )
+            }
         }
     }
 

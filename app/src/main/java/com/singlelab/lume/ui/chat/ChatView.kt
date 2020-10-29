@@ -14,6 +14,7 @@ interface ChatView : LoadingView, ErrorView {
     fun showNewMessage(message: ChatMessageItem)
     fun enableMessageSending(isEnabled: Boolean)
     fun showMute(isMuted: Boolean)
+    fun showTitle(title: String?)
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun navigateToEvent(eventUid: String)
@@ -23,4 +24,5 @@ interface ChatView : LoadingView, ErrorView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun showMuteDialog(isMuted: Boolean)
+
 }

@@ -33,7 +33,11 @@ class ChatsFragment : BaseFragment(), ChatsView, OnlyForAuthFragments {
 
     private val chatsAdapter: ChatsAdapter by lazy { ChatsAdapter { navigateToChat(it) } }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? =
         inflater.inflate(R.layout.fragment_chats, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,6 +59,7 @@ class ChatsFragment : BaseFragment(), ChatsView, OnlyForAuthFragments {
     private fun navigateToChat(chat: ChatItem) {
         findNavController().navigate(
             ChatsFragmentDirections.actionFromChatsToChat(
+                null,
                 ChatOpeningInvocationType.Common(chat.title, chat.uid, chat.isGroup)
             )
         )
@@ -63,6 +68,7 @@ class ChatsFragment : BaseFragment(), ChatsView, OnlyForAuthFragments {
     private fun initViews() {
         chatsView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         chatsView.adapter = chatsAdapter
-        ContextCompat.getDrawable(requireContext(), R.drawable.chats_item_divider)?.let { chatsView.addItemDecoration(ChatsItemDecorator(it)) }
+        ContextCompat.getDrawable(requireContext(), R.drawable.chats_item_divider)
+            ?.let { chatsView.addItemDecoration(ChatsItemDecorator(it)) }
     }
 }

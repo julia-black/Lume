@@ -14,6 +14,7 @@ import com.singlelab.net.exceptions.TimeoutException
 import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.chat.ChatMessageRequest
 import com.singlelab.net.model.chat.ChatMessageResponse
+import com.singlelab.net.model.chat.ChatMessagesResponse
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -28,13 +29,12 @@ constructor(
     interactor as BaseInteractor
 ) {
     var page: Int = 1
+    val chatSettings = ChatSettings()
 
     private var isLoading: Boolean = false
     private var hasOldMessages: Boolean = true
 
-    private val chatSettings = ChatSettings()
-
-    fun showChat(type: ChatOpeningInvocationType, page: Int = 1) {
+    fun showChat(chatUid: String? = null, type: ChatOpeningInvocationType? = null, page: Int = 1) {
         // TODO: Сделать прогресс бар для загрузки сообщений с сервера, изначально показывать сообщения из бд?
         if (page == 1) {
             Analytics.logOpenChat()
@@ -52,10 +52,19 @@ constructor(
                         type.chatUid,
                         page
                     )
-                    else -> null
+                    else -> {
+                        if (chatUid != null) {
+                            interactor.loadChatByUid(
+                                chatUid,
+                                page
+                            )
+                        } else {
+                            null
+                        }
+                    }
                 }
                 if (chatResponse != null) {
-                    chatSettings.chatType = type
+                    setChatType(type, chatUid, chatResponse)
                     chatSettings.chatUid = chatResponse.chatUid
                     chatSettings.eventUid = chatResponse.eventUid
                     chatSettings.personUid = chatResponse.personUid
@@ -65,6 +74,7 @@ constructor(
                         if (chatResponse.unreadMessagesCount > 0) {
                             updateNotifications()
                         }
+                        viewState.showTitle(chatSettings.chatType?.title)
                         viewState.showMute(chatSettings.isMuted)
                     }
                     isLoading = false
@@ -82,6 +92,23 @@ constructor(
                 isLoading = false
                 showLocalMessages()
             }
+        }
+    }
+
+    private fun setChatType(
+        type: ChatOpeningInvocationType?,
+        chatUid: String?,
+        chatResponse: ChatMessagesResponse
+    ) {
+        if (type != null) {
+            chatSettings.chatType = type
+        } else if (chatUid != null) {
+            chatSettings.chatType =
+                if (chatResponse.isGroupChat != null && chatResponse.isGroupChat!! && chatResponse.chatName != null) {
+                    ChatOpeningInvocationType.Common(chatResponse.chatName!!, chatUid, true)
+                } else {
+                    ChatOpeningInvocationType.Person(chatResponse.chatName!!, chatUid, false)
+                }
         }
     }
 
@@ -210,6 +237,8 @@ constructor(
             interactor.saveChatMessages(chatResponseMessages.toDbEntities(chatSettings.chatUid))
         }
     }
+
+    val isGroup: Boolean = chatSettings.chatType != null && chatSettings.chatType!!.isGroup
 
     data class ChatSettings(
         private var _lastMessageUid: String? = null,

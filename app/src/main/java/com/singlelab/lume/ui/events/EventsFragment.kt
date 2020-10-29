@@ -168,6 +168,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
     override fun onClickChat(eventName: String, chatUid: String) {
         findNavController().navigate(
             EventsFragmentDirections.actionEventsToChat(
+                null,
                 ChatOpeningInvocationType.Common(
                     title = eventName,
                     chatUid = chatUid,

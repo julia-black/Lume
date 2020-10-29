@@ -45,8 +45,6 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
 
     private lateinit var chatMessagesAdapter: ChatMessagesAdapter
 
-    private lateinit var chatType: ChatOpeningInvocationType
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,9 +54,15 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        chatType = arguments?.let { ChatFragmentArgs.fromBundle(it).chatType } ?: return
-        initViews()
-        presenter.showChat(chatType)
+        arguments?.let {
+            val chatUid: String? = ChatFragmentArgs.fromBundle(it).chatUid
+            val chatType: ChatOpeningInvocationType? = ChatFragmentArgs.fromBundle(it).chatType
+            if (chatUid == null && chatType == null) {
+                return
+            }
+            initViews()
+            presenter.showChat(chatUid, chatType)
+        }
     }
 
     override fun showChat(messages: List<ChatMessageItem>, page: Int) {
@@ -125,6 +129,12 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         )
     }
 
+    override fun showTitle(title: String?) {
+        if (title != null) {
+            chatTitleView.text = title
+        }
+    }
+
     override fun showMute(isMuted: Boolean) {
         context?.let { context ->
             val drawable = if (isMuted) R.drawable.ic_mute else R.drawable.ic_volume
@@ -137,7 +147,6 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
     }
 
     private fun initViews() {
-        chatTitleView.text = chatType.title
         val listener = object : OnClickImageListener {
             override fun onClickImage(imageUids: List<String>) {
                 navigateToImages(imageUids)
@@ -153,7 +162,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
                 navigateToPerson(personUid)
             }
         }
-        chatMessagesAdapter = if (chatType.isGroup) {
+        chatMessagesAdapter = if (presenter.isGroup) {
             GroupChatMessagesAdapter(clickEvent, listener, messageListener)
         } else {
             PrivateChatMessagesAdapter(listener, messageListener)
@@ -167,7 +176,10 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 (chatView.layoutManager as LinearLayoutManager?)?.let { layoutManager ->
                     if (dy < 0 && presenter.isNeedLoading() && layoutManager.findFirstVisibleItemPosition() == 0) {
-                        presenter.showChat(chatType, ++presenter.page)
+                        presenter.showChat(
+                            type = presenter.chatSettings.chatType,
+                            page = ++presenter.page
+                        )
                     }
                 }
             }
@@ -227,7 +239,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
     }
 
     private fun showPendingMessage(text: String, images: List<Bitmap>) {
-        val pendingMessage = if (chatType.isGroup) {
+        val pendingMessage = if (presenter.isGroup) {
             GroupChatMessageItem(
                 uid = PENDING_MESSAGE_UID,
                 text = text,

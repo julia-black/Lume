@@ -191,6 +191,7 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
     override fun onChatClick(personName: String, personUid: String) {
         findNavController().navigate(
             FriendsFragmentDirections.actionFromFriendsToChat(
+                null,
                 ChatOpeningInvocationType.Person(
                     title = personName,
                     personUid = personUid
