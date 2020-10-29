@@ -11,7 +11,8 @@ data class ChatMessagesResponse(
     val eventUid: String? = null,
     val personImageUid: String? = null,
     val eventImageUid: String? = null,
-    val unreadMessagesCount: Int = 0
+    val unreadMessagesCount: Int = 0,
+    val isMuted: Boolean = false
 )
 
 // Chats

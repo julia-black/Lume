@@ -7,10 +7,15 @@ import com.singlelab.net.model.chat.ChatMessagesResponse
 import com.singlelab.net.repositories.BaseRepository
 
 interface ChatRepository {
-    suspend fun loadNewMessages(chatUid: String, lastMessageUid: String?): List<ChatMessageResponse>?
+    suspend fun loadNewMessages(
+        chatUid: String,
+        lastMessageUid: String?
+    ): List<ChatMessageResponse>?
+
     suspend fun sendMessage(message: ChatMessageRequest): ChatMessageResponse?
     suspend fun loadPersonChat(personUid: String, page: Int): ChatMessagesResponse?
     suspend fun loadChatByUid(chatUid: String, page: Int): ChatMessagesResponse?
+    suspend fun muteChat(chatUid: String, isMute: Boolean)
 }
 
 class DefaultChatRepository(
@@ -42,4 +47,11 @@ class DefaultChatRepository(
             call = { chatsApi.chatAsync(chatUid, pageNumber = page).await() },
             errorMessage = "Не удалось загрузить чат"
         )
+
+    override suspend fun muteChat(chatUid: String, isMute: Boolean) {
+        safeApiCall(
+            call = { chatsApi.muteChatAsync(chatUid, isMute).await() },
+            errorMessage = "Не удалось выполнить действие"
+        )
+    }
 }

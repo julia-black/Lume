@@ -1,6 +1,10 @@
 package com.singlelab.net.api
 
-import com.singlelab.net.model.chat.*
+import com.singlelab.net.model.MessageResponse
+import com.singlelab.net.model.chat.ChatMessageRequest
+import com.singlelab.net.model.chat.ChatMessageResponse
+import com.singlelab.net.model.chat.ChatMessagesResponse
+import com.singlelab.net.model.chat.ChatResponse
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.Body
@@ -34,4 +38,10 @@ interface ChatsApi {
 
     @POST("chat/add-chat-message")
     fun sendMessageAsync(@Body message: ChatMessageRequest): Deferred<Response<ChatMessageResponse>>
+
+    @POST("chat/mute-chat")
+    fun muteChatAsync(
+        @Query("chatUid") chatUid: String,
+        @Query("mute") isMute: Boolean
+    ): Deferred<Response<MessageResponse>>
 }

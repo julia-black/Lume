@@ -13,10 +13,14 @@ interface ChatView : LoadingView, ErrorView {
     fun showEmptyChat()
     fun showNewMessage(message: ChatMessageItem)
     fun enableMessageSending(isEnabled: Boolean)
+    fun showMute(isMuted: Boolean)
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun navigateToEvent(eventUid: String)
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun navigateToPerson(personUid: String)
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun showMuteDialog(isMuted: Boolean)
 }

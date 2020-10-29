@@ -59,11 +59,13 @@ constructor(
                     chatSettings.chatUid = chatResponse.chatUid
                     chatSettings.eventUid = chatResponse.eventUid
                     chatSettings.personUid = chatResponse.personUid
+                    chatSettings.isMuted = chatResponse.isMuted
                     chatSettings.setLastMessageUid(chatResponse.messages)
                     runOnMainThread {
                         if (chatResponse.unreadMessagesCount > 0) {
                             updateNotifications()
                         }
+                        viewState.showMute(chatSettings.isMuted)
                     }
                     isLoading = false
                     if (chatResponse.messages.isNullOrEmpty()) {
@@ -137,6 +139,31 @@ constructor(
         }
     }
 
+    fun onChatMuteClick() {
+        viewState.showMuteDialog(chatSettings.isMuted)
+    }
+
+    fun muteChat() {
+        chatSettings.chatUid?.let { uid ->
+            viewState.showLoading(true)
+            invokeSuspend {
+                try {
+                    interactor.muteChat(uid, !chatSettings.isMuted)
+                    chatSettings.isMuted = !chatSettings.isMuted
+                    runOnMainThread {
+                        viewState.showLoading(false)
+                        viewState.showMute(chatSettings.isMuted)
+                    }
+                } catch (e: ApiException) {
+                    runOnMainThread {
+                        viewState.showLoading(false)
+                        viewState.showError(e.message)
+                    }
+                }
+            }
+        }
+    }
+
     fun isNeedLoading() = !isLoading && hasOldMessages
 
     private suspend fun showLocalMessages() {
@@ -189,7 +216,8 @@ constructor(
         var chatType: ChatOpeningInvocationType? = null,
         var chatUid: String? = null,
         var eventUid: String? = null,
-        var personUid: String? = null
+        var personUid: String? = null,
+        var isMuted: Boolean = false
     ) {
         val lastMessageUid
             get() = _lastMessageUid

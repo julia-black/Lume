@@ -10,7 +10,11 @@ import com.singlelab.lume.database.repository.ChatMessagesRepository as LocalCha
 import com.singlelab.net.repositories.chat.ChatRepository as RemoteChatRepository
 
 interface ChatInteractor {
-    suspend fun loadNewMessages(chatUid: String, lastMessageUid: String?): List<ChatMessageResponse>?
+    suspend fun loadNewMessages(
+        chatUid: String,
+        lastMessageUid: String?
+    ): List<ChatMessageResponse>?
+
     suspend fun sendMessage(message: ChatMessageRequest): ChatMessageResponse?
     suspend fun loadPersonChat(personUid: String, page: Int): ChatMessagesResponse?
     suspend fun loadChatByUid(chatUid: String, page: Int): ChatMessagesResponse?
@@ -18,6 +22,7 @@ interface ChatInteractor {
     suspend fun saveChatMessages(messages: List<ChatMessage>)
     suspend fun saveChatMessage(message: ChatMessage)
     suspend fun byChatUid(chatUid: String): List<ChatMessage>
+    suspend fun muteChat(chatUid: String, isMute: Boolean)
 }
 
 class DefaultChatInteractor(
@@ -47,4 +52,8 @@ class DefaultChatInteractor(
 
     override suspend fun byChatUid(chatUid: String) =
         localRepository.byChatUid(chatUid)
+
+    override suspend fun muteChat(chatUid: String, isMute: Boolean) {
+        remoteRepository.muteChat(chatUid, isMute)
+    }
 }

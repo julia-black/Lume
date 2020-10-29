@@ -137,7 +137,7 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         setSoftInputType(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     }
 
-    fun showDialog(title: String, text: String, listener: DialogInterface.OnClickListener) {
+    fun showDialog(title: String, text: String? = null, listener: DialogInterface.OnClickListener) {
         context?.let {
             val builder = AlertDialog.Builder(it)
             builder

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -106,6 +107,31 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         findNavController().navigate(ChatFragmentDirections.actionChatToPerson(personUid))
     }
 
+    override fun showMuteDialog(isMuted: Boolean) {
+        val dialogClickListener =
+            DialogInterface.OnClickListener { _, which ->
+                when (which) {
+                    DialogInterface.BUTTON_POSITIVE -> {
+                        presenter.muteChat()
+                    }
+                    DialogInterface.BUTTON_NEGATIVE -> {
+                    }
+                }
+            }
+        val text = if (isMuted) R.string.on_push else R.string.mute_push
+        showDialog(
+            title = getString(text),
+            listener = dialogClickListener
+        )
+    }
+
+    override fun showMute(isMuted: Boolean) {
+        context?.let { context ->
+            val drawable = if (isMuted) R.drawable.ic_volume else R.drawable.ic_mute
+            chatMuteView.setImageDrawable(ContextCompat.getDrawable(context, drawable))
+        }
+    }
+
     override fun navigateToEvent(eventUid: String) {
         findNavController().navigate(ChatFragmentDirections.actionChatToEvent(eventUid))
     }
@@ -155,6 +181,9 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         attachmentMessageView.setOnClickListener {
             addAttachment()
             attachmentMessageView.isEnabled = false
+        }
+        chatMuteView.setOnClickListener {
+            presenter.onChatMuteClick()
         }
     }
 

@@ -185,6 +185,8 @@
     <string name="chat_message_images_count">+ %1$d</string>
     <string name="text_copied">Текст скопирован в буфер обмена</string>
     <string name="copy_message">Скопировать</string>
+    <string name="mute_push">Выключить уведомления?</string>
+    <string name="on_push">Включить уведомления?</string>
 
     <!-- City -->
     <string name="city">Город</string>

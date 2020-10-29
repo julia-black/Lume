@@ -31,6 +31,17 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/chat_title" />
 
+    <ImageView
+        android:id="@+id/chatMuteView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:src="@drawable/ic_mute"
+        android:tint="@color/selector_gray_icon"
+        app:layout_constraintBottom_toBottomOf="@id/chatTitleView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/chatTitleView" />
+
     <EditText
         android:id="@+id/messageInputView"
         android:layout_width="0dp"
