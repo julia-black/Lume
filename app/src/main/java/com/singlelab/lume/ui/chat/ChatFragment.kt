@@ -45,6 +45,8 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
 
     private lateinit var chatMessagesAdapter: ChatMessagesAdapter
 
+    private var chatType: ChatOpeningInvocationType? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,13 +57,9 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            val chatUid: String? = ChatFragmentArgs.fromBundle(it).chatUid
-            val chatType: ChatOpeningInvocationType? = ChatFragmentArgs.fromBundle(it).chatType
-            if (chatUid == null && chatType == null) {
-                return
-            }
+            chatType = ChatFragmentArgs.fromBundle(it).chatType ?: return
             initViews()
-            presenter.showChat(chatUid, chatType)
+            presenter.showChat(chatType)
         }
     }
 
@@ -162,7 +160,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
                 navigateToPerson(personUid)
             }
         }
-        chatMessagesAdapter = if (presenter.isGroup) {
+        chatMessagesAdapter = if (chatType != null && chatType!!.isGroup) {
             GroupChatMessagesAdapter(clickEvent, listener, messageListener)
         } else {
             PrivateChatMessagesAdapter(listener, messageListener)
@@ -239,7 +237,7 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
     }
 
     private fun showPendingMessage(text: String, images: List<Bitmap>) {
-        val pendingMessage = if (presenter.isGroup) {
+        val pendingMessage = if (chatType != null && chatType!!.isGroup) {
             GroupChatMessageItem(
                 uid = PENDING_MESSAGE_UID,
                 text = text,

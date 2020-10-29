@@ -34,7 +34,7 @@ constructor(
     private var isLoading: Boolean = false
     private var hasOldMessages: Boolean = true
 
-    fun showChat(chatUid: String? = null, type: ChatOpeningInvocationType? = null, page: Int = 1) {
+    fun showChat(type: ChatOpeningInvocationType? = null, page: Int = 1) {
         // TODO: Сделать прогресс бар для загрузки сообщений с сервера, изначально показывать сообщения из бд?
         if (page == 1) {
             Analytics.logOpenChat()
@@ -52,19 +52,10 @@ constructor(
                         type.chatUid,
                         page
                     )
-                    else -> {
-                        if (chatUid != null) {
-                            interactor.loadChatByUid(
-                                chatUid,
-                                page
-                            )
-                        } else {
-                            null
-                        }
-                    }
+                    else -> null
                 }
                 if (chatResponse != null) {
-                    setChatType(type, chatUid, chatResponse)
+                    chatSettings.chatType = type
                     chatSettings.chatUid = chatResponse.chatUid
                     chatSettings.eventUid = chatResponse.eventUid
                     chatSettings.personUid = chatResponse.personUid
