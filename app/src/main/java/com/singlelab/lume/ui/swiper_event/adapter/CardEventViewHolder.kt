@@ -37,6 +37,13 @@ class CardEventViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
                 images.addAll(event.images ?: arrayListOf())
                 listener.onImageClick(images)
             }
+        } else {
+            itemView.image.setImageDrawable(
+                ContextCompat.getDrawable(
+                    itemView.context,
+                    R.mipmap.image_event_default
+                )
+            )
         }
 
         if (event.types.size < 3) {
