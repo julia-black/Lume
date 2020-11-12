@@ -59,7 +59,7 @@
                 android:id="@+id/outgoingMessageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:autoLink="web"
+                android:autoLink="all"
                 android:includeFontPadding="false"
                 android:paddingStart="@dimen/margin_small"
                 android:paddingTop="@dimen/margin_small"

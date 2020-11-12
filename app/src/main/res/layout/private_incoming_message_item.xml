@@ -40,7 +40,7 @@
             android:id="@+id/incomingMessageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:autoLink="web"
+            android:autoLink="all"
             android:includeFontPadding="false"
             android:paddingHorizontal="@dimen/margin_small"
             android:paddingStart="@dimen/margin_small"

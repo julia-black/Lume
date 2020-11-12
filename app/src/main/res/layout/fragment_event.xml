@@ -237,6 +237,7 @@
                         android:layout_marginHorizontal="@dimen/margin_medium"
                         android:layout_marginTop="@dimen/margin_medium"
                         android:textColor="@color/colorText"
+                        android:autoLink="all"
                         android:textSize="@dimen/text_size_standart"
                         app:layout_constraintEnd_toStartOf="@id/icon_edit_description"
                         app:layout_constraintStart_toStartOf="parent"
