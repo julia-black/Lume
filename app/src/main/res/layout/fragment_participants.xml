@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:paddingBottom="@dimen/padding_bottom_nav_without_margin"
     android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -10,10 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:visibility="gone"
+        android:overScrollMode="never"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_person"
         tools:visibility="visible"
-        tools:itemCount="5"/>
+        tools:itemCount="20"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
