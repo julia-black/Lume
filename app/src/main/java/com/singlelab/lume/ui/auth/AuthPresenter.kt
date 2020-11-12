@@ -46,15 +46,12 @@ class AuthPresenter @Inject constructor(
         }
         invokeSuspend {
             try {
-                val pushToken = if (isPushSend && !preferences?.getPushToken()
-                        .isNullOrEmpty()
-                ) preferences?.getPushToken() else null
-                val personUid = interactor.sendCode(phone, pushToken)
+                val personUid = interactor.sendCode(phone)
                 preferences?.setUid(personUid)
                 this.phone = phone
                 runOnMainThread {
                     viewState.showLoading(isShow = false, withoutBackground = true)
-                    viewState.onCodeSend(phone, !pushToken.isNullOrEmpty())
+                    viewState.onCodeSend(phone)
                 }
             } catch (e: ApiException) {
                 if (e.errorCode == Const.ERROR_CODE_NEW_PUSH_TOKEN) {
