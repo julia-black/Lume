@@ -47,12 +47,14 @@ class ChatsFragment : BaseFragment(), ChatsView, OnlyForAuthFragments {
     }
 
     override fun showChats(chats: List<ChatItem>) {
+        chatsView.visibility = View.VISIBLE
         emptyChatsView.visibility = View.GONE
         chatsAdapter.setChats(chats)
         chatsAdapter.notifyDataSetChanged()
     }
 
     override fun showEmptyChats() {
+        chatsView.visibility = View.GONE
         emptyChatsView.visibility = View.VISIBLE
     }
 

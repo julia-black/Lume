@@ -4,6 +4,7 @@ import com.singlelab.net.ApiUnit
 import com.singlelab.net.repositories.auth.AuthRepository
 import com.singlelab.net.repositories.auth.AuthRepositoryImpl
 import com.singlelab.lume.LumeApplication
+import com.singlelab.lume.database.LumeDatabase
 import com.singlelab.lume.ui.auth.AuthPresenter
 import com.singlelab.lume.ui.auth.interactor.AuthInteractor
 import com.singlelab.lume.ui.auth.interactor.AuthInteractorImpl
@@ -21,8 +22,8 @@ object AuthModule {
     }
 
     @Provides
-    fun provideInteractor(repository: AuthRepository): AuthInteractor {
-        return AuthInteractorImpl(repository)
+    fun provideInteractor(repository: AuthRepository, database: LumeDatabase): AuthInteractor {
+        return AuthInteractorImpl(repository, database)
     }
 
     @Provides

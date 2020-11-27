@@ -29,7 +29,7 @@ constructor(
         viewState.showLoading(true)
         invokeSuspend {
             try {
-                // TODO: Сделать прогресс бар для загрузки чатов с сервера, изначально показывать чаты из бд?
+                showChatsFromCache()
                 val remoteChats = interactor.remoteChats()
                 if (remoteChats != null) {
                     interactor.saveChats(remoteChats.toDbEntities())
@@ -37,6 +37,16 @@ constructor(
                 showLocalChats()
             } catch (e: ApiException) {
                 showLocalChats()
+            }
+        }
+    }
+
+    private suspend fun showChatsFromCache() {
+        val chats = interactor.localChats().toUiEntities()
+        runOnMainThread {
+            if (chats.isNotEmpty()) {
+                viewState.showLoading(false)
+                viewState.showChats(chats)
             }
         }
     }

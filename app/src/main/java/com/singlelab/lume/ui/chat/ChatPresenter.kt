@@ -81,6 +81,7 @@ constructor(
                 }
             } catch (e: Exception) {
                 isLoading = false
+                runOnMainThread { viewState.showError("Сообщения могут быть неактуальны") }
                 showLocalMessages()
             }
         }
@@ -185,6 +186,7 @@ constructor(
     fun isNeedLoading() = !isLoading && hasOldMessages
 
     private suspend fun showLocalMessages() {
+        //todo если нет интернета, эти параметры будут null, подумать над тем, как это реализовать
         val chatUid = chatSettings.chatUid
         val chatType = chatSettings.chatType
         val currentPersonUid = AuthData.uid
