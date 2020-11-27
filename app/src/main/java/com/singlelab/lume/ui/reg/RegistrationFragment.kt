@@ -16,12 +16,9 @@ import androidx.navigation.fragment.findNavController
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnActivityResultListener
-import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.view.ValidationError
 import com.singlelab.lume.ui.cities.CitiesFragment
-import com.singlelab.lume.ui.view.input.InputView
-import com.singlelab.lume.ui.view.input.OnInvalidStringsListener
 import com.singlelab.lume.util.getBitmap
 import com.theartofdev.edmodo.cropper.CropImage
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,8 +28,7 @@ import moxy.presenter.ProvidePresenter
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RegistrationFragment : BaseFragment(), RegistrationView,
-    OnActivityResultListener, OnInvalidStringsListener {
+class RegistrationFragment : BaseFragment(), RegistrationView, OnActivityResultListener {
 
     @Inject
     lateinit var daggerPresenter: RegistrationPresenter
@@ -61,10 +57,6 @@ class RegistrationFragment : BaseFragment(), RegistrationView,
         findNavController().popBackStack()
         findNavController().popBackStack()
         findNavController().navigate(R.id.my_profile)
-    }
-
-    override fun showLogin(login: String?) {
-        layout_login.setText(login)
     }
 
     override fun showName(name: String?) {
@@ -99,50 +91,7 @@ class RegistrationFragment : BaseFragment(), RegistrationView,
         }
     }
 
-    override fun onInvalidString(view: InputView) {
-        view.setError(getString(R.string.login_hint))
-    }
-
-    override fun onCorrectString(view: InputView) {
-        view.setWarning(getString(R.string.login_hint))
-    }
-
     private fun initInputViews() {
-        layout_login.apply {
-            setHint(getString(R.string.login))
-            setWarning(getString(R.string.login_hint))
-            setImeAction(EditorInfo.IME_ACTION_NEXT)
-            setInputType(InputType.TYPE_CLASS_TEXT)
-            setOnEditorListener {
-                if (it == EditorInfo.IME_ACTION_NEXT) {
-                    runOnMainThread {
-                        this@RegistrationFragment.view?.clearFocus()
-                        layout_name.requestEditTextFocus()
-                    }
-                }
-                return@setOnEditorListener false
-            }
-            setSingleLine()
-            setMaxLength(25)
-            val pattern = Regex(Const.REGEX_LOGIN)
-            setInvalidStringsListener(pattern, this@RegistrationFragment)
-            addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    presenter.setLogin(s.toString())
-                }
-
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
-        }
         layout_name.apply {
             setHint(getString(R.string.name))
             setImeAction(EditorInfo.IME_ACTION_NEXT)
@@ -243,7 +192,6 @@ class RegistrationFragment : BaseFragment(), RegistrationView,
             val validationError = validation()
             if (validationError == null) {
                 presenter.registration(
-                    layout_login.getText(),
                     layout_name.getText(),
                     layout_age.getText().toInt(),
                     layout_description.getText()
@@ -267,7 +215,6 @@ class RegistrationFragment : BaseFragment(), RegistrationView,
 
     private fun validation(): ValidationError? {
         return presenter.validation(
-            layout_login.getText(),
             layout_name.getText(),
             layout_age.getText(),
             layout_description.getText()

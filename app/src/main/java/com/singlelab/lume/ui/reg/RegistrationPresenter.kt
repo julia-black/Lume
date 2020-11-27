@@ -3,7 +3,6 @@ package com.singlelab.lume.ui.reg
 import android.graphics.Bitmap
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
-import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.city.City
 import com.singlelab.lume.model.view.ValidationError
 import com.singlelab.lume.pref.Preferences
@@ -29,7 +28,7 @@ class RegistrationPresenter @Inject constructor(
 
     private var image: Bitmap? = null
 
-    fun registration(login: String, name: String, age: Int, description: String) {
+    fun registration(name: String, age: Int, description: String) {
         val uid = AuthData.uid
         if (!uid.isNullOrEmpty() && city?.cityId != null && image != null) {
             viewState.showLoading(true)
@@ -37,7 +36,6 @@ class RegistrationPresenter @Inject constructor(
                 val imageStr = image!!.resize().toBase64()
                 val miniImageStr = image!!.resize(200).toBase64()
                 val profile = ProfileRequest(
-                    login = login,
                     name = name,
                     age = age,
                     description = description,
@@ -72,14 +70,11 @@ class RegistrationPresenter @Inject constructor(
     }
 
     fun validation(
-        login: String?,
         name: String?,
         age: String?,
         description: String?
     ): ValidationError? {
         return when {
-            !login.isNullOrEmpty() && !login.matches(Const.REGEX_LOGIN.toRegex()) -> ValidationError.INVALID_LOGIN
-            login.isNullOrEmpty() -> ValidationError.EMPTY_LOGIN
             name.isNullOrEmpty() -> ValidationError.EMPTY_NAME
             description.isNullOrEmpty() -> ValidationError.EMPTY_DESCRIPTION
             age.isNullOrEmpty() -> ValidationError.EMPTY_AGE
@@ -106,7 +101,6 @@ class RegistrationPresenter @Inject constructor(
     }
 
     fun saveInputs() {
-        viewState.showLogin(profileRequest.login)
         viewState.showName(profileRequest.name)
         if (profileRequest.age != null) {
             viewState.showAge(profileRequest.age!!)

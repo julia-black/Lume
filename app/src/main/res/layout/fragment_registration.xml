@@ -50,18 +50,11 @@
             app:layout_constraintTop_toBottomOf="@id/text_welcome" />
 
         <com.singlelab.lume.ui.view.input.InputView
-            android:id="@+id/layout_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_big"
-            app:layout_constraintTop_toBottomOf="@id/text_fill_form" />
-
-        <com.singlelab.lume.ui.view.input.InputView
             android:id="@+id/layout_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_big"
-            app:layout_constraintTop_toBottomOf="@id/layout_login" />
+            app:layout_constraintTop_toBottomOf="@id/text_fill_form" />
 
         <com.singlelab.lume.ui.view.input.InputView
             android:id="@+id/layout_age"
