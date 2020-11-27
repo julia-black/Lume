@@ -174,6 +174,10 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         }
     }
 
+    override fun showLoadingFriends(isShow: Boolean) {
+        friendsView.showLoading(isShow)
+    }
+
     override fun navigateToAuth() {
         findNavController().popBackStack()
         findNavController().navigate(R.id.auth)

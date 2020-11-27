@@ -1,8 +1,10 @@
 package com.singlelab.lume.ui.my_profile
 
 import android.graphics.Bitmap
+import android.util.Log
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.profile.Badge
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.model.profile.PersonNotifications
@@ -46,8 +48,10 @@ class MyProfilePresenter @Inject constructor(
         invokeSuspend {
             try {
                 if (!AuthData.isAnon) {
+                    showProfileFromCache(isFirstAttach)
                     profile = interactor.loadProfile()
                     profile?.let {
+                        interactor.saveProfile(it)
                         preferences?.setCity(it.cityId, it.cityName)
                         preferences?.setAge(it.age)
                     }
@@ -115,9 +119,16 @@ class MyProfilePresenter @Inject constructor(
 
     fun loadFriends() {
         profile?.personUid?.let {
+            Log.d(Const.LOG_TAG, "personUid = it")
             invokeSuspend {
                 try {
+                    showFriendsFromCache()
+                    Log.d(Const.LOG_TAG, "loading")
                     friends = interactor.loadFriends(it)
+                    Log.d(Const.LOG_TAG, "loaded")
+                    friends?.let {
+                        interactor.saveFriends(it)
+                    }
                     runOnMainThread {
                         viewState.onLoadedFriends(friends)
                     }
@@ -145,6 +156,30 @@ class MyProfilePresenter @Inject constructor(
                     runOnMainThread {
                         viewState.showError(e.message)
                     }
+                }
+            }
+        }
+    }
+
+    private fun showProfileFromCache(isFirstAttach: Boolean) {
+        invokeSuspend {
+            profile = interactor.loadProfileFromCache()
+            if (profile != null) {
+                runOnMainThread {
+                    viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
+                    viewState.showProfile(profile!!)
+                }
+            }
+        }
+    }
+
+    private fun showFriendsFromCache() {
+        invokeSuspend {
+            val friends = interactor.loadFriendsFromCache()
+            Log.d(Const.LOG_TAG, "friends = $friends")
+            if (friends != null) {
+                runOnMainThread {
+                    viewState.onLoadedFriends(friends)
                 }
             }
         }

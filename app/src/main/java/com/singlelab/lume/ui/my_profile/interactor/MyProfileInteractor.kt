@@ -18,4 +18,12 @@ interface MyProfileInteractor {
     suspend fun removePushToken()
 
     suspend fun loadBadges(personUid: String): List<Badge>?
+
+    suspend fun loadProfileFromCache(): Profile?
+
+    suspend fun saveProfile(profile: Profile)
+
+    suspend fun loadFriendsFromCache(): List<Person>?
+
+    suspend fun saveFriends(friends: List<Person>)
 }

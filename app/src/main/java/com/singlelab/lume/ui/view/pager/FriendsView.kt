@@ -5,6 +5,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
@@ -12,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.singlelab.lume.R
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.ui.view.pager.listener.OnFriendsClickListener
 import com.singlelab.lume.ui.view.person_short.OnPersonShortClickListener

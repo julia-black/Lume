@@ -2,6 +2,8 @@ package com.singlelab.lume.ui.my_profile.di
 
 import com.singlelab.lume.LumeApplication
 import com.singlelab.lume.database.LumeDatabase
+import com.singlelab.lume.database.repository.ProfileRepository
+import com.singlelab.lume.database.repository.RoomProfileRepository
 import com.singlelab.lume.ui.my_profile.MyProfilePresenter
 import com.singlelab.lume.ui.my_profile.interactor.MyProfileInteractor
 import com.singlelab.lume.ui.my_profile.interactor.MyProfileInteractorImpl
@@ -25,8 +27,16 @@ object MyProfileModule {
     @Provides
     fun provideInteractor(
         repository: PersonRepository,
+        localRepository: ProfileRepository,
         database: LumeDatabase
     ): MyProfileInteractor {
-        return MyProfileInteractorImpl(repository, database)
+        return MyProfileInteractorImpl(repository, localRepository, database)
     }
+
+    @Provides
+    fun provideLocalRepository(
+        database: LumeDatabase
+    ): ProfileRepository = RoomProfileRepository(
+        db = database
+    )
 }

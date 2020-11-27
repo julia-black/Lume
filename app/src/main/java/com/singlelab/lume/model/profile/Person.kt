@@ -43,5 +43,38 @@ class Person(
                 null
             }
         }
+
+        fun fromEntity(person: com.singlelab.lume.database.entity.Person?): Person? {
+            return if (person != null) {
+                Person(
+                    person.personUid,
+                    person.name,
+                    person.login,
+                    person.description,
+                    person.age,
+                    person.cityName,
+                    person.imageContentUid,
+                    person.isFriend,
+                    false,
+                    person.friendshipApprovalRequired,
+                    ParticipantStatus.findStatus(person.participantStatus)
+                )
+            } else {
+                null
+            }
+        }
+    }
+
+    fun toEntity(): com.singlelab.lume.database.entity.Person {
+        return com.singlelab.lume.database.entity.Person(
+            personUid,
+            name,
+            login,
+            description ?: "",
+            age,
+            cityName ?: "",
+            imageContentUid ?: "",
+            isFriend
+        )
     }
 }

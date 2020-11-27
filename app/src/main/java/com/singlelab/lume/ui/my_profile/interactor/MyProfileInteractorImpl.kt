@@ -2,6 +2,7 @@ package com.singlelab.lume.ui.my_profile.interactor
 
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.database.LumeDatabase
+import com.singlelab.lume.database.repository.ProfileRepository
 import com.singlelab.lume.model.profile.Badge
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.model.profile.Profile
@@ -11,6 +12,7 @@ import com.singlelab.net.repositories.person.PersonRepository
 
 class MyProfileInteractorImpl(
     private val repository: PersonRepository,
+    private val localRepository: ProfileRepository,
     private val database: LumeDatabase
 ) : MyProfileInteractor,
     BaseInteractor(repository as BaseRepository) {
@@ -45,5 +47,22 @@ class MyProfileInteractorImpl(
         return repository.getBadges(personUid)?.mapNotNull {
             Badge.fromResponse(it)
         }?.sortedBy { !it.isReceived }
+    }
+
+    override suspend fun loadProfileFromCache(): Profile? {
+        return Profile.fromEntity(localRepository.get())
+    }
+
+    override suspend fun saveProfile(profile: Profile) {
+        localRepository.insert(profile.toEntity())
+    }
+
+    override suspend fun loadFriendsFromCache(): List<Person> {
+        return localRepository.getFriends().mapNotNull { Person.fromEntity(it) }
+    }
+
+    override suspend fun saveFriends(friends: List<Person>) {
+        localRepository.clearFriends()
+        localRepository.insertFriends(friends.map { it.toEntity() })
     }
 }

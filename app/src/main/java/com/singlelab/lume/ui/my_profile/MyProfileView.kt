@@ -27,4 +27,7 @@ interface MyProfileView : LoadingView, ErrorView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showNewBadge(hasNewBadges: Boolean)
+
+    @StateStrategyType(OneExecutionStateStrategy::class)
+    fun showLoadingFriends(isShow: Boolean)
 }
