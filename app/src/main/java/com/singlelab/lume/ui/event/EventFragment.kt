@@ -657,6 +657,12 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
                 shareEvent(it.eventUid, it.name)
             }
         }
+        icon_date.setOnClickListener {
+            presenter.onClickDate()
+        }
+        start_date.setOnClickListener {
+            presenter.onClickDate()
+        }
     }
 
     private fun shareEvent(eventUid: String?, name: String) {

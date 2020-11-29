@@ -284,4 +284,10 @@ class EventPresenter @Inject constructor(
             }
         }
     }
+
+    fun onClickDate() {
+        if (isAdministrator()) {
+
+        }
+    }
 }
