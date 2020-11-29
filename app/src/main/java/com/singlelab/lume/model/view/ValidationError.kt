@@ -14,5 +14,6 @@ enum class ValidationError(val titleResId: Int) {
     EMPTY_DESCRIPTION_EVENT(R.string.empty_description_event),
     EMPTY_START_TIME(R.string.empty_start_time),
     EMPTY_END_TIME(R.string.empty_end_time),
-    INVALID_LOGIN(R.string.invalid_login)
+    INVALID_LOGIN(R.string.invalid_login),
+    INVALID_AGE(R.string.invalid_age)
 }

@@ -67,12 +67,12 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
 
     private fun initTutorial() {
         val tutorialList = TutorialPage.values().toList()
-        view_pager_tutorial.apply {
+        view_pager_tutorial?.apply {
             adapter = TutorialAdapter(tutorialList)
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
             (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+            TabLayoutMediator(tab_layout, view_pager_tutorial) { _, _ -> }.attach()
         }
-        TabLayoutMediator(tab_layout, view_pager_tutorial) { tab, position -> }.attach()
     }
 
     override fun showLoading(isShow: Boolean, withoutBackground: Boolean) {

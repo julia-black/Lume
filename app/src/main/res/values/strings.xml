@@ -210,6 +210,7 @@
     <string name="mtrl_picker_range_header_only_start_selected">%1$s - Выберите конечную дату</string>
     <string name="choose_city">Укажи город</string>
     <string name="invalid_login">Некорректный логин</string>
+    <string name="invalid_age">Некорректный возраст</string>
     <string name="empty_login">Не заполнен логин</string>
     <string name="empty_name">Не заполнено имя</string>
     <string name="empty_description">Не заполнено описание профиля</string>

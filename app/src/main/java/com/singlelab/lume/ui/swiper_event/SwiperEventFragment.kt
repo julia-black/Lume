@@ -172,6 +172,7 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
 //            findNavController().navigate(SwiperEventFragmentDirections.actionSwiperEventToSearchEvent())
 //        }
         button_filter.setOnClickListener {
+            button_filter.isEnabled = false
             val action = SwiperEventFragmentDirections.actionSwiperEventToFilterFragment()
             action.isEvent = true
             presenter.filterEvent.let {

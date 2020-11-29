@@ -1,6 +1,7 @@
 package com.singlelab.lume.ui.reg
 
 import android.graphics.Bitmap
+import androidx.core.text.isDigitsOnly
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.city.City
@@ -78,6 +79,7 @@ class RegistrationPresenter @Inject constructor(
             name.isNullOrEmpty() -> ValidationError.EMPTY_NAME
             description.isNullOrEmpty() -> ValidationError.EMPTY_DESCRIPTION
             age.isNullOrEmpty() -> ValidationError.EMPTY_AGE
+            !age.isDigitsOnly() -> ValidationError.INVALID_AGE
             image == null -> ValidationError.EMPTY_PHOTO
             city == null -> ValidationError.EMPTY_CITY
             else -> null
