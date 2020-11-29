@@ -16,6 +16,7 @@ import com.singlelab.lume.util.toBase64
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.exceptions.NotConnectionException
 import com.singlelab.net.model.auth.AuthData
+import kotlinx.coroutines.delay
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -161,14 +162,13 @@ class MyProfilePresenter @Inject constructor(
         }
     }
 
-    private fun showProfileFromCache(isFirstAttach: Boolean) {
-        invokeSuspend {
-            profile = interactor.loadProfileFromCache()
-            if (profile != null) {
-                runOnMainThread {
-                    viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
-                    viewState.showProfile(profile!!)
-                }
+    private suspend fun showProfileFromCache(isFirstAttach: Boolean) {
+        profile = interactor.loadProfileFromCache()
+        if (profile != null) {
+            delay(Const.MIN_DELAY_FOR_TRANSITION)
+            runOnMainThread {
+                viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
+                viewState.showProfile(profile!!)
             }
         }
     }

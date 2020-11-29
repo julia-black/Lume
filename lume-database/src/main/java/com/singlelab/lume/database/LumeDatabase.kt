@@ -8,11 +8,11 @@ import com.singlelab.lume.database.dao.*
 import com.singlelab.lume.database.entity.*
 
 @Database(
-    version = 11,
+    version = 12,
     entities = [
         Chat::class,
         ChatMessage::class,
-        Event::class,
+        EventSummary::class,
         Profile::class,
         Person::class
     ],
@@ -21,7 +21,7 @@ import com.singlelab.lume.database.entity.*
 abstract class LumeDatabase : RoomDatabase() {
     internal abstract fun chatsDao(): ChatsDao
     internal abstract fun chatMessagesDao(): ChatMessagesDao
-    internal abstract fun eventInSwipesDao(): EventsInSwipesDao
+    internal abstract fun eventsSummaryDao(): EventsSummaryDao
     internal abstract fun profileDao(): ProfileDao
     internal abstract fun friendsDao(): FriendsDao
 

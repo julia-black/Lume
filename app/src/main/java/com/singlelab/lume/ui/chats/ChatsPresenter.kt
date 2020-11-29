@@ -2,11 +2,13 @@ package com.singlelab.lume.ui.chats
 
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.chats.common.toDbEntities
 import com.singlelab.lume.ui.chats.common.toUiEntities
 import com.singlelab.lume.ui.chats.interactor.ChatsInteractor
 import com.singlelab.net.exceptions.ApiException
+import kotlinx.coroutines.delay
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -43,6 +45,7 @@ constructor(
 
     private suspend fun showChatsFromCache() {
         val chats = interactor.localChats().toUiEntities()
+        delay(Const.MIN_DELAY_FOR_TRANSITION)
         runOnMainThread {
             if (chats.isNotEmpty()) {
                 viewState.showLoading(false)

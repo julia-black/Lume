@@ -1,12 +1,15 @@
 package com.singlelab.lume.ui.events.di
 
+import com.singlelab.lume.LumeApplication
+import com.singlelab.lume.database.LumeDatabase
+import com.singlelab.lume.database.repository.EventsSummaryRepository
+import com.singlelab.lume.database.repository.RoomEventsSummaryRepository
+import com.singlelab.lume.ui.events.EventsPresenter
+import com.singlelab.lume.ui.events.interactor.EventsInteractor
+import com.singlelab.lume.ui.events.interactor.EventsInteractorImpl
 import com.singlelab.net.ApiUnit
 import com.singlelab.net.repositories.events.EventsRepository
 import com.singlelab.net.repositories.events.EventsRepositoryImpl
-import com.singlelab.lume.LumeApplication
-import com.singlelab.lume.ui.events.EventsPresenter
-import com.singlelab.lume.ui.events.interactor.EventsInteractorImpl
-import com.singlelab.lume.ui.events.interactor.EventsInteractor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,12 +25,20 @@ object EventsModule {
     }
 
     @Provides
-    fun provideInteractor(repository: EventsRepository): EventsInteractor {
-        return EventsInteractorImpl(repository)
+    fun provideInteractor(
+        repository: EventsRepository,
+        localRepository: EventsSummaryRepository
+    ): EventsInteractor {
+        return EventsInteractorImpl(repository, localRepository)
     }
 
     @Provides
     fun provideRepository(apiUnit: ApiUnit): EventsRepository {
         return EventsRepositoryImpl(apiUnit)
+    }
+
+    @Provides
+    fun provideLocalRepository(database: LumeDatabase): EventsSummaryRepository {
+        return RoomEventsSummaryRepository(database)
     }
 }

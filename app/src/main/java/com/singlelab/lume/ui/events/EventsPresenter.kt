@@ -8,6 +8,7 @@ import com.singlelab.lume.model.event.EventStatus
 import com.singlelab.lume.model.event.EventSummary
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.events.interactor.EventsInteractor
+import com.singlelab.lume.util.compare
 import com.singlelab.lume.util.toCalendarDay
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.exceptions.NotConnectionException
@@ -25,6 +26,8 @@ class EventsPresenter @Inject constructor(
     private var allDays: MutableMap<CalendarDay, MutableList<EventSummary>> = mutableMapOf()
 
     private var allEvents: List<EventSummary>? = null
+
+    private var eventsFromCache: List<EventSummary>? = null
 
     private var pastEvents = mutableListOf<EventSummary>()
     private var newInviteEvents = mutableListOf<EventSummary>()
@@ -44,23 +47,14 @@ class EventsPresenter @Inject constructor(
         viewState.showLoading(true)
         invokeSuspend {
             try {
+                showEventsFromCache(currentEventUid)
+                allEvents = eventsFromCache
                 allEvents = interactor.getEvents()
-                parseEventsToDays(allEvents)
-                filterEvents(allEvents)
-                val countInvites = allEvents?.count {
-                    it.participantStatus == ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER
-                } ?: 0
-                runOnMainThread {
-                    viewState.showLoading(false)
+                if (eventsFromCache == null || !eventsFromCache!!.compare(allEvents!!)) {
                     allEvents?.let {
-                        viewState.showEvents(parseToList(allDays), countInvites)
-                        viewState.showEventsOnCalendar(
-                            pastEvents,
-                            newInviteEvents,
-                            futureEvents,
-                            getCurrentDay(currentEventUid)
-                        )
+                        interactor.saveEventToCache(it)
                     }
+                    filterAndShowEvents(allEvents, currentEventUid)
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
@@ -71,6 +65,35 @@ class EventsPresenter @Inject constructor(
                         callRetry = { loadEvents(currentEventUid) }
                     )
                 }
+            }
+        }
+    }
+
+    private fun filterAndShowEvents(allEvents: List<EventSummary>?, currentEventUid: String?) {
+        parseEventsToDays(allEvents)
+        filterEvents(allEvents)
+        val countInvites = allEvents?.count {
+            it.participantStatus == ParticipantStatus.WAITING_FOR_APPROVE_FROM_USER
+        } ?: 0
+        runOnMainThread {
+            viewState.showLoading(false)
+            allEvents?.let {
+                viewState.showEvents(parseToList(allDays), countInvites)
+                viewState.showEventsOnCalendar(
+                    pastEvents,
+                    newInviteEvents,
+                    futureEvents,
+                    getCurrentDay(currentEventUid)
+                )
+            }
+        }
+    }
+
+    private suspend fun showEventsFromCache(currentEventUid: String?) {
+        invokeSuspend {
+            eventsFromCache = interactor.getEventsFromCache()
+            if (!eventsFromCache.isNullOrEmpty()) {
+                filterAndShowEvents(eventsFromCache, currentEventUid)
             }
         }
     }

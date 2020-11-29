@@ -6,5 +6,9 @@ import com.singlelab.lume.model.promo.PromoReward
 interface EventsInteractor {
     suspend fun getEvents(): List<EventSummary>?
 
+    suspend fun getEventsFromCache(): List<EventSummary>?
+
     suspend fun checkPromoReward(cityId: Int): PromoReward?
+
+    suspend fun saveEventToCache(list: List<EventSummary>)
 }

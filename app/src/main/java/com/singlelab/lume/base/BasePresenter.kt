@@ -6,12 +6,8 @@ import com.singlelab.lume.model.profile.PersonNotifications
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.auth.AuthData
-import com.singlelab.net.model.auth.AuthResponse
 import com.singlelab.net.repositories.OnRefreshTokenListener
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import moxy.MvpPresenter
 import kotlin.coroutines.CoroutineContext
 
@@ -36,6 +32,11 @@ open class BasePresenter<ViewT : BaseView>(
         if (preferences != null && preferences.isFirstLaunch()) {
             loadPromo()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        scope.cancel()
     }
 
     private fun loadPromo() {

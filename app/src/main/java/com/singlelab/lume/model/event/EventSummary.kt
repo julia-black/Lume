@@ -46,6 +46,52 @@ class EventSummary(
                 null
             }
         }
+
+        fun fromEntity(eventSummaryEntity: com.singlelab.lume.database.entity.EventSummary?): EventSummary? {
+            return if (eventSummaryEntity != null) {
+                EventSummary(
+                    eventSummaryEntity.eventUid,
+                    eventSummaryEntity.name,
+                    eventSummaryEntity.description,
+                    eventSummaryEntity.startTime,
+                    eventSummaryEntity.endTime,
+                    eventSummaryEntity.types.map { EventType.findById(it) },
+                    eventSummaryEntity.eventPrimaryImageContentUid,
+                    eventSummaryEntity.xCoordinate,
+                    eventSummaryEntity.yCoordinate,
+                    EventStatus.findById(eventSummaryEntity.status),
+                    eventSummaryEntity.isAdministrator,
+                    ParticipantStatus.findStatus(eventSummaryEntity.participantStatus)!!,
+                    eventSummaryEntity.anyPersonWaitingForApprove,
+                    eventSummaryEntity.isOnline,
+                    eventSummaryEntity.chatUid,
+                    eventSummaryEntity.cityName
+                )
+            } else {
+                null
+            }
+        }
+    }
+
+    fun toEntity(): com.singlelab.lume.database.entity.EventSummary {
+        return com.singlelab.lume.database.entity.EventSummary(
+            eventUid,
+            name,
+            description,
+            startTime,
+            endTime,
+            types.map { it.id },
+            eventPrimaryImageContentUid ?: "",
+            xCoordinate,
+            yCoordinate,
+            status.id,
+            isAdministrator,
+            participantStatus.id,
+            anyPersonWaitingForApprove,
+            isOnline,
+            chatUid,
+            cityName
+        )
     }
 
     fun isActive(): Boolean {

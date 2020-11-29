@@ -34,9 +34,7 @@ object MyProfileModule {
     }
 
     @Provides
-    fun provideLocalRepository(
-        database: LumeDatabase
-    ): ProfileRepository = RoomProfileRepository(
-        db = database
-    )
+    fun provideLocalRepository(database: LumeDatabase): ProfileRepository {
+        return RoomProfileRepository(database)
+    }
 }

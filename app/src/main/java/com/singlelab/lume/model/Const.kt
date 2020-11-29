@@ -6,7 +6,7 @@ object Const {
     const val URL_KEY = "Url"
     const val APP_NAME = "Lume"
     const val FOLDER_NAME = "Lume Images"
-    const val BASE_URL = "https://lumeprod.azurewebsites.net/api/"
+    const val BASE_URL = "https://lumewebapp.azurewebsites.net/api/"
     const val STORE_URL = "https://play.google.com/store/apps/details?id=com.singlelab.lume"
     const val GOOGLE_PLAY = "play.google"
 
@@ -37,6 +37,7 @@ object Const {
     const val SELECT_IMAGE_REQUEST_CODE = 102
 
     const val CARD_NUM_LENGTH = 16
+    const val MIN_DELAY_FOR_TRANSITION = 350L
 
     const val CODE_CHAR_SPACE = 160
 

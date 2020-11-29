@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.*
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.base.listeners.OnActivityResultListener
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.Const.SELECT_IMAGE_REQUEST_CODE
 import com.singlelab.lume.model.view.ToastType
 import com.singlelab.lume.ui.chat.common.*
@@ -51,16 +53,39 @@ class ChatFragment : BaseFragment(), ChatView, OnlyForAuthFragments, OnActivityR
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
-        inflater.inflate(R.layout.fragment_chat, container, false)
+    ): View? {
+        Log.d(Const.LOG_TAG, "ChatFragment: onCreateView")
+        return inflater.inflate(R.layout.fragment_chat, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d(Const.LOG_TAG, "ChatFragment: onViewCreated")
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             chatType = ChatFragmentArgs.fromBundle(it).chatType ?: return
             initViews()
             presenter.showChat(chatType)
         }
+    }
+
+    override fun onStart() {
+        Log.d(Const.LOG_TAG, "ChatFragment: onStart")
+        super.onStart()
+    }
+
+    override fun onStop() {
+        Log.d(Const.LOG_TAG, "ChatFragment: onStop")
+        super.onStop()
+    }
+
+    override fun onPause() {
+        Log.d(Const.LOG_TAG, "ChatFragment: onPause")
+        super.onPause()
+    }
+
+    override fun onResume() {
+        Log.d(Const.LOG_TAG, "ChatFragment: onResume")
+        super.onResume()
     }
 
     override fun showChat(messages: List<ChatMessageItem>, page: Int) {
