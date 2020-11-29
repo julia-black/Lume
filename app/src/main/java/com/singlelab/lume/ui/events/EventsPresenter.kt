@@ -14,6 +14,7 @@ import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.exceptions.NotConnectionException
 import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.event.ParticipantStatus
+import kotlinx.coroutines.delay
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -93,6 +94,7 @@ class EventsPresenter @Inject constructor(
         invokeSuspend {
             eventsFromCache = interactor.getEventsFromCache()
             if (!eventsFromCache.isNullOrEmpty()) {
+                delay(Const.MIN_DELAY_FOR_TRANSITION)
                 filterAndShowEvents(eventsFromCache, currentEventUid)
             }
         }
