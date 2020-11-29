@@ -1,5 +1,6 @@
 package com.singlelab.lume.util
 
+import android.text.format.DateUtils
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.singlelab.lume.model.Const
 import org.threeten.bp.LocalDate
@@ -70,7 +71,7 @@ fun Long.toDateFormat(format: String): String {
     return date.parseToString(format)
 }
 
-fun Long.toFormatUTC(format: String) : String {
+fun Long.toFormatUTC(format: String): String {
     val date = Date(this)
     val sdf = SimpleDateFormat(format, Locale.getDefault())
     sdf.timeZone = TimeZone.getTimeZone("UTC")
@@ -83,4 +84,14 @@ fun String.toLongTime(format: String): Long {
     inputFormat.timeZone = TimeZone.getTimeZone(Const.UTC)
     val date = inputFormat.parse(this)
     return date.time
+}
+
+fun Long.isToday() = DateUtils.isToday(this)
+
+fun Long.isYesterday(): Boolean {
+    val time = Calendar.getInstance()
+    time.timeInMillis = this
+    val now = Calendar.getInstance()
+    return now.get(Calendar.DATE) - time.get(Calendar.DATE) == 1 &&
+            now.get(Calendar.MONTH) == time.get(Calendar.MONTH)
 }
