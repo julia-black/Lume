@@ -1,5 +1,6 @@
 package com.singlelab.lume.model.event
 
+import com.singlelab.lume.database.entity.EventSummary
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.net.model.event.EventResponse
 import com.singlelab.net.model.event.ParticipantStatus
@@ -63,6 +64,38 @@ class Event(
                     eventResponse.cityName,
                     eventResponse.isOnline,
                     eventResponse.promoRequestUid
+                )
+            } else {
+                null
+            }
+        }
+
+        fun fromEventSummaryEntity(eventSummary: EventSummary?): Event? {
+            return if (eventSummary != null) {
+                Event(
+                    eventSummary.eventUid,
+                    eventSummary.name,
+                    null,
+                    null,
+                    eventSummary.xCoordinate,
+                    eventSummary.yCoordinate,
+                    eventSummary.description,
+                    eventSummary.startTime,
+                    eventSummary.endTime,
+                    eventSummary.chatUid,
+                    EventStatus.findById(eventSummary.status),
+                    eventSummary.types.map { EventType.findById(it) },
+                    listOf(),
+                    listOf(),
+                    listOf(),
+                    null,
+                    false,
+                    null,
+                    listOf(),
+                    eventSummary.cityId?.toInt(),
+                    eventSummary.cityName,
+                    eventSummary.isOnline,
+                    null
                 )
             } else {
                 null

@@ -39,10 +39,21 @@ class EventPresenter @Inject constructor(
                     }
                 }
             } catch (e: ApiException) {
+                showEventFromCache(uid)
                 runOnMainThread {
                     viewState.showLoading(false)
                     viewState.showError(e.message)
                 }
+            }
+        }
+    }
+
+    private suspend fun showEventFromCache(uid: String) {
+        val event = interactor.getEventFromCache(uid)
+        if (event != null) {
+            runOnMainThread {
+                viewState.showLoading(false)
+                viewState.showEvent(event)
             }
         }
     }

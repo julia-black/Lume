@@ -25,5 +25,6 @@ data class EventSummary(
     val anyPersonWaitingForApprove: Boolean,
     val isOnline: Boolean,
     val chatUid: String? = null,
+    val cityId: String? = null,
     val cityName: String? = null
 )

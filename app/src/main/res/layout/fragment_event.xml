@@ -236,8 +236,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/margin_medium"
                         android:layout_marginTop="@dimen/margin_medium"
-                        android:textColor="@color/colorText"
                         android:autoLink="all"
+                        android:textColor="@color/colorText"
                         android:textSize="@dimen/text_size_standart"
                         app:layout_constraintEnd_toStartOf="@id/icon_edit_description"
                         app:layout_constraintStart_toStartOf="parent"
@@ -274,11 +274,11 @@
                         android:layout_height="@dimen/size_image_person_short"
                         android:layout_marginHorizontal="@dimen/margin_medium"
                         android:layout_marginVertical="@dimen/margin_small"
+                        app:cardBackgroundColor="@color/colorGrayVeryLight"
                         app:cardCornerRadius="10dp"
                         app:cardElevation="0dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/age"
-                        tools:cardBackgroundColor="@color/colorGray">
+                        app:layout_constraintTop_toBottomOf="@id/age">
 
                         <ImageView
                             android:id="@+id/image_administrator"

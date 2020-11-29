@@ -1,6 +1,7 @@
 package com.singlelab.lume.ui.event.interactor
 
 import com.singlelab.lume.base.BaseInteractor
+import com.singlelab.lume.database.repository.EventsSummaryRepository
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.model.promo.PromoReward
 import com.singlelab.net.model.event.ParticipantRequest
@@ -9,7 +10,10 @@ import com.singlelab.net.model.event.UpdateEventRequest
 import com.singlelab.net.repositories.BaseRepository
 import com.singlelab.net.repositories.events.EventsRepository
 
-class EventInteractorImpl(private val repository: EventsRepository) : EventInteractor,
+class EventInteractorImpl(
+    private val repository: EventsRepository,
+    private val localRepository: EventsSummaryRepository
+) : EventInteractor,
     BaseInteractor(repository as BaseRepository) {
 
     override suspend fun getEvent(uid: String): Event? {
@@ -38,5 +42,9 @@ class EventInteractorImpl(private val repository: EventsRepository) : EventInter
 
     override suspend fun sendReport(uid: String, reasonReport: String) {
         repository.sendReport(ReportEventRequest(uid, reasonReport))
+    }
+
+    override suspend fun getEventFromCache(uid: String): Event? {
+        return Event.fromEventSummaryEntity(localRepository.getEvent(uid))
     }
 }

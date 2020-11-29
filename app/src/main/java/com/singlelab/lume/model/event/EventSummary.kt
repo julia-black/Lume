@@ -19,6 +19,7 @@ class EventSummary(
     val anyPersonWaitingForApprove: Boolean,
     val isOnline: Boolean,
     val chatUid: String? = null,
+    val cityId: String? = null,
     val cityName: String? = null
 ) {
     companion object {
@@ -40,6 +41,7 @@ class EventSummary(
                     eventSummaryResponse.anyPersonWaitingForApprove,
                     eventSummaryResponse.isOnline,
                     eventSummaryResponse.chatUid,
+                    eventSummaryResponse.cityId,
                     eventSummaryResponse.cityName
                 )
             } else {
@@ -65,6 +67,7 @@ class EventSummary(
                     eventSummaryEntity.anyPersonWaitingForApprove,
                     eventSummaryEntity.isOnline,
                     eventSummaryEntity.chatUid,
+                    eventSummaryEntity.cityId,
                     eventSummaryEntity.cityName
                 )
             } else {
@@ -90,6 +93,7 @@ class EventSummary(
             anyPersonWaitingForApprove,
             isOnline,
             chatUid,
+            cityId,
             cityName
         )
     }

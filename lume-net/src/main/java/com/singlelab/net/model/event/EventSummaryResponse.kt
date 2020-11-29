@@ -16,5 +16,6 @@ class EventSummaryResponse(
     val anyPersonWaitingForApprove: Boolean,
     val isOnline: Boolean,
     val chatUid: String,
+    val cityId: String? = null,
     val cityName: String? = null
 )

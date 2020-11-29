@@ -8,7 +8,7 @@ import com.singlelab.lume.database.dao.*
 import com.singlelab.lume.database.entity.*
 
 @Database(
-    version = 12,
+    version = 13,
     entities = [
         Chat::class,
         ChatMessage::class,

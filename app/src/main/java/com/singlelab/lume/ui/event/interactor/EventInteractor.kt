@@ -2,8 +2,8 @@ package com.singlelab.lume.ui.event.interactor
 
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.model.promo.PromoReward
-import com.singlelab.net.model.event.UpdateEventRequest
 import com.singlelab.net.model.event.ParticipantRequest
+import com.singlelab.net.model.event.UpdateEventRequest
 
 interface EventInteractor {
     suspend fun getEvent(uid: String): Event?
@@ -19,4 +19,6 @@ interface EventInteractor {
     suspend fun checkPromoReward(cityId: Int): PromoReward?
 
     suspend fun sendReport(uid: String, reasonReport: String)
+
+    suspend fun getEventFromCache(uid: String): Event?
 }
