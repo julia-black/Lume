@@ -7,5 +7,7 @@ class UpdateEventRequest(
     val extraImages: List<String>? = null,
     val description: String? = null,
     val xCoordinate: Double? = null,
-    val yCoordinate: Double? = null
+    val yCoordinate: Double? = null,
+    val startTime: String? = null,
+    val endTime: String? = null
 )

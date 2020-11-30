@@ -1,6 +1,8 @@
 package com.singlelab.lume.ui.event
 
 import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -34,6 +36,8 @@ import com.singlelab.net.model.event.ParticipantStatus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_event.*
 import kotlinx.android.synthetic.main.fragment_event.description
+import kotlinx.android.synthetic.main.view_edit_dialog.view.*
+import kotlinx.android.synthetic.main.view_title_picker.view.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import java.util.*
@@ -658,11 +662,30 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             }
         }
         icon_date.setOnClickListener {
-            presenter.onClickDate()
+            showDateAction()
         }
         start_date.setOnClickListener {
-            presenter.onClickDate()
+            showDateAction()
         }
+    }
+
+    private fun showDateAction() {
+        if (presenter.isCanUpdateDate()) {
+            showListDialog(
+                getString(R.string.choose_action),
+                arrayOf(
+                    getString(R.string.change_date)
+                ), DialogInterface.OnClickListener { _, which ->
+                    when (which) {
+                        0 -> onClickChooseDate()
+                    }
+                }
+            )
+        }
+    }
+
+    private fun onClickChooseDate() {
+        showDatePicker(presenter.getStartTime(), true)
     }
 
     private fun shareEvent(eventUid: String?, name: String) {
@@ -683,4 +706,50 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
             )
         )
     }
+
+    private fun showDatePicker(currentDateTime: Calendar?, isStart: Boolean) {
+        context?.let {
+            val date = currentDateTime ?: Calendar.getInstance()
+            val picker = DatePickerDialog(
+                it,
+                { _, year, month, dayOfMonth ->
+                    presenter.saveNewDate(year, month, dayOfMonth, isStart)
+                    showTimePicker(presenter.newDateStart, isStart)
+                },
+                date.get(Calendar.YEAR),
+                date.get(Calendar.MONTH),
+                date.get(Calendar.DAY_OF_MONTH)
+            )
+
+            val customLayout = layoutInflater.inflate(R.layout.view_title_picker, null)
+            customLayout.text.text =
+                if (isStart) getString(R.string.choose_start_date) else getString(R.string.choose_end_date)
+
+            picker.setCustomTitle(customLayout)
+            if (isStart || presenter.newDateStart == null) {
+                picker.datePicker.minDate = Date().time
+            } else {
+                picker.datePicker.minDate = presenter.newDateStart!!.timeInMillis
+            }
+            picker.show()
+        }
+    }
+
+    private fun showTimePicker(currentDateTime: Calendar?, isStart: Boolean) {
+        context?.let {
+            val dateTime = currentDateTime ?: Calendar.getInstance()
+            TimePickerDialog(
+                it, { _, hourOfDay, minute ->
+                    presenter.saveCurrentTime(hourOfDay, minute, isStart)
+                    if (isStart) {
+                        showDatePicker(currentDateTime, false)
+                    }
+                },
+                dateTime.get(Calendar.HOUR_OF_DAY),
+                dateTime.get(Calendar.MINUTE),
+                true
+            ).show()
+        }
+    }
+
 }

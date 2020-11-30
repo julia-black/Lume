@@ -3,19 +3,23 @@ package com.singlelab.lume.ui.event
 import android.graphics.Bitmap
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
+import com.singlelab.lume.model.Const
 import com.singlelab.lume.model.event.Event
 import com.singlelab.lume.model.event.EventStatus
 import com.singlelab.lume.model.profile.Person
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.event.interactor.EventInteractor
+import com.singlelab.lume.util.formatToUTC
 import com.singlelab.lume.util.resize
 import com.singlelab.lume.util.toBase64
+import com.singlelab.lume.util.toLongTime
 import com.singlelab.net.exceptions.ApiException
 import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.event.ParticipantRequest
 import com.singlelab.net.model.event.ParticipantStatus
 import com.singlelab.net.model.event.UpdateEventRequest
 import moxy.InjectViewState
+import java.util.*
 import javax.inject.Inject
 
 @InjectViewState
@@ -25,6 +29,9 @@ class EventPresenter @Inject constructor(
 ) : BasePresenter<EventView>(preferences, interactor as BaseInteractor) {
 
     var event: Event? = null
+
+    var newDateStart: Calendar? = null
+    var newDateEnd: Calendar? = null
 
     fun loadEvent(uid: String) {
         viewState.showLoading(true)
@@ -285,9 +292,74 @@ class EventPresenter @Inject constructor(
         }
     }
 
-    fun onClickDate() {
-        if (isAdministrator()) {
-
+    fun saveNewDate(year: Int, month: Int, day: Int, isStart: Boolean) {
+        if (isStart) {
+            if (newDateStart == null) {
+                newDateStart = Calendar.getInstance()
+            }
+            newDateStart!!.set(Calendar.YEAR, year)
+            newDateStart!!.set(Calendar.MONTH, month)
+            newDateStart!!.set(Calendar.DAY_OF_MONTH, day)
+        } else {
+            if (newDateEnd == null) {
+                newDateEnd = Calendar.getInstance()
+            }
+            newDateEnd!!.set(Calendar.YEAR, year)
+            newDateEnd!!.set(Calendar.MONTH, month)
+            newDateEnd!!.set(Calendar.DAY_OF_MONTH, day)
         }
     }
+
+    fun saveCurrentTime(hours: Int, minutes: Int, isStart: Boolean) {
+        if (isStart) {
+            if (newDateStart == null) {
+                newDateStart = Calendar.getInstance()
+            }
+            newDateStart!!.set(Calendar.HOUR_OF_DAY, hours)
+            newDateStart!!.set(Calendar.MINUTE, minutes)
+        } else {
+            if (newDateEnd == null) {
+                newDateEnd = Calendar.getInstance()
+            }
+            newDateEnd!!.set(Calendar.HOUR_OF_DAY, hours)
+            newDateEnd!!.set(Calendar.MINUTE, minutes)
+            updateDate(newDateStart, newDateEnd)
+        }
+    }
+
+    private fun updateDate(newDateStart: Calendar?, newDateEnd: Calendar?) {
+        event?.eventUid?.let { uid ->
+            viewState.showLoading(isShow = true, withoutBackground = true)
+            invokeSuspend {
+                try {
+                    val request = UpdateEventRequest(
+                        eventUid = uid,
+                        startTime = newDateStart?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE),
+                        endTime = newDateEnd?.time.formatToUTC(Const.DATE_FORMAT_TIME_ZONE)
+                    )
+                    val event = interactor.updateEvent(request)
+                    runOnMainThread {
+                        viewState.showLoading(isShow = false, withoutBackground = true)
+                        event?.let {
+                            viewState.showEvent(it)
+                        }
+                    }
+                } catch (e: ApiException) {
+                    runOnMainThread {
+                        viewState.showLoading(isShow = false, withoutBackground = true)
+                        viewState.showError(e.message)
+                    }
+                }
+            }
+        }
+    }
+
+    fun getStartTime(): Calendar? {
+        val longTime = event?.startTime?.toLongTime(Const.DATE_FORMAT_TIME_ZONE) ?: return null
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = longTime
+        return calendar
+    }
+
+    fun isCanUpdateDate() = isAdministrator() && event != null && event!!.isActive()
 }
