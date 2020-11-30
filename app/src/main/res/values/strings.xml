@@ -173,6 +173,7 @@
     <string name="empty_friends">У тебя пока нет друзей\nНайдите их!</string>
     <string name="empty_friends_short">У тебя пока нет друзей</string>
     <string name="empty_search">Ничего не найдено\nПопробуйте изменить запрос</string>
+    <string name="invite">Пригласить</string>
 
     <!-- Chats -->
     <string name="chats_title">Чаты</string>

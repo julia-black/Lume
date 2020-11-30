@@ -65,24 +65,31 @@ class PersonViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 
             if (person.isInvited || person.participantStatus == ParticipantStatus.ACTIVE) {
                 itemView.button_accept.visibility = View.GONE
+                itemView.button_invite.visibility = View.GONE
                 itemView.button_reject.visibility = View.GONE
                 if (isAdministrator) {
                     itemView.button_reject.visibility = View.VISIBLE
                 }
             } else {
-                itemView.button_accept.visibility = View.VISIBLE
-                itemView.button_accept.setOnClickListener {
-                    listener.onAcceptClick(person.personUid, eventUid)
-                }
-
                 if (isInviting) {
+                    itemView.button_invite.visibility = View.VISIBLE
+                    itemView.button_invite.setOnClickListener {
+                        listener.onInviteClick(person.personUid, eventUid)
+                    }
+                    itemView.button_accept.visibility = View.GONE
                     itemView.button_reject.visibility = View.GONE
                 } else {
+                    itemView.button_accept.visibility = View.VISIBLE
+                    itemView.button_accept.setOnClickListener {
+                        listener.onAcceptClick(person.personUid, eventUid)
+                    }
                     itemView.button_reject.visibility = View.VISIBLE
+                    itemView.button_invite.visibility = View.GONE
                 }
             }
             if (isInviting && isPersonAlreadyInEvent(participantIds, person.personUid)) {
                 itemView.button_accept.visibility = View.GONE
+                itemView.button_invite.visibility = View.GONE
             }
         } else {
             if (person.friendshipApprovalRequired) {

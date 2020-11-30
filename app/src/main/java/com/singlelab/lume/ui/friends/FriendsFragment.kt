@@ -204,6 +204,10 @@ class FriendsFragment : BaseFragment(), FriendsView, OnlyForAuthFragments,
         presenter.addToFriends(personUid)
     }
 
+    override fun onInviteClick(personUid: String, eventUid: String) {
+        presenter.invitePerson(personUid, eventUid, isSearchResults)
+    }
+
     override fun onAcceptClick(personUid: String, eventUid: String) {
         presenter.invitePerson(personUid, eventUid, isSearchResults)
     }

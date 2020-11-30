@@ -80,10 +80,12 @@ class ParticipantsFragment : BaseFragment(), ParticipantsView, OnlyForAuthFragme
     }
 
     override fun onChatClick(personName: String, personUid: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onAddToFriends(personUid: String) {
+    }
+
+    override fun onInviteClick(personUid: String, eventUid: String) {
     }
 
     override fun onAcceptClick(personUid: String, eventUid: String) {

@@ -94,6 +94,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/card_image" />
 
+    <Button
+        android:id="@+id/button_invite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:backgroundTint="@color/selector_action_button"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/noto_sans_bold"
+        android:padding="10dp"
+        android:paddingVertical="@dimen/margin_small"
+        android:text="@string/invite"
+        android:textColor="@color/colorText"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/card_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/card_image" />
+
     <ImageView
         android:id="@+id/button_chat"
         android:layout_width="26dp"
