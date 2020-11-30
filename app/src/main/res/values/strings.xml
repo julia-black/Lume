@@ -137,6 +137,9 @@
     <string name="add_images">Добавить изображения</string>
     <string name="open_map">Открыть карту</string>
     <string name="change_location">Изменить местоположение</string>
+    <string name="change_date">Изменить дату</string>
+    <string name="choose_start_date">Дата начала</string>
+    <string name="choose_end_date">Дата окончания</string>
     <string name="set_location">Выбрать местоположение</string>
     <string name="success_delete">Изображение успешно удалено</string>
     <string name="title_swipes">Выбор событий становится удобным и простым!</string>
