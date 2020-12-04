@@ -19,7 +19,7 @@ interface MyProfileInteractor {
 
     suspend fun loadBadges(personUid: String): List<Badge>?
 
-    suspend fun loadProfileFromCache(): Profile?
+    suspend fun loadProfileFromCache(uid: String): Profile?
 
     suspend fun saveProfile(profile: Profile)
 
