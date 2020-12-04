@@ -53,11 +53,11 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
     @ProvidePresenter
     fun provideMyProfilePresenter() = daggerPresenter
 
-    private lateinit var settingsView: SettingsView
+    private var settingsView: SettingsView? = null
 
-    private lateinit var friendsView: FriendsView
+    private var friendsView: FriendsView? = null
 
-    private lateinit var badgesView: BadgesView
+    private var badgesView: BadgesView? = null
 
     private val callbackBackPressed: OnBackPressedCallback =
         object : OnBackPressedCallback(true) {
@@ -88,14 +88,14 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
     private fun initViewPager() {
         context?.let {
             friendsView = FriendsView(it)
-            friendsView.setFriendsListener(this, this)
+            friendsView?.setFriendsListener(this, this)
 
             badgesView = BadgesView(it)
 
             settingsView = SettingsView(it)
-            settingsView.setSettingsListener(this)
+            settingsView?.setSettingsListener(this)
         }
-        val views = mutableListOf<PagerTabView>(friendsView, badgesView, settingsView)
+        val views = mutableListOf<PagerTabView>(friendsView!!, badgesView!!, settingsView!!)
         view_pager.apply {
             adapter = PagerAdapter(views)
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
@@ -109,11 +109,11 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
             override fun onPageSelected(position: Int) {
                 when (position) {
                     PagerTab.FRIENDS.position -> {
-                        friendsView.showLoading(true)
+                        friendsView?.showLoading(true)
                         presenter.loadFriends()
                     }
                     PagerTab.BADGES.position -> {
-                        badgesView.showLoading(true)
+                        badgesView?.showLoading(true)
                         presenter.loadBadges()
                     }
                 }
@@ -155,13 +155,17 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
     }
 
     override fun onLoadedFriends(friends: List<Person>?) {
-        friendsView.setFriends(friends)
-        (view_pager.adapter as PagerAdapter?)?.updateFriendsView(friendsView)
+        friendsView?.let {
+            it.setFriends(friends)
+            (view_pager.adapter as PagerAdapter?)?.updateFriendsView(it)
+        }
     }
 
     override fun onLoadedBadges(badges: List<Badge>) {
-        badgesView.setBadges(badges)
-        (view_pager.adapter as PagerAdapter?)?.updateBadgesView(badgesView)
+        badgesView?.let {
+            it.setBadges(badges)
+            (view_pager.adapter as PagerAdapter?)?.updateBadgesView(it)
+        }
     }
 
     override fun showNewBadge(hasNewBadges: Boolean) {
@@ -175,7 +179,7 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
     }
 
     override fun showLoadingFriends(isShow: Boolean) {
-        friendsView.showLoading(isShow)
+        friendsView?.showLoading(isShow)
     }
 
     override fun navigateToAuth() {
