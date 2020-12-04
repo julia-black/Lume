@@ -51,11 +51,15 @@ class EventsPresenter @Inject constructor(
                 showEventsFromCache(currentEventUid)
                 allEvents = eventsFromCache
                 allEvents = interactor.getEvents()
-                if (eventsFromCache == null || !eventsFromCache!!.compare(allEvents!!)) {
+                if (eventsFromCache.isNullOrEmpty() || !eventsFromCache!!.compare(allEvents!!)) {
                     allEvents?.let {
                         interactor.saveEventToCache(it)
                     }
                     filterAndShowEvents(allEvents, currentEventUid)
+                } else {
+                    runOnMainThread {
+                        viewState.showLoading(false)
+                    }
                 }
             } catch (e: ApiException) {
                 runOnMainThread {
