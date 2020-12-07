@@ -39,8 +39,17 @@ class EventsPresenter @Inject constructor(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         loadEvents()
-        if (preferences != null && preferences.getEventPromoRewardEnabled()) {
-            checkPromoReward()
+        preferences?.let {
+            when {
+                preferences.getEventPromoRewardEnabled() -> {
+                    checkPromoReward()
+                }
+                preferences.getNewYearPromoRewardEnabled() -> {
+                    runOnMainThread {
+                        viewState.showNewYearPromo(preferences.getNewYearNotShowed())
+                    }
+                }
+            }
         }
     }
 
@@ -194,5 +203,9 @@ class EventsPresenter @Inject constructor(
         } else {
             viewState.showCurrentDayOnPager(currentDay)
         }
+    }
+
+    fun onShowedNewYearPromo() {
+        preferences?.setNewYearPromoShowed(true)
     }
 }

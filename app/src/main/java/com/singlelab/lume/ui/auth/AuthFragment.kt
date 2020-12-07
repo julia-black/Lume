@@ -15,7 +15,6 @@ import com.singlelab.lume.MainActivity
 import com.singlelab.lume.R
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.listeners.OnBackPressListener
-import com.singlelab.lume.model.tutorial.TutorialPage
 import com.singlelab.lume.ui.view.tutorial.TutorialAdapter
 import com.singlelab.lume.util.maskPhone
 import com.singlelab.lume.util.toShortPhone
@@ -66,9 +65,9 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
     }
 
     private fun initTutorial() {
-        val tutorialList = TutorialPage.values().toList()
+        val tutorialList = presenter.getTutorialList()
         view_pager_tutorial?.apply {
-            adapter = TutorialAdapter(tutorialList)
+            adapter = TutorialAdapter(tutorialList.toMutableList())
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
             (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
             TabLayoutMediator(tab_layout, view_pager_tutorial) { _, _ -> }.attach()
@@ -171,5 +170,10 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
 
         layout_phone.visibility = View.VISIBLE
         button_send_code.visibility = View.VISIBLE
+    }
+
+    override fun updateNewYearPromo(newYearPromoRewardEnabled: Boolean) {
+        super.updateNewYearPromo(newYearPromoRewardEnabled)
+        (view_pager_tutorial?.adapter as TutorialAdapter?)?.updateList(presenter.getTutorialList())
     }
 }

@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.singlelab.lume.R
 import kotlinx.android.synthetic.main.view_dialog.view.*
@@ -49,5 +50,9 @@ class DialogView @JvmOverloads constructor(
         button_close.setOnClickListener {
             listener.onCloseDialogClick()
         }
+    }
+
+    fun setIcon(drawableId: Int) {
+        icon_promo.setImageDrawable(ContextCompat.getDrawable(context, drawableId))
     }
 }

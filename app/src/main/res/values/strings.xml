@@ -249,11 +249,25 @@
     <string name="promo_request_send">Заявка отправлена, ожидайте вознаграждения!</string>
     <string name="not_valid_card_num">Некорректный номер карты</string>
 
+    <!-- Promo New Year -->
+    <string name="title_promo_new_year">Выиграй 10.000₽ за организацию события!</string>
+    <string name="description_promo_new_year">Два организатора получат денежный приз в размере 10.000₽ - первый победитель будет награжден за самое интересное мероприятие, а
+        второй победитель будет выбран случайным образом!</string>
+    <string name="title_rules_promo_new_year">Правила конкурса:</string>
+    <string name="rules_promo_new_year">
+        1. Организуй и проведи событие, добавь в него немного творчества и необычных идей.
+        \n2. После завершения, сделай скриншот события.
+        \n3. Отправь нам в Директ в Instagram сделанный скриншот и пару фото с события.
+        \n4. 11 января в прямом эфире в Instagram будут подведены итоги конкурса.
+    </string>
+    <string name="details_promo_new_year">Конкурс проводится с 10 декабря по 10 января включительно.</string>
+
     <!-- Report -->
     <string name="report">Пожаловаться</string>
     <string name="enter_reason_report">Причина жалобы</string>
     <string name="empty_reason">Не указана причина</string>
     <string name="report_send">Жалоба отправлена, спасибо за помощь!</string>
+    <string name="tutorial_text_new_year">У каждого есть шанс выиграть 10.000₽ в честь Нового года! Присоединяйся, чтобы узнать подробнее!</string>
 
     <!-- Arrays -->
     <string-array name="custom_weekdays">

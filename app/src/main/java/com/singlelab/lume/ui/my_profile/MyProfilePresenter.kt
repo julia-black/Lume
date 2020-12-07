@@ -34,9 +34,15 @@ class MyProfilePresenter @Inject constructor(
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        if (preferences != null && preferences.isFirstLaunch()) {
-            sendPushToken(preferences.getPushToken())
+        preferences?.let {
+            if (preferences.isFirstLaunch()) {
+                sendPushToken(preferences.getPushToken())
+            }
+            if (preferences.getNewYearPromoRewardEnabled()) {
+                viewState.showNewYearView()
+            }
         }
+
     }
 
     override fun onLoadedNotification(notifications: PersonNotifications) {

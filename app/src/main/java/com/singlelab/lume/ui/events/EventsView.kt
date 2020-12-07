@@ -25,4 +25,7 @@ interface EventsView : LoadingView, ErrorView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showPromoReward(countEvents: Int)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showNewYearPromo(isShowed: Boolean)
 }

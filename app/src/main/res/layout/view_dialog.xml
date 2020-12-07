@@ -117,7 +117,7 @@
                         android:textSize="@dimen/text_size_small" />
 
                     <ImageView
-                        android:id="@+id/icon_money"
+                        android:id="@+id/icon_promo"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_gravity="center"

@@ -12,4 +12,7 @@ interface BaseView : MvpView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun showNotifications(notifications: PersonNotifications)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun updateNewYearPromo(newYearPromoRewardEnabled: Boolean)
 }

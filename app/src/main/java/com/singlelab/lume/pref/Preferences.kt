@@ -18,6 +18,8 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
         const val PREF_PUSH_TOKEN = "pref_push_token"
         const val PREF_AGE = "pref_age"
         const val PREF_PROMO_REWARD = "pref_promo_reward"
+        const val PREF_NEW_YEAR = "pref_new_year"
+        const val PREF_NEW_YEAR_SHOWED = "pref_new_year_showed"
     }
 
     init {
@@ -95,6 +97,20 @@ class Preferences(private val sharedPreferences: SharedPreferences?) {
 
     fun getEventPromoRewardEnabled() =
         sharedPreferences?.getBoolean(PREF_PROMO_REWARD, false) ?: false
+
+    fun setNewYearPromoRewardEnabled(eventPromoRewardEnabled: Boolean) {
+        sharedPreferences?.edit()?.putBoolean(PREF_NEW_YEAR, eventPromoRewardEnabled)?.apply()
+    }
+
+    fun getNewYearPromoRewardEnabled() =
+        sharedPreferences?.getBoolean(PREF_NEW_YEAR, false) ?: false
+
+    fun setNewYearPromoShowed(isShowed: Boolean) {
+        sharedPreferences?.edit()?.putBoolean(PREF_NEW_YEAR_SHOWED, isShowed)?.apply()
+    }
+
+    fun getNewYearNotShowed() =
+        sharedPreferences?.getBoolean(PREF_NEW_YEAR_SHOWED, false) ?: false
 
     private fun isAnon(): Boolean {
         return sharedPreferences == null || sharedPreferences.getBoolean(PREF_IS_ANON, true)

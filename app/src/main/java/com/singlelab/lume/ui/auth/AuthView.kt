@@ -16,4 +16,7 @@ interface AuthView : LoadingView, ErrorView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun toRegistration()
+
+//    @StateStrategyType(AddToEndSingleStrategy::class)
+//    fun showNewYearsPromo()
 }

@@ -3,6 +3,7 @@ package com.singlelab.lume.ui.auth
 import com.singlelab.lume.base.BaseInteractor
 import com.singlelab.lume.base.BasePresenter
 import com.singlelab.lume.model.Const
+import com.singlelab.lume.model.tutorial.TutorialPage
 import com.singlelab.lume.pref.Preferences
 import com.singlelab.lume.ui.auth.interactor.AuthInteractor
 import com.singlelab.net.exceptions.ApiException
@@ -94,6 +95,16 @@ class AuthPresenter @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    fun getTutorialList(): List<TutorialPage> {
+        return if (preferences != null && preferences.getNewYearPromoRewardEnabled()) {
+            TutorialPage.values().toList()
+        } else {
+            val list = TutorialPage.values().toMutableList()
+            list.remove(TutorialPage.TUTORIAL_0)
+            list
         }
     }
 }

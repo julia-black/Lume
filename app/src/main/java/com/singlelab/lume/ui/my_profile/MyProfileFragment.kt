@@ -178,6 +178,12 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         friendsView.showLoading(isShow)
     }
 
+    override fun showNewYearView() {
+        context?.let {
+            view_shape.background = ContextCompat.getDrawable(it, R.drawable.shape_profile_new_year)
+        }
+    }
+
     override fun navigateToAuth() {
         findNavController().popBackStack()
         findNavController().navigate(R.id.auth)

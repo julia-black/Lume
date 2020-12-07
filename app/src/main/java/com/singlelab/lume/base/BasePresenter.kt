@@ -45,6 +45,10 @@ open class BasePresenter<ViewT : BaseView>(
                 val promoInfo = baseInteractor.getPromo()
                 promoInfo?.let {
                     preferences?.setEventPromoRewardEnabled(promoInfo.isEventPromoRewardEnabled)
+                    preferences?.setNewYearPromoRewardEnabled(promoInfo.isNewYearPromoRewardEnabled)
+                    runOnMainThread {
+                        viewState.updateNewYearPromo(promoInfo.isNewYearPromoRewardEnabled)
+                    }
                 }
             } catch (e: ApiException) {
             }
