@@ -256,4 +256,7 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
     override fun onCloseDialogClick() {
         info_dialog.isVisible = false
     }
+
+    override fun onLinkClick(url: String) {
+    }
 }
