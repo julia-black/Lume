@@ -6,8 +6,8 @@ import com.singlelab.lume.database.entity.Profile
 
 @Dao
 internal abstract class ProfileDao : BaseDao<Profile> {
-    @Query("select * from profile limit 1")
-    internal abstract suspend fun getProfile(): Profile?
+    @Query("select * from profile where personUid=:uid limit 1")
+    internal abstract suspend fun getProfile(uid: String): Profile?
 
     @Query("delete from profile")
     internal abstract suspend fun clear()

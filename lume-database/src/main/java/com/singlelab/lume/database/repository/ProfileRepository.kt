@@ -5,7 +5,7 @@ import com.singlelab.lume.database.entity.Person
 import com.singlelab.lume.database.entity.Profile
 
 interface ProfileRepository {
-    suspend fun get(): Profile?
+    suspend fun get(uid: String): Profile?
     suspend fun insert(profile: Profile)
     suspend fun clear()
     suspend fun getFriends(): List<Person> = listOf()
@@ -17,7 +17,7 @@ class RoomProfileRepository(db: LumeDatabase) : ProfileRepository {
     private val dao = db.profileDao()
     private val friendsDao = db.friendsDao()
 
-    override suspend fun get() = dao.getProfile()
+    override suspend fun get(uid: String) = dao.getProfile(uid)
 
     override suspend fun insert(profile: Profile) {
         dao.insertOrReplace(profile)

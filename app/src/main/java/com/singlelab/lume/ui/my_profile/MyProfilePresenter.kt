@@ -55,7 +55,7 @@ class MyProfilePresenter @Inject constructor(
         invokeSuspend {
             try {
                 if (!AuthData.isAnon) {
-                    showProfileFromCache(isFirstAttach)
+                    showProfileFromCache(AuthData.uid, isFirstAttach)
                     profile = interactor.loadProfile()
                     profile?.let {
                         interactor.saveProfile(it)
@@ -168,13 +168,15 @@ class MyProfilePresenter @Inject constructor(
         }
     }
 
-    private suspend fun showProfileFromCache(isFirstAttach: Boolean) {
-        profile = interactor.loadProfileFromCache()
-        if (profile != null) {
-            delay(Const.MIN_DELAY_FOR_TRANSITION)
-            runOnMainThread {
-                viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
-                viewState.showProfile(profile!!)
+    private suspend fun showProfileFromCache(personUid: String?, isFirstAttach: Boolean) {
+        if (personUid != null) {
+            profile = interactor.loadProfileFromCache(personUid)
+            if (profile != null) {
+                delay(Const.MIN_DELAY_FOR_TRANSITION)
+                runOnMainThread {
+                    viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
+                    viewState.showProfile(profile!!)
+                }
             }
         }
     }

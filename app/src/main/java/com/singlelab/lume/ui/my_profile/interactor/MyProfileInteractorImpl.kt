@@ -49,8 +49,8 @@ class MyProfileInteractorImpl(
         }?.sortedBy { !it.isReceived }
     }
 
-    override suspend fun loadProfileFromCache(): Profile? {
-        return Profile.fromEntity(localRepository.get())
+    override suspend fun loadProfileFromCache(uid: String): Profile? {
+        return Profile.fromEntity(localRepository.get(uid))
     }
 
     override suspend fun saveProfile(profile: Profile) {
