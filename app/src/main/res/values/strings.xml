@@ -59,6 +59,7 @@
     <!-- Url -->
     <string name="url_about_developer">http://single-lab.tilda.ws</string>
     <string name="url_agreement">http://lumeprod.azurewebsites.net/license</string>
+    <string name="url_instagram">https://www.instagram.com/lume_app</string>
 
     <!-- Profile -->
     <string name="go_to_chat">Перейти в чат</string>
@@ -268,6 +269,7 @@
     <string name="empty_reason">Не указана причина</string>
     <string name="report_send">Жалоба отправлена, спасибо за помощь!</string>
     <string name="tutorial_text_new_year">У каждого есть шанс выиграть 10.000₽ в честь Нового года! Присоединяйся, чтобы узнать подробнее!</string>
+    <string name="title_instagram">Мы в Instagram</string>
 
     <!-- Arrays -->
     <string-array name="custom_weekdays">

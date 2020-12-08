@@ -40,7 +40,7 @@ class DialogView @JvmOverloads constructor(
         @StringRes citiesInfo: Int,
         @StringRes rulesInfo: Int,
         @StringRes linkInRules: Int? = null,
-        url: String? = null,
+        @StringRes url: Int? = null,
         counterInfo: String? = null
     ) {
         description_dialog.setText(description)
@@ -52,7 +52,7 @@ class DialogView @JvmOverloads constructor(
             setLink(
                 context.getString(linkInRules),
                 context.getString(rulesInfo),
-                url
+                context.getString(url)
             )
         }
         cities_info.setText(citiesInfo)

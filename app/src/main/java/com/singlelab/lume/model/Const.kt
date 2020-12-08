@@ -8,7 +8,6 @@ object Const {
     const val FOLDER_NAME = "Lume Images"
     const val BASE_URL = "https://lumeprod.azurewebsites.net/api/"
     const val STORE_URL = "https://play.google.com/store/apps/details?id=com.singlelab.lume"
-    const val INSTAGRAM_URL = "https://www.instagram.com/lume_app/"
     const val GOOGLE_PLAY = "play.google"
 
     const val PREF = "lume_pref"

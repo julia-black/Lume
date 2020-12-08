@@ -243,7 +243,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
                     R.string.details_promo_new_year,
                     R.string.rules_promo_new_year,
                     R.string.instagram,
-                    Const.INSTAGRAM_URL,
+                    R.string.url_instagram,
                     null
                 )
                 setDescription(getString(R.string.description_promo_new_year))

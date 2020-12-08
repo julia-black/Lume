@@ -214,6 +214,10 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         findNavController().navigate(MyProfileFragmentDirections.actionMyProfileToPerson(personUid))
     }
 
+    override fun onInstagramClick() {
+        openBrowser(getString(R.string.url_instagram))
+    }
+
     override fun onFeedbackClick() {
         findNavController().navigate(MyProfileFragmentDirections.actionMyProfileToFeedback())
     }
