@@ -40,7 +40,7 @@ class SwiperEventPresenter @Inject constructor(
                 sendPushToken(preferences.getPushToken())
             }
             if (it.getNewYearPromoRewardEnabled()) {
-                viewState.showNewYearImage()
+                viewState.showNewYearImage(true)
             }
         }
     }

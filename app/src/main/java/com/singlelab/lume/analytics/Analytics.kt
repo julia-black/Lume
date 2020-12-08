@@ -48,6 +48,10 @@ object Analytics {
         firebaseAnalytics.logEvent(AnalyticsEvent.SEND_MESSAGE.title, bundleOf().addUserParams())
     }
 
+    fun logPromoClick() {
+        firebaseAnalytics.logEvent(AnalyticsEvent.PROMO_CLICK.title, bundleOf().addUserParams())
+    }
+
     private fun Bundle.addUserParams(): Bundle {
         AuthData.age?.let {
             this.putInt(AGE, it)
