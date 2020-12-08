@@ -25,6 +25,9 @@ class SettingsView @JvmOverloads constructor(
 
     fun setSettingsListener(listener: OnSettingsClickListener) {
         this.settingsClickListener = listener
+        instagram.setOnClickListener {
+            settingsClickListener?.onInstagramClick()
+        }
         feedback.setOnClickListener {
             settingsClickListener?.onFeedbackClick()
         }

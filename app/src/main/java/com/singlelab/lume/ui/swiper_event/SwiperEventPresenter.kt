@@ -39,6 +39,9 @@ class SwiperEventPresenter @Inject constructor(
             if (it.isFirstLaunch()) {
                 sendPushToken(preferences.getPushToken())
             }
+            if (it.getNewYearPromoRewardEnabled()) {
+                viewState.showNewYearImage()
+            }
         }
     }
 

@@ -90,6 +90,18 @@ class EditProfileFragment : BaseFragment(), EditProfileView, OnInvalidStringsLis
         view.setWarning(getString(R.string.login_hint))
     }
 
+    override fun showError(message: String, withRetry: Boolean, callRetry: () -> Unit) {
+        super.showError(message, withRetry, callRetry)
+        button_update.isEnabled = true
+    }
+
+    override fun showLoading(isShow: Boolean, withoutBackground: Boolean) {
+        super.showLoading(isShow, withoutBackground)
+        if (!isShow) {
+            button_update.isEnabled = true
+        }
+    }
+
     private fun initInputViews() {
         login.apply {
             setHint(getString(R.string.login))
@@ -205,6 +217,7 @@ class EditProfileFragment : BaseFragment(), EditProfileView, OnInvalidStringsLis
             findNavController().popBackStack()
         }
         button_update.setOnClickListener {
+            button_update.isEnabled = false
             presenter.updateProfile()
         }
         parentFragmentManager.setFragmentResultListener(

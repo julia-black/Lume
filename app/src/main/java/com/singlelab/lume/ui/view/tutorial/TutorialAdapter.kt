@@ -7,7 +7,7 @@ import com.singlelab.lume.model.tutorial.TutorialPage
 
 
 class TutorialAdapter(
-    private val list: List<TutorialPage>
+    private val list: MutableList<TutorialPage>
 ) : RecyclerView.Adapter<TutorialViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TutorialViewHolder {
@@ -20,4 +20,10 @@ class TutorialAdapter(
     }
 
     override fun getItemCount(): Int = list.size
+
+    fun updateList(list: List<TutorialPage>) {
+        this.list.clear()
+        this.list.addAll(list)
+        notifyDataSetChanged()
+    }
 }

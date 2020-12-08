@@ -217,16 +217,51 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
             setPromoRules(
                 R.string.description_promo_reward,
                 R.string.title_rules_promo_reward,
-                R.string.rules_promo_reward,
                 R.string.cities_promo_reward,
-                counterInfo
+                R.string.rules_promo_reward,
+                counterInfo = counterInfo
             )
             setDescription(getString(R.string.description_promo_reward))
         }
     }
 
+    override fun showNewYearPromo(isShowed: Boolean) {
+        context?.let {
+            button_reward.setImageDrawable(
+                ContextCompat.getDrawable(
+                    it,
+                    R.drawable.ic_emoji_new_year
+                )
+            )
+            button_reward.isVisible = true
+            dialog_view.apply {
+                setDialogListener(this@EventsFragment)
+                setTitle(getString(R.string.title_promo_new_year))
+                setPromoRules(
+                    R.string.description_promo_new_year,
+                    R.string.title_rules_promo_new_year,
+                    R.string.details_promo_new_year,
+                    R.string.rules_promo_new_year,
+                    R.string.instagram,
+                    R.string.url_instagram,
+                    null
+                )
+                setDescription(getString(R.string.description_promo_new_year))
+                setIcon(R.drawable.ic_emoji_new_year)
+            }
+            if (!isShowed) {
+                dialog_view.isVisible = true
+                presenter.onShowedNewYearPromo()
+            }
+        }
+    }
+
     override fun onCloseDialogClick() {
         showMoneyInfo(false)
+    }
+
+    override fun onLinkClick(url: String) {
+        openBrowser(url)
     }
 
     private fun toCreateEvent() {

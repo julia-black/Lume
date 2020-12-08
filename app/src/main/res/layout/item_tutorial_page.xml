@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_big"
         android:gravity="center"
-        android:lines="2"
+        android:lines="3"
         android:textColor="@color/colorTextGray"
         android:textSize="@dimen/text_size_standart"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -105,6 +105,9 @@ open class BaseFragment : MvpAppCompatFragment(), ErrorView, LoadingView {
         (activity as MainActivity).showNotifications(notifications)
     }
 
+    override fun updateNewYearPromo(newYearPromoRewardEnabled: Boolean) {
+    }
+
     protected fun invokeSuspend(block: suspend () -> Unit) {
         scope.launch { block.invoke() }
     }

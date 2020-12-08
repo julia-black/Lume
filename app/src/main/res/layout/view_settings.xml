@@ -23,6 +23,25 @@
         android:background="@color/colorGrayVeryLight" />
 
     <TextView
+        android:id="@+id/instagram"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small"
+        android:drawableStart="@drawable/ic_instagram"
+        android:drawablePadding="@dimen/margin_medium"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/margin_big"
+        android:paddingVertical="@dimen/margin_medium"
+        android:text="@string/title_instagram"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/text_size_standart" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGrayVeryLight" />
+
+    <TextView
         android:id="@+id/agreement"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

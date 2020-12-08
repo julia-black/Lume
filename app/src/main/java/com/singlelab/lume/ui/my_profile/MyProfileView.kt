@@ -30,4 +30,7 @@ interface MyProfileView : LoadingView, ErrorView {
 
     @StateStrategyType(OneExecutionStateStrategy::class)
     fun showLoadingFriends(isShow: Boolean)
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showNewYearView()
 }

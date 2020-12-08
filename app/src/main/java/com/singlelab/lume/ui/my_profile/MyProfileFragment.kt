@@ -182,6 +182,12 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         friendsView?.showLoading(isShow)
     }
 
+    override fun showNewYearView() {
+        context?.let {
+            view_shape.background = ContextCompat.getDrawable(it, R.drawable.shape_profile_new_year)
+        }
+    }
+
     override fun navigateToAuth() {
         findNavController().popBackStack()
         findNavController().navigate(R.id.auth)
@@ -210,6 +216,10 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
 
     override fun onPersonClick(personUid: String) {
         findNavController().navigate(MyProfileFragmentDirections.actionMyProfileToPerson(personUid))
+    }
+
+    override fun onInstagramClick() {
+        openBrowser(getString(R.string.url_instagram))
     }
 
     override fun onFeedbackClick() {
