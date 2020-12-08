@@ -144,6 +144,11 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
     override fun onCardRewound() {
     }
 
+    override fun updateNewYearPromo(newYearPromoRewardEnabled: Boolean) {
+        super.updateNewYearPromo(newYearPromoRewardEnabled)
+        showNewYearImage(newYearPromoRewardEnabled)
+    }
+
     private fun initCardStack() {
         cardStackManager = CardStackLayoutManager(context, this)
         cardStackManager?.apply {
@@ -168,12 +173,12 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         }
     }
 
-    override fun showNewYearImage() {
+    override fun showNewYearImage(isNewYear: Boolean) {
         context?.let {
             icon_empty_events.setImageDrawable(
                 ContextCompat.getDrawable(
                     it,
-                    R.drawable.ic_not_events_new_year
+                    if (isNewYear) R.drawable.ic_not_events_new_year else R.drawable.ic_not_events
                 )
             )
         }

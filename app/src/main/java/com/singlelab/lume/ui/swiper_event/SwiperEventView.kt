@@ -27,5 +27,5 @@ interface SwiperEventView : LoadingView, ErrorView {
     fun showSuccessReport()
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showNewYearImage()
+    fun showNewYearImage(isNewYear: Boolean)
 }

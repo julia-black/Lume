@@ -19,6 +19,7 @@ import com.prolificinteractive.materialcalendarview.CalendarMode
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener
 import com.singlelab.lume.R
+import com.singlelab.lume.analytics.Analytics
 import com.singlelab.lume.base.BaseFragment
 import com.singlelab.lume.base.OnlyForAuthFragments
 import com.singlelab.lume.model.Const
@@ -90,6 +91,7 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
             showFullCalendar(!calendar_full_view.isVisible)
         }
         button_reward.setOnClickListener {
+            Analytics.logPromoClick()
             showMoneyInfo(true)
         }
     }
