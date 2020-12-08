@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.animation.LinearInterpolator
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentResultListener
 import androidx.navigation.fragment.findNavController
@@ -164,6 +165,17 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
             if (this is DefaultItemAnimator) {
                 supportsChangeAnimations = false
             }
+        }
+    }
+
+    override fun showNewYearImage() {
+        context?.let {
+            icon_empty_events.setImageDrawable(
+                ContextCompat.getDrawable(
+                    it,
+                    R.drawable.ic_not_events_new_year
+                )
+            )
         }
     }
 

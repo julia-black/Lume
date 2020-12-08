@@ -3,7 +3,7 @@ package com.singlelab.lume.model.tutorial
 import com.singlelab.lume.R
 
 enum class TutorialPage(val imageId: Int, val titleId: Int) {
-    TUTORIAL_0(R.drawable.ic_tutorial_1, R.string.tutorial_text_new_year), //todo сменить изображение
+    TUTORIAL_NEW_YEAR(R.drawable.ic_tutorial_new_year, R.string.tutorial_text_new_year),
     TUTORIAL_1(R.drawable.ic_tutorial_1, R.string.tutorial_text_1),
     TUTORIAL_2(R.drawable.ic_tutorial_2, R.string.tutorial_text_2),
     TUTORIAL_3(R.drawable.ic_tutorial_3, R.string.tutorial_text_3),

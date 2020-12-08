@@ -103,7 +103,7 @@ class AuthPresenter @Inject constructor(
             TutorialPage.values().toList()
         } else {
             val list = TutorialPage.values().toMutableList()
-            list.remove(TutorialPage.TUTORIAL_0)
+            list.remove(TutorialPage.TUTORIAL_NEW_YEAR)
             list
         }
     }
