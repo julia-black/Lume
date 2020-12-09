@@ -51,6 +51,7 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
     companion object {
         const val REQUEST_EVENT = "REQUEST_EVENT"
         const val RESULT_EVENT = "RESULT_EVENT"
+        const val RESULT_IS_LEAVE = "RESULT_IS_LEAVE"
         const val MAX_VIEW_PARTICIPANTS = 3
     }
 
@@ -420,7 +421,11 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
 
     override fun onRejectedEvent() {
         parentFragmentManager.setFragmentResult(
-            REQUEST_EVENT, bundleOf(RESULT_EVENT to presenter.event?.eventUid)
+            REQUEST_EVENT,
+            bundleOf(
+                RESULT_EVENT to presenter.event?.eventUid,
+                RESULT_IS_LEAVE to true
+            )
         )
         parentFragmentManager.popBackStack()
     }

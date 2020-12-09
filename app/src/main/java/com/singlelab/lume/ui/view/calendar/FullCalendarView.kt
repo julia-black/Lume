@@ -98,10 +98,10 @@ class FullCalendarView @JvmOverloads constructor(
         }
     }
 
-    private fun getNextMonth(offset: Int): Calendar {
-        val calendar = Calendar.getInstance()
-        calendar[Calendar.MONTH] = calendar.get(Calendar.MONTH) + offset
-        return calendar
+    fun removeDecorators() {
+        calendars.forEach {
+            it.removeDecorators()
+        }
     }
 
     fun addDecorator(decorator: HighlightDecorator?) {
@@ -113,6 +113,12 @@ class FullCalendarView @JvmOverloads constructor(
         calendars.forEach {
             it.addDecorator(decorator)
         }
+    }
+
+    private fun getNextMonth(offset: Int): Calendar {
+        val calendar = Calendar.getInstance()
+        calendar[Calendar.MONTH] = calendar.get(Calendar.MONTH) + offset
+        return calendar
     }
 
     private fun removeDecorator(decorator: HighlightDecorator?) {

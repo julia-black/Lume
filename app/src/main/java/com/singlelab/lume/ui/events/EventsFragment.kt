@@ -105,9 +105,11 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
         if (days.isEmpty()) {
             isEmptyDays = true
             card_empty_events.isVisible = true
+            view_pager_events.isVisible = false
         } else {
             isEmptyDays = false
             card_empty_events.isVisible = false
+            view_pager_events.isVisible = true
             view_pager_events?.apply {
                 adapter = DaysAdapter(days, this@EventsFragment)
             }
@@ -120,7 +122,10 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
         futureEvents: MutableList<EventSummary>,
         currentDay: CalendarDay?
     ) {
+
         context?.let { context ->
+            calendar_week_view.removeDecorators()
+            calendar_full_view.removeDecorators()
             val pastDaysWithEvent =
                 pastEvents.map { it.startTime }.toCalendarDays(Const.DATE_FORMAT_TIME_ZONE)
             val pastDecorator = HighlightDecorator(
@@ -282,11 +287,16 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
             CreatingEventFragment.REQUEST_CREATING_EVENT -> {
                 val eventUid: String =
                     result.getString(CreatingEventFragment.RESULT_CREATING_EVENT) ?: return
-                presenter.loadEvents(eventUid)
+                presenter.loadEvents(eventUid, true)
             }
             EventFragment.REQUEST_EVENT -> {
-                val eventUid: String = result.getString(EventFragment.RESULT_EVENT) ?: return
-                presenter.loadEvents(eventUid)
+                val eventUid: String? = result.getString(EventFragment.RESULT_EVENT)
+                val isLeave: Boolean = result.getBoolean(EventFragment.RESULT_IS_LEAVE) ?: false
+                if (isLeave && eventUid != null) {
+                    presenter.removeEvent(eventUid)
+                } else {
+                    presenter.loadEvents(eventUid, true)
+                }
                 presenter.updateNotifications()
             }
         }

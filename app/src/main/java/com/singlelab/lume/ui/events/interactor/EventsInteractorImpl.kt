@@ -26,6 +26,7 @@ class EventsInteractorImpl(
     }
 
     override suspend fun saveEventToCache(list: List<EventSummary>) {
+        localRepository.clear()
         localRepository.insert(list.map { it.toEntity() })
     }
 }

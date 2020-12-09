@@ -26,7 +26,7 @@ class EventsPresenter @Inject constructor(
 
     private var allDays: MutableMap<CalendarDay, MutableList<EventSummary>> = mutableMapOf()
 
-    private var allEvents: List<EventSummary>? = null
+    private var allEvents: MutableList<EventSummary>? = null
 
     private var eventsFromCache: List<EventSummary>? = null
 
@@ -53,13 +53,15 @@ class EventsPresenter @Inject constructor(
         }
     }
 
-    fun loadEvents(currentEventUid: String? = null) {
+    fun loadEvents(currentEventUid: String? = null, isAfterUpdate: Boolean = false) {
         viewState.showLoading(true)
         invokeSuspend {
             try {
-                showEventsFromCache(currentEventUid)
-                allEvents = eventsFromCache
-                allEvents = interactor.getEvents()
+                if (!isAfterUpdate) { //если загружаем события после обновления, то из кэша не показываем, сразу показываем новые
+                    showEventsFromCache(currentEventUid)
+                    allEvents = eventsFromCache?.toMutableList()
+                }
+                allEvents = interactor.getEvents()?.toMutableList()
                 if (eventsFromCache.isNullOrEmpty() || !eventsFromCache!!.compare(allEvents!!)) {
                     allEvents?.let {
                         interactor.saveEventToCache(it)
@@ -211,5 +213,10 @@ class EventsPresenter @Inject constructor(
 
     fun onShowedNewYearPromo() {
         preferences?.setNewYearPromoShowed(true)
+    }
+
+    fun removeEvent(eventUid: String) {
+        allEvents?.removeAll { it.eventUid == eventUid }
+        filterAndShowEvents(allEvents, null)
     }
 }
