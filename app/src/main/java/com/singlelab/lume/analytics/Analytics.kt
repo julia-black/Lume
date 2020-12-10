@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.ktx.BuildConfig
 import com.google.firebase.ktx.Firebase
 import com.singlelab.lume.model.analytics.AnalyticsEvent
 import com.singlelab.net.model.auth.AuthData
@@ -37,19 +38,19 @@ object Analytics {
             Pair(COUNT_IMAGES, event.images?.size ?: 0),
             Pair(EVENT_TYPES, event.types)
         )
-        firebaseAnalytics.logEvent(AnalyticsEvent.CREATE_EVENT.title, params.addUserParams())
+        logFirebaseEvent(AnalyticsEvent.CREATE_EVENT.title, params.addUserParams())
     }
 
     fun logOpenChat() {
-        firebaseAnalytics.logEvent(AnalyticsEvent.OPEN_CHAT.title, bundleOf().addUserParams())
+        logFirebaseEvent(AnalyticsEvent.OPEN_CHAT.title, bundleOf().addUserParams())
     }
 
     fun logSendMessage() {
-        firebaseAnalytics.logEvent(AnalyticsEvent.SEND_MESSAGE.title, bundleOf().addUserParams())
+        logFirebaseEvent(AnalyticsEvent.SEND_MESSAGE.title, bundleOf().addUserParams())
     }
 
     fun logPromoClick() {
-        firebaseAnalytics.logEvent(AnalyticsEvent.PROMO_CLICK.title, bundleOf().addUserParams())
+        logFirebaseEvent(AnalyticsEvent.PROMO_CLICK.title, bundleOf().addUserParams())
     }
 
     private fun Bundle.addUserParams(): Bundle {
@@ -63,5 +64,11 @@ object Analytics {
             this.putString(CITY_NAME, it)
         }
         return this
+    }
+
+    private fun logFirebaseEvent(event: String, bundle: Bundle) {
+        if (!BuildConfig.DEBUG) {
+            firebaseAnalytics.logEvent(event, bundle)
+        }
     }
 }
