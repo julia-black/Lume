@@ -37,28 +37,6 @@ class FriendsPresenter @Inject constructor(
         loadFriends()
     }
 
-    private fun loadFriends() {
-        val uid = AuthData.uid ?: return
-        viewState.showLoading(isShow = true, withoutBackground = true)
-        invokeSuspend {
-            try {
-                friends = interactor.getFriends(uid)?.toMutableList()
-                if (eventUid != null) {
-                    friends?.removeAll { it.friendshipApprovalRequired }
-                }
-                runOnMainThread {
-                    viewState.showLoading(isShow = false, withoutBackground = true)
-                    viewState.showFriends(friends)
-                }
-            } catch (e: ApiException) {
-                runOnMainThread {
-                    viewState.showLoading(isShow = false, withoutBackground = true)
-                    viewState.showError(e.message)
-                }
-            }
-        }
-    }
-
     fun search(searchStr: String, page: Int = 1) {
         pageNumber = page
         if (searchStr.isBlank()) {
@@ -224,6 +202,27 @@ class FriendsPresenter @Inject constructor(
                 }
             }
         }
+    }
 
+    private fun loadFriends() {
+        val uid = AuthData.uid ?: return
+        viewState.showLoading(isShow = true, withoutBackground = true)
+        invokeSuspend {
+            try {
+                friends = interactor.getFriends(uid)?.toMutableList()
+                if (eventUid != null) {
+                    friends?.removeAll { it.friendshipApprovalRequired }
+                }
+                runOnMainThread {
+                    viewState.showLoading(isShow = false, withoutBackground = true)
+                    viewState.showFriends(friends)
+                }
+            } catch (e: ApiException) {
+                runOnMainThread {
+                    viewState.showLoading(isShow = false, withoutBackground = true)
+                    viewState.showError(e.message)
+                }
+            }
+        }
     }
 }

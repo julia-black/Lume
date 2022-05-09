@@ -25,11 +25,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class FilterPersonFragment : BaseFragment(), FilterPersonView {
 
-    companion object {
-        const val REQUEST_FILTER = "REQUEST_FILTER"
-        const val RESULT_FILTER = "RESULT_FILTER"
-    }
-
     @Inject
     lateinit var daggerPresenter: FilterPersonPresenter
 
@@ -38,7 +33,6 @@ class FilterPersonFragment : BaseFragment(), FilterPersonView {
 
     @ProvidePresenter
     fun providePresenter() = daggerPresenter
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -86,13 +80,12 @@ class FilterPersonFragment : BaseFragment(), FilterPersonView {
         }
     }
 
-
     private fun setListeners() {
         text_city.setOnClickListener {
             toChooseCity()
         }
 
-        seek_bar_age.setOnThumbValueChangeListener { _: MultiSlider?, _: MultiSlider.Thumb?, thumbIndex: Int, value: Int ->
+        seek_bar_age.setOnThumbValueChangeListener { _, _, thumbIndex, value ->
             if (thumbIndex == 0) {
                 presenter.filterPerson?.minAge = value
                 if (value == presenter.filterPerson?.maxAge) {
@@ -152,5 +145,10 @@ class FilterPersonFragment : BaseFragment(), FilterPersonView {
             bundleOf(RESULT_FILTER to filter)
         )
         parentFragmentManager.popBackStack()
+    }
+
+    companion object {
+        const val REQUEST_FILTER = "REQUEST_FILTER"
+        const val RESULT_FILTER = "RESULT_FILTER"
     }
 }

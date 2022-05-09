@@ -169,13 +169,13 @@ class MyProfilePresenter @Inject constructor(
     }
 
     private suspend fun showProfileFromCache(personUid: String?, isFirstAttach: Boolean) {
-        if (personUid != null) {
+        personUid?.let {
             profile = interactor.loadProfileFromCache(personUid)
-            if (profile != null) {
+            profile?.let {
                 delay(Const.MIN_DELAY_FOR_TRANSITION)
                 runOnMainThread {
                     viewState.showLoading(isShow = false, withoutBackground = !isFirstAttach)
-                    viewState.showProfile(profile!!)
+                    viewState.showProfile(it)
                 }
             }
         }
@@ -185,9 +185,9 @@ class MyProfilePresenter @Inject constructor(
         invokeSuspend {
             val friends = interactor.loadFriendsFromCache()
             Log.d(Const.LOG_TAG, "friends = $friends")
-            if (friends != null) {
+            friends?.let {
                 runOnMainThread {
-                    viewState.onLoadedFriends(friends)
+                    viewState.onLoadedFriends(it)
                 }
             }
         }

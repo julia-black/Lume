@@ -45,16 +45,6 @@ class FilterPresenter @Inject constructor(preferences: Preferences?) : MvpPresen
         }
     }
 
-    fun setCheckedEventType(eventType: EventType, checked: Boolean) {
-        filterEvent ?: return
-        if (checked) {
-            if (!filterEvent!!.selectedTypes.contains(eventType))
-                filterEvent!!.selectedTypes.add(eventType)
-        } else {
-            filterEvent!!.selectedTypes.removeAll { it == eventType }
-        }
-    }
-
     fun setUserLocation(longitude: Double, latitude: Double) {
         filterEvent?.let {
             it.longitude = longitude

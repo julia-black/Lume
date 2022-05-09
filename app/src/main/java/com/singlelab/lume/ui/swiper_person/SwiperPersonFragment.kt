@@ -90,6 +90,38 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
     override fun onCardRewound() {
     }
 
+    override fun showPerson(person: Person) {
+        if (presenter.person == null) {
+            presenter.loadRandomPerson()
+        } else {
+            button_filter.visibility = View.VISIBLE
+            button_report_person.visibility = View.VISIBLE
+            view_template_person.visibility = View.VISIBLE
+            card_stack_view.visibility = View.VISIBLE
+            text_empty_swipes.visibility = View.GONE
+            (card_stack_view.adapter as CardStackPersonAdapter).setData(listOf(person))
+        }
+    }
+
+    override fun toAcceptedPerson(person: Person, eventUid: String) {
+        showSnackbar(getString(R.string.person_invited, person.name), ToastType.SUCCESS)
+        presenter.loadRandomPerson()
+    }
+
+    override fun showEmptySwipes() {
+        view_template_person.visibility = View.GONE
+        card_stack_view.visibility = View.GONE
+        text_empty_swipes.visibility = View.VISIBLE
+        text_empty_swipes.text = getString(R.string.empty_persons)
+        button_filter.visibility = View.VISIBLE
+        button_report_person.visibility = View.GONE
+    }
+
+    override fun showSuccessReport() {
+        hideKeyboard()
+        showSnackbar(getString(R.string.report_send), ToastType.SUCCESS)
+    }
+
     private fun initCardStack() {
         val listenerImage = object : OnClickImageListener {
             override fun onClickImage(imageUids: List<String>) {
@@ -168,37 +200,5 @@ class SwiperPersonFragment : BaseFragment(), SwiperPersonView, OnlyForAuthFragme
                 result.getParcelable(FilterPersonFragment.RESULT_FILTER) ?: return
             presenter.applyFilter(filterPerson)
         }
-    }
-
-    override fun showPerson(person: Person) {
-        if (presenter.person == null) {
-            presenter.loadRandomPerson()
-        } else {
-            button_filter.visibility = View.VISIBLE
-            button_report_person.visibility = View.VISIBLE
-            view_template_person.visibility = View.VISIBLE
-            card_stack_view.visibility = View.VISIBLE
-            text_empty_swipes.visibility = View.GONE
-            (card_stack_view.adapter as CardStackPersonAdapter).setData(listOf(person))
-        }
-    }
-
-    override fun toAcceptedPerson(person: Person, eventUid: String) {
-        showSnackbar(getString(R.string.person_invited, person.name), ToastType.SUCCESS)
-        presenter.loadRandomPerson()
-    }
-
-    override fun showEmptySwipes() {
-        view_template_person.visibility = View.GONE
-        card_stack_view.visibility = View.GONE
-        text_empty_swipes.visibility = View.VISIBLE
-        text_empty_swipes.text = getString(R.string.empty_persons)
-        button_filter.visibility = View.VISIBLE
-        button_report_person.visibility = View.GONE
-    }
-
-    override fun showSuccessReport() {
-        hideKeyboard()
-        showSnackbar(getString(R.string.report_send), ToastType.SUCCESS)
     }
 }

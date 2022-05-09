@@ -50,9 +50,6 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
     @InjectPresenter
     lateinit var presenter: MyProfilePresenter
 
-    @ProvidePresenter
-    fun provideMyProfilePresenter() = daggerPresenter
-
     private var settingsView: SettingsView? = null
 
     private var friendsView: FriendsView? = null
@@ -65,6 +62,9 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
                 onBackPressed()
             }
         }
+
+    @ProvidePresenter
+    fun provideMyProfilePresenter() = daggerPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -83,42 +83,6 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         } else {
             presenter.loadProfile(presenter.profile == null)
         }
-    }
-
-    private fun initViewPager() {
-        context?.let {
-            friendsView = FriendsView(it)
-            friendsView?.setFriendsListener(this, this)
-
-            badgesView = BadgesView(it)
-
-            settingsView = SettingsView(it)
-            settingsView?.setSettingsListener(this)
-        }
-        val views = mutableListOf<PagerTabView>(friendsView!!, badgesView!!, settingsView!!)
-        view_pager.apply {
-            adapter = PagerAdapter(views)
-            orientation = ViewPager2.ORIENTATION_HORIZONTAL
-            (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
-        }
-        TabLayoutMediator(tab_layout, view_pager) { tab, position ->
-            tab.text = views[position].getTitle()
-            view_pager.setCurrentItem(tab.position, true)
-        }.attach()
-        view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                when (position) {
-                    PagerTab.FRIENDS.position -> {
-                        friendsView?.showLoading(true)
-                        presenter.loadFriends()
-                    }
-                    PagerTab.BADGES.position -> {
-                        badgesView?.showLoading(true)
-                        presenter.loadBadges()
-                    }
-                }
-            }
-        })
     }
 
     override fun showProfile(profile: Profile) {
@@ -250,6 +214,46 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         shareText(Const.STORE_URL)
     }
 
+    fun onBackPressed() {
+        callbackBackPressed.remove()
+    }
+
+    private fun initViewPager() {
+        context?.let {
+            friendsView = FriendsView(it)
+            friendsView?.setFriendsListener(this, this)
+
+            badgesView = BadgesView(it)
+
+            settingsView = SettingsView(it)
+            settingsView?.setSettingsListener(this)
+        }
+        val views = mutableListOf<PagerTabView>(friendsView!!, badgesView!!, settingsView!!)
+        view_pager.apply {
+            adapter = PagerAdapter(views)
+            orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+        }
+        TabLayoutMediator(tab_layout, view_pager) { tab, position ->
+            tab.text = views[position].getTitle()
+            view_pager.setCurrentItem(tab.position, true)
+        }.attach()
+        view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    PagerTab.FRIENDS.position -> {
+                        friendsView?.showLoading(true)
+                        presenter.loadFriends()
+                    }
+                    PagerTab.BADGES.position -> {
+                        badgesView?.showLoading(true)
+                        presenter.loadBadges()
+                    }
+                }
+            }
+        })
+    }
+
     private fun onClickImage(imageContentUid: String) {
         showListDialog(
             getString(R.string.choose_action),
@@ -280,9 +284,5 @@ class MyProfileFragment : BaseFragment(), MyProfileView, OnActivityResultListene
         val action = MyProfileFragmentDirections.actionMyProfileToFriends()
         action.isSearch = isSearch
         findNavController().navigate(action)
-    }
-
-    fun onBackPressed() {
-        callbackBackPressed.remove()
     }
 }

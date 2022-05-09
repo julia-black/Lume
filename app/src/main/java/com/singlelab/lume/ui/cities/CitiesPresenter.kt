@@ -25,6 +25,19 @@ class CitiesPresenter @Inject constructor(
         loadCities()
     }
 
+    fun filter(queryStr: String) {
+        if (queryStr.isBlank()) {
+            viewState.showCities(allCities, containsAnyCity)
+        } else {
+            allCities?.let { allCities ->
+                viewState.showCities(allCities.filter {
+                    it.cityName.toUpperCase(Const.RUS_LOCALE)
+                        .startsWith(queryStr.toUpperCase(Const.RUS_LOCALE))
+                })
+            }
+        }
+    }
+
     private fun loadCities() {
         viewState.showLoading(true)
         invokeSuspend {
@@ -39,19 +52,6 @@ class CitiesPresenter @Inject constructor(
                     viewState.showLoading(false)
                     viewState.showError(e.message)
                 }
-            }
-        }
-    }
-
-    fun filter(queryStr: String) {
-        if (queryStr.isBlank()) {
-            viewState.showCities(allCities, containsAnyCity)
-        } else {
-            allCities?.let { allCities ->
-                viewState.showCities(allCities.filter {
-                    it.cityName.toUpperCase(Const.RUS_LOCALE)
-                        .startsWith(queryStr.toUpperCase(Const.RUS_LOCALE))
-                })
             }
         }
     }

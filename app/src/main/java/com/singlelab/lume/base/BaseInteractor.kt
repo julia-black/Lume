@@ -11,11 +11,8 @@ open class BaseInteractor(private val baseRepository: BaseRepository) {
         baseRepository.setOnRefreshTokenListener(listener)
     }
 
-    suspend fun getNotifications(): PersonNotifications {
-        return PersonNotifications.fromResponse(baseRepository.getNotifications())
-    }
+    suspend fun getNotifications() =
+        PersonNotifications.fromResponse(baseRepository.getNotifications())
 
-    suspend fun getPromo(): PromoInfo? {
-        return PromoInfo.fromResponse(baseRepository.getPromo())
-    }
+    suspend fun getPromo() = PromoInfo.fromResponse(baseRepository.getPromo())
 }

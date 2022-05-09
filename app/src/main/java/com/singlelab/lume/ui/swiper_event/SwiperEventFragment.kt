@@ -149,30 +149,6 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
         showNewYearImage(newYearPromoRewardEnabled)
     }
 
-    private fun initCardStack() {
-        cardStackManager = CardStackLayoutManager(context, this)
-        cardStackManager?.apply {
-            setStackFrom(StackFrom.None)
-            setVisibleCount(3)
-            setTranslationInterval(8.0f)
-            setScaleInterval(0.95f)
-            setSwipeThreshold(0.3f)
-            setMaxDegree(20.0f)
-            setDirections(Direction.HORIZONTAL)
-            setCanScrollHorizontal(true)
-            setCanScrollVertical(true)
-            setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
-            setOverlayInterpolator(LinearInterpolator())
-        }
-        card_stack_view.layoutManager = cardStackManager
-        card_stack_view.adapter = CardStackEventAdapter(listener = this)
-        card_stack_view.itemAnimator.apply {
-            if (this is DefaultItemAnimator) {
-                supportsChangeAnimations = false
-            }
-        }
-    }
-
     override fun showNewYearImage(isNewYear: Boolean) {
         context?.let {
             icon_empty_events.setImageDrawable(
@@ -181,36 +157,6 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
                     if (isNewYear) R.drawable.ic_not_events_new_year else R.drawable.ic_not_events
                 )
             )
-        }
-    }
-
-    private fun setListeners() {
-//        button_search.setOnClickListener {
-//            findNavController().navigate(SwiperEventFragmentDirections.actionSwiperEventToSearchEvent())
-//        }
-        button_filter.setOnClickListener {
-            button_filter.isEnabled = false
-            val action = SwiperEventFragmentDirections.actionSwiperEventToFilterFragment()
-            action.isEvent = true
-            presenter.filterEvent.let {
-                val filterEvent = it.copy(selectedTypes = it.selectedTypes.toMutableList())
-                action.filterEvent = filterEvent
-                findNavController().navigate(action)
-            }
-        }
-        parentFragmentManager.setFragmentResultListener(
-            FilterFragment.REQUEST_FILTER,
-            this,
-            FragmentResultListener { requestKey, result ->
-                onFragmentResult(requestKey, result)
-            })
-    }
-
-    private fun onFragmentResult(requestKey: String, result: Bundle) {
-        if (requestKey == FilterFragment.REQUEST_FILTER) {
-            val filterEvent: FilterEvent =
-                result.getParcelable(FilterFragment.RESULT_FILTER) ?: return
-            presenter.applyFilter(filterEvent)
         }
     }
 
@@ -263,5 +209,56 @@ class SwiperEventFragment : BaseFragment(), SwiperEventView, OnlyForAuthFragment
     }
 
     override fun onLinkClick(url: String) {
+    }
+
+    private fun initCardStack() {
+        cardStackManager = CardStackLayoutManager(context, this)
+        cardStackManager?.apply {
+            setStackFrom(StackFrom.None)
+            setVisibleCount(3)
+            setTranslationInterval(8.0f)
+            setScaleInterval(0.95f)
+            setSwipeThreshold(0.3f)
+            setMaxDegree(20.0f)
+            setDirections(Direction.HORIZONTAL)
+            setCanScrollHorizontal(true)
+            setCanScrollVertical(true)
+            setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
+            setOverlayInterpolator(LinearInterpolator())
+        }
+        card_stack_view.layoutManager = cardStackManager
+        card_stack_view.adapter = CardStackEventAdapter(listener = this)
+        card_stack_view.itemAnimator.apply {
+            if (this is DefaultItemAnimator) {
+                supportsChangeAnimations = false
+            }
+        }
+    }
+
+    private fun setListeners() {
+        button_filter.setOnClickListener {
+            button_filter.isEnabled = false
+            val action = SwiperEventFragmentDirections.actionSwiperEventToFilterFragment()
+            action.isEvent = true
+            presenter.filterEvent.let {
+                val filterEvent = it.copy(selectedTypes = it.selectedTypes.toMutableList())
+                action.filterEvent = filterEvent
+                findNavController().navigate(action)
+            }
+        }
+        parentFragmentManager.setFragmentResultListener(
+            FilterFragment.REQUEST_FILTER,
+            this,
+            FragmentResultListener { requestKey, result ->
+                onFragmentResult(requestKey, result)
+            })
+    }
+
+    private fun onFragmentResult(requestKey: String, result: Bundle) {
+        if (requestKey == FilterFragment.REQUEST_FILTER) {
+            val filterEvent: FilterEvent =
+                result.getParcelable(FilterFragment.RESULT_FILTER) ?: return
+            presenter.applyFilter(filterEvent)
+        }
     }
 }

@@ -30,10 +30,6 @@ import javax.inject.Inject
 class ReceiveRewardFragment : BaseFragment(), ReceiveRewardView, OnImageClickListener,
     OnActivityResultListener {
 
-    companion object {
-        const val MAX_COUNT_IMAGES = 2
-    }
-
     @Inject
     lateinit var daggerPresenter: ReceiveRewardPresenter
 
@@ -135,5 +131,9 @@ class ReceiveRewardFragment : BaseFragment(), ReceiveRewardView, OnImageClickLis
         button_apply.setOnClickListener {
             presenter.onApplyReward(edit_text_card_num.text.toString())
         }
+    }
+
+    companion object {
+        const val MAX_COUNT_IMAGES = 2
     }
 }

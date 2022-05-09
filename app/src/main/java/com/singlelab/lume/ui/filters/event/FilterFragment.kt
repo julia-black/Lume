@@ -43,12 +43,6 @@ import javax.inject.Inject
 class FilterFragment : BaseFragment(),
     FilterView, OnPermissionListener {
 
-    companion object {
-        const val REQUEST_FILTER = "REQUEST_FILTER"
-        const val RESULT_FILTER = "RESULT_FILTER"
-        const val FAR_DISTANCE = 2
-    }
-
     @Inject
     lateinit var daggerPresenter: FilterPresenter
 
@@ -76,9 +70,6 @@ class FilterFragment : BaseFragment(),
             presenter.filterEvent = FilterFragmentArgs.fromBundle(
                 it
             ).filterEvent
-//            presenter.filterPerson = FilterFragmentArgs.fromBundle(
-//                it
-//            ).filterPerson
         }
         showFilters(presenter.isEvent())
         setListeners()
@@ -146,21 +137,6 @@ class FilterFragment : BaseFragment(),
             checkbox_online.visibility = View.GONE
             checkbox_not_online.visibility = View.GONE
             button_choose_date.visibility = View.GONE
-//            presenter.filterPerson?.let {
-//                seek_bar_age.min = Const.MIN_AGE
-//                seek_bar_age.max = Const.MAX_AGE
-//                if (it.minAge == Const.MIN_AGE && it.maxAge == Const.MAX_AGE) {
-//                    text_age.setText(R.string.any_age)
-//                } else {
-//                    seek_bar_age.getThumb(0).value = it.minAge
-//                    seek_bar_age.getThumb(1).value = it.maxAge
-//                    if (it.minAge == it.maxAge) {
-//                        text_age.text = getString(R.string.age_exact, it.minAge)
-//                    } else {
-//                        text_age.text = getString(R.string.age_from_to, it.minAge, it.maxAge)
-//                    }
-//                }
-//            }
             if (presenter.filterPerson?.cityName != null) {
                 text_city.text = presenter.filterPerson!!.cityName
             } else {
@@ -404,5 +380,11 @@ class FilterFragment : BaseFragment(),
             checkbox_not_online.setChecked(false)
             presenter.filterEvent?.isExceptOnline = false
         }
+    }
+
+    companion object {
+        const val REQUEST_FILTER = "REQUEST_FILTER"
+        const val RESULT_FILTER = "RESULT_FILTER"
+        const val FAR_DISTANCE = 2
     }
 }

@@ -33,11 +33,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionListener {
 
-    companion object {
-        const val REQUEST_LOCATION = "REQUEST_LOCATION"
-        const val RESULT_LOCATION = "RESULT_LOCATION"
-    }
-
     @Inject
     lateinit var daggerPresenter: MapPresenter
 
@@ -212,5 +207,10 @@ class MapFragment : BaseFragment(), MapView, OnMapReadyCallback, OnPermissionLis
         location.address = address.getAddressLine(0).removePostalCode(address.postalCode)
         location.city = address.locality
         edit_text_search.setText(location.address)
+    }
+
+    companion object {
+        const val REQUEST_LOCATION = "REQUEST_LOCATION"
+        const val RESULT_LOCATION = "RESULT_LOCATION"
     }
 }

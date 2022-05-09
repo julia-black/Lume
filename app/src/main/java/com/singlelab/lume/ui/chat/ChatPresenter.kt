@@ -14,7 +14,6 @@ import com.singlelab.net.exceptions.TimeoutException
 import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.chat.ChatMessageRequest
 import com.singlelab.net.model.chat.ChatMessageResponse
-import com.singlelab.net.model.chat.ChatMessagesResponse
 import moxy.InjectViewState
 import javax.inject.Inject
 
@@ -35,7 +34,6 @@ constructor(
     private var hasOldMessages: Boolean = true
 
     fun showChat(type: ChatOpeningInvocationType? = null, page: Int = 1) {
-        // TODO: Сделать прогресс бар для загрузки сообщений с сервера, изначально показывать сообщения из бд?
         if (page == 1) {
             Analytics.logOpenChat()
             viewState.showLoading(true)
@@ -84,23 +82,6 @@ constructor(
                 runOnMainThread { viewState.showError("Сообщения могут быть неактуальны") }
                 showLocalMessages()
             }
-        }
-    }
-
-    private fun setChatType(
-        type: ChatOpeningInvocationType?,
-        chatUid: String?,
-        chatResponse: ChatMessagesResponse
-    ) {
-        if (type != null) {
-            chatSettings.chatType = type
-        } else if (chatUid != null) {
-            chatSettings.chatType =
-                if (chatResponse.isGroupChat != null && chatResponse.isGroupChat!! && chatResponse.chatName != null) {
-                    ChatOpeningInvocationType.Common(chatResponse.chatName!!, chatUid, true)
-                } else {
-                    ChatOpeningInvocationType.Person(chatResponse.chatName!!, chatUid, false)
-                }
         }
     }
 
@@ -230,8 +211,6 @@ constructor(
             interactor.saveChatMessages(chatResponseMessages.toDbEntities(chatSettings.chatUid))
         }
     }
-
-    val isGroup: Boolean = chatSettings.chatType != null && chatSettings.chatType!!.isGroup
 
     data class ChatSettings(
         private var _lastMessageUid: String? = null,

@@ -111,5 +111,4 @@ dependencies {
 
     //Analytics
     implementation 'com.yandex.android:mobmetricalib:3.16.1'
-    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
 }

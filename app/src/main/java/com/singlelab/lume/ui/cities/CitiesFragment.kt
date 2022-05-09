@@ -22,11 +22,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class CitiesFragment : BaseFragment(), CitiesView, OnCityClickListener {
 
-    companion object {
-        const val REQUEST_CITY = "REQUEST_CITY"
-        const val RESULT_CITY = "RESULT_CITY"
-    }
-
     @Inject
     lateinit var daggerPresenter: CitiesPresenter
 
@@ -102,5 +97,10 @@ class CitiesFragment : BaseFragment(), CitiesView, OnCityClickListener {
     private fun showEmptySearch() {
         title_empty_search.visibility = View.VISIBLE
         recycler_cities.visibility = View.GONE
+    }
+
+    companion object {
+        const val REQUEST_CITY = "REQUEST_CITY"
+        const val RESULT_CITY = "RESULT_CITY"
     }
 }

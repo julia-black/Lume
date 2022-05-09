@@ -8,9 +8,8 @@ import com.singlelab.net.repositories.events.EventsRepository
 
 class SearchEventInteractorImpl(private val repository: EventsRepository) : SearchEventInteractor,
     BaseInteractor(repository as BaseRepository) {
-    override suspend fun search(searchEventRequest: SearchEventRequest): List<EventSummary>? {
-        return repository.search(searchEventRequest)?.mapNotNull {
+    override suspend fun search(searchEventRequest: SearchEventRequest) =
+        repository.search(searchEventRequest)?.mapNotNull {
             EventSummary.fromResponse(it)
         }
-    }
 }

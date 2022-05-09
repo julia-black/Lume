@@ -13,8 +13,7 @@ import com.singlelab.net.repositories.events.EventsRepository
 class EventInteractorImpl(
     private val repository: EventsRepository,
     private val localRepository: EventsSummaryRepository
-) : EventInteractor,
-    BaseInteractor(repository as BaseRepository) {
+) : EventInteractor, BaseInteractor(repository as BaseRepository) {
 
     override suspend fun getEvent(uid: String): Event? {
         return Event.fromResponse(repository.getEvent(uid))

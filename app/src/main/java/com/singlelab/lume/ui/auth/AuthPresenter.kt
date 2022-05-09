@@ -68,15 +68,14 @@ class AuthPresenter @Inject constructor(
     }
 
     fun onClickAuth(code: String) {
-        if (phone != null) {
+        phone?.let {
             runOnMainThread {
                 viewState.showLoading(isShow = true, withoutBackground = true)
             }
             invokeSuspend {
                 try {
-                    val auth = interactor.auth(phone!!, code)
-                    if (auth != null) {
-                        preferences?.setAuth(auth)
+                    interactor.auth(it, code)?.let {
+                        preferences?.setAuth(it)
                     }
                     val isPersonFilled = interactor.isPersonFilled()
                     runOnMainThread {
@@ -98,13 +97,11 @@ class AuthPresenter @Inject constructor(
         }
     }
 
-    fun getTutorialList(): List<TutorialPage> {
-        return if (preferences != null && preferences.getNewYearPromoRewardEnabled()) {
-            TutorialPage.values().toList()
-        } else {
-            val list = TutorialPage.values().toMutableList()
-            list.remove(TutorialPage.TUTORIAL_NEW_YEAR)
-            list
+    fun getTutorialList() = if (preferences != null && preferences.getNewYearPromoRewardEnabled()) {
+        TutorialPage.values().toList()
+    } else {
+        TutorialPage.values().toMutableList().apply {
+            remove(TutorialPage.TUTORIAL_NEW_YEAR)
         }
     }
 }

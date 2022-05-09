@@ -29,10 +29,6 @@ class CreatingEventPresenter @Inject constructor(
     preferences: Preferences?
 ) : BasePresenter<CreatingEventView>(preferences, interactor as BaseInteractor) {
 
-    companion object {
-        private const val MAX_TYPES_SIZE = 3
-    }
-
     var currentDateStart: Calendar? = null
     var currentDateEnd: Calendar? = null
 
@@ -117,16 +113,20 @@ class CreatingEventPresenter @Inject constructor(
             if (currentDateStart == null) {
                 currentDateStart = Calendar.getInstance()
             }
-            currentDateStart!!.set(Calendar.YEAR, year)
-            currentDateStart!!.set(Calendar.MONTH, month)
-            currentDateStart!!.set(Calendar.DAY_OF_MONTH, day)
+            currentDateStart?.apply {
+                set(Calendar.YEAR, year)
+                set(Calendar.MONTH, month)
+                set(Calendar.DAY_OF_MONTH, day)
+            }
         } else {
             if (currentDateEnd == null) {
                 currentDateEnd = Calendar.getInstance()
             }
-            currentDateEnd!!.set(Calendar.YEAR, year)
-            currentDateEnd!!.set(Calendar.MONTH, month)
-            currentDateEnd!!.set(Calendar.DAY_OF_MONTH, day)
+            currentDateEnd?.apply {
+                set(Calendar.YEAR, year)
+                set(Calendar.MONTH, month)
+                set(Calendar.DAY_OF_MONTH, day)
+            }
         }
     }
 
@@ -135,16 +135,20 @@ class CreatingEventPresenter @Inject constructor(
             if (currentDateStart == null) {
                 currentDateStart = Calendar.getInstance()
             }
-            currentDateStart!!.set(Calendar.HOUR_OF_DAY, hours)
-            currentDateStart!!.set(Calendar.MINUTE, minutes)
-            viewState.showDateStart(currentDateStart!!.parseToString(Const.DATE_FORMAT_ON_CARD))
+            currentDateStart?.apply {
+                set(Calendar.HOUR_OF_DAY, hours)
+                set(Calendar.MINUTE, minutes)
+                viewState.showDateStart(this.parseToString(Const.DATE_FORMAT_ON_CARD))
+            }
         } else {
             if (currentDateEnd == null) {
                 currentDateEnd = Calendar.getInstance()
             }
-            currentDateEnd!!.set(Calendar.HOUR_OF_DAY, hours)
-            currentDateEnd!!.set(Calendar.MINUTE, minutes)
-            viewState.showDateEnd(currentDateEnd!!.parseToString(Const.DATE_FORMAT_ON_CARD))
+            currentDateEnd?.apply {
+                set(Calendar.HOUR_OF_DAY, hours)
+                set(Calendar.MINUTE, minutes)
+                viewState.showDateEnd(parseToString(Const.DATE_FORMAT_ON_CARD))
+            }
         }
     }
 
@@ -162,28 +166,17 @@ class CreatingEventPresenter @Inject constructor(
         viewState.showImages(images)
     }
 
-    fun getPrimaryImage(): String? {
-        return if (images.isNotEmpty()) {
-            images[0].resize().toBase64()
-        } else {
-            null
-        }
-    }
-
-    fun getImagesStr(): List<String>? {
-        val newImages = mutableListOf<String>()
-        if (images.size >= 1) {
-            images.removeAt(0)
-        }
-        newImages.addAll(images.map { it.resize().toBase64() })
-        return newImages
+    fun getPrimaryImage() = if (images.isNotEmpty()) {
+        images[0].resize().toBase64()
+    } else {
+        null
     }
 
     fun setCity(city: City) {
-        this.cityId = city.cityId
-        this.cityName = city.cityName
+        cityId = city.cityId
+        cityName = city.cityName
         viewState.showCurrentCity(cityId, cityName)
-        this.location = null
+        location = null
         viewState.showLocationName(null)
     }
 
@@ -195,17 +188,11 @@ class CreatingEventPresenter @Inject constructor(
         viewState.showLocationName(location.address)
     }
 
-    fun getLat(): Double? {
-        return location?.latLong?.latitude
-    }
+    fun getLat() = location?.latLong?.latitude
 
-    fun getLong(): Double? {
-        return location?.latLong?.longitude
-    }
+    fun getLong() = location?.latLong?.longitude
 
-    fun getAddress(): String? {
-        return location?.address
-    }
+    fun getAddress() = location?.address
 
     fun setMainImage(position: Int) {
         val mainImage = images[position]
@@ -224,6 +211,15 @@ class CreatingEventPresenter @Inject constructor(
 
     fun getTypes() = types
 
+    private fun getImagesStr(): List<String> {
+        val newImages = mutableListOf<String>()
+        if (images.size >= 1) {
+            images.removeAt(0)
+        }
+        newImages.addAll(images.map { it.resize().toBase64() })
+        return newImages
+    }
+
     private fun addType(type: Int) {
         if (types.size < MAX_TYPES_SIZE) {
             types.add(EventType.findById(type))
@@ -234,5 +230,9 @@ class CreatingEventPresenter @Inject constructor(
     private fun removeType(type: Int) {
         types.removeAll { it.id == type }
         viewState.showTypes(types)
+    }
+
+    companion object {
+        private const val MAX_TYPES_SIZE = 3
     }
 }

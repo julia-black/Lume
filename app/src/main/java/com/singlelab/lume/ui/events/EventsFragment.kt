@@ -122,7 +122,6 @@ class EventsFragment : BaseFragment(), EventsView, OnlyForAuthFragments,
         futureEvents: MutableList<EventSummary>,
         currentDay: CalendarDay?
     ) {
-
         context?.let { context ->
             calendar_week_view.removeDecorators()
             calendar_full_view.removeDecorators()

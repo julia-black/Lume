@@ -11,16 +11,14 @@ class AuthInteractorImpl @Inject constructor(
     private var repository: AuthRepository,
     private val database: LumeDatabase
 ) : BaseInteractor(repository as BaseRepository), AuthInteractor {
-    override suspend fun sendCode(phone: String): String? {
-        return repository.sendSmsCode(phone)?.personUid
-    }
+
+    override suspend fun sendCode(phone: String) = repository.sendSmsCode(phone)?.personUid
 
     override suspend fun auth(phone: String, code: String): Auth? {
         database.clearAllTables()
         return Auth.fromResponse(repository.auth(phone, code))
     }
 
-    override suspend fun isPersonFilled(): Boolean {
-        return repository.isPersonFilled() != null && repository.isPersonFilled()!!.isPersonFilledUp
-    }
+    override suspend fun isPersonFilled() =
+        repository.isPersonFilled() != null && repository.isPersonFilled()!!.isPersonFilledUp
 }

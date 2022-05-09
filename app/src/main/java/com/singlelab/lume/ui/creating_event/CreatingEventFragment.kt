@@ -51,11 +51,6 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
     OnActivityResultListener,
     OnImageClickListener {
 
-    companion object {
-        const val REQUEST_CREATING_EVENT = "CREATING_EVENT_REQUEST"
-        const val RESULT_CREATING_EVENT = "CREATING_EVENT_RESULT"
-    }
-
     @Inject
     lateinit var daggerPresenter: CreatingEventPresenter
 
@@ -381,8 +376,7 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
         context?.let {
             val date = currentDateTime ?: Calendar.getInstance()
             val picker = DatePickerDialog(
-                it,
-                DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+                it, { _, year, month, dayOfMonth ->
                     presenter.saveCurrentDate(year, month, dayOfMonth, isStart)
                     showTimePicker(presenter.currentDateStart, isStart)
                 },
@@ -425,5 +419,10 @@ class CreatingEventFragment : BaseFragment(), CreatingEventView, OnlyForAuthFrag
                 presenter.setMapLocation(location)
             }
         }
+    }
+
+    companion object {
+        const val REQUEST_CREATING_EVENT = "CREATING_EVENT_REQUEST"
+        const val RESULT_CREATING_EVENT = "CREATING_EVENT_RESULT"
     }
 }

@@ -36,7 +36,6 @@ import com.singlelab.net.model.event.ParticipantStatus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_event.*
 import kotlinx.android.synthetic.main.fragment_event.description
-import kotlinx.android.synthetic.main.view_edit_dialog.view.*
 import kotlinx.android.synthetic.main.view_title_picker.view.*
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
@@ -47,13 +46,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonImageClickListener,
     OnActivityResultListener {
-
-    companion object {
-        const val REQUEST_EVENT = "REQUEST_EVENT"
-        const val RESULT_EVENT = "RESULT_EVENT"
-        const val RESULT_IS_LEAVE = "RESULT_IS_LEAVE"
-        const val MAX_VIEW_PARTICIPANTS = 3
-    }
 
     @Inject
     lateinit var daggerPresenter: EventPresenter
@@ -757,4 +749,10 @@ class EventFragment : BaseFragment(), EventView, OnlyForAuthFragments, OnPersonI
         }
     }
 
+    companion object {
+        const val REQUEST_EVENT = "REQUEST_EVENT"
+        const val RESULT_EVENT = "RESULT_EVENT"
+        const val RESULT_IS_LEAVE = "RESULT_IS_LEAVE"
+        const val MAX_VIEW_PARTICIPANTS = 3
+    }
 }

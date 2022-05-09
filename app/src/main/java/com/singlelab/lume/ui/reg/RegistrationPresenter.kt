@@ -86,10 +86,6 @@ class RegistrationPresenter @Inject constructor(
         }
     }
 
-    fun setLogin(login: String) {
-        profileRequest.login = login
-    }
-
     fun setName(name: String) {
         profileRequest.name = name
     }

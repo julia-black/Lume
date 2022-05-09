@@ -10,7 +10,7 @@ class City(
     val cityName: String
 ) : Parcelable {
     companion object {
-        fun fromResponse(cityResponse: CityResponse): City? {
+        fun fromResponse(cityResponse: CityResponse?): City? {
             return if (cityResponse == null) {
                 null
             } else {

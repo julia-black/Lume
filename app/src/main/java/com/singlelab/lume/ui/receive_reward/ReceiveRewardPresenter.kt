@@ -21,10 +21,6 @@ class ReceiveRewardPresenter @Inject constructor(
     preferences: Preferences?
 ) : BasePresenter<ReceiveRewardView>(preferences, interactor as BaseInteractor) {
 
-    companion object {
-        private const val MAX_COUNT_IMAGE = 5
-    }
-
     private var images: MutableList<Bitmap> = mutableListOf()
 
     private var eventUid: String? = null
@@ -80,5 +76,9 @@ class ReceiveRewardPresenter @Inject constructor(
             accountingNumber = cardNum,
             images = images.map { it.resize().toBase64() }
         )
+    }
+
+    companion object {
+        private const val MAX_COUNT_IMAGE = 5
     }
 }

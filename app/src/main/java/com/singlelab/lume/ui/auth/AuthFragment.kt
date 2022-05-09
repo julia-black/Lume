@@ -52,6 +52,11 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
         initTutorial()
     }
 
+    override fun updateNewYearPromo(newYearPromoRewardEnabled: Boolean) {
+        super.updateNewYearPromo(newYearPromoRewardEnabled)
+        (view_pager_tutorial?.adapter as TutorialAdapter?)?.updateList(presenter.getTutorialList())
+    }
+
     private fun initViewPhone() {
         layout_phone.setHint("")
         layout_phone.setStartDrawable(resources.getDrawable(R.drawable.ic_phone, context?.theme))
@@ -78,6 +83,38 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
         super.showLoading(isShow, withoutBackground)
         button_send_code.isEnabled = !isShow
         button_auth.isEnabled = !isShow
+    }
+
+    override fun onCodeSend(phone: String, isPushCode: Boolean) {
+        (activity as MainActivity).setBackPressListener(this)
+        text_info.visibility = View.VISIBLE
+        if (isPushCode) {
+            text_info.text = getString(R.string.push_code_send)
+        } else {
+            text_info.text = getString(R.string.sms_code_send, phone.maskPhone())
+        }
+        button_back.visibility = View.VISIBLE
+        layout_code.visibility = View.VISIBLE
+        layout_code.setText("")
+        button_auth.visibility = View.VISIBLE
+
+        layout_phone.visibility = View.GONE
+        button_send_code.visibility = View.GONE
+    }
+
+    override fun toProfile() {
+        findNavController().popBackStack()
+        findNavController().navigate(R.id.my_profile)
+    }
+
+    override fun toRegistration() {
+        (activity as MainActivity).setBackPressListener(null)
+        findNavController().navigate(AuthFragmentDirections.actionAuthToRegistration())
+    }
+
+    override fun onBackPressed() {
+        showInputPhone()
+        (activity as MainActivity).setBackPressListener(null)
     }
 
     private fun setListeners() {
@@ -130,38 +167,6 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
         }
     }
 
-    override fun onCodeSend(phone: String, isPushCode: Boolean) {
-        (activity as MainActivity).setBackPressListener(this)
-        text_info.visibility = View.VISIBLE
-        if (isPushCode) {
-            text_info.text = getString(R.string.push_code_send)
-        } else {
-            text_info.text = getString(R.string.sms_code_send, phone.maskPhone())
-        }
-        button_back.visibility = View.VISIBLE
-        layout_code.visibility = View.VISIBLE
-        layout_code.setText("")
-        button_auth.visibility = View.VISIBLE
-
-        layout_phone.visibility = View.GONE
-        button_send_code.visibility = View.GONE
-    }
-
-    override fun toProfile() {
-        findNavController().popBackStack()
-        findNavController().navigate(R.id.my_profile)
-    }
-
-    override fun toRegistration() {
-        (activity as MainActivity).setBackPressListener(null)
-        findNavController().navigate(AuthFragmentDirections.actionAuthToRegistration())
-    }
-
-    override fun onBackPressed() {
-        showInputPhone()
-        (activity as MainActivity).setBackPressListener(null)
-    }
-
     private fun showInputPhone() {
         button_back.visibility = View.INVISIBLE
         text_info.visibility = View.INVISIBLE
@@ -170,10 +175,5 @@ class AuthFragment : BaseFragment(), AuthView, OnBackPressListener {
 
         layout_phone.visibility = View.VISIBLE
         button_send_code.visibility = View.VISIBLE
-    }
-
-    override fun updateNewYearPromo(newYearPromoRewardEnabled: Boolean) {
-        super.updateNewYearPromo(newYearPromoRewardEnabled)
-        (view_pager_tutorial?.adapter as TutorialAdapter?)?.updateList(presenter.getTutorialList())
     }
 }

@@ -10,7 +10,6 @@ import com.singlelab.net.model.ErrorResponse
 import com.singlelab.net.model.ResultCoroutines
 import com.singlelab.net.model.auth.AuthData
 import com.singlelab.net.model.auth.AuthResponse
-import com.singlelab.net.model.person.PersonNotificationsResponse
 import com.singlelab.net.model.promo.PromoInfoResponse
 import retrofit2.Response
 import java.net.HttpURLConnection
@@ -25,35 +24,27 @@ open class BaseRepository(private val apiUnit: ApiUnit) {
         this.onRefreshTokenListener = listener
     }
 
-    suspend fun getNotifications(): PersonNotificationsResponse? {
-        return safeApiCall(
-            call = { apiUnit.personApi.getNotificationsAsync().await() },
-            errorMessage = "Не удалось получить уведомления"
-        )
-    }
+    suspend fun getNotifications() = safeApiCall(
+        call = { apiUnit.personApi.getNotificationsAsync().await() },
+        errorMessage = "Не удалось получить уведомления"
+    )
 
-    suspend fun getPromo(): PromoInfoResponse? {
-        return safeApiCall(
-            call = { apiUnit.promoApi.getPromoAsync().await() },
-            errorMessage = "Не удалось получить промо-акции"
-        )
-    }
+    suspend fun getPromo(): PromoInfoResponse = safeApiCall(
+        call = { apiUnit.promoApi.getPromoAsync().await() },
+        errorMessage = "Не удалось получить промо-акции"
+    )
 
     suspend fun <T : Any> safeApiCall(
         call: suspend () -> Response<T>,
         errorMessage: String
-    ): T? {
-        val result: ResultCoroutines<T> = safeApiResult(call, errorMessage)
-        var data: T? = null
-
-        when (result) {
+    ): T {
+        when (val result = safeApiResult(call, errorMessage)) {
             is ResultCoroutines.Success ->
-                data = result.data
+                return result.data
             is ResultCoroutines.Error -> {
                 throw result.exception
             }
         }
-        return data
     }
 
     private suspend fun <T : Any> safeApiResult(

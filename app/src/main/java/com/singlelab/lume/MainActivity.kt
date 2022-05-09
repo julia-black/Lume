@@ -12,8 +12,6 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.facebook.FacebookSdk
-import com.facebook.applinks.AppLinkData
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
@@ -83,17 +81,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchFacebookLinks() {
-        FacebookSdk.setAutoInitEnabled(true)
-        FacebookSdk.fullyInitialize()
-        AppLinkData.fetchDeferredAppLinkData(
-            this
-        ) {
-            YandexMetrica.reportReferralUrl(it?.targetUri.toString());
-        }
-        //если после установки через рекламу запустили приложение не сразу
-        AppLinkData.createFromActivity(this)?.let {
-            YandexMetrica.reportAppOpen(it.targetUri.toString())
-        }
+//        FacebookSdk.setAutoInitEnabled(true)
+//        FacebookSdk.fullyInitialize()
+//        AppLinkData.fetchDeferredAppLinkData(
+//            this
+//        ) {
+//            YandexMetrica.reportReferralUrl(it?.targetUri.toString());
+//        }
+//        //если после установки через рекламу запустили приложение не сразу
+//        AppLinkData.createFromActivity(this)?.let {
+//            YandexMetrica.reportAppOpen(it.targetUri.toString())
+//        }
     }
 
     private fun getDynamicLink(navController: NavController) {

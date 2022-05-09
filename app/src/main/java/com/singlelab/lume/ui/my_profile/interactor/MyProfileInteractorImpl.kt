@@ -19,17 +19,14 @@ class MyProfileInteractorImpl(
 
     override suspend fun loadProfile() = Profile.fromResponse(repository.getProfile())
 
-    override suspend fun loadFriends(personUid: String): List<Person>? {
-        return repository.getFriends(personUid)?.mapNotNull {
+    override suspend fun loadFriends(personUid: String) =
+        repository.getFriends(personUid)?.mapNotNull {
             Person.fromResponse(it)
         }
-    }
 
-    override suspend fun updateImageProfile(imageStr: String, miniImageStr: String): String? {
-        val profileResponse =
-            repository.updateProfile(ProfileRequest(image = imageStr, miniImage = miniImageStr))
-        return profileResponse?.imageContentUid
-    }
+    override suspend fun updateImageProfile(imageStr: String, miniImageStr: String): String? =
+        repository.updateProfile(ProfileRequest(image = imageStr, miniImage = miniImageStr))
+            ?.imageContentUid
 
     override suspend fun updatePushToken(token: String?) {
         repository.updateProfile(ProfileRequest(token = token))
@@ -43,23 +40,20 @@ class MyProfileInteractorImpl(
         repository.removePushToken()
     }
 
-    override suspend fun loadBadges(personUid: String): List<Badge>? {
-        return repository.getBadges(personUid)?.mapNotNull {
+    override suspend fun loadBadges(personUid: String) =
+        repository.getBadges(personUid)?.mapNotNull {
             Badge.fromResponse(it)
         }?.sortedBy { !it.isReceived }
-    }
 
-    override suspend fun loadProfileFromCache(uid: String): Profile? {
-        return Profile.fromEntity(localRepository.get(uid))
-    }
+    override suspend fun loadProfileFromCache(uid: String) =
+        Profile.fromEntity(localRepository.get(uid))
 
     override suspend fun saveProfile(profile: Profile) {
         localRepository.insert(profile.toEntity())
     }
 
-    override suspend fun loadFriendsFromCache(): List<Person> {
-        return localRepository.getFriends().mapNotNull { Person.fromEntity(it) }
-    }
+    override suspend fun loadFriendsFromCache() =
+        localRepository.getFriends().mapNotNull { Person.fromEntity(it) }
 
     override suspend fun saveFriends(friends: List<Person>) {
         localRepository.clearFriends()

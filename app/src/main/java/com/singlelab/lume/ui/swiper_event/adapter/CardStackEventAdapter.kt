@@ -27,8 +27,4 @@ class CardStackEventAdapter(
         this.events = events
         notifyDataSetChanged()
     }
-
-    fun getEvents(): List<Event> {
-        return events
-    }
 }

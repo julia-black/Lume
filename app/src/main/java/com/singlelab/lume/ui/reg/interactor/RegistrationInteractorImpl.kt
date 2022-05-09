@@ -7,7 +7,5 @@ import com.singlelab.net.repositories.reg.RegistrationRepository
 
 class RegistrationInteractorImpl(private val repository: RegistrationRepository) :
     BaseInteractor(repository as BaseRepository), RegistrationInteractor {
-    override suspend fun registration(profile: ProfileRequest) {
-        return repository.registration(profile)
-    }
+    override suspend fun registration(profile: ProfileRequest) = repository.registration(profile)
 }
